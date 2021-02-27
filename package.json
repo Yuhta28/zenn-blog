@@ -1,0 +1,23 @@
+{
+  "name": "zenn-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuhta28/zenn-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuhta28/zenn-blog/issues"
+  },
+  "homepage": "https://github.com/Yuhta28/zenn-blog#readme",
+  "dependencies": {
+    "zenn-cli": "^0.1.74"
+  }
+}
