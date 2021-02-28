@@ -1,7 +1,7 @@
 ---
 title: "zenn-cliで記事作成してみた"
 emoji: "🐭"
-type: "idea" # tech: 技術記事 / idea: アイデア
+type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [初心者,Zenn,GitHub]
 published: true
 ---
