@@ -1,5 +1,6 @@
 {
     "rules": {
         "textlint-rule-no-mix-dearu-desumasu": true
+        "textlint-rule-preset-ja-technical-writing": true
     }
 }
