@@ -56,7 +56,7 @@ zenn-cliの使い方記事で紹介されている通り、`npx zenn new:article
 ちなみに記事のMarkdownの名前ですが、Zenn内で一意である必要があります。
 (Slugというそうです。詳しくはこちら⇓)
 https://zenn.dev/zenn/articles/what-is-slug
-既に公開している記事のSlugの変更はできないので、GitHubリポジトリで管理したい場合は、
+すでに公開している記事のSlugの変更はできないので、GitHubリポジトリで管理したい場合は、以下の通りにします。
 
 1. `articles/books`ディレクトリ内にファイル名が公開済み記事のSlugであるMarkdownファイルを作成する。
 2. 作成したMarkdownファイルに記事の内容をコピー&ペーストする。
