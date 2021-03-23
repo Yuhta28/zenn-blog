@@ -6,5 +6,6 @@ topics: [windows]
 published: false
 ---
 # 概要
-Windowsでも開発できるためのTips集をまとめてみました
+Windowsでも開発できるためのTips集をまとめてみました。
 コピペは便利です。
+私はそう思います
