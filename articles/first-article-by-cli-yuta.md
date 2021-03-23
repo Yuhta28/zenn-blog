@@ -9,7 +9,8 @@ published: true
 先日行われたDevelopers Summit 2021でZennの開発者である、catnose氏がZennの開発秘話を話されました。
 https://event.shoeisha.jp/devsumi/20210218/session/3082/
 Zennを個人で開発されており、個人開発の苦労話やZennの機能紹介などたいへんおもしろい内容でした。
-その中で、GitHubリポジトリとZennの連携、zenn-cliを使うことでローカルエディタでZennの記事作成ができるという話がありましたので、早速一個お試しで作成してみました。
+その中で、GitHubリポジトリとZennの連携、zenn-cliを使い、ローカルエディタでZennの記事作成ができるという話がありました。
+なのでさっそく一個お試しで作成してみました。
 
 # GitHubリポジトリとの連携
 具体的な方法については開発者様の記事をご覧になればわかると思いますので詳しい手順については割愛します。
@@ -21,7 +22,7 @@ https://zenn.dev/zenn/articles/connect-to-github
 同じく具体的な手順については開発者様の記事を参照
 https://zenn.dev/zenn/articles/zenn-cli-guide
 
-` npx zenn preview`コマンドを実行することで`http://localhost:8000`でプレビュー画面が立ち上がり、プレビューしながらローカルエディタで執筆できます。
+` npx zenn preview`コマンドを実行すると`http://localhost:8000`でプレビュー画面が立ち上がり、プレビューしながらローカルエディタで執筆できます。
 
 ### 下書き画面の様子
 ![](https://storage.googleapis.com/zenn-user-upload/vvj51qf1nkj3vbcq6z08cuz6x2ji)
@@ -36,9 +37,9 @@ published: false
 ---
 ```
 
-zenn-cliの使い方記事で紹介されている通り、`npx zenn new:article`で、ファイル内に上記のヘッダー設定が記述された記事作成用のMarkdownファイルが作成されます。
+zenn-cliの使い方記事で紹介されている通り、`npx zenn new:article`で、ファイル内に上記のヘッダ設定が記述された記事作成用のMarkdownファイルが作成されます。
 ここでタイトルや記事に含まれているトピックの設定、Zennの記事カテゴリである、Tech系かIdea系の分類を決めることができます。
-**published**の部分ですが、ここを`true`にすることで、実際に記事を全体に公開することができます。
+**published**の部分ですが、ここを`true`にすることで、実際に記事を全体に公開できます。
 
 # デプロイ
 デプロイできるブランチは一つだけですので、Zennの設定画面からデプロイ実行するブランチを決めて、該当のブランチで`git push`すれば自動デプロイされます。
