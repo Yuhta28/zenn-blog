@@ -20,3 +20,24 @@ https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 ## textlint
 `textlint`はMarkdown形式やプレーンテキストのファイルを校正してくれるJavaScriptで記述されたOSSツールです。
 https://textlint.github.io/
+校正のためのルールを扱うプラグインが多数開発されており、自分自身で自由に校正のルールを決めて使用します。
+ルールの設定箇所は`.textlintrc`ファイル内に記述します。
+
+```text:.textlintrc
+{
+    "rules": {
+        "preset-ja-technical-writing": {
+            "sentence-length": false,
+            "ja-no-weak-phrase": false
+        },
+        "prh": {
+            "rulePaths": [
+                "node_modules/prh/prh-rules/media/WEB+DB_PRESS.yml"
+            ]
+        }
+    },
+    "plugins": [
+        "review"
+    ]
+}
+```
