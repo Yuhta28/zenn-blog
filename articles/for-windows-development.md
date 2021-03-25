@@ -6,4 +6,4 @@ topics: [windows]
 published: false
 ---
 # 概要
-Windowsでも開発できるためのTIPS集
+Windowsでも開発できるためのTips集をまとめてみました。
