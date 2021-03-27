@@ -151,4 +151,4 @@ https://github.com/pat-s/always-upload-cache
 #### キャッシュ取得後
 ![](https://storage.googleapis.com/zenn-user-upload/0eph9zjbzvfnylyh7jxid7rfeirv)
 
-もう1つ工夫した点としては、textlintで特に問題が見つからない場合reviewdogを実行するのは無駄なstepsになりますので、`if: failure()`で前述のtextlintで異常が見つかった場合のみ実行するようにしました。
+もう一つ工夫した点としては、textlintで特に問題が見つからない場合reviewdogを実行するのは無駄なstepsになりますので、`if: failure()`で前述のtextlintで異常が見つかった場合のみ実行するようにしました。
