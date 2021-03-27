@@ -2,8 +2,8 @@
 title: "GitHub ActionsでZennブログの校正を自動化してみた"
 emoji: "🐀"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [GitHubActions,reviewdog,Zenn,CI]
-published: false
+topics: [GitHubActions,reviewdog,Zenn,GitHub,textlint]
+published: true
 ---
 # 概要
 前回の記事でも紹介したとおり、ZennはGitHubリポジトリと連携すると、自分の好きなエディタで記事を書くことができます。
