@@ -15,9 +15,9 @@ jobs:
     name: reviewdog (github-check)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@v2
+      - uses: reviewdog/action-setup@v1
         with:
-          go-version: 1.14
+          reviewdog_version: latest
       - uses: actions/setup-node@v2
 
       - uses: actions/checkout@v2
@@ -37,11 +37,6 @@ jobs:
       
       - name: Install dependent module
         run: npm install
-
-      - name: Install reviewdog
-        # use: reviewdog/action-setup@v1
-        run: |
-          curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s
       
       - name: Execute textlint for ブログ記事
         run: |
@@ -52,5 +47,4 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # npx textlint -f checkstyle "articles/*.md" | ./bin/reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
-          cat .textlint.log | ./bin/reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
+          cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
