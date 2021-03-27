@@ -154,7 +154,7 @@ https://github.com/pat-s/always-upload-cache
 またtextlintで特に問題が見つからない場合、reviewdogを実行するのは無駄なstepsになりますので、`if: failure()`で前述のtextlintで異常が見つかった場合のみ実行するようにしました。
 
 # デモ実行
-実際に`git push`して`develop`ブランチから`main`ブランチにPRし、何かしらの表現ミスがありましたらreviewdogがこのようにレビューコメントを出してくれます。
+実際に`git push`して`develop`ブランチから`main`ブランチにPRし、何かしらの表現ミスがありましたら、reviewdogがこのようにレビューコメントを出してくれます。
 ![](https://storage.googleapis.com/zenn-user-upload/ybiyeuxyl6nxr41xt8eizy7qf2h7)
 こんな感じで、PRして`git push`する度にGitHub Actionsが動いてドキュメント校正してくれます。
 1個前の記事からリポジトリで記事を管理しましたので、そちらもtextlintをかけてみましたが、結構指摘箇所がありました。
@@ -162,9 +162,9 @@ https://github.com/pat-s/always-upload-cache
 https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 
 # 所感
-元々CircleCI実践入門本で躓いた部分でしたが、知り合いの力を借りて何とか解決できた所です。
+もともとCircleCI実践入門本でつまずいた部分でしたが、知り合いの力を借りて何とか解決できた所です。
 (詳細はこちらのスクラップ参照)
 https://zenn.dev/yuta28/scraps/221c80e7c07172
-身近でCIを試せるものはないかと検討して、ブログ記事の自動校正にチャレンジしてみようと思いました。
-まだ記事のリポジトリ移管が進んでいませんが、移管後にドキュメント校正を実行して、ついでに文章の見直しをしようと思います。
+身近でCIを試せるものはないかと検討して、ブログ記事の自動校正化にチャレンジしてみようと思いました。
+まだ記事のリポジトリ移管が進んでいませんが、移管後にドキュメント校正をして、ついでに文章の見直しをしようと思います。
 
