@@ -45,14 +45,14 @@ textlintはデフォルトルールというものが存在せず、自分でル
 - textlint-rule-prh
 
 `textlint-rule-preset-ja-technical-writing`は技術文書向けのルールプリセットです。
-ルールプリセットは複数のルールを一つにまとめたルールで、`textlint-rule-preset-ja-technical-writing`は以下のルールが含まれています。
+ルールプリセットは複数のルールを1つにまとめたルールで、`textlint-rule-preset-ja-technical-writing`は以下のルールが含まれています。
 https://efcl.info/2016/07/13/textlint-rule-preset-ja-technical-writing/
 
 - 「ですます調」、「である調」を統一します
 - 同じ助詞を連続して使用しない
-- 1文の長さは90文字以下とする
+- 一文の長さは90文字以下とする
 
-ただ、文章の文字数の縛りは、URLを文中に貼るとURLの文字もカウントしてしまい、PRの承認が上手くいかないときが有りましたので、`false`にしました。
+ただ、文字数の縛りはURLを文中に貼るとURLの文字もカウントしてしまい、PRの承認がうまくいかないときがありましたので`false`にしました。
 ほかにも、「〜だと思います」という弱い日本語表現は技術書でしたら使わないようにしますが、ブログですのでそこまで厳しくしなくても良いと判断して、同じく`false`にしています。
 
 `textlint-rule-prh`は表記ゆれをチェックしてくれる校正補助ツールです。
