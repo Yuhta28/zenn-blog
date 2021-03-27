@@ -2,8 +2,8 @@
 title: "GitHub ActionsでZennブログの校正を自動化してみた"
 emoji: "🐀"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: [GitHubActions,reviewdog,Zenn,CI]
-published: false
+topics: [GitHubActions,reviewdog,Zenn,GitHub,textlint]
+published: true
 ---
 # 概要
 前回の記事でも紹介したとおり、ZennはGitHubリポジトリと連携すると、自分の好きなエディタで記事を書くことができます。
@@ -168,3 +168,9 @@ https://zenn.dev/yuta28/scraps/221c80e7c07172
 身近でCIを試せるものはないかと検討して、ブログ記事の自動校正化にチャレンジしてみようと思いました。
 まだ記事のリポジトリ移管が進んでいませんが、移管後にドキュメント校正をして、ついでに文章の見直しをしようと思います。
 
+https://github.com/Yuhta28/zenn-blog
+
+# 参考文献
+https://gihyo.jp/book/2020/978-4-297-11411-4
+https://swet.dena.com/entry/2018/09/18/142413
+https://dev.classmethod.jp/articles/shuntaka-github-actions-reviewdog/
