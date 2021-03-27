@@ -1,5 +1,5 @@
 ---
-title: "GitHub Actionsでzennブログの校正を自動化してみた"
+title: "GitHub ActionsでZennブログの校正を自動化してみた"
 emoji: "🐀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [GitHubActions,reviewdog,Zenn,CI]
@@ -68,7 +68,7 @@ https://github.com/reviewdog/reviewdog
 
 それではGitHub Actionsのワークフローファイルの中身を紹介していきます。
 
-### textlint.yml
+# textlint.yml
 
 ```yml:textlint.yml
 # This is a basic workflow to help you get started with Actions
@@ -129,7 +129,7 @@ jobs:
 ```
 
 中身について解説します。
-### ワークフローファイル解説
+# ワークフローファイル解説
 大まかなステップの流れとしては次の通りです。
 
 - reviewdog,nodeのアクションを起動
@@ -152,3 +152,19 @@ https://github.com/pat-s/always-upload-cache
 ![](https://storage.googleapis.com/zenn-user-upload/0eph9zjbzvfnylyh7jxid7rfeirv)
 
 またtextlintで特に問題が見つからない場合、reviewdogを実行するのは無駄なstepsになりますので、`if: failure()`で前述のtextlintで異常が見つかった場合のみ実行するようにしました。
+
+# デモ実行
+実際に`git push`して`develop`ブランチから`main`ブランチにPRし、何かしらの表現ミスがありましたらreviewdogがこのようにレビューコメントを出してくれます。
+![](https://storage.googleapis.com/zenn-user-upload/ybiyeuxyl6nxr41xt8eizy7qf2h7)
+こんな感じで、PRして`git push`する度にGitHub Actionsが動いてドキュメント校正してくれます。
+1個前の記事からリポジトリで記事を管理しましたので、そちらもtextlintをかけてみましたが、結構指摘箇所がありました。
+![](https://storage.googleapis.com/zenn-user-upload/i5lwtmyrkls9t3kf0hswh4wvgwj0)
+https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
+
+# 所感
+元々CircleCI実践入門本で躓いた部分でしたが、知り合いの力を借りて何とか解決できた所です。
+(詳細はこちらのスクラップ参照)
+https://zenn.dev/yuta28/scraps/221c80e7c07172
+身近でCIを試せるものはないかと検討して、ブログ記事の自動校正にチャレンジしてみようと思いました。
+まだ記事のリポジトリ移管が進んでいませんが、移管後にドキュメント校正を実行して、ついでに文章の見直しをしようと思います。
+
