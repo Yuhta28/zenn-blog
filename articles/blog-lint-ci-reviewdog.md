@@ -20,7 +20,7 @@ https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 ## textlint
 `textlint`はMarkdown形式やプレーンテキストのファイルを校正してくれるJavaScriptで記述されたOSSツールです。
 https://textlint.github.io/
-校正のためのルールを扱うプラグインが多数開発されており、自分自身で自由に校正のルールを決めて使用します。
+textlintはデフォルトルールというものが存在せず、自分でルールの設定とプラグインが必要になります。
 ルールの設定箇所は`.textlintrc`ファイル内に記述します。
 
 ```text:.textlintrc
@@ -35,9 +35,26 @@ https://textlint.github.io/
                 "node_modules/prh/prh-rules/media/WEB+DB_PRESS.yml"
             ]
         }
-    },
-    "plugins": [
-        "review"
-    ]
+    }
 }
 ```
+
+ここでは2つのルールをセットしてあります。
+
+- textlint-rule-preset-ja-technical-writing
+- textlint-rule-prh
+
+`textlint-rule-preset-ja-technical-writing`は技術文書向けのルールプリセットです。
+ルールプリセットは複数のルールを一つにまとめたルールで、`textlint-rule-preset-ja-technical-writing`は以下のルールが含まれています。
+https://efcl.info/2016/07/13/textlint-rule-preset-ja-technical-writing/
+
+- 「ですます調」、「である調」を統一します
+- 同じ助詞を連続して使用しない
+- 1文の長さは90文字以下とする
+
+ただ、文章の文字数の縛りは、URLを文中に貼るとURLの文字もカウントしてしまい、PRの承認が上手くいかないときが有りましたので、`false`にしました。
+ほかにも、「〜だと思います」という弱い日本語表現は技術書でしたら使わないようにしますが、ブログですのでそこまで厳しくしなくても良いと判断して、同じく`false`にしています。
+
+`textlint-rule-prh`は表記ゆれをチェックしてくれる校正補助ツールです。
+https://github.com/textlint-rule/textlint-rule-prh
+
