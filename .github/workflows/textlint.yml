@@ -28,9 +28,9 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            node-
 
       - name: Install textlint
         run:  'npm install --save-dev textlint textlint-rule-preset-ja-technical-writing textlint-rule-prh'
@@ -54,4 +54,3 @@ jobs:
         run: |
           # npx textlint -f checkstyle "articles/*.md" | ./bin/reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
           cat .textlint.log | ./bin/reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
-
