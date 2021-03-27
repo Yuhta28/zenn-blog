@@ -59,3 +59,8 @@ https://efcl.info/2016/07/13/textlint-rule-preset-ja-technical-writing/
 https://github.com/textlint-rule/textlint-rule-prh
 
 たとえば、`りんごが箱の中に有った`という文でしたら、有ったという文をあったに変換してくれます。
+
+## reviewdog
+`reviewdog`はtextlintなどLinterツールの結果を、GitHubのPRにレビューコメントを投稿してくれるGoで記述されたOSSツールです。
+https://github.com/reviewdog/reviewdog
+
