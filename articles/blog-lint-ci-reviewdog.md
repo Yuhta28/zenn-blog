@@ -137,3 +137,18 @@ jobs:
 - textlintを記事に対して実行
 - 何かしらの記載ミスが有った場合のみtextlintの出力結果をreviewdogに渡してGitHubにレビューコメントを投稿
 
+工夫した点としてcacheアクションを使うことで、ワークフローの高速化を図りました。
+ところがGitHub Actionsが提供している[actions/cache](https://github.com/actions/cache)ですが、stepsが失敗しているとキャッシュを取得しないという仕様があります。
+https://github.com/actions/cache/blob/main/action.yml#L24
+この仕様のおかげでドキュメントを校正し、textlintで記載ミスがあるとキャッシュを取得してくれず、毎回textlintのインストールを最初からインストールし直します。
+![](https://storage.googleapis.com/zenn-user-upload/umcoopmh5z5ix9b55qcy22hp6j29)
+調べてみると有志で`actions/cache`をforkしてstepsが失敗してもキャッシュを取得するようにしたアクションを公開してくれる方がいましたので、それを使うことにしました。
+https://github.com/pat-s/always-upload-cache
+こちらを使うことで、stepsが失敗してもキャッシュを取得してくれてワークフローの処理を速めることができました。
+
+#### キャッシュ取得前
+![](https://storage.googleapis.com/zenn-user-upload/7waih5q0yowk6bjm1ztmplh0u6b9)
+#### キャッシュ取得後
+![](https://storage.googleapis.com/zenn-user-upload/0eph9zjbzvfnylyh7jxid7rfeirv)
+
+またtextlintで特に問題が見つからない場合、reviewdogを実行するのは無駄なstepsになりますので、`if: failure()`で前述のtextlintで異常が見つかった場合のみ実行するようにしました。
