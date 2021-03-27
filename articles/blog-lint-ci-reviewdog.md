@@ -58,7 +58,7 @@ https://efcl.info/2016/07/13/textlint-rule-preset-ja-technical-writing/
 `textlint-rule-prh`は表記ゆれをチェックしてくれる校正補助ツールです。
 https://github.com/textlint-rule/textlint-rule-prh
 
-たとえば、`りんごが箱の中に有った`という文でしたら、有ったという文をあったに変換してくれます
+たとえば、`りんごが箱の中に有った`という文でしたら、有ったという文をあったに変換してくれます。
 
 ## reviewdog
 `reviewdog`はtextlintなどLinterツールの結果を、GitHubのPRにレビューコメントを投稿してくれるGoで記述されたOSSツールです。
