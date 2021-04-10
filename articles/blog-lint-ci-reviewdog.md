@@ -202,6 +202,7 @@ https://github.com/Yuhta28/zenn-blog
 https://gihyo.jp/book/2020/978-4-297-11411-4
 https://swet.dena.com/entry/2018/09/18/142413
 https://dev.classmethod.jp/articles/shuntaka-github-actions-reviewdog/
+https://www.npmjs.com/package/textlint-rule-preset-smarthr
 
 # LT資料
 LTのスライド資料です。
