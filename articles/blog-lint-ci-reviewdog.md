@@ -16,7 +16,7 @@ https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 - textlint
 - reviewdog
 
-それぞれのツールについて簡単にはなりますが、紹介致します
+それぞれのツールについて簡単にはなりますが、紹介いたします。
 ## textlint
 `textlint`はMarkdown形式やプレーンテキストのファイルを校正してくれるJavaScriptで記述されたOSSツールです。
 https://textlint.github.io/
