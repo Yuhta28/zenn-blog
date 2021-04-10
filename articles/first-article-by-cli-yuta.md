@@ -62,4 +62,5 @@ https://zenn.dev/zenn/articles/what-is-slug
 2. 作成したMarkdownファイルに記事の内容をコピー&ペーストする。
 3. **published**を`true`にして`git push`でデプロイする。
 
-これで完了です。今後はこちらを中心に記事を書いていきます。
+これで完了です。
+今後はこちらを中心に記事を書いていきます。
