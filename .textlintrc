@@ -1,9 +1,11 @@
 {
     "rules": {
-        "preset-smarthr": true,
+        "preset-smarthr":{
+            "sentence-length": false
+        },
         "prh": {
             "rulePaths": [
-                "node_modules/prh/prh-rules/media/WEB+DB_PRESS.yml"
+                "dict/smarthr-prh-basic.yml"
             ]
         }
     }
