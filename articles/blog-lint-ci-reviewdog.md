@@ -63,7 +63,7 @@ https://github.com/textlint-rule/textlint-rule-prh
 Smart HRさんが新しくルールプリセットを作成して、外部に公開してくれたようです。
 参考記事⇓
 https://shanaiho.smarthr.co.jp/n/n881866630eda
-ルールプリセット GitHub⇓
+GitHub⇓
 https://github.com/kufu/textlint-rule-preset-smarthr
 試しにこちらを入れてみましたので、`.textlintrc`の中身を変更しました。
 
