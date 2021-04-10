@@ -5,7 +5,8 @@
         },
         "prh": {
             "rulePaths": [
-                "dict/smarthr-prh-basic.yml"
+                "dict/smarthr-prh-basic.yml",
+                "dict/smarthr-prh-tech-word.yml"
             ]
         }
     }

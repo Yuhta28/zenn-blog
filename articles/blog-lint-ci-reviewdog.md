@@ -59,6 +59,34 @@ https://efcl.info/2016/07/13/textlint-rule-preset-ja-technical-writing/
 https://github.com/textlint-rule/textlint-rule-prh
 
 たとえば、`りんごが箱の中に有った`という文でしたら、有ったという文をあったに変換してくれます。
+#### 2021/4/10追記
+Smart HRさんが新しくルールプリセットを作成して、外部に公開してくれたようです。
+参考記事⇓
+https://shanaiho.smarthr.co.jp/n/n881866630eda
+GitHub⇓
+https://github.com/kufu/textlint-rule-preset-smarthr
+私の校正ルールに合いそうだと思いましたので、`.textlintrc`の中身を変更しました。
+
+```text:.textlintrc
+{
+    "rules": {
+        "preset-smarthr":{
+            "sentence-length": false
+        },
+        "prh": {
+            "rulePaths": [
+                "dict/smarthr-prh-basic.yml",
+                "dict/smarthr-prh-tech-word.yml"
+            ]
+        }
+    }
+}
+```
+
+`textlint-rule-prh`の独自辞書の中身も公開してくれましたのでこちらも使ってみました。
+https://github.com/kufu/textlint-rule-preset-smarthr/tree/main/dict
+みなさんが使う場合は、ローカルのPCにSmart HRさんの辞書を格納しておいてください。
+(私はdictディレクトリを作成してその中に置きました)
 
 ## reviewdog
 `reviewdog`はtextlintなどLinterツールの結果を、GitHubのPRにレビューコメントを投稿してくれるGoで記述されたOSSツールです。
@@ -110,7 +138,7 @@ jobs:
             node-
 
       - name: Install textlint
-        run:  'npm install --save-dev textlint textlint-rule-preset-ja-technical-writing textlint-rule-prh'
+        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-prh'
       
       - name: Install dependent module
         run: npm install
