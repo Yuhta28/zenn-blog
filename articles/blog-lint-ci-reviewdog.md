@@ -9,14 +9,14 @@ published: true
 前回の記事でも紹介したとおり、ZennはGitHubリポジトリと連携すると、自分の好きなエディタで記事を書くことができます。
 https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 ほかにもGitHubを連携することでCIツールを導入することが可能となり、記事作成の助けにもなります。
-そこで今回は、GitHub Actionsとtextlintとreviewdogを使うことで、PRする度に自動ドキュメント校正してくれるCI環境の構築してみました。
+そこで今回は、GitHub Actionsとtextlintとreviewdogを使うことで、PRするたびに自動ドキュメント校正してくれるCI環境の構築してみました。
 # ドキュメント校正ツール
 今回GitHub Actionsに組み込む校正ツールは以下の２つを使用します。
 
 - textlint
 - reviewdog
 
-それぞれのツールについて簡単にはなりますが、紹介致します。
+それぞれのツールについて簡単にはなりますが、紹介いたします。
 ## textlint
 `textlint`はMarkdown形式やプレーンテキストのファイルを校正してくれるJavaScriptで記述されたOSSツールです。
 https://textlint.github.io/
@@ -142,7 +142,7 @@ jobs:
 https://github.com/actions/cache/blob/main/action.yml#L24
 この仕様のおかげでドキュメントを校正し、textlintで記載ミスがあるとキャッシュを取得してくれず、毎回textlintのインストールを最初からインストールし直します。
 ![](https://storage.googleapis.com/zenn-user-upload/umcoopmh5z5ix9b55qcy22hp6j29)
-調べてみると有志で`actions/cache`をforkしてstepsが失敗してもキャッシュを取得するようにしたアクションを公開してくれる方がいましたので、それを使うことにしました。
+調べてみると有志で`actions/cache`をforkしてstepsが失敗してもキャッシュを取得するようにしたアクションを公開してくれる人がいましたので、それを使うことにしました。
 https://github.com/pat-s/always-upload-cache
 こちらを使うことで、stepsが失敗してもキャッシュを取得してくれてワークフローの処理を速めることができました。
 
@@ -156,13 +156,13 @@ https://github.com/pat-s/always-upload-cache
 # デモ実行
 実際に`git push`して`develop`ブランチから`main`ブランチにPRし、何かしらの表現ミスがありましたら、reviewdogがこのようにレビューコメントを出してくれます。
 ![](https://storage.googleapis.com/zenn-user-upload/ybiyeuxyl6nxr41xt8eizy7qf2h7)
-こんな感じで、PRして`git push`する度にGitHub Actionsが動いてドキュメント校正してくれます。
+こんな感じで、PRして`git push`するたびにGitHub Actionsが動いてドキュメント校正してくれます。
 1個前の記事からリポジトリで記事を管理しましたので、そちらもtextlintをかけてみましたが、結構指摘箇所がありました。
 ![](https://storage.googleapis.com/zenn-user-upload/i5lwtmyrkls9t3kf0hswh4wvgwj0)
 https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 
 # 所感
-もともとCircleCI実践入門本でつまずいた部分でしたが、知り合いの力を借りて何とか解決できた所です。
+もともとCircleCI実践入門本でつまずいた部分でしたが、知り合いの力を借りて何とか解決できたところです。
 (詳細はこちらのスクラップ参照)
 https://zenn.dev/yuta28/scraps/221c80e7c07172
 身近でCIを試せるものはないかと検討して、ブログ記事の自動校正化にチャレンジしてみようと思いました。
