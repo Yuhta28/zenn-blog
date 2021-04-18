@@ -18,3 +18,8 @@ CloudFormationやAnsibleは日本語記事も豊富でQiitaやZennで検索す�
 | ---- | ---- | ---- |
 | CloudFormation | 899件 | 31件 |
 | Ansible | 2804件 | 33件 |
+
+ですが、AnsibleはOSSでありAWSのマネージドサービスではありません。
+AWSのマネージドサービスでAnsibleにあたるのがAWS OpsWorksとよばれるサービスです。
+https://aws.amazon.com/jp/opsworks/
+OpsWorksを使うことで、サーバ構築やデプロイなどを自動化することができます。
