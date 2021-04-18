@@ -14,12 +14,12 @@ CloudFormationはOS以下のレイヤーの構築をサポートしてくれま�
 CloudFormationやAnsibleは日本語記事も豊富でQiitaやZennで検索するとたくさんの記事がヒットします。
 
 ※2021年4月18日現在
-|  | Qiita | Zenn |
-| ---- | ---- | ---- |
-| CloudFormation | 899件 | 31件 |
-| Ansible | 2804件 | 33件 |
+|                | Qiita  | Zenn |
+| ----           | ----   | ---- |
+| CloudFormation | 899件  | 31件 |
+| Ansible        | 2804件 | 33件 |
 
 ですが、AnsibleはOSSでありAWSのマネージドサービスではありません。
 AWSのマネージドサービスでAnsibleにあたるのがAWS OpsWorksとよばれるサービスです。
 https://aws.amazon.com/jp/opsworks/
-OpsWorksを使うことで、サーバ構築やデプロイなどを自動化することができます。
+OpsWorksを使うことで、サーバー構築やデプロイなどを自動化できます。
