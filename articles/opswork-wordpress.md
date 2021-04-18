@@ -16,8 +16,8 @@ CloudFormationやAnsibleは日本語記事も豊富でQiitaやZennで検索す�
 ※2021年4月18日現在
 |                | Qiita  | Zenn |
 | ----           | ----   | ---- |
-| CloudFormation | 899件  | 31件 |
-| Ansible        | 2804件 | 33件 |
+| CloudFormation | 899  | 31 |
+| Ansible        | 2804 | 33 |
 
 ですが、AnsibleはOSSでありAWSのマネージドサービスではありません。
 AWSのマネージドサービスでAnsibleにあたるのがAWS OpsWorksとよばれるサービスです。
