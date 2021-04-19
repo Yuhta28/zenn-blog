@@ -1,7 +1,8 @@
 {
     "rules": {
         "preset-smarthr":{
-            "sentence-length": false
+            "sentence-length": false,
+            "ja-no-mixed-period": false
         },
         "prh": {
             "rulePaths": [
