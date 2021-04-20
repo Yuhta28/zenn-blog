@@ -40,7 +40,7 @@ OpsWorksを使うことで、サーバー構築やデプロイなどを自動化
 - MariaDB
 - PHP 7.4
 
-スクラップで連載しているAWSインフラ構築日記の構成を基にしたWordPress構築を行っていきます。
+スクラップで連載しているAWSインフラ構築日記の構成を基にしてWordPressを構築していきます。
 https://zenn.dev/yuta28/scraps/1e14a65a26626b
 
 # OpsWorksについて
@@ -49,7 +49,7 @@ OpsWorksには3つのバージョンが提供されています。
 
 - AWS OpsWorks for Chef Automate
 - AWS OpsWorks for Puppet Enterprise
-- AWS OpsWorks スタック
+- AWS OpsWorksスタック
 
 ChefとPuppetですが、この2つは構成管理ツールつまりAnsibleと同様の機能を持っています。
 大きく異なる点ですが、Ansibleはエージェントレスであるのに対しこの2つは変更先であるクライアントにエージェントをインストールして導入します。
