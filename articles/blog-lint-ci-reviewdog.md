@@ -195,7 +195,7 @@ https://zenn.dev/yuta28/articles/first-article-by-cli-yuta
 https://zenn.dev/yuta28/scraps/221c80e7c07172
 身近でCIを試せるものはないかと検討して、ブログ記事の自動校正化にチャレンジしてみようと思いました。
 まだ記事のリポジトリ移管が進んでいませんが、移管後にドキュメント校正をして、ついでに文章の見直しをしようと思います。
-この文章は敬体です。この文章は常態である。
+この文章は、句点が、とても多くて、読みにくいであろうかもしれない。。
 https://github.com/Yuhta28/zenn-blog
 
 # 参考文献
