@@ -55,7 +55,7 @@ OpsWorksには3つのバージョンが提供されています。
 ChefとPuppetですが、この2つは構成管理ツール、つまりAnsibleと同様の機能を持っています。
 大きく異なる点ですが、Ansibleはエージェントレスであるのに対しこの2つは変更先であるクライアントにエージェントをインストールして導入します。
 ほかにもAnsibleはYAMLで処理内容を記述しますが、ChefはRuby、PuppetはDSLという独自言語を用いて処理内容を記述します。
-ChefとPuppetの詳しい説明は割愛しますので、気になる方は各種のHPからご覧ください。
+ChefとPuppetの詳しい説明は割愛しますので、気になるかたは各種のHPからご覧ください。
 https://www.chef.io/products/chef-infra
 https://puppet.com/
 
