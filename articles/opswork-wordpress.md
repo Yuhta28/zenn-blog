@@ -39,6 +39,7 @@ OpsWorksを使うことで、サーバー構築やデプロイなどを自動化
 - Apache
 - MariaDB
 - PHP 7.4
+- WordPress
 
 スクラップで連載しているAWSインフラ構築日記の構成を基にしてWordPressを構築していきます。
 https://zenn.dev/yuta28/scraps/1e14a65a26626b
@@ -49,8 +50,29 @@ OpsWorksには3つのバージョンが提供されています。
 
 - AWS OpsWorks for Chef Automate
 - AWS OpsWorks for Puppet Enterprise
-- AWS OpsWorksスタック
+- AWS OpsWorks Stack
 
-ChefとPuppetですが、この2つは構成管理ツールつまりAnsibleと同様の機能を持っています。
+ChefとPuppetですが、この2つは構成管理ツール、つまりAnsibleと同様の機能を持っています。
 大きく異なる点ですが、Ansibleはエージェントレスであるのに対しこの2つは変更先であるクライアントにエージェントをインストールして導入します。
 ほかにもAnsibleはYAMLで処理内容を記述しますが、ChefはRuby、PuppetはDSLという独自言語を用いて処理内容を記述します。
+ChefとPuppetの詳しい説明は割愛しますので、気になる方は各種のHPからご覧ください。
+https://www.chef.io/products/chef-infra
+https://puppet.com/
+
+AWS OpsWorks for Chef AutomateとAWS OpsWorks for Puppet Enterpriseは使っているツールが異なるだけで使い方に違いはありません。
+AWS OpsWorks StackもChefを使いますが、こちらはEC2インスタンスにインストールしたChef Soloクライアントを使うことで自分自身に設定変更命令を出して構成管理やプロビジョニングを実行するものになります。
+https://aws.amazon.com/jp/opsworks/chefautomate/faqs/?nc=sn&loc=5
+
+今回はWordPressを構築するEC2インスタンス内にChef Soloクライアントを導入して自身にChefを実行する形にしていきたいので、AWS OpsWorks Stackを使用していきたいと思います。
+（以下、Stackと表記します）
+
+# Stackの使い方
+AWSコンソール画面からOpsWorksのページを開いてみましょう。
+左のStackを選択します。
+![](https://storage.googleapis.com/zenn-user-upload/mjbaiuq66vpnquhdd1iiz0aqjkbq)
+
+Stackのダッシュボードが表示されますので、Add your first stackを選択します。
+Stackの種類を選ぶことができ、サンプルとChefのバージョンを選ぶことができます。初めてOpsWorksを触るときは、Sampleを選んで使用感を試すのもいいと思います。
+![](https://storage.googleapis.com/zenn-user-upload/5f8ok3g0i4bmoz5wfz1acqvqwn3x)
+https://docs.aws.amazon.com/opsworks/latest/userguide/gettingstarted-intro.html
+
