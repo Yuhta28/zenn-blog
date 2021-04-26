@@ -81,8 +81,14 @@ Stackを作成したら次にLayerを作成します。
 LayerはStackに一つ以上含まれているコンポーネントを表します。
 ![](https://storage.googleapis.com/zenn-user-upload/xmt9u7zhyaf5tkb454q09lm1d5eg)
 OpsWorksタブを選択し、名前を作成します。
-
-
+名前を作成後、LayerメニューからRecipesタブへ移動します。
+![](https://storage.googleapis.com/zenn-user-upload/sixpzg7t1vaxu7wd41wu8ujaub16)
+ここでChefのレシピをどのタイミングで実行したいか設定できます。
+今回はEC2インスタンス起動時にWordPressに必要なミドルウェアとWordPressをインストールし、インスタンス起動時にWordPressがインストールできるようにしています。
+## Instanceの追加
+InstancesメニューからStackに登録するインスタンスを追加します。
+![](https://storage.googleapis.com/zenn-user-upload/08f5uht21okjqj42w5zvu93u4lbv)
+新規で作成することはもちろん、既に起動中のインスタンスもStackに登録することができます。
 メモ
 OpsWorksのStackにはChefのレシピが格納されているGitリポジトリを登録する必要がある。
 リポジトリのレシピディレクトリ名で実行する内容を決めることができる
