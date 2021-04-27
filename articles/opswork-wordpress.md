@@ -3,7 +3,7 @@ title: "OpsWorksを使ってEC2インスタンスにWordPressを導入してみ�
 emoji: "🐀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","OpsWorks","WordPress"]
-published: false
+published: true
 ---
 
 # 概要
