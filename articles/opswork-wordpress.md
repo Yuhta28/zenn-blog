@@ -88,9 +88,15 @@ OpsWorksタブを選択し、名前を作成します。
 ## Instanceの追加
 InstancesメニューからStackに登録するインスタンスを追加します。
 ![](https://storage.googleapis.com/zenn-user-upload/08f5uht21okjqj42w5zvu93u4lbv)
-新規で作成することはもちろん、すでに起動中のインスタンスもStackに登録できます。
-メモ
-OpsWorksのStackにはChefのレシピが格納されているGitリポジトリを登録する必要がある。
-リポジトリのレシピディレクトリ名で実行する内容を決めることができる
+Newタブでインスタンス名とインスタンスタイプ、配置するサブネットを選択してインスタンスを追加します。
+インスタンス追加後、メニュー画面からインスタンスを起動させます。(パブリックIPは隠しています)
+![](https://storage.googleapis.com/zenn-user-upload/h5wmt3lyzpi9q1k8xp28t4nsuw1v)
+# WordPress起動
+http://パブリックIP/wordpress をURLに貼り付けるとWordPressのインストール画面が表示されて無事にWordPressが導入できました。
 
-StackのRunコマンドでExecuteRecipiesからレシピディレクトリから実行したいレシピを選択する
+# 使いにくいと感じた点
+OpsWorksを使ってみましたが、事前にGitでcookbookを格納したリポジトリが必要であることが少し手間だと感じます。
+これはOpsWorksというよりもChefの思想によるものなので、なんとも言えませんが。。。
+またChefは設定変更先にエージェントを導入する必要があり、新規インスタンスの場合は起動時に最初から入れてくれるので楽ですが、既存のインスタンスをOpsWorksに組み込む場合は自分の手でインストールする必要があります。
+![](https://storage.googleapis.com/zenn-user-upload/oxalcn0tw1ccxsmkvdjhxfbvvpmf)
+エージェントのインストール方法ですが変更先インスタンスにAWS CLIを導入することが必要です。
