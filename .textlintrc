@@ -10,5 +10,12 @@
                 "dict/smarthr-prh-tech-word.yml"
             ]
         }
+    },
+    "filters": {
+        "allowlist": {
+            "allow": [
+                "フィルタリング"
+            ]
+        }
     }
 }
