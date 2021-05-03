@@ -55,10 +55,10 @@ PCからは１台のサーバーに見えても、実はリバースプロキシ
 PCからリバースプロキシへアクセスし、プロキシサーバーはPCから受け取ったリクエストをWebサーバーへ転送します。
 リクエストを受け取ったWebサーバーはプロキシサーバーへWebコンテンツをレスポンスし、コンテンツを受け取ったプロキシサーバーはPCへレスポンスを転送します。
 そしてPCからはプロキシサーバーからコンテンツを受け取ったようにみえるということです。
-プロキシサーバーはNginxで動かし、WebサーバーはApacheが入ったWordPressを使います。
+プロキシサーバーはnginxで動かし、WebサーバーはApacheが入ったWordPressを使います。
 #### プロキシサーバー情報
 - Amazon Linux2
-- Nginx 1.18
+- nginx 1.18
 #### Webサーバー情報
 - Ubuntu 20.04
 - WordPress 5.7
@@ -70,7 +70,7 @@ Webサーバーの構築ですが、こちらのスクラップをご覧くだ�
 https://zenn.dev/yuta28/scraps/1e14a65a26626b
 
 ## プロキシサーバー構築
-Amazon Linux2でNginxをインストールする場合、AWSが提供する`amazon-linux-extras`パッケージからインストールします。
+Amazon Linux2でnginxをインストールする場合、AWSが提供する`amazon-linux-extras`パッケージからインストールします。
 ```
 $ sudo amazon-linux-extras install nginx1
 Installing nginx
@@ -94,12 +94,12 @@ amzn2extra-nginx1                                                               
 せっかくなので無料ドメインを取得してプロキシサーバーにドメインを付与します。
 ドメイン名：`proxy-yuta.ddns.net`
 
-Nginxを起動して`http://proxy-yuta.ddns.net` でNginxのテストページが表示できることを確認します。
+nginxを起動して`http://proxy-yuta.ddns.net` でnginxのテストページが表示できることを確認します。
 ![](https://storage.googleapis.com/zenn-user-upload/4b54z4oy4oh5jj9df79czv0t6zgv)
 
 
 
-Nginxの設定ファイル, `/etc/nginx/nginx.conf`のserverセクション内を以下のように修正します。
+nginxの設定ファイル, `/etc/nginx/nginx.conf`のserverセクション内を以下のように修正します。
 
 ```nginx 
 server {
@@ -132,7 +132,7 @@ server {
     }
 ```
 
-修正後にNginxを再起動して設定を読み込ませます。
+修正後にnginxを再起動して設定を読み込ませます。
 もう一度`http://proxy-yuta.ddns.net`を開きますとWordPressのページが表示されます。
 ![](https://storage.googleapis.com/zenn-user-upload/olzykwjmhl2v3ii2l3quxbzju8es)
 
@@ -140,8 +140,8 @@ server {
 proxyドメインでWebサイトコンテンツを表示させることができましたが、解決できずに困っていることがあります。
 proxyドメインのページから他のページに遷移すると元のWebサーバーのドメインに変更されてしまいます。
 ![](https://storage.googleapis.com/zenn-user-upload/k3viv6y862k6ynx8oyrazya9qxwd)
-やりたい事としてはプロキシサーバーのドメインでWebサイトのコンテンツを表示し続けたいのですが、Nginxの公式ドキュメントを調べてもわかりませんでした。
-`ngx_http_proxy_module`モジュールのドキュメントを調べましたが、それ以外で調べるポイントなどご存知のかたがいましたらアドバイス宜しくお願い致します。
+やりたいこととしてはプロキシサーバーのドメインでWebサイトのコンテンツを表示し続けたいのですが、nginxの公式ドキュメントを調べてもわかりませんでした。
+`ngx_http_proxy_module`モジュールのドキュメントを調べましたが、それ以外で調べるポイントなどご存じのかたがいましたらアドバイス宜しくお願いいたします。
 
 # 所感
 リバースプロキシの知識を深めるためにプロキシサーバーを構築し、プロキシサーバーでWebサイトのコンテンツを表示させることができました。
