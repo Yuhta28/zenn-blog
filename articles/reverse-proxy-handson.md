@@ -3,7 +3,7 @@ title: "リバースプロキシを使って、別Webサイトのコンテンツ
 emoji: "🐀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["nginx","WordPress","プロキシ"]
-published: false
+published: true
 ---
 # 概要
 最近仕事でリバースプロキシを扱いましたが、今まで実際に触ったことがなく本で読んだ知識レベルでしかなかったせいで、GW前最後の仕事でかなり手こずりました。
