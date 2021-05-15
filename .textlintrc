@@ -14,7 +14,9 @@
     "filters": {
         "allowlist": {
             "allow": [
-                "フィルタリング"
+                "フィルタリング",
+                "RHEL",
+                "Debian"
             ]
         }
     }
