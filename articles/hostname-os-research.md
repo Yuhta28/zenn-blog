@@ -3,7 +3,7 @@ title: "Linuxのホスト名について調査してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Linux","hostname","RFC"]
-published: false
+published: true
 ---
 
 # 概要
@@ -369,7 +369,13 @@ Yutadebian
 - ☓ ：ルールを無視できなかった
 
 こうして確認しますとDebian系の2つは少しルールに厳しく、Fedora系はある程度ルールに寛容ということがわかります。
+OpenSUSEもFedora系と同じですね。
+面白かったのが、Red Hat Enterprise Linuxでホスト名の日本語を設定したらDNS名になったことです。
+ほかのOSでは`localhost`になりましたが、ここだけ違う動きをしていたのが興味深いです。
+
+# 所感
+普段あまり意識しないホスト名の命名規則について調査してみました。
+どの会社でもホスト名の命名規則を定めるかと思いますが、RFCに則った命名規則にしないと思わぬトラブルに巻き込まれることもあり得ますので、皆さまも一度調べてみると面白いかもしれません。
 
 # 参考文献
-https://www.nic.ad.jp/ja/rfc-jp/WhatisRFC.html
-https://jprs.jp/glossary/index.php?ID=0149
+https://saku-jp.hatenablog.com/entry/20130612/p1
