@@ -105,7 +105,7 @@ abcdefghijklmnopqrstuvwxyz
 - Amazon Linux 2
 - Red Hat Enterprise Linux 8.3
 - openSUSE 15.2
-- Debian
+- Debian GNU/Linux 10
 
 OSはAWSのマーケットプレイス上にあるOSを適当にチョイスしました。
 では始めていきます。
@@ -262,8 +262,9 @@ $ hostname
 YutaRedhat
 ```
 
+## openSUSE 15.2
 
-```
+```bash
 > cat /etc/os-release
 NAME="SLES"
 VERSION="15-SP2"
@@ -274,11 +275,100 @@ ID_LIKE="suse"
 ANSI_COLOR="0;32"
 CPE_NAME="cpe:/o:suse:sles:15:sp2"
 
-> sudo hostnamectl set-hostname yuta_suse
+> hostname #初期ネーム
+yuta-opensuse
+
+> sudo hostnamectl set-hostname yuta_open@su*se #ルール①検証
 > hostname
-yuta_suse
+yuta_opensuse
+
+> sudo hostnamectl set-hostname ユータ #ルール②検証
+> hostname
+localhost
+
+> sudo hostnamectl set-hostname 12345 #ルール③検証
+> hostname
+12345
+
+> sudo hostnamectl set-hostname Yuta- #ルール④検証
+> hostname
+Yuta-
+
+> sudo hostnamectl set-hostname yuta* #ルール④検証
+> hostname
+yuta
+
+> sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+> hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+> sudo hostnamectl set-hostname "Yuta openSUSE" #ルール⑥検証
+> hostname
+YutaopenSUSE
 ```
 
+## Debian GNU/Linux 10
+
+```bash
+$ cat /etc/os-release 
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+
+$ hostname #初期ネーム
+yuta-debian
+
+$ sudo hostnamectl set-hostname yuta_de*bi@an #ルール①検証
+$ hostname
+yutadebian
+
+$ sudo hostnamectl set-hostname ユータ #ルール②検証
+$ hostname
+localhost
+
+$ sudo hostnamectl set-hostname 12345 #ルール③検証
+$ hostname
+12345
+
+$ sudo hostnamectl set-hostname Yuta- #ルール④検証
+$ hostname
+Yuta
+
+$ sudo hostnamectl set-hostname yuta* #ルール④検証
+$ hostname
+yuta
+
+$ sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+$ hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+$ sudo hostnamectl set-hostname "Yuta debian" #ルール⑥検証
+$ hostname
+Yutadebian
+```
+# 調査結果
+複数のOSに対して同じ検証を行った結果以下の調査結果になりました。
+
+| ルール | Ubuntu | Amazon Linux | RHEL | SUSE | Debian |
+| ----   | :----: | :----:           | :----:  | :----: | :----:   |
+| ルール検証① | ☓ | △ | △ | △ | ☓ |
+| ルール検証② | ☓ | ☓ | ☓ | ☓ | ☓ |
+| ルール検証③ | ○ | ○ | ○ | ○ | ○ |
+| ルール検証④ | ☓ | △ | △ | △ | ☓ |
+| ルール検証⑤ | ○ | ○ | ○ | ○ | ○ |
+| ルール検証⑥ | ☓ | ☓ | ☓ | ☓ | ☓ |
+
+- ○：ルールを無視できた
+- △：一部だけ無視できなかった
+- ☓ ：ルールを無視できなかった
+
+こうして確認しますとDebian系の2つは少しルールに厳しく、Fedora系はある程度ルールに寛容ということがわかります。
 
 # 参考文献
 https://www.nic.ad.jp/ja/rfc-jp/WhatisRFC.html
