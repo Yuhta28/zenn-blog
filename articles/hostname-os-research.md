@@ -41,8 +41,8 @@ RFCとはインターネット上にまつわるさまざまな技術的使用�
 
 インターネットホストテーブルの仕様についてまとめたRFC 952には以下の内容が書かれています。
 
-> 1. A "name" (Net, Host, Gateway, or Domain name) is a text string up
-   to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus
+>  A "name" (Net, Host, Gateway, or Domain name) is a text string up
+>   to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus
    sign (-), and period (.).  Note that periods are only allowed when
    they serve to delimit components of "domain style names". (See
    RFC-921, "Domain Name System Implementation Schedule", for
@@ -86,11 +86,85 @@ abcdefghijklmnopqrstuvwxyz
 これはDNSのラベルの文字数制限[^2]と同じです。
 [^2]:https://jprs.jp/glossary/index.php?ID=0149
 
-そこでRFC 952で定めている命名規則のルールでどれが厳格に守られていて、どれが許容されているのか色んなOSを使って検証してみることにしました。
+気になったのが、以前別のOSを使ったときはアンスコがホスト名に設定できましたので、OSごとに遵守されているルールが違うのではないかと思い、色んなOSを使って検証してみることにしました。
+
+# 調査方法
+調査方法としてRFC 952で定められているルールが遵守されているか確認するため、以下の違反行為が許容されるかどうか検証していきます。
+### ルール違反行為一覧
+
+1. ホスト名にアンスコ(_)、アットマーク(@)、アスタリスク(*)を使えるか
+2. ホスト名に日本語は使えるか
+3. ホスト名の先頭に英字以外の文字が使えるか
+4. ホスト名の最後にハイフン(-)、ピリオド(.)が使えるか
+5. ホスト名の文字数に24文字以上設定できるか
+6. 空白文字が使えるか
+
+### 検証対象OS
+
+- Ubuntu 20.04
+- Amazon Linux 2
+- Red Hat Enterprise Linux 8.3
+- openSUSE 15.2
+- Debian GNU/Linux 10
+
+OSはAWSのマーケットプレイス上にあるOSを適当にチョイスしました。
+では始めていきます。
+
+# 検証
+
+## Ubuntu 20.04
 
 
+```bash
+$ cat /etc/os-release 
+NAME="Ubuntu"
+VERSION="20.04.2 LTS (Focal Fossa)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 20.04.2 LTS"
+VERSION_ID="20.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=focal
+UBUNTU_CODENAME=focal
 
+$ hostname #初期ネーム
+Yuta-Ubuntu
+
+$ sudo hostnamectl set-hostname Yuta_Ubuntu@PC*AWS #ルール①検証
+$ hostname
+YutaUbuntuPCAWS
+
+$ sudo hostnamectl set-hostname ユータ #ルール②検証
+$ hostname
+localhost
+
+$ sudo hostnamectl set-hostname 12345 #ルール③検証
+$ hostname
+12345
+
+$ sudo hostnamectl set-hostname Yuta- #ルール④検証
+$ hostname
+Yuta
+
+$ sudo hostnamectl set-hostname yuta* #ルール④検証
+$ hostname
+yuta
+
+$ sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+$ hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+$ sudo hostnamectl set-hostname "Yuta Ubuntu" #ルール⑥検証
+$ hostname
+YutaUbuntu
 ```
+
+## Amazon Linux2
+
+```bash
 $ cat /etc/os-release
 NAME="Amazon Linux"
 VERSION="2"
@@ -102,57 +176,42 @@ ANSI_COLOR="0;33"
 CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2"
 HOME_URL="https://amazonlinux.com/"
 
-$ sudo hostnamectl set-hostname yuta_ec2
+$ hostname #初期ネーム
+yuta-azln2
+
+$ sudo hostnamectl set-hostname Yuta_Amazon@Linux2*AWS #ルール①検証
 $ hostname
-yuta_ec2
-```
+yuta_amazonlinux2aws
 
-```
-$ cat /etc/os-release
-NAME="AlmaLinux"
-VERSION="8.3 (Purple Manul)"
-ID="almalinux"
-ID_LIKE="rhel centos fedora"
-VERSION_ID="8.3"
-PLATFORM_ID="platform:el8"
-PRETTY_NAME="AlmaLinux 8.3 (Purple Manul)"
-ANSI_COLOR="0;34"
-CPE_NAME="cpe:/o:almalinux:almalinux:8.3:GA"
-HOME_URL="https://almalinux.org/"
-BUG_REPORT_URL="https://bugs.almalinux.org/"
-
-ALMALINUX_MANTISBT_PROJECT="AlmaLinux-8"
-
-$ sudo hostnamectl set-hostname yuta_alma-linux
+$ sudo hostnamectl set-hostname ユータ #ルール②検証
 $ hostname
-yuta_alma-linux
-```
+localhost
 
-```
-$ cat /etc/os-release
-NAME="CentOS Linux"
-VERSION="7 (Core)"
-ID="centos"
-ID_LIKE="rhel fedora"
-VERSION_ID="7"
-PRETTY_NAME="CentOS Linux 7 (Core)"
-ANSI_COLOR="0;31"
-CPE_NAME="cpe:/o:centos:centos:7"
-HOME_URL="https://www.centos.org/"
-BUG_REPORT_URL="https://bugs.centos.org/"
-
-CENTOS_MANTISBT_PROJECT="CentOS-7"
-CENTOS_MANTISBT_PROJECT_VERSION="7"
-REDHAT_SUPPORT_PRODUCT="centos"
-REDHAT_SUPPORT_PRODUCT_VERSION="7"
-
-$ sudo hostnamectl set-hostname yuta_centos
+$ sudo hostnamectl set-hostname 12345 #ルール③検証
 $ hostname
-yuta_centos
+12345
+
+$ sudo hostnamectl set-hostname Yuta- #ルール④検証
+$ hostname
+yuta-
+
+$ sudo hostnamectl set-hostname Yuta* #ルール④検証
+$ hostname
+yuta
+
+$ sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+$ hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+$ sudo hostnamectl set-hostname "Yuta amzn2" #ルール⑥検証
+$ hostname
+yutaamzn2
+
 ```
 
+## Red Hat Enterprise Linux 8.3
 
-```
+```bash
 $ cat /etc/os-release
 NAME="Red Hat Enterprise Linux"
 VERSION="8.3 (Ootpa)"
@@ -170,13 +229,42 @@ REDHAT_BUGZILLA_PRODUCT="Red Hat Enterprise Linux 8"
 REDHAT_BUGZILLA_PRODUCT_VERSION=8.3
 REDHAT_SUPPORT_PRODUCT="Red Hat Enterprise Linux"
 REDHAT_SUPPORT_PRODUCT_VERSION="8.3"
-$ sudo hostnamectl set-hostname yuta_redhat
+
+$ hostname #初期ネーム
+yuta-redhat
+
+$ sudo hostnamectl set-hostname yuta_redhat@Enterprize*linux　#ルール①検証
 $ hostname
-yuta_redhat
+yuta_redhatEnterprizelinux
+
+$ sudo hostnamectl set-hostname ユータ #ルール②検証
+$ hostname
+ip-10-0-2-31
+
+$ sudo hostnamectl set-hostname 12345 #ルール③検証
+$ hostname
+12345
+
+$ sudo hostnamectl set-hostname Yuta- #ルール④検証
+$ hostname
+Yuta-
+
+$ sudo hostnamectl set-hostname yuta* #ルール④検証
+$ hostname
+yuta
+
+sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+$ hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+$ sudo hostnamectl set-hostname "Yuta Redhat" #ルール⑥検証
+$ hostname
+YutaRedhat
 ```
 
+## openSUSE 15.2
 
-```
+```bash
 > cat /etc/os-release
 NAME="SLES"
 VERSION="15-SP2"
@@ -187,11 +275,100 @@ ID_LIKE="suse"
 ANSI_COLOR="0;32"
 CPE_NAME="cpe:/o:suse:sles:15:sp2"
 
-> sudo hostnamectl set-hostname yuta_suse
+> hostname #初期ネーム
+yuta-opensuse
+
+> sudo hostnamectl set-hostname yuta_open@su*se #ルール①検証
 > hostname
-yuta_suse
+yuta_opensuse
+
+> sudo hostnamectl set-hostname ユータ #ルール②検証
+> hostname
+localhost
+
+> sudo hostnamectl set-hostname 12345 #ルール③検証
+> hostname
+12345
+
+> sudo hostnamectl set-hostname Yuta- #ルール④検証
+> hostname
+Yuta-
+
+> sudo hostnamectl set-hostname yuta* #ルール④検証
+> hostname
+yuta
+
+> sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+> hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+> sudo hostnamectl set-hostname "Yuta openSUSE" #ルール⑥検証
+> hostname
+YutaopenSUSE
 ```
 
+## Debian GNU/Linux 10
+
+```bash
+$ cat /etc/os-release 
+PRETTY_NAME="Debian GNU/Linux 10 (buster)"
+NAME="Debian GNU/Linux"
+VERSION_ID="10"
+VERSION="10 (buster)"
+VERSION_CODENAME=buster
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+
+$ hostname #初期ネーム
+yuta-debian
+
+$ sudo hostnamectl set-hostname yuta_de*bi@an #ルール①検証
+$ hostname
+yutadebian
+
+$ sudo hostnamectl set-hostname ユータ #ルール②検証
+$ hostname
+localhost
+
+$ sudo hostnamectl set-hostname 12345 #ルール③検証
+$ hostname
+12345
+
+$ sudo hostnamectl set-hostname Yuta- #ルール④検証
+$ hostname
+Yuta
+
+$ sudo hostnamectl set-hostname yuta* #ルール④検証
+$ hostname
+yuta
+
+$ sudo hostnamectl set-hostname 1223334444555556666667777777888888889999999990000000000abcdefghijklmn #ルール⑤検証
+$ hostname
+1223334444555556666667777777888888889999999990000000000abcdefghi
+
+$ sudo hostnamectl set-hostname "Yuta debian" #ルール⑥検証
+$ hostname
+Yutadebian
+```
+# 調査結果
+複数のOSに対して検証した結果以下の調査結果になりました。
+
+| ルール | Ubuntu | Amazon Linux | RHEL | SUSE | Debian |
+| ----   | :----: | :----:           | :----:  | :----: | :----:   |
+| ルール検証① | ☓ | △ | △ | △ | ☓ |
+| ルール検証② | ☓ | ☓ | ☓ | ☓ | ☓ |
+| ルール検証③ | ○ | ○ | ○ | ○ | ○ |
+| ルール検証④ | ☓ | △ | △ | △ | ☓ |
+| ルール検証⑤ | ○ | ○ | ○ | ○ | ○ |
+| ルール検証⑥ | ☓ | ☓ | ☓ | ☓ | ☓ |
+
+- ○：ルールを無視できた
+- △：一部だけ無視できなかった
+- ☓ ：ルールを無視できなかった
+
+こうして確認しますとDebian系の2つは少しルールに厳しく、Fedora系はある程度ルールに寛容ということがわかります。
 
 # 参考文献
 https://www.nic.ad.jp/ja/rfc-jp/WhatisRFC.html
