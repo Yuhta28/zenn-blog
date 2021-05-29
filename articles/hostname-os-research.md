@@ -357,16 +357,16 @@ Yutadebian
 
 | ルール | Ubuntu | Amazon Linux | RHEL | SUSE | Debian |
 | ----   | :----: | :----:           | :----:  | :----: | :----:   |
-| ルール検証① | ☓ | △ | △ | △ | ☓ |
-| ルール検証② | ☓ | ☓ | ☓ | ☓ | ☓ |
-| ルール検証③ | ○ | ○ | ○ | ○ | ○ |
-| ルール検証④ | ☓ | △ | △ | △ | ☓ |
-| ルール検証⑤ | ○ | ○ | ○ | ○ | ○ |
-| ルール検証⑥ | ☓ | ☓ | ☓ | ☓ | ☓ |
+| ルール検証① | × | △ | △ | △ | × |
+| ルール検証② | × | × | × | × | × |
+| ルール検証③ | 〇 | 〇 | 〇 | 〇 | 〇 |
+| ルール検証④ | × | △ | △ | △ | × |
+| ルール検証⑤ | 〇 | 〇 | 〇 | 〇 | 〇 |
+| ルール検証⑥ | × | × | × | × | × |
 
-- ○：ルールを無視できた
+- 〇：ルールを無視できた
 - △：一部だけ無視できなかった
-- ☓ ：ルールを無視できなかった
+- × ：ルールを無視できなかった
 
 こうして確認しますとDebian系の2つは少しルールに厳しく、Fedora系はある程度ルールに寛容ということがわかります。
 OpenSUSEもFedora系と同じですね。
@@ -377,9 +377,45 @@ Amazon Linux2では大文字小文字の区別がつかないのか大文字が�
 ほかにもRed Hat Enterprise Linuxではホスト名に日本語を設定したらDNS名に変更されたこともユニークな動きでした。
 ほかのOSでは`localhost`になりましたが、ここだけ違う動きをしていたのが興味深いです。
 
+# おまけ
+せっかくなのでWindows Server 2019でもどんな結果になるか試してみることにしました。
+### ルール①検証
+![](https://storage.googleapis.com/zenn-user-upload/47f3de7eb214d3e059c998b2.png)
+### ルール②検証
+![](https://storage.googleapis.com/zenn-user-upload/c744e9274812970310ee9a86.png)
+### ルール③検証
+![](https://storage.googleapis.com/zenn-user-upload/60a9361eac05cc0c2b921c9f.png)
+### ルール④検証
+![](https://storage.googleapis.com/zenn-user-upload/4583009ddd76c61b8168a80d.png)
+![](https://storage.googleapis.com/zenn-user-upload/d02ae534c28673df3deb36a7.png)
+### ルール⑤検証
+![](https://storage.googleapis.com/zenn-user-upload/34f59cc2d4735a8fc8c3da8b.png)
+![](https://storage.googleapis.com/zenn-user-upload/300f6b600777ecfab6746d8f.png)
+### ルール⑥検証
+![](https://storage.googleapis.com/zenn-user-upload/338a09a20f6cc1ae0381aa35.png)
+
+まとめるとこんな感じです。
+| ルール | Ubuntu | Amazon Linux | RHEL | SUSE | Debian | Windows Server |
+| ----   | :----: | :----:           | :----:  | :----: | :----:   | :----: |
+| ルール検証① | × | △ | △ | △ | × | × |
+| ルール検証② | × | × | × | × | × | 〇 |
+| ルール検証③ | 〇 | 〇 | 〇 | 〇 | 〇 | × |
+| ルール検証④ | × | △ | △ | △ | × | △ |
+| ルール検証⑤ | 〇 | 〇 | 〇 | 〇 | 〇 | 〇 |
+| ルール検証⑥ | × | × | × | × | × |× |
+
+Linuxと比較すると独自性があり、面白い結果となりました。
+ホスト名に日本語が使えるとは思っておらず、ビックリしました。
+
+
 # 所感
 普段あまり意識しないホスト名の命名規則について調査してみました。
 どの会社でもホスト名の命名規則を定めるかと思いますが、RFCに則った命名規則にしないと思わぬトラブルに巻き込まれることもあり得ますので、皆さまも一度調べてみると面白いかもしれません。
 
 # 参考文献
 https://saku-jp.hatenablog.com/entry/20130612/p1
+https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/identity/naming-conventions-for-computer-domain-site-ou#computer-names
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](8e3c0ce8353d40c797362e4b154376c5)
