@@ -106,6 +106,9 @@ nginxの出力内容をパイプして次のコマンドに引き渡すことが
 
 もしかすると他にも実は標準エラー出力にて表示されるCLIコマンドがあるかもしれないので、もしパイプできないと思ったときは標準エラー出力の存在を疑ってみるのもいいのかもしれません。
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](6daa241108684c9baa423952f1041b31)
 # 参考文献
 https://www.cyberciti.biz/faq/unix-linux-bsd-display-nginx-version/
 https://codezine.jp/article/detail/4836
