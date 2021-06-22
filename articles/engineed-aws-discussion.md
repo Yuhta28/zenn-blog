@@ -3,7 +3,7 @@ title: "engineedのAWS Well-Architected ディスカッションに参加した�
 emoji: "🐁"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ポエム","感想"]
-published: false
+published: true
 ---
 # 概要
 先日、engineedというAWS資格保持者限定の求人サービスに登録しました。
@@ -13,9 +13,9 @@ published: false
 # engineedとは
 https://info.engineed.io/engineer/
 株式会社アンチパターンさんが運営されているAWS有資格者のみが登録できる求人サービスです。
-まだ新しいサービスで2021/5現在パブリックベータ版がリリースされている段階です。
+まだ新しいサービスで2021/6/22現在パブリックベータ版がリリースされている段階です。
 
-もともとアンチパターンさんが別で展開しているHarborsというコワーキングスペースで開催されているもくもく会によく参加していて、スポンサーLTという形でこのサービスを宣伝していたことがengineedを知るきっかけになりました。
+もともとアンチパターンさんが別で展開しているHarborSというコワーキングスペースで開催されているもくもく会によく参加していて、スポンサーLTという形でこのサービスを宣伝していたことがengineedを知るきっかけになりました。
 https://harbors.anti-pattern.co.jp/
 
 engineedはAWSの認定資格保持者のみが登録でき、自身の経歴を記載できるほかGitHubやZennなど外部サービスも連携でき、企業にアウトプットを見せることもできます。
