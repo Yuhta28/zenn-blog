@@ -81,3 +81,7 @@ RDSのRIの公式ドキュメントは意外にも日本語化されておらず
 
 # 参考文献
 https://docs.amazonaws.cn/en_us/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.html
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](87c2cc7b251d4b8c8bf69cffebf2c1a9)
