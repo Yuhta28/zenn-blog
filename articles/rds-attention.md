@@ -40,7 +40,13 @@ SPではt3.smallの半分のコストであるt3.micro2台分に対しても割�
 4月頃から会社で動かしているWebサーバーのインスタンスタイプをt3.mediumからt3.smallに移行している段階でしたので、インスタンスタイプが変更されても割引が効くSPの方が弊社にちょうどよかったことになります。
 
 また弊社は7月から期初となりますので、新年度の予算にAWSのコストを計上したいというマネージャーの要望のもと適用日を6/26からではなく7/1に変更しました。
-EC2インスタンスのRIとSPは申請日に即日反映させる以外にも一定期間先の日付を指定してその日がきたら請求とプラン開始を選択できます。
-![](https://storage.googleapis.com/zenn-user-upload/73de594b05ba9007251a82e4.png)
-![](https://storage.googleapis.com/zenn-user-upload/6a7935dac6863460d93d3dac.png)
+EC2インスタンスのRIとSPは申請日に即日反映させる以外にも先の日付を指定して請求とプラン開始日を変更できます。
+![](https://storage.googleapis.com/zenn-user-upload/7777b5a22a7248dea6703665.png)
+![](https://storage.googleapis.com/zenn-user-upload/4cbce4c211ec865c53f01362.png)
 
+大分話が脱線しましたが、EC2インスタンスのコスト最適化はこれで問題なく完了しましたので次はRDSのRIも同じように7/1適用で申請しようとしました。
+
+# RDSのRIについて
+RDSもEC2インスタンスと同じように6/25で期限が切れますが、7/1に適用させるために適用日付を変更して申請しようとしました。
+ところが、RDSのRIには日付の選択オプションがなくて、私は次の画面で選択できるのかなと思い、このまま送信ボタンを押してしまいました。
+![](https://storage.googleapis.com/zenn-user-upload/e66d29867f78eb7c8b2b217e.png)
