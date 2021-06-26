@@ -3,7 +3,7 @@ title: "RDSのリザーブドインスタンスに気をつけよう"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","RDS"]
-published: false
+published: true
 ---
 
 # 背景
