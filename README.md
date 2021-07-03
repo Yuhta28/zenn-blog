@@ -6,5 +6,5 @@
 # 私のブログページ
 https://zenn.dev/yuta28
 
-ブログ記事をまとめたLTスライド資料
+## ブログ記事をまとめたLTスライド資料
 https://speakerdeck.com/yuhta28
