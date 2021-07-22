@@ -3,7 +3,7 @@ title: "CloudWatch Logsをいい感じにtailしてくれるcwを使ってみた
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","cloudwatch","cw"]
-published: false
+published: true
 ---
 # 概要
 CloudWatch Logsのログをいい感じに追いかけるのに役に立つOSS`cw`の紹介になります。
