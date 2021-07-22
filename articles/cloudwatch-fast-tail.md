@@ -58,12 +58,12 @@ $ aws logs tail --follow access_log
 
 ![](/images/cloudwatch-fast-tail/image1.png)
 
-`tail -f`でログを参照できるのは便利なのですが、ご覧のとおりログストリーム名ごとに指定することができず、複数のサーバーのアクセスログが混在している状態です。
+`tail -f`でログを参照できるのは便利なのですが、ご覧のとおりログストリーム名ごとに指定ができず、複数のサーバーのアクセスログが混在している状態です。
 
 今回はそんな悩みを解決してくれるOSSであるcwを紹介して使ってみた感想を記していきます。
 
 # cwとは
-cwはターミナル画面からCloudWatch Logsのログを**高速**で取得することができるgoで作成されたOSSです。
+cwはターミナル画面からCloudWatch Logsのログを**高速**で取得できるgoで作成されたOSSです。
 https://github.com/lucagrulla/cw
 
 珍しく`pip`や`npm`などの外部パッケージを必要とせず、OS依存となる実行アプリになります。
@@ -81,7 +81,7 @@ brew install cw
 
 # ハンズオン
 インストールできましたので、早速使っていきます。
-ローカルにAWS CLIをインストールしている場合、`aws configure`で認証情報をローカルマシンに登録していると思いますが、もしIAMロールを付与したEC2インスタンス内でaws cliを利用していた場合は、`~/.aws/config`ファイルにデフォルトリージョンの設定を行う必要があります。
+ローカルにAWS CLIをインストールしている場合、`aws configure`で認証情報をローカルマシンに登録していると思いますが、もしIAMロールを付与したEC2インスタンス内でaws cliを利用していた場合は、`~/.aws/config`ファイルにデフォルトのリージョン情報を設定する必要があります。
 ```bash:config
 [default]
 region = ap-northeast-1
