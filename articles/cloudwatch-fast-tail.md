@@ -187,6 +187,9 @@ operation error CloudWatch Logs: FilterLogEvents, exceeded maximum number of att
 
 最大試行回数が超過したというAPIエラーですが、詳細が不明です。
 情報が全然ないのでissueを立てて直接開発者に問い合わせてみようと思います。
+##### 2021/7/23追記
+問い合わせました。
+https://github.com/lucagrulla/cw/issues/214
 # 所感
 cwを使ってログストリームごとに`tail -f`でログ参照してみました。
 CloudWatch LogsのOSSで有名なのはawslogsですが、少し動作がもっさりしていてかつPython製なので使っているホストのバージョン依存で動作に不安な面がありました。
