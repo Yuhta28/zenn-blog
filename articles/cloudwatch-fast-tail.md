@@ -197,3 +197,5 @@ cwはパッケージ不要でbrewで簡単にインストールできました�
 
 # 参考文献
 https://blog.mmmcorp.co.jp/blog/2021/02/14/best-5ways-searching-cloudwatch-logs/
+https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html
+
