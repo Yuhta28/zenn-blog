@@ -1,5 +1,5 @@
 ---
-title: "EC2インスタンスのキーペア置換について調べてみた"
+title: "EC2インスタンスのキーペア置換に気を付けよう"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ec2","ssh"]
