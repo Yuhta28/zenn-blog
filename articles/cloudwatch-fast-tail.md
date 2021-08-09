@@ -202,3 +202,7 @@ https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.htm
 # LT資料
 LTのスライド資料です。
 @[speakerdeck](2c749ceb40034cbea63d55621ed7944c)
+
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/i-use-cw-which-is-oss-to-tail-aws-cloudwatch-logs-2e9g

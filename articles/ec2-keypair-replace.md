@@ -88,3 +88,7 @@ EC2インスタンスのキーペア置換について調べてみました。
 # LT資料
 LTのスライド資料です。
 @[speakerdeck](db4934e09e7445f7850b28d9d74d8580)
+
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/be-attention-to-replace-a-key-pair-for-ec2-4e3j
