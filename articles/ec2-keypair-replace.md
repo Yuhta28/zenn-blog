@@ -20,7 +20,7 @@ EC2インスタンスは初期設定ではパスワードによるSSH接続が�
 #PermitEmptyPasswords no
 PasswordAuthentication no
 ```
-キーペアを選択してEC2インスタンスを起動しましたら、初期ユーザーで秘密鍵接続でSSHログインできるようになります。
+キーペアを選択してEC2インスタンスを起動しましたら、初期ユーザーで秘密鍵接続によるSSHログインができるようになります。
 
 ```bash
  ssh -i ./NewWindows.pem ec2-user@18.182.24.156
