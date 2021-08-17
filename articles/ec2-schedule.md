@@ -7,4 +7,4 @@ published: false
 ---
 
 # 概要
-会社で使っているEC2の数が膨大になり、Savings Plansでも割引
+会社で使っているEC2の数が膨大になり、Savings Plansの割引の恩恵があまり得られていないことがわかりました。
