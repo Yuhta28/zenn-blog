@@ -16,5 +16,5 @@ published: false
 複数のサービスを組み合わせて実装したAWSソリューションです。
 https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/
 
-イメージとしてはEC2に専用のタグを付与して、LambdaがDynamoDBに保存されているタグごとに定義されたスケジュール情報を読み取り、DynamoDBのタグ情報と一致したタグを持つEC2に対してLambdaが停止、起動を実行するという仕組みになっています。
+イメージとしてはEC2に専用のタグを付与して、LambdaがDynamoDBに保存されているタグごとに定義されたスケジュール情報を読み取り、DynamoDBのタグ情報と一致したタグを持つEC2に対してLambdaが停止、起動するという仕組みになっています。
 (上記公式ページのアーキテクチャ図参照)
