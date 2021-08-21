@@ -20,6 +20,7 @@ https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/
 イメージとしてはEC2に専用のタグを付与して、LambdaがDynamoDBに保存されているタグごとに定義されたスケジュール情報を読み取り、DynamoDBのタグ情報と一致したタグを持つEC2に対してLambdaが停止、起動するという仕組みになっています。
 ![](/images/ec2-schedule/image1.png)
 [上記ページから引用](https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/)
-CloudFormationテンプレートファイルが用意されていますので、自前で上記アーキテクチャを構築する必要はなく、簡単に用意することができますのでまずはテンプレートファイルをインストールし、CloudFormationを実行します。
+CloudFormationテンプレートファイルが用意されていますので、自前で上記アーキテクチャを構築する必要はなく、簡単に用意できますのでまずはテンプレートファイルをインストールし、CloudFormationを実行します。
 ###### テンプレートファイル
 https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/aws-instance-scheduler.template
+
