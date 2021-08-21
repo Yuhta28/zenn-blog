@@ -95,5 +95,17 @@ EC2インスタンスとRDSインスタンスの両方をインスタンスス�
 | weekdays | mon-fri |
 
 ![](/images/ec2-schedule/image4.png)
+
+##### schedule
+scheduleに複数のperiodをまとめることでインスタンスに複数のperiodのスケジューリング設定を反映させることができます。
+サンプルである`jp-office-hours`はJST基準で`office-hours`のperiod設定を反映させる設定になります。
+
+| フィールド| 値 |
+| ---- | ---- |
+| period | office-hours |
+| timezone | Asia/Tokyo |
+| name | jp-office-hours |
+
+![](/images/ec2-schedule/image5.png)
 # 参考文献
 https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
