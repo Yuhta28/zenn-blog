@@ -22,7 +22,7 @@ https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/
 *アーキテクチャ*
 
 [上記ページから引用](https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/)
-CloudFormationテンプレートファイルが用意されていますので、自前で上記アーキテクチャを構築する必要はなく、簡単に用意できますのでまずはテンプレートファイルをインストールし、CloudFormationを実行します。
+CloudFormationテンプレートファイルが用意されていますので、自前で上記アーキテクチャを構築する必要はなく、簡単に作成できますのでまずはテンプレートファイルをダウンロードし、CloudFormationを実行します。
 ###### テンプレートファイル
 https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/aws-instance-scheduler.template
 
@@ -68,6 +68,12 @@ https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/aws-i
   - 起動したインスタンスに追加するタグ
 - StoppedTags
   - 停止したインスタンスに追加するタグ
+
+基本的にデフォルト設定のままで問題ありません。
+EC2インスタンスとRDSインスタンスの両方をインスタンススケジューラー対象にしたい場合、`Both`を選択します。
+そのほかですと、Regionで東京を希望する場合は`ap-northeast-1`、日本時間でスケジューリングしたい場合はTimeZoneを`Asia/Tokyo`にします。
+パラメータ入力を完了し、スタック作成の確認画面まで進むとIAMの新規作成のチェック確認がありますので忘れずにチェックします。
+![](/images/ec2-schedule/image2.png)
 
 
 # 参考文献
