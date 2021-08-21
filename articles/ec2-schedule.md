@@ -108,6 +108,8 @@ scheduleに複数のperiodをまとめることでインスタンスに複数の
 
 ![](/images/ec2-schedule/image5.png)
 
-
+このタグを稼働しているインスタンスに付与します。
+このハンズオンを実施している時間帯は土曜日の夕方ですので、スケジュールタグ`Schedule`を付与したらEC2インスタンスは自動で停止するようになります。
+![](/images/ec2-schedule/image6.png)
 # 参考文献
 https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
