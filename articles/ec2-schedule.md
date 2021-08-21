@@ -19,8 +19,56 @@ https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/
 
 イメージとしてはEC2に専用のタグを付与して、LambdaがDynamoDBに保存されているタグごとに定義されたスケジュール情報を読み取り、DynamoDBのタグ情報と一致したタグを持つEC2に対してLambdaが停止、起動するという仕組みになっています。
 ![](/images/ec2-schedule/image1.png)
+*アーキテクチャ*
+
 [上記ページから引用](https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/)
 CloudFormationテンプレートファイルが用意されていますので、自前で上記アーキテクチャを構築する必要はなく、簡単に用意できますのでまずはテンプレートファイルをインストールし、CloudFormationを実行します。
 ###### テンプレートファイル
 https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/aws-instance-scheduler.template
 
+# CloudFormation実行
+テンプレートファイルをアップロードし、スタック作成を進めていくと以下のパラメータ入力が求められます。
+
+#### Shceduler
+- TagName
+  - インスタンススケジューラー対象となるタグの定義付け
+- ScheduledServices
+  - 対象のAWSサービス(EC2、RDS、その両方の中から選択)
+- ScheduleRdsClusters
+  - Auroraクラスターのスケジューラーを有効可否
+- CreateRdsSnapshot
+  - 停止前にRDSのスナップショット取得可否
+- SchedulingActive
+  - スケジューラーの即時有効可否
+- Regions
+  - 対象リージョン選択
+- DefaultTimezone
+  - デフォルトのタイムゾーン設定
+- CrossAccountRoles
+  - クロスアカウントロール
+- This account
+  - 現在のアカウントのリソースに対してスケジューラーの有効可否
+- SchedulerFrequency
+  - Lambdaの実行頻度(分単位)
+- MemorySize
+  - Lambdaのメモリサイズ指定
+
+#### Option
+- UseCloudWatchMetrics
+  - CloudWatchメトリクスによるインスタンスデータ収集の有効可否
+- UseCloudWatchLogs
+  - CloudWatchによるロギング設定の有効可否
+- EnableSSMMaintenanceWindows
+  - SSMメンテナンスウインドウをロードしてEC2のスケジューラーの設定有効可否
+
+#### Other parameters
+- LogRetentionDays
+  - ログ保持期間
+- StartedTags
+  - 起動したインスタンスに追加するタグ
+- StoppedTags
+  - 停止したインスタンスに追加するタグ
+
+
+# 参考文献
+https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
