@@ -79,7 +79,33 @@ EC2インスタンスとRDSインスタンスの両方をインスタンスス�
 これを起動することで上記図のアーキテクチャが構築されEC2(またはRDS)にTagに`Schedule`をつけたものが対応したスケジュールアクションを設定することで自動で停止起動が実現できます。
 
 # サンプルハンズオン
+起動できたらまずはDynamoDBを見てみます。
+いくつかテーブルが作られていると思いますが、`ConfigTable`を見てます。
+![](/images/ec2-schedule/image3.png)
+注目するポイントはTypeの`period`と`schedule`です。
+##### period
+インスタンスの稼働時間を指定できます。
+サンプルで作成された`office-hours`は平日月曜日~金曜日の10:00~19:00の間に稼働することを意味しています。
 
+| フィールド| 値 |
+| ---- | ---- |
+| begintime | 10:00 |
+| endtime | 19:00 |
+| name | office-hours|
+| weekdays | mon-fri |
 
+![](/images/ec2-schedule/image4.png)
+
+##### schedule
+scheduleに複数のperiodをまとめることでインスタンスに複数のperiodのスケジューリング設定を反映させることができます。
+サンプルである`jp-office-hours`はJST基準で`office-hours`のperiod設定を反映させる設定になります。
+
+| フィールド| 値 |
+| ---- | ---- |
+| period | office-hours |
+| timezone | Asia/Tokyo |
+| name | jp-office-hours |
+
+![](/images/ec2-schedule/image5.png)
 # 参考文献
 https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
