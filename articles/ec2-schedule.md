@@ -80,7 +80,20 @@ EC2インスタンスとRDSインスタンスの両方をインスタンスス�
 
 # サンプルハンズオン
 起動できたらまずはDynamoDBを見てみます。
+いくつかテーブルが作られていると思いますが、`ConfigTable`を見てます。
+![](/images/ec2-schedule/image3.png)
+注目するポイントはTypeの`period`と`schedule`です。
+##### period
+インスタンスの稼働時間を指定できます。
+サンプルで作成された`office-hours`は平日月曜日~金曜日の10:00~19:00の間に稼働することを意味しています。
 
+| フィールド| 値 |
+| ---- | ---- |
+| begintime | 10:00 |
+| endtime | 19:00 |
+| name | office-hours|
+| weekdays | mon-fri |
 
+![](/images/ec2-schedule/image4.png)
 # 参考文献
 https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
