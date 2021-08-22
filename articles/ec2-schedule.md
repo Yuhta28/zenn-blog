@@ -1,5 +1,5 @@
 ---
-title: "Instance Schedulerを使って検証環境のEC2の稼働時間を管理してみた"
+title: "Instance Schedulerを使ってEC2の稼働時間を管理してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ec2"]
@@ -9,7 +9,7 @@ published: false
 # 概要
 会社で使っているEC2はSavings Plansを採用していてオンデマンドで使うよりも安い料金でEC2を利用しています。
 ただそれでもEC2の数が段々と増えていて、当初の予想よりもコンピューティングリソースの消費が大きくなりEC2の利用料が大きくなってきました。
-そこで検証環境のEC2インスタンスの稼働時間を減らし、コンピューティングリソースの消費を抑えることでEC2の利用料を節約しようと思いました。
+そこで検証環境のEC2の稼働時間を減らし、コンピューティングリソースの消費を抑えることでEC2の利用料を節約しようと思いました。
 前職では先輩が作成したLambdaで21:00~翌9:00の時間帯は自動でシャットダウンする仕組みができており、当初はそれを真似しようと思いましたがInstance Schedulerなるものを今の会社のリーダーから教わりました。
 今回はInstance Schedulerを実際に使ってみてどういったものなのか試してみました。
 
@@ -109,7 +109,29 @@ scheduleに複数のperiodをまとめることでインスタンスに複数の
 ![](/images/ec2-schedule/image5.png)
 
 このタグを稼働しているインスタンスに付与します。
-このハンズオンを実施している時間帯は土曜日の夕方ですので、スケジュールタグ`Schedule`を付与したらEC2インスタンスは自動で停止するようになります。
+このハンズオンを実施している時間帯は日曜日ですので、スケジュールタグ`Schedule`を付与したらEC2は自動で停止するようになります。
 ![](/images/ec2-schedule/image6.png)
+*タグ付与直後*
+
+![](/images/ec2-schedule/image7.png)
+*数分後*
+
+タグを付与してから数分後にEC2のステータスが変更し、停止されました。
+ここで土曜日、日曜日は終日起動するというperiod`weekends`を`jp-office-hours`のscheduleに追加します。
+![](/images/ec2-schedule/image8.png)
+![](/images/ec2-schedule/image9.png)
+
+テーブルの編集が完了したらあっという間にEC2が起動されました。
+![](/images/ec2-schedule/image10.png)
+
+このようにsheduleに複数のperiod設定をつけた場合どれか一つの期間を満たせばEC2が起動するようになっています。
+これを活用することで例えば9:00-12:00の間起動し、12:00-13:00の間は停止、また13:00から起動するといった細やかな設定も可能になります。
+
+# Scheduler CLIについて
+スケジュールの設定は前述のとおりDyanamoDBのテーブルを編集することで新規にスケジュールを作成できますが、Instance Scheduerには専用のCLIコマンドも用意されています。
+次にCLIコマンドを活用したスケジューリング設定について説明します。
+
 # 参考文献
 https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
+
+https://www.youtube.com/watch?v=HqXMxdjv638
