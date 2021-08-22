@@ -3,7 +3,7 @@ title: "Instance Schedulerを使ってEC2の稼働時間を管理してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ec2"]
-published: false
+published: true
 ---
 
 # 概要
