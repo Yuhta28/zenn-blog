@@ -217,6 +217,9 @@ Instance Schedulerを使ってEC2の稼働時間の管理ができました。
 検証環境は基本的に深夜早朝、土日は動かす必要はないので停止したほうがいいですが、毎回仕事終わりにEC2を停止する運用にしても忘れることもありますし、検証環境の数が多いと一々手で止めるなんてことを行なうとオペレーションコストが高まってしまいます。
 Instance SchedulerでEC2のコスト最適化を推進して無駄を減らしていこうと思います。
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](4e5899a5aeae4fe18d8bc7ebc38db918)
 # 参考文献
 https://d1.awsstatic.com/Solutions/ja_JP/instance-scheduler.pdf
 
