@@ -48,5 +48,29 @@ RDSのRIとEC2のRI、SPの三者はそれぞれでできる部分、できな�
 | 時刻指定 | × | × | ○|
 
 これは意外と見落としがちな罠だと思いますので、今後RI/SPを申請するときは気を付けたほうがよさそうです。
+
+## 追記の追記
+EC2のRIですが、AWS CLIからでしたら時刻指定ができるみたいです。
+
+https://twitter.com/ohsawa0515/status/1431467827249090560?conversation=none
+
+AWS CLIのドキュメントを参照しますと、`purchase-reserved-instances-offering`コマンドのこのオプションを使えば時刻指定ができるみたいです。
+
+--purchase-time (timestamp)
+> The time at which to purchase the Reserved Instance, in UTC format (for example, YYYY -MM -DD T*HH* :MM :SS Z).
+
+```
+purchase-reserved-instances-offering
+--instance-count <value> \
+--reserved-instances-offering-id <value> \
+--purchase-time <value>
+```
+
+AWSはコンソールではできないこともCLIならできることが多々あります。
+ちなみにRDSのRIもCLIなら日付指定できるかなと思って調べましたが、残念ながらCLIでもRDSのRIは日付指定できないみたいです。
+
+いつかRDSのRIも日時の指定ができることを祈っています。
 # 参考文献
 https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-scheduled-instances.html
+https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/purchase-reserved-instances-offering.html
+https://awscli.amazonaws.com/v2/documentation/api/latest/reference/rds/purchase-reserved-db-instances-offering.html
