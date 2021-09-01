@@ -70,6 +70,11 @@ AWSはコンソールではできないこともCLIならできることが多�
 ちなみにRDSのRIもCLIなら日付指定できるかなと思って調べましたが、残念ながらCLIでもRDSのRIは日付指定できないみたいです。
 
 いつかRDSのRIも日時の指定ができることを祈っています。
+
+# 英語記事
+EC2 RI/SPとRDS RIのそれぞれの注文タイミングの違いにフォーカスをあてて英訳しました。
+https://dev.to/yuta28/difference-between-ec2-ri-sp-and-rds-ri-1ad
+
 # 参考文献
 https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/ec2-scheduled-instances.html
 https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/purchase-reserved-instances-offering.html
