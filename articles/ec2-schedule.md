@@ -209,9 +209,76 @@ scheduler-cli create-period --name "sample-period" --begintime 10:00 --endtime 1
 
 ![](/images/ec2-schedule/image12.png)
 
-DynamoDBのテーブルにもCLIで作成したperiodとscheduleが表示されていることを確認できました。
+:::message
+--stackオプションですが、ここではCloudFormationで作成したスタックの名前を指定してください。
+:::
+
+コマンド実行してDynamoDBのテーブルにもCLIで作成したperiodとscheduleが表示されていることを確認できました。
 これでCLIによるインスタンスのスケジューリング設定も行えることができます。
 
+# 追記(2021/9/17)
+もう少しInstance Schdeulerの設定項目でクロスアカウントロールの設定がありましたので、これを活用すればマルチアカウント運用時でも一環境のスタックから他のアカウントのEC2インスタンスやRDSにもスケジューラー設定を実装できることが分かりましたので記載いたします。
+
+## リモートアカウントでのスケジューラー設定
+こちらのリンクからリモートアカウントで実行するためのスタックテンプレートファイルをダウンロードします。
+
+https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/aws-instance-scheduler-remote.template
+
+CloudFormationにアップロードさせましたらInstance Schedulerが動いているAWSアカウントの番号を入力します。
+![](/images/ec2-schedule/image13.png)
+
+実行後、出力タブを確認するとクロスアカウントロールが作成されます。
+値のロールARNを本家アカウントで使用しますので控えておきます。
+![](/images/ec2-schedule/image14.png)
+
+本家アカウントのCloudFormationですでに実行したスタックの更新を行ないます。
+[CloudFormation実行](https://zenn.dev/yuta28/articles/ec2-schedule#cloudformation%E5%AE%9F%E8%A1%8C)で触れてますが、クロスアカウントロールを記入する箇所がありますのでここに控えたロールARNを記入します。
+![](/images/ec2-schedule/image15.png)
+
+更新して`UPDATE_COMPLETE`になりましたらリモートアカウント先のEC2インスタンスにスケジューラータグを設定して確認してみます。
+リモートアカウント先でEC2インスタンスを作成し、スケジューラータグをつけます。
+![](/images/ec2-schedule/image16.png)
+sample-scheduleには以下のスケジュールが設定されています。
+
+
+```json:sample-period
+{
+  "type": {
+    "S": "period"
+  },
+  "name": {
+    "S": "sample-period"
+  },
+  "begintime": {
+    "S": "17:44"
+  },
+  "endtime": {
+    "S": "17:48"
+  },
+  "weekdays": {
+    "SS": [
+      "sat-sun"
+    ]
+  }
+}
+```
+
+土日の17:44~17:48の間に稼働するという設定です。
+EC2の作成時刻は17:40頃ですので少し待ってみて自動で起動できることを確認します。
+
+##### 5分後
+ちゃんと起動されていました。
+![](/images/ec2-schedule/image17.png)
+さらに待って停止も実行されるか見てみます。
+##### さらに5分後
+![](/images/ec2-schedule/image18.png)
+ご覧の通り停止されていました。
+EC2インスタンス画面だけでは分かりにくいと思いましたのでCloudTrailでも結果を見てみます。
+##### CloudTrail
+![](/images/ec2-schedule/image19.png)
+CloudTrailで確認するとEC2インスタンスの起動停止の実行ユーザーが`ec2-scheduler-アカウント番号`になっていました。
+
+このようにマルチアカウントでAWSを運用しているからといってすべてのAWSアカウントにInstance Schedulerを設定する必要はなく、最初に導入したアカウントからクロスアカウントロールで別のAWSアカウントにスケジューラー設定を反映させることができます。
 # 所感
 Instance Schedulerを使ってEC2の稼働時間の管理ができました。
 検証環境は基本的に深夜早朝、土日は動かす必要はないので停止したほうがいいですが、毎回仕事終わりにEC2を停止する運用にしても忘れることもありますし、検証環境の数が多いと一々手で止めるなんてことを行なうとオペレーションコストが高まってしまいます。
