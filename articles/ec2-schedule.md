@@ -231,11 +231,11 @@ CloudFormationにアップロードさせましたらInstance Schedulerが動い
 値のロールARNを本家アカウントで使用しますので控えておきます。
 ![](/images/ec2-schedule/image14.png)
 
-本家アカウントのCloudFormationで既に実行したスタックの更新を行ないます。
+本家アカウントのCloudFormationですでに実行したスタックの更新を行ないます。
 [CloudFormation実行](https://zenn.dev/yuta28/articles/ec2-schedule#cloudformation%E5%AE%9F%E8%A1%8C)で触れてますが、クロスアカウントロールを記入する箇所がありますのでここに控えたロールARNを記入します。
 ![](/images/ec2-schedule/image15.png)
 
-更新を実行し、`UPDATE_COMPLETE`になりましたらリモートアカウント先のEC2インスタンスにスケジューラータグを設定して確認してみます。
+更新して`UPDATE_COMPLETE`になりましたらリモートアカウント先のEC2インスタンスにスケジューラータグを設定して確認してみます。
 リモートアカウント先でEC2インスタンスを作成し、スケジューラータグをつけます。
 ![](/images/ec2-schedule/image16.png)
 sample-scheduleには以下のスケジュールが設定されています。
