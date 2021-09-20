@@ -90,7 +90,14 @@ wsl --set-default-version 2
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-
+# Git for Windows
+https://gitforwindows.org/
+MacですとGitは標準に入っているかもしれませんが、Windowsには入っていません。
+とはいえWindowsでのGitのインストール方法は難しくないので↑の公式ページからインストーラーをダウンロードしてインストールするだけでOKです。
+エクスプローラーの右クリックメニューにGit実行アプリが出てくればOKです。
+![](/images/windows-development-env/image5.png)
+※GUIもあるのですが、私は使い方わかりません。。。
+GitのGUIの使いやすい機能ご存知でしたらアドバイスください。
 
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
