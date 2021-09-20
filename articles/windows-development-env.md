@@ -102,12 +102,23 @@ Windowsでもbashコマンドを使えるように提供されたアプリケー
 GUIのおススメの機能ご存じでしたらアドバイスください。
 
 # Windows Terminal
+https://github.com/microsoft/terminal
 ここまでPowerShellやWSL、`Git Bash`など色々なターミナルソフトをインストールしました。
-複数のターミナルソフトを同時起動するのは管理が大変です。
-そこで
+ただ複数のターミナルソフトを起動すると管理が大変です。
+ここでWindowsならではのターミナルソフトとしてWindows Terminalを活用します。
+Windows Terminalは上記のターミナル、コマンドラインツールを統合的に管理できるターミナルソフトです。
+2020年にリリースされたことでだいぶWindowsでのターミナル操作も楽になったと思います。
+インストール方法は簡単で[Microsoft Store](https://www.microsoft.com/ja-jp/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab)からインストールするだけでOKです。
+最初に起動するとWindows PowerShell(古いほう)が表示されます。
+![](/images/windows-development-env/image7.png)
+タブの▽ボタンから設定を選べばカスタマイズできます。
+ここでターミナルの見た目を変えたり、デフォルトの起動をWSLに変更するなど色々できます。
+私はターミナルごとに背景色を変えたり、最初にPowerShell Coreにするなど自分好みに変えました。
+![](/images/windows-development-env/image8.png)
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
 https://dev.classmethod.jp/articles/powershell-7-pipeline-chain-operator/
 https://jsnotice.com/posts/2021-05-31/
 https://brew.sh/index_ja
 https://www.atlassian.com/ja/git/tutorials/git-bash
+https://docs.microsoft.com/ja-jp/windows/terminal/
