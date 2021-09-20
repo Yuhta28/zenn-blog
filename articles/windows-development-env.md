@@ -83,7 +83,7 @@ wsl --set-default-version 2
 初期設定が完了しますとWSLが使えるようになります。
 ![](/images/windows-development-env/image4.png)
 
-ちなみに余談ですが、Macのパッケージ管理システムとして有名なHomebrewですがLinuxでも使うことができます。
+
 
 
 
