@@ -8,7 +8,7 @@ published: true
 # 概要
 プログラミングの勉強を始める際、何となくMacじゃないといけないと考えている人は一定数いるのかなと思います。
 プログラミングスクールでもPCをMac指定しているところもありますし、Windowsでは開発できないと思っている人もいそうです。
-ただWindowsも近年色々といい感じな開発ツールが出始めてきていますので、Macを買い替えなくてもお手元のWindowsPCでも導入できる開発支援ツールを入れてみてプログラミング勉強してみてもいいかなと思い、私が使っているツール群について紹介します。
+ただWindowsも近年色々といい感じな開発ツールが出始めてきていますので、Macを買い替えなくてもお手元のWindowsPCでも導入できる開発支援ツールを入れてみてプログラミング勉強してみてもいいかなと考え、私が使っているツール群について紹介します。
 
 :::message alert
 当初開発環境構築までを記事にしようとしましたが、私のスキル・知識では正確に説明できないので、ツールの紹介に留めます。
@@ -29,7 +29,7 @@ https://github.com/PowerShell/PowerShell
 ダウンロード後、インストーラーを起動しましたら標準設定のまま次へをクリックしインストールを完了させます。
 PowerShell Coreを起動しますと黒い画面が表示され、以下にもUNIXライクな見た目のコマンドラインが表示されます。
 ![](/images/windows-development-env/image2.png)
-私自身ガッツリPowerShellを触ってきたわけではないため、PowerShell Coreにどういった新機能があるのか上手く説明できる自信がありませんが、代表的なものに[Pipeline Chain Operators](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipeline_chain_operators?view=powershell-7.1)があります。
+私自身ガッツリPowerShellを触ってきたわけではないため、PowerShell Coreにどういった新機能があるのか上手く説明できる自信がありませんが、一例として[Pipeline Chain Operators](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_pipeline_chain_operators?view=powershell-7.1)を挙げます。
 Linuxでは`&&`や`||`で複数コマンドの実行結果を可能としておりましたが、Windows PowerShellでは今までこの機能は実装されていませんでした。
 
 ```powershell:Windows PowerShell
