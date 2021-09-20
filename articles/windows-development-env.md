@@ -82,7 +82,8 @@ wsl --set-default-version 2
 インストール後起動しますと、新規ユーザー登録とパスワード登録を要求されますので設定します。
 初期設定が完了しますとWSLが使えるようになります。
 ![](/images/windows-development-env/image4.png)
-
+余談ですが、HomebrewはLinuxでも使うことができます。
+インストール方法は簡単で以下のワンライナーを実行するだけでOKです。
 
 
 
