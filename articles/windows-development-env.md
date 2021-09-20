@@ -3,7 +3,7 @@ title: "WindowsPCでWeb開発におススメなツールを紹介してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Windows","scoop","WSL2"]
-published: false
+published: true
 ---
 # 概要
 プログラミングの勉強を始める際、何となくMacじゃないといけないと考えている人は一定数いるのかなと思います。
@@ -187,7 +187,10 @@ PS C:\Users\yuta_> scoop search firefox
     tor-browser (10.5.6) --> includes 'firefox.exe'
 ```
 
-
+# 所感
+WindowsPCでWeb開発するときにおススメのツール群について紹介しました。
+私はもともとプライベートPCはLinuxを好んで使っていましたが、新しくWindowsPCを購入し、Windowsでも出来ることが色々と広がっていたので最近はWindowsPCでもくもく会などの勉強会に参加しています。
+まずはWindowsで環境構築を経験するのも楽しいと思いますので、皆さんも是非試してみてください。
 
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
