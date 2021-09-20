@@ -81,6 +81,11 @@ wsl --set-default-version 2
 
 インストール後起動しますと、新規ユーザー登録とパスワード登録を要求されますので設定します。
 初期設定が完了しますとWSLが使えるようになります。
+![](/images/windows-development-env/image4.png)
+WSLは複数のLinuxディストリビューションを使い分けることができますので、Ubuntu以外にも軽量OSとして有名なAlpineも使ってみるのも面白いと思います。
+https://www.microsoft.com/ja-jp/p/alpine-wsl/9p804crf0395?rtc=1&activetab=pivot:overviewtab
+ちなみに余談ですが、Macのパッケージ管理システムとして有名なHomebrewですがLinuxでも使うことができます。
+インストール方法は簡単で以下のワンライナーを実行するだけでOKです。
 
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
