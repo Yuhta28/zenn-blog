@@ -71,6 +71,17 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 #### Linuxカーネル更新プログラムパッケージをダウンロード
 https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 
+#### WSL2を規定のバージョンとして設定
+
+```powershell:powershell
+wsl --set-default-version 2
+```
+#### Microsoft StoreからLinuxディストリビューションをインストール
+![](/images/windows-development-env/image3.png)
+
+インストール後起動しますと、新規ユーザー登録とパスワード登録を要求されますので設定します。
+初期設定が完了しますとWSLが使えるようになります。
+
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
 https://dev.classmethod.jp/articles/powershell-7-pipeline-chain-operator/
