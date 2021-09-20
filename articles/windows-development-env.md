@@ -102,7 +102,6 @@ MacですとGitは標準に入っているかもしれませんが、Windowsに�
 ※GUIもあるのですが、私は使い方わかりません。。。
 GitのGUIの使いやすい機能ご存知でしたらアドバイスください。
 
-# Windows Terminal
 
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
