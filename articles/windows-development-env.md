@@ -58,6 +58,7 @@ WSLは起動が早く、Windowsホストにあるファイルも共有しやす�
 https://docs.microsoft.com/ja-jp/windows/wsl/compare-versions
 詳細なインストール手順は公式ドキュメントの以下が参考になります。
 https://docs.microsoft.com/ja-jp/windows/wsl/install-win10
+
 ### 手順だけ見たい人向け
 #### WSL導入を有効化
 
@@ -69,27 +70,6 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 ```
 #### Linuxカーネル更新プログラムパッケージをダウンロード
 https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-
-#### WSL2を規定のバージョンとして設定
-
-```powershell:powershell
-wsl --set-default-version 2
-```
-#### Microsoft StoreからLinuxディストリビューションをインストール
-![](/images/windows-development-env/image3.png)
-
-インストール後起動しますと、新規ユーザー登録とパスワード登録を要求されますので設定します。
-初期設定が完了しますとWSLが使えるようになります。
-![](/images/windows-development-env/image4.png)
-WSLは複数のLinuxディストリビューションを使い分けることができますので、Ubuntu以外にも軽量OSとして有名なAlpineも使ってみるのも面白いと思います。
-https://www.microsoft.com/ja-jp/p/alpine-wsl/9p804crf0395?rtc=1&activetab=pivot:overviewtab
-ちなみに余談ですが、Macのパッケージ管理システムとして有名なHomebrewですがLinuxでも使うことができます。
-インストール方法は簡単で以下のワンライナーを実行するだけでOKです。
-(少し時間はかかります)
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
 
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
