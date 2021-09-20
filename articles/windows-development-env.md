@@ -189,8 +189,8 @@ PS C:\Users\yuta_> scoop search firefox
 
 # 所感
 WindowsPCでWeb開発するときにおススメのツール群について紹介しました。
-私はもともとプライベートPCはLinuxを好んで使っていましたが、新しくWindowsPCを購入し、Windowsでも出来ることが色々と広がっていたので最近はWindowsPCでもくもく会などの勉強会に参加しています。
-まずはWindowsで環境構築を経験するのも楽しいと思いますので、皆さんも是非試してみてください。
+私はもともとプライベートPCはLinuxを入れて使っていましたが、新しくWindowsPCを購入し、Windowsでもできることが色々と広がっていたので最近はWindowsPCでもくもく会などの勉強会に参加しています。
+まずはWindowsで環境構築を経験するのも楽しいと思いますので、皆さんもぜひ試してみてください。
 
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
