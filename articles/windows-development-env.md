@@ -94,7 +94,7 @@ wsl --set-default-version 2
 https://gitforwindows.org/
 MacですとGitは標準に入っているかもしれませんが、Windowsには入っていません。
 とはいえWindowsでのGitのインストール方法は難しくないので↑の公式ページからインストーラーをダウンロードしてインストールするだけでOKです。
-WindowsのGitにはGit Bashという便利なものがあります。
+WindowsのGitには`Git Bash`という便利なものがあります。
 ![](/images/windows-development-env/image6.png)
 WindowsでもBashコマンドを使えるように提供されたアプリケーションです。
 デフォルト設定のままGit for Windowsをインストールしていけば最初から入っています。
