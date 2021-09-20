@@ -50,57 +50,7 @@ Hello
 World
 ```
 
-# WSL2
-https://docs.microsoft.com/ja-jp/windows/wsl/
-従来WindowsでLinux環境を試す場合、VirtualBoxやVMwareなどの仮想マシンとISOイメージをインストールして起動させる必要がありました。
-個人的に仮想マシンは起動に時間がかかりあまり気軽に使えなくて微妙な気持ちでした。
-WSLは起動が早く、Windowsホストにあるファイルも共有しやすいので一番気に入っているツール(システム?)です。
-バージョン1と2があり基本的にバージョン2のほうが機能に優位性があります。
-https://docs.microsoft.com/ja-jp/windows/wsl/compare-versions
-詳細なインストール手順は公式ドキュメントの以下が参考になります。
-https://docs.microsoft.com/ja-jp/windows/wsl/install-win10
 
-### 手順だけ見たい人向け
-#### WSL導入を有効化
-
-```powershell:PowerShell
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-## 再起動する
-```
-#### Linuxカーネル更新プログラムパッケージをダウンロード
-https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-
-#### WSL2を規定のバージョンとして設定
-
-```powershell:powershell
-wsl --set-default-version 2
-```
-#### Microsoft StoreからLinuxディストリビューションをインストール
-![](/images/windows-development-env/image3.png)
-
-インストール後起動しますと、新規ユーザー登録とパスワード登録を要求されますので設定します。
-初期設定が完了しますとWSLが使えるようになります。
-![](/images/windows-development-env/image4.png)
-WSLは複数のLinuxディストリビューションを使い分けることができますので、Ubuntu以外にも軽量OSとして有名なAlpineも使ってみるのも面白いと思います。
-https://www.microsoft.com/ja-jp/p/alpine-wsl/9p804crf0395?rtc=1&activetab=pivot:overviewtab
-ちなみに余談ですが、Macのパッケージ管理システムとして有名なHomebrewですがLinuxでも使うことができます。
-インストール方法は簡単で以下のワンライナーを実行するだけでOKです。
-(少し時間はかかります)
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-# Git for Windows
-https://gitforwindows.org/
-MacですとGitは標準に入っているかもしれませんが、Windowsには入っていません。
-とはいえWindowsでのGitのインストール方法は難しくないので↑の公式ページからインストーラーをダウンロードしてインストールするだけでOKです。
-エクスプローラーの右クリックメニューにGit実行アプリが出てくればOKです。
-![](/images/windows-development-env/image5.png)
-※GUIもあるのですが、私は使い方わかりません。。。
-GitのGUIの使いやすい機能ご存知でしたらアドバイスください。
 
 
 # 参考文献
