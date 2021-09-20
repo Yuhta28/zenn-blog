@@ -115,6 +115,80 @@ Windows Terminalは上記のターミナル、コマンドラインツールを�
 ここでターミナルの見た目を変えたり、デフォルトの起動をWSLに変更するなど色々できます。
 私はターミナルごとに背景色を変えたり、最初にPowerShell Coreにするなど自分好みに変えました。
 ![](/images/windows-development-env/image8.png)
+
+# Scoop
+https://scoop.sh/
+Windowsでソフトウェアをインストールする際はGUIでブラウザ画面からダブルクリックしてダウンロードしてインストールすることが一般的です。
+ですが、それですと自動化がしにくくて面倒かつ手順も残しにくいです。
+WindowsにもDebian系のAPTやRHELのYUM(DNF)のようなパッケージ管理ツールがありまして、それがScoopとよばれるものです。
+Scoopのインストール方法はPowerShellから以下のコマンドを叩くだけです。
+
+```powershell:powershell
+PS: Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+PS: iwr -useb get.scoop.sh | iex
+```
+
+インストールできましたら試しにいくつかコマンドを実行してみます。
+
+##### パッケージ検索
+```powershell:powershell
+PS C:\Users\yuta_> scoop search touch
+
+'main' bucket:
+    busybox (4264-gc79f13025) --> includes 'touch'
+    coreutils (5.97.3) --> includes 'touch.exe'
+    gow (0.8.0) --> includes 'touch.exe'
+    psutils (0.2020.02.27) --> includes 'touch.ps1'
+    touch (0.2018.07.25)
+    unxutils (2007.03.01) --> includes 'touch.exe'
+```
+
+#### パッケージインストール
+```powershell:powershell
+PS C:\Users\yuta_> scoop install touch
+Installing 'touch' (0.2018.07.25) [64bit]
+Loading touch.ps1 from cache
+Checking hash of touch.ps1 ... ok.
+Linking ~\scoop\apps\touch\current => ~\scoop\apps\touch\0.2018.07.25
+Creating shim for 'touch'.
+'touch' (0.2018.07.25) was installed successfully!
+```
+
+#### インストール済みパッケージ一覧
+```powershell:powershell
+PS C:\Users\yuta_> scoop list
+Installed apps:
+
+  ghq 1.2.1 [main]
+  go 1.17.1 [main]
+  grep 2.5.4 [main]
+  peco 0.5.10 [main]
+  posh-git 1.0.0 [extras]
+  touch 0.2018.07.25 [main]
+  which 2.20 [main]
+  ```
+
+Scoopはbucketという単位でアプリを管理しており、`main`bucket以外のbucketを追加すればより多くのアプリをインストールできます。
+https://github.com/lukesampson/scoop#known-application-buckets
+#### リポジトリの追加
+```powershell:powershell
+scoop bucket add extras
+
+PS C:\Users\yuta_> scoop search firefox
+# firefoxはextras bucketからインストールできます。
+'extras' bucket:
+    firefox-beta (93.0b6)
+    firefox-developer (93.0b6)
+    firefox-esr-portable (78.14.0)
+    firefox-esr (78.14.0)
+    firefox-nightly (94.0a1.20210919212908)
+    firefox-portable (92.0)
+    firefox (92.0)
+    tor-browser (10.5.6) --> includes 'firefox.exe'
+```
+
+
+
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
 https://dev.classmethod.jp/articles/powershell-7-pipeline-chain-operator/
@@ -122,3 +196,5 @@ https://jsnotice.com/posts/2021-05-31/
 https://brew.sh/index_ja
 https://www.atlassian.com/ja/git/tutorials/git-bash
 https://docs.microsoft.com/ja-jp/windows/terminal/
+https://qiita.com/Dooteeen/items/12dc8fb14042888113d0
+https://nodachisoft.com/common/jp/article/jp000009/
