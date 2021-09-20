@@ -94,13 +94,19 @@ wsl --set-default-version 2
 https://gitforwindows.org/
 MacですとGitは標準に入っているかもしれませんが、Windowsには入っていません。
 とはいえWindowsでのGitのインストール方法は難しくないので↑の公式ページからインストーラーをダウンロードしてインストールするだけでOKです。
-エクスプローラーの右クリックメニューにGit実行アプリが出てくればOKです。
-![](/images/windows-development-env/image5.png)
-※GUIもあるのですが、私は使い方わかりません。。。
-GitのGUIの使いやすい機能ご存知でしたらアドバイスください。
+WindowsのGitにはGit Bashという便利なものがあります。
+![](/images/windows-development-env/image6.png)
+WindowsでもBashコマンドを使えるように提供されたアプリケーションです。
+デフォルト設定のままGit for Windowsをインストールしていけば最初から入っています。
+※一応GUIもあるのですが、私は使い方わかりません。。。
+GUIのおススメの機能ご存じでしたらアドバイスください。
 
+# Windows Terminal
+ここまでPowerShellやWSL、Git Bashなど色々なターミナルソフトをインストールしました。
+複数のターミナルソフト
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
 https://dev.classmethod.jp/articles/powershell-7-pipeline-chain-operator/
 https://jsnotice.com/posts/2021-05-31/
 https://brew.sh/index_ja
+https://www.atlassian.com/ja/git/tutorials/git-bash
