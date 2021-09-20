@@ -84,7 +84,11 @@ wsl --set-default-version 2
 ![](/images/windows-development-env/image4.png)
 余談ですが、HomebrewはLinuxでも使うことができます。
 インストール方法は簡単で以下のワンライナーを実行するだけでOKです。
+(少し時間はかかります)
 
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 
 
