@@ -83,6 +83,14 @@ wsl --set-default-version 2
 初期設定が完了しますとWSLが使えるようになります。
 ![](/images/windows-development-env/image4.png)
 WSLは複数のLinuxディストリビューションを使い分けることができますので、Ubuntu以外にも軽量OSとして有名なAlpineも使ってみるのも面白いと思います。
+https://www.alpinelinux.org/
+ちなみに余談ですが、Macのパッケージ管理システムとして有名なHomebrewですがLinuxでも使うことができます。
+インストール方法は簡単で以下のワンライナーを実行するだけでOKです。
+(少し時間はかかります)
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 
 # 参考文献
