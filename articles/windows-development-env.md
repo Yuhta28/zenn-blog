@@ -53,7 +53,7 @@ World
 https://docs.microsoft.com/ja-jp/windows/wsl/
 従来WindowsでLinux環境を試す場合、VirtualBoxやVMwareなどの仮想マシンとISOイメージをインストールして起動させる必要がありました。
 個人的に仮想マシンは起動に時間がかかりあまり気軽に使えなくて微妙な気持ちでした。
-WSLは起動が早く、Windowsホストにあるファイルも共有しやすいので一番気に入っているツール(システム?)です。
+WSLは起動が早く、Windowsホストにあるファイルも共有しやすいので一番気に入っているツール(system?)です。
 バージョン1と2があり基本的にバージョン2のほうが機能に優位性があります。
 https://docs.microsoft.com/ja-jp/windows/wsl/compare-versions
 詳細なインストール手順は公式ドキュメントの以下が参考になります。
