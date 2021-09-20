@@ -96,14 +96,15 @@ MacですとGitは標準に入っているかもしれませんが、Windowsに�
 とはいえWindowsでのGitのインストール方法は難しくないので↑の公式ページからインストーラーをダウンロードしてインストールするだけでOKです。
 WindowsのGitには`Git Bash`という便利なものがあります。
 ![](/images/windows-development-env/image6.png)
-WindowsでもBashコマンドを使えるように提供されたアプリケーションです。
+Windowsでもbashコマンドを使えるように提供されたアプリケーションです。
 デフォルト設定のままGit for Windowsをインストールしていけば最初から入っています。
 ※一応GUIもあるのですが、私は使い方わかりません。。。
 GUIのおススメの機能ご存じでしたらアドバイスください。
 
 # Windows Terminal
-ここまでPowerShellやWSL、Git Bashなど色々なターミナルソフトをインストールしました。
-複数のターミナルソフト
+ここまでPowerShellやWSL、`Git Bash`など色々なターミナルソフトをインストールしました。
+複数のターミナルソフトを同時起動するのは管理が大変です。
+そこで
 # 参考文献
 https://dev.classmethod.jp/articles/powershell-7-generally-available/
 https://dev.classmethod.jp/articles/powershell-7-pipeline-chain-operator/
