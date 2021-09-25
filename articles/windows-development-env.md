@@ -90,6 +90,11 @@ wsl --set-default-version 2
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+# Docker Desktop for Windows
+https://docs.docker.com/desktop/
+WSL2を導入しましたらDockerをインストールしましょう。
+WindowsでDockerを動かす場合WSL2+Docker Desktopの組み合わせが一番簡単に構築しやすいのでWSL2を導入してからインストールすることをおススメします。
+
 # Git for Windows
 https://gitforwindows.org/
 MacですとGitは標準に入っているかもしれませんが、Windowsには入っていません。
