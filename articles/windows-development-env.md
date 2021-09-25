@@ -94,6 +94,13 @@ wsl --set-default-version 2
 https://docs.docker.com/desktop/
 WSL2を導入しましたらDockerをインストールしましょう。
 WindowsでDockerを動かす場合WSL2+Docker Desktopの組み合わせが一番簡単に構築しやすいのでWSL2を導入してからインストールすることをおススメします。
+インストール方法はこちらの公式に沿って進めば簡単です。
+https://docs.docker.com/desktop/windows/install/
+インストール完了後、デスクトップにアイコンが生成されますのでクリックします。
+![](/images/windows-development-env/image9.png)
+
+DockerにはDocker HubというDockerイメージを格納するGit Hubのようなものがありますので、アカウントを登録してDocker Desktopと連携すれば便利です。
+https://hub.docker.com/
 
 # Git for Windows
 https://gitforwindows.org/
