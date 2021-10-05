@@ -289,7 +289,10 @@ mainブランチにマージされますと`terraform apply`ステップが走�
 
 作成できることを確認できましたら最後のrunをdestoryに変更して再度pushしてPRします。
 同じようにCIのチェックが入り、異常がなければマージしてEC2インスタンスを削除します。
+![](/images/terraform-gha/image8.png)
+![](/images/terraform-gha/image9.png)
 
+これでTerraform+GitHub ActionsのCI/CD構築を一通り実践しました。
 
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
