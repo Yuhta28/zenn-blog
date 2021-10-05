@@ -2,7 +2,7 @@
 title: "GitHub ActionsにAWSクレデンシャル情報を渡さずにTerraformでCI/CDをやってみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["AWS","terraform","GitHubActions"]
+topics: ["AWS","terraform","GitHubActions","OIDC"]
 published: true
 ---
 
@@ -275,7 +275,7 @@ variable "instance_name" {
 }
 ```
 
-Terraform部分はAMIやセキュリティグループ箇所を自分のものに読み替えて設定してください。
+Terraformに関してはAMIやセキュリティグループ箇所を自分のものに読み替えて設定してください。
 セットアップできましたらブランチを切ってGitHubにpushします。
 
 ## GitHub Actions起動
