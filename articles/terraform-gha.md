@@ -299,6 +299,9 @@ Terraform+GitHub ActionsのCI/CD構築を一通り実践しました。
 今回はEC2の作成とS3に`terraform.tfstate`を置くためにEC2とS3のフルアクセスを付与しましたが、TerraformでAWSリソースを作成することを考えるとAdmin権限をあげてもいい気がします。
 ともあれこの機能はまだ新しく日本語記事も少ないと思いますので、この記事を読んで皆さんも是非手元で試してみてほしいと思います。
 
+# LT資料
+LTのスライド資料です。
+
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 https://zenn.dev/yutaro1985/articles/b012f69b49bec095b9f1
