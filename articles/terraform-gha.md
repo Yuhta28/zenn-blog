@@ -3,7 +3,7 @@ title: "GitHub ActionsにAWSクレデンシャル情報を渡さずにTerraform�
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","terraform","GitHubActions"]
-published: false
+published: true
 ---
 
 # 概要
@@ -13,13 +13,13 @@ https://twitter.com/__steele/status/1437984026145427461
 よりわかりやすく嚙み砕くとこういうことです。
 https://twitter.com/toricls/status/1438120050167189510
 
-CirleCIやGitHub ActionsでAWSを使う場合は事前に環境変数にアクセスキーとシークレットキーを登録させてCIを動かしてきましたが、そのためにIAMユーザーを発行して鍵を管理するのは手間だったのでこれはいいアップデートです。
+Circle CIやGitHub ActionsでAWSを使う場合は事前に環境変数にアクセスキーとシークレットキーを登録させてCIを動かしてきましたが、そのためにIAMユーザーを発行して鍵を管理するのは手間だったのでこれはいいアップデートです。
 
-今回はTerraformとGitHub Actionsを組み合わせたCI/CDにこの機能を取り入れてGitHub ActionsにIAMロールを渡してEC2構築のCI/CDを実装してみようと思います。
+今回はTerraformとGitHub Actionsを組み合わせたCI/CDにこの機能を取り入れてGitHub ActionsにIAMロールを渡してEC2インスタンス構築のCI/CDを実装してみようと思います。
 https://github.com/aws-actions/configure-aws-credentials
 
 # GitHub Actionsを用いたTerraformのCI/CD
-TerraformでAWSリソースを構築する際GitHub ActionsやCircle CIをでCI/CDを構築する場合、事前に環境変数にIAMユーザーのアクセスキーとシークレットキーを登録する必要がありました。
+TerraformでAWSリソースを構築する際GitHub ActionsやCircle CIでCI/CDを構築する場合、事前に環境変数にIAMユーザーのアクセスキーとシークレットキーを登録する必要がありました。
 
 #### 従来のTerraform+GitHub Actions
 ![](/images/terraform-gha/image1.png)
