@@ -176,7 +176,7 @@ jobs:
       # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform destroy -auto-approve
+      run: terraform apply -auto-approve
 
 ```
 
@@ -193,14 +193,14 @@ GitHubに3つの環境変数をセットします。
 先ほど手元に控えたIAMロールのARNをここに貼り付けます。
 
 ##### AWS_WEB_IDENTITY_TOKEN_FILE
-ウェブIDトークンファイルへのパス
+Web IDトークンファイルへのパス
 詳しくは後述
 
 ##### AWS_DEFAULT_REGION
 デフォルトのリージョン
 東京リージョンを指定したい場合は`ap-northeast-1`
 
-最後のcurl~ですがウェブIDトークンファイルにトークンを渡すためのパラメーターを渡しています。
+最後のcurl~でWeb IDトークンファイルにトークンを渡すためのパラメーターを渡しています。
 
 - `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
 - `ACTIONS_ID_TOKEN_REQUEST_URL`
@@ -208,7 +208,7 @@ GitHubに3つの環境変数をセットします。
 この2つはGitHub Actionsの環境変数のようですが、ドキュメントにも記載がなく詳細は不明でした。
 作成したOIDCプロバイダー`vstoken.actions.githubusercontent.com`に対してリクエストを投げてトークンを取得しているみたいですが、詳しいことはドキュメントに記載されたら確認します。
 
-このトークンを先ほどのウェブIDトークンファイルへ格納し、次の`configure-aws-credentials`に渡しています。
+このトークンを先ほどのWeb IDトークンファイルへ格納し、次の`configure-aws-credentials`に渡しています。
 
 ```yml:ワークフローファイル抜粋
       uses: aws-actions/configure-aws-credentials@master
@@ -274,6 +274,12 @@ variable "instance_name" {
   default     = "Yuta-ServerInstance"
 }
 ```
+
+Terraform部分はAMIやセキュリティグループ箇所を自分のものに読み替えて設定してください。
+セットアップできましたらブランチを切ってGitHubにpushします。
+
+## GitHub Actions起動
+
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 https://zenn.dev/yutaro1985/articles/b012f69b49bec095b9f1
