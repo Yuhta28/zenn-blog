@@ -292,7 +292,12 @@ mainブランチにマージされますと`terraform apply`ステップが走�
 ![](/images/terraform-gha/image8.png)
 ![](/images/terraform-gha/image9.png)
 
-これでTerraform+GitHub ActionsのCI/CD構築を一通り実践しました。
+# 所感
+Terraform+GitHub ActionsのCI/CD構築を一通り実践しました。
+新しい機能の検証は中々大変でこの仕組みを試すのに大分時間がかかりました。
+他の人のブログのおかげでCI/CDの構築が完了できたのでブログ発信の大事さが分かった気がします。
+今回はEC2の作成とS3に`terraform.tfstate`を置くためにEC2とS3のフルアクセスを付与しましたが、TerraformでAWSリソースを作成することを考えるとAdmin権限をあげてもいい気がします。
+ともあれこの機能はまだ新しく日本語記事も少ないと思いますので、この記事を読んで皆さんも是非手元で試してみてほしいと思います。
 
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
