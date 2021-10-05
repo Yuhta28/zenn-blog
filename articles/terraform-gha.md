@@ -95,8 +95,145 @@ Outputs:
     Value: !GetAtt Role.Arn
 ```
 
+ブログ先のスタックテンプレートに合わせてこのIAMロールは特定のリポジトリ[^2]のみで動くようにしています。
+IAMロールの内容ですが、STS以外にもEC2を作成するためと`terraform.tfstate`をS3に格納するためにS3のフルアクセス権限を渡しています。
+このテンプレートを起動させてIAMのコンソール画面を確認します。
+![](/images/terraform-gha/image2.png)
+
+[^2]: ここではYuhta28/terraform-githubaction-ciにしています
+
+IAMロール`ExampleGithubRole`が作成されてますので、ロールARNを手元に控えます。
+IDプロバイダーも作成されていることも念のため確認しておきます。
+![](/images/terraform-gha/image3.png)
 
 
+## ワークフロー作成
+次にGitHub Actionsを動かすためのワークフローファイルを作成します。
+#### ワークフロー作成
+
+```yml:workflow.yml
+name: 'Terraform'
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    
+
+jobs:
+  terraformCICD:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - run: sleep 5
+
+    - uses: actions/checkout@v2
+
+    - name: Configure AWS
+      run: |
+        export AWS_ROLE_ARN=arn:aws:iam::<AWS_AccountID>:role/ExampleGithubRole
+        export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
+        export AWS_DEFAULT_REGION=ap-northeast-1
+     
+        echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
+        echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
+        echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
+        curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sigstore" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: aws-actions/configure-aws-credentials@master
+      with:
+        role-to-assume: "${{ env.AWS_ROLE_ARN }}"
+        web-identity-token-file: "${{ env.AWS_WEB_IDENTITY_TOKEN_FILE }}"
+        aws-region: "${{ env.AWS_DEFAULT_REGION }}"
+        role-duration-seconds: 900
+        role-session-name: GitHubActionsTerraformCICD
+    
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check -diff
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate -no-color
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      if: github.event_name == 'pull_request'
+      run: terraform plan -no-color
+      continue-on-error: true
+
+      # On push to main, build or change infrastructure according to Terraform configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform destroy -auto-approve
+
+```
+
+新規でGitHub Actionsワークフローファイルを作成する場合、GitHubからいくつかテンプレートが用意されていますのでその中からTerraformを選べば↑のワークフローファイルのひな形が簡単に作れます。
+![](/images/terraform-gha/image4.png)
+
+注目部分は`Configure AWS`箇所です。
+
+
+## Terraform構築
+ワークフローファイルが作成されましたので次はTerraformの実装です。
+今回は単純にEC2インスタンスを1台作成して、`terraform.tfstate`をS3に格納する構成にします。
+
+```bash:ディレクトリ構成
+|
+├── main.tf
+└── variables.tf
+```
+
+```hcl:main.tf
+terraform {
+  backend "s3" {
+    bucket = "terraform-s3-yuta1993"
+    key    = "terraform.tfstate"
+    region = "ap-northeast-1"
+
+  }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.27"
+    }
+  }
+
+  required_version = ">= 0.14.9"
+}
+
+provider "aws" {
+  region = "ap-northeast-1"
+}
+
+resource "aws_instance" "app_server_yuta" {
+  ami                    = "ami-00cb500575fd9f9be"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = ["sg-058cda7badca49175", "sg-0c5b21b30ff8741cd"]
+  subnet_id              = "subnet-05b2284acd7a081db"
+
+  tags = {
+    Name = var.instance_name
+  }
+}
+```
+
+```hcl:variables.tf
+variable "instance_name" {
+  description = "Value of the Name tag for the EC2 instance"
+  type        = string
+  default     = "Yuta-ServerInstance"
+}
+```
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 https://zenn.dev/yutaro1985/articles/b012f69b49bec095b9f1
