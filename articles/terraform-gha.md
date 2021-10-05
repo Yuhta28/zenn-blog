@@ -100,7 +100,7 @@ IAMロールの内容ですが、STS以外にもEC2を作成するためと`terr
 このテンプレートを起動させてIAMのコンソール画面を確認します。
 ![](/images/terraform-gha/image2.png)
 
-[^2]: ここではYuhta28/terraform-githubaction-ciにしています
+[^2]: ここでは`Yuhta28/terraform-githubaction-ci`にしています
 
 IAMロール`ExampleGithubRole`が作成されてますので、ロールARNを手元に控えます。
 IDプロバイダーも作成されていることも念のため確認しておきます。
