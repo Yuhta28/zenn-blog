@@ -16,8 +16,7 @@
             "allow": [
                 "フィルタリング",
                 "RHEL",
-                "Debian",
-                "AWS_WEB_IDENTITY_TOKEN_FILE"
+                "Debian"
             ]
         }
     }
