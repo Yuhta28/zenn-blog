@@ -279,6 +279,17 @@ Terraform部分はAMIやセキュリティグループ箇所を自分のもの�
 セットアップできましたらブランチを切ってGitHubにpushします。
 
 ## GitHub Actions起動
+pushしてmainブランチへPRを出しますとGitHub Actionsが動きます。
+
+![](/images/terraform-gha/image5.png)
+
+`terraform plan`ステップまで問題なく実行されればマージが可能になりますのでマージします。
+mainブランチにマージされますと`terraform apply`ステップが走り、EC2インスタンスが作成されます。
+![](/images/terraform-gha/image7.png)
+
+作成できることを確認できましたら最後のrunをdestoryに変更して再度pushしてPRします。
+同じようにCIのチェックが入り、異常がなければマージしてEC2インスタンスを削除します。
+
 
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
