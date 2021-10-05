@@ -36,12 +36,12 @@ TerraformでAWSリソースを構築する際GitHub ActionsやCircle CIをでCI/
 この場合アクセスキーとシークレットキーを発行するためにIAMユーザーを新規作成しないといけないこと、マルチアカウントでTerraformを展開したい場合アクセスキーとシークレットキーを登録しなおさないといけないことがあり手間がかかります。
 
 ## 下準備
-まずはAWSでGitHubに渡すためのIAMロールと認証連携のためのIDプロバイダーを作成します。
+まずはAWSでGitHubに渡すためのIAMロールと認証連携のためのOIDCプロバイダーを作成します。
 IAMのコンソール画面から作成しても大丈夫ですがクラスメソッドさんのブログ[^1]にいい感じのCloudFormationスタックテンプレートがありましたのでそれをお借りします。
 
 [^1]: https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 
-#### IAMロール&IDプロバイダー作成
+#### IAMロール&OIDCプロバイダー作成
 
 ```yml:CloudFormation
 AWSTemplateFormatVersion: "2010-09-09"
@@ -103,13 +103,16 @@ IAMロールの内容ですが、STS以外にもEC2を作成するためと`terr
 [^2]: ここでは`Yuhta28/terraform-githubaction-ci`にしています
 
 IAMロール`ExampleGithubRole`が作成されてますので、ロールARNを手元に控えます。
-IDプロバイダーも作成されていることも念のため確認しておきます。
+OIDCプロバイダーも作成されていることも念のため確認しておきます。
 ![](/images/terraform-gha/image3.png)
 
 
 ## ワークフロー作成
 次にGitHub Actionsを動かすためのワークフローファイルを作成します。
 #### ワークフロー作成
+
+新規でGitHub Actionsワークフローファイルを作成する場合、GitHubからいくつかテンプレートが用意されていますのでその中からTerraformを選べば↓のワークフローファイルのひな形が簡単に作れます。
+![](/images/terraform-gha/image4.png)
 
 ```yml:workflow.yml
 name: 'Terraform'
@@ -177,11 +180,48 @@ jobs:
 
 ```
 
-新規でGitHub Actionsワークフローファイルを作成する場合、GitHubからいくつかテンプレートが用意されていますのでその中からTerraformを選べば↑のワークフローファイルのひな形が簡単に作れます。
-![](/images/terraform-gha/image4.png)
+注目部分は`Configure AWS`です。
+#### 解説ポイント
+GitHubに3つの環境変数をセットします。
 
-注目部分は`Configure AWS`箇所です。
+- AWS_ROLE_ARN
+- AWS_WEB_IDENTITY_TOKEN_FILE
+- AWS_DEFAULT_REGION
 
+##### AWS_ROLE_ARN
+引き受けるロールのARNを指定
+先ほど手元に控えたIAMロールのARNをここに貼り付けます。
+
+##### AWS_WEB_IDENTITY_TOKEN_FILE
+ウェブIDトークンファイルへのパス
+詳しくは後述
+
+##### AWS_DEFAULT_REGION
+デフォルトのリージョン
+東京リージョンを指定したい場合は`ap-northeast-1`
+
+最後のcurl~ですがウェブIDトークンファイルにトークンを渡すためのパラメーターを渡しています。
+
+- `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
+- `ACTIONS_ID_TOKEN_REQUEST_URL`
+
+この2つはGitHub Actionsの環境変数のようですが、ドキュメントにも記載がなく詳細は不明でした。
+作成したOIDCプロバイダー`vstoken.actions.githubusercontent.com`に対してリクエストを投げてトークンを取得しているみたいですが、詳しいことはドキュメントに記載されたら確認します。
+
+このトークンを先ほどのウェブIDトークンファイルへ格納し、次の`configure-aws-credentials`に渡しています。
+
+```yml:ワークフローファイル抜粋
+      uses: aws-actions/configure-aws-credentials@master
+      with:
+        role-to-assume: "${{ env.AWS_ROLE_ARN }}"
+        web-identity-token-file: "${{ env.AWS_WEB_IDENTITY_TOKEN_FILE }}"
+        aws-region: "${{ env.AWS_DEFAULT_REGION }}"
+        role-duration-seconds: 900
+        role-session-name: GitHubActionsTerraformCICD
+```
+
+冒頭に記載したワークフローファイルと比較するとAWSのアクセスキーとシークレットキーの環境変数がなくなり、IAMロールとOIDCのトークンをセットしています。
+ロールのセッション名は必須ではありませんが、運用時にログ調査する際に名前があったほうが追いやすいので設定しておくとよいです。
 
 ## Terraform構築
 ワークフローファイルが作成されましたので次はTerraformの実装です。
@@ -237,4 +277,5 @@ variable "instance_name" {
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 https://zenn.dev/yutaro1985/articles/b012f69b49bec095b9f1
+https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc
 
