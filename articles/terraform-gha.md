@@ -236,7 +236,7 @@ Web IDトークンファイルへのパス
 ```hcl:main.tf
 terraform {
   backend "s3" {
-    bucket = "terraform-s3-yuta1993"
+    bucket = "バケット名を指定"
     key    = "terraform.tfstate"
     region = "ap-northeast-1"
 
