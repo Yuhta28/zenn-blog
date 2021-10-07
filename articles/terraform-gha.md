@@ -65,7 +65,7 @@ Resources:
               Federated: !Ref GithubOidc
             Condition:
               StringLike:
-                vstoken.actions.githubusercontent.com:sub: !Sub repo:${RepoName}:*
+                token.actions.githubusercontent.com:sub: !Sub repo:${RepoName}:*
 
   Policy:
     Type: AWS::IAM::Policy
@@ -73,7 +73,7 @@ Resources:
       PolicyName: test-gha
       Roles:
        - !Ref Role
-      PolicyDocument: 
+      PolicyDocument:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
@@ -86,7 +86,7 @@ Resources:
   GithubOidc:
     Type: AWS::IAM::OIDCProvider
     Properties:
-      Url: https://vstoken.actions.githubusercontent.com
+      Url: https://token.actions.githubusercontent.com
       ClientIdList: [sigstore]
       ThumbprintList: [a031c46782e6e6c662c2c87c76da9aa62ccabd8e]
 
@@ -206,7 +206,7 @@ Web IDトークンファイルへのパス
 - `ACTIONS_ID_TOKEN_REQUEST_URL`
 
 この2つはGitHub Actionsの環境変数のようですが、ドキュメントにも記載がなく詳細は不明でした。
-作成したOIDCプロバイダー`vstoken.actions.githubusercontent.com`に対してリクエストを投げてトークンを取得しているみたいですが、詳しいことはドキュメントに記載されたら確認します。
+作成したOIDCプロバイダー`token.actions.githubusercontent.com`に対してリクエストを投げてトークンを取得しているみたいですが、詳しいことはドキュメントに記載されたら確認します。
 
 このトークンを先ほどのWeb IDトークンファイルへ格納し、次の`configure-aws-credentials`に渡しています。
 
@@ -298,6 +298,7 @@ Terraform+GitHub ActionsのCI/CD構築を一通り実践しました。
 他の人のブログのおかげでCI/CDの構築が完了できたのでブログ発信の大事さが分かった気がします。
 今回はEC2の作成とS3に`terraform.tfstate`を置くためにEC2とS3のフルアクセスを付与しましたが、TerraformでAWSリソースを作成することを考えるとAdmin権限をあげてもいい気がします。
 ともあれこの機能はまだ新しく日本語記事も少ないと思いますので、この記事を読んで皆さんも是非手元で試してみてほしいと思います。
+
 
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
