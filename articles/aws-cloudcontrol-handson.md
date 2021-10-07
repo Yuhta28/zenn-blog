@@ -345,6 +345,131 @@ aws cloudcontrol get-resource-request-status --request-token 094f5413-ba56-4cec-
 ![](/images/aws-cloudcontrol-handson/image3.png)
 *削除*
 
+# 冪等性を保つ
+AWS Cloud Control APIの`create-resource`,`update-resource`,`delete-resource`にはクライアントトークンを発行させるパラメーターがあります。
+
+```powershell
+aws cloudcontrol create-resource `
+--type-name AWS::Logs::LogGroup `
+--desired-state "{LogGroupName: CloudApiLogGroup,RetentionInDays:90}" `
+--client-token 123
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "9262db04-0c2d-4483-8357-f68c9df3c37d",
+        "Operation": "CREATE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-08T00:38:01.514000+09:00"
+    }
+}
+```
+
+このパラメーターはリクエストの冪等性を保証するために使用されるものです。
+冪等性とは同じ操作を何回繰り返しても同じ結果になることを示す数学用語です。
+ITではAnsibleなどの構成管理ツールでよく使われる言葉です。
+冪等性が保証されることで、誤って同じ操作を実行して予期せぬエラーを防ぐことが可能になります。
+
+## クライアントトークンを発行しないケース
+クライアントトークンを発行しない状態でCloud Watch Logsの同名のロググループを作成するコマンドを複数回実行したとします。
+
+```powershell
+aws cloudcontrol create-resource --type-name AWS::Logs::LogGroup --desired-state "{LogGroupName: CloudApiLogGroup-non-token,RetentionInDays:90}"
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup-non-token",
+        "RequestToken": "2a13c377-57a3-4460-9433-2f80a1725649",
+        "Operation": "CREATE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-08T00:49:48.628000+09:00"
+    }
+}
+
+aws cloudcontrol create-resource --type-name AWS::Logs::LogGroup --desired-state "{LogGroupName: CloudApiLogGroup-non-token,RetentionInDays:90}"
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup-non-token",
+        "RequestToken": "54bc582b-62ec-47e0-93d2-a7d442f98659",
+        "Operation": "CREATE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-08T00:49:51.993000+09:00"
+    }
+}
+```
+
+実行するたびに異なるリクエストトークンが発行され、コマンドそのものは正常終了します。
+ですが、`get-resource-request-status`でステータスを確認しますと最初のリクエストトークンは`SUCCESS`ですが、2回目に実行したコマンドのリクエストトークンは`FAILED`になっています。
+
+```powershell
+ aws cloudcontrol get-resource-request-status --request-token 2a13c377-57a3-4460-9433-2f80a1725649
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup-non-token",
+        "RequestToken": "2a13c377-57a3-4460-9433-2f80a1725649",
+        "Operation": "CREATE",
+        "OperationStatus": "SUCCESS", #成功が返っている
+        "EventTime": "2021-10-08T00:49:49.514000+09:00"
+    }
+}
+
+aws cloudcontrol get-resource-request-status --request-token 54bc582b-62ec-47e0-93d2-a7d442f98659
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup-non-token",
+        "RequestToken": "54bc582b-62ec-47e0-93d2-a7d442f98659",
+        "Operation": "CREATE",
+        "OperationStatus": "FAILED", 
+        "EventTime": "2021-10-08T00:49:52.694000+09:00",
+        "StatusMessage": "Resource of type 'AWS::Logs::LogGroup' with identifier '{\"/properties/LogGroupName\":\"CloudApiLogGroup-non-token\"}' already exists.",
+        "ErrorCode": "AlreadyExists" #既に同名のロググループ名が存在しており、失敗ステータスを返している
+    }
+}
+```
+
+## クライアントトークンを発行するケース
+クライアントトークンを発行するオプションを指定して同名のロググループを作成するコマンドを複数回実行します。
+
+```powershell
+aws cloudcontrol create-resource --type-name AWS::Logs::LogGroup --desired-state "{LogGroupName: CloudApiLogGroup,RetentionInDays:90}"  --client-token 123
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "9262db04-0c2d-4483-8357-f68c9df3c37d",
+        "Operation": "CREATE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-08T00:38:01.514000+09:00"
+    }
+}
+
+aws cloudcontrol create-resource --type-name AWS::Logs::LogGroup --desired-state "{LogGroupName: CloudApiLogGroup,RetentionInDays:90}"  --client-token 123
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "9262db04-0c2d-4483-8357-f68c9df3c37d",
+        "Operation": "CREATE",
+        "OperationStatus": "SUCCESS", #成功ステータスを返している
+        "EventTime": "2021-10-08T00:38:02.890000+09:00"
+    }
+}
+```
+
+クライアントトークンを発行した状態で２回目に同名のロググループを作成するコマンドを実行すると、ステータスが`IN_PROGRESS`ではなく、`SUCCESS`になっていることがわかります。
+AWSでは冪等性を保つために**常に**クライアントトークンを渡すことを推奨しております。
+クライアントトークンは36時間の間有効です。
+最大128文字まで指定できますので、UUIDなど一意なクライアントトークンを発行するようにしたほうがよさそうです。
+
+# 所感
+AWS Cloud Control APIについて研究してみました。
+GAされたとはいえ、まだまだ機能に不足されている面がありすぐに使えるものではありませんが従来のAWS CLIにはなかった冪等性の担保がありますのでコマンド実行時には見落とすエラーの発生防止になりそうです。
+
+今後の機能アップデートを楽しみにしています。
+
 # 参考文献
 https://aws.amazon.com/jp/cloudcontrolapi/
 https://dev.classmethod.jp/articles/aws-cloud-control-api-kinesis/
