@@ -10,7 +10,7 @@ published: false
 https://aws.amazon.com/jp/blogs/news/announcing-aws-cloud-control-api/
 
 今回はAWS Cloud Control APIを使ってAWSリソースの取得や作成などを試してみます。
-
+https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/what-is-cloudcontrolapi.html
 
 # 従来のAPI操作
 AWSリソースはコンソール画面から作成や削除ができますが、AWSにはAPIが提供されておりAWS CLIを使ってAPI操作でAWSリソースの作成や削除ができます。
@@ -141,6 +141,20 @@ CRUDL操作(CRUD+List)は以下のコマンドです。
 - update-resource
 - delete-resource
 - list-resources
+
+先ほどは`get-resource`を使ってAWSリソースの詳細情報を取得しました。
+`--identifier`オプションにリソースの名前を指定します。そして必須オプションで大事なのが、`--type-name`です。
+ここにはAWSリソースのタイプを指定しますが、CloudFormationを使ったことがある人なら見たことがあるプロパティだと思います。
+2021年9月30日時点では以下のAWSリソースがサポートされているとドキュメントに記載があります。
+https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/supported-resources.html
+
+まだまだ数が少なくEC2の起動もサポートされていない状態です。
+
+リリースされたばかりですので定期的に確認して更新されているか確認しておきましょう。
+
+公式ドキュメントにCloud Watch Logsを使ってCRUDL操作まで一通り経験できるチュートリアルがありましたので、AWS Cloud Control APIのインストールから順番に始めてみたいと思います。
+
+# ハンズオン
 
 # 参考文献
 https://aws.amazon.com/jp/cloudcontrolapi/
