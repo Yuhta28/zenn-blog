@@ -71,4 +71,79 @@ aws lambda get-function --function-name Yuta-rds-auto-stop
 }
 ```
 
-使用した
+使用したAPIは`describe-log-groups`でオプションとして`log-group-name-prefix`でロググループの名前を指定して詳細情報を取得しています。
+
+指定するAPIはもちろん出力されるJSON形式もリソースごとに異なっていました。
+仮にjqコマンドでJSONデータを加工するとき、加工するスクリプトファイルが使いまわしできず煩雑になってしまいます。
+
+# Cloud ControlによるAPI操作
+それでは新しくリリースされたAWS Cloud ControlによるAPI操作で同じAWSリソースを出力させてみます。
+
+```bash:Lambda
+ aws cloudcontrol get-resource --type-name AWS::Lambda::Function --identifier Yuta-rds-auto-stop
+{
+    "TypeName": "AWS::Lambda::Function",
+    "ResourceDescription": {
+        "Identifier": "Yuta-rds-auto-stop",
+        "Properties": "{\"MemorySize\":128,\"Description\":\"\",\"TracingConfig\":{\"Mode\":\"PassThrough\"},\"Timeout\":3,\"Handler\":\"lambda_function.lambda_handler\",\"Role\":\"arn:aws:iam::Account_id:role/Yuta-rds-auto-stop\",\"FileSystemConfigs\":[],\"FunctionName\":\"Yuta-rds-auto-stop\",\"Runtime\":\"python3.7\",\"PackageType\":\"Zip\",\"Environment\":{\"Variables\":{\"db_cluster\":\"database-yuta\",\"ACCOUNTID\":\"Account_id\",\"TAGKEY\":\"AUTO_STARTSTOP\",\"TAGVALUE\":\"true\"}},\"Arn\":\"arn:aws:lambda:ap-northeast-1:Account_id:function:Yuta-rds-auto-stop\",\"Architectures\":[\"x86_64\"]}"
+    }
+}
+```
+
+```bash:CloudWatch Logs
+aws cloudcontrol get-resource --type-name AWS::Logs::LogGroup --identifier /aws/lambda/Yuta-rds-auto-stop
+{
+    "TypeName": "AWS::Logs::LogGroup",
+    "ResourceDescription": {
+        "Identifier": "/aws/lambda/Yuta-rds-auto-stop",
+        "Properties": "{\"RetentionInDays\":7,\"LogGroupName\":\"/aws/lambda/Yuta-rds-auto-stop\",\"Arn\":\"arn:aws:logs:ap-northeast-1:Account_id:log-group:/aws/lambda/Yuta-rds-auto-stop:*\"}"
+    }
+}
+```
+
+`get-resource`という共通のAPIを使って同じJSON出力形式で2つのAWSリソースの詳細情報を取得しました。
+
+ここでAWS Cloud Control APIについて詳しく見てみましょう。
+
+# AWS Cloud Control APIについて
+Cloud Control APIは前述のとおり膨大なAWSリソースや数十のサードパーティーのサービス全体で、リソースの作成、読み取り、更新、削除および一覧表示を実行するための標準的なAPIセットです。
+`aws cloudcontrol help`で現在使用できるサブコマンドが一覧表示されます。
+
+```bash:helpコマンド
+Available Commands
+******************
+
+* cancel-resource-request
+
+* create-resource
+
+* delete-resource
+
+* get-resource
+
+* get-resource-request-status
+
+* help
+
+* list-resource-requests
+
+* list-resources
+
+* update-resource
+
+* wait
+```
+
+CRUDL操作(CRUD+List)は以下のコマンドです。
+
+- create-resource
+- get-resource
+- update-resource
+- delete-resource
+- list-resources
+
+# 参考文献
+https://aws.amazon.com/jp/cloudcontrolapi/
+https://dev.classmethod.jp/articles/aws-cloud-control-api-kinesis/
+https://blog.serverworks.co.jp/aws-cli-cloudcontrol_
+https://codezine.jp/article/detail/14970
