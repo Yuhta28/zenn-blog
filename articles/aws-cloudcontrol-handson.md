@@ -18,7 +18,7 @@ AWSリソースはコンソール画面から作成や削除ができますが�
 
 例えば特定のLambda関数の詳細を確認する場合、以下のAPIを使ってLambda関数の詳細を取得します。
 
-```bash:Lambda
+```powershell:Lambda
 aws lambda get-function --function-name Yuta-rds-auto-stop
 {
     "Configuration": {
@@ -55,7 +55,7 @@ aws lambda get-function --function-name Yuta-rds-auto-stop
 
 次にCloudWatch Logsの特定のロググループの詳細を取得します。
 
-```bash:CloudWatch Logs
+```powershell:CloudWatch Logs
  aws logs describe-log-groups --log-group-name-prefix /aws/lambda/Yuta-rds-auto-stop
 {
     "logGroups": [
@@ -79,7 +79,7 @@ aws lambda get-function --function-name Yuta-rds-auto-stop
 # Cloud ControlによるAPI操作
 それでは新しくリリースされたAWS Cloud ControlによるAPI操作で同じAWSリソースを出力させてみます。
 
-```bash:Lambda
+```powershell:Lambda
  aws cloudcontrol get-resource --type-name AWS::Lambda::Function --identifier Yuta-rds-auto-stop
 {
     "TypeName": "AWS::Lambda::Function",
@@ -90,7 +90,7 @@ aws lambda get-function --function-name Yuta-rds-auto-stop
 }
 ```
 
-```bash:CloudWatch Logs
+```powershell:CloudWatch Logs
 aws cloudcontrol get-resource --type-name AWS::Logs::LogGroup --identifier /aws/lambda/Yuta-rds-auto-stop
 {
     "TypeName": "AWS::Logs::LogGroup",
@@ -109,7 +109,7 @@ aws cloudcontrol get-resource --type-name AWS::Logs::LogGroup --identifier /aws/
 Cloud Control APIは前述のとおり膨大なAWSリソースや数十のサードパーティーのサービス全体で、リソースの作成、読み取り、更新、削除および一覧表示を実行するための標準的なAPIセットです。
 `aws cloudcontrol help`で現在使用できるサブコマンドが一覧表示されます。
 
-```bash:helpコマンド
+```powershell:helpコマンド
 Available Commands
 ******************
 
@@ -148,13 +148,202 @@ CRUDL操作(CRUD+List)は以下のコマンドです。
 2021年9月30日時点では以下のAWSリソースがサポートされているとドキュメントに記載があります。
 https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/supported-resources.html
 
-まだまだ数が少なくEC2の起動もサポートされていない状態です。
+まだまだ数が少なくEC2インスタンスの起動もサポートされていない状態です。
 
 リリースされたばかりですので定期的に確認して更新されているか確認しておきましょう。
 
-公式ドキュメントにCloud Watch Logsを使ってCRUDL操作まで一通り経験できるチュートリアルがありましたので、AWS Cloud Control APIのインストールから順番に始めてみたいと思います。
+公式ドキュメントにCloud Watch Logsを使ってCRUDL操作まで一通り経験できるチュートリアルがありましたので、早速始めてみたいと思います。
+https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/resource-operations.html
 
 # ハンズオン
+AWS Cloud Control APIを使うためにはAWS CLIのバージョンが2.2.43以上である必要があります。
+手元のバージョンが古い場合は更新しておきましょう。
+## 事前準備
+https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2.html
+
+```bash
+aws --version
+aws-cli/2.2.44 Python/3.8.8 Linux/5.10.16.3-microsoft-standard-WSL2 exe/x86_64.ubuntu.20 prompt/off
+```
+
+## リソース作成
+
+それではCloud Watch Logsを作成していきます。`create-resource`サブコマンドを指定し、`--type-name`でCloud Watch Logsのリソースタイプを指定します。
+`--desired-state`にリソースごとに必要なプロパティを設定します。
+ロググループ名とログの保持期間を設定しました。
+
+```powershell
+aws cloudcontrol create-resource --type-name AWS::Logs::LogGroup --desired-state "{LogGroupName: CloudApiLogGroup,RetentionInDays:90}"
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "8c98858b-a70b-4381-850e-606005f8c5ee",
+        "Operation": "CREATE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-07T21:36:48.335000+09:00"
+    }
+}
+```
+
+リソースを作成するとリクエストトークンが発行されます。
+リソースの作成進捗を確認する場合はリクエストトークンを指定して`get-resource-request-status`を実行します。
+
+```powershell
+aws cloudcontrol get-resource-request-status --request-token 8c98858b-a70b-4381-850e-606005f8c5ee
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "8c98858b-a70b-4381-850e-606005f8c5ee",
+        "Operation": "CREATE",
+        "OperationStatus": "SUCCESS",
+        "EventTime": "2021-10-07T21:36:49.146000+09:00"
+    }
+}
+```
+
+![](/images/aws-cloudcontrol-handson/image1.png)
+*コンソール画面*
+
+ステータスが**SUCCESS**でコンソール画面上からも作成されていることが確認できました。
+
+## リソース確認
+リソース確認は先ほどの`get-resource`を使います。
+```powershell
+aws cloudcontrol get-resource --type-name AWS::Logs::LogGroup --identifier CloudApiLogGroup
+{
+    "TypeName": "AWS::Logs::LogGroup",
+    "ResourceDescription": {
+        "Identifier": "CloudApiLogGroup",
+        "Properties": "{\"RetentionInDays\":90,\"LogGroupName\":\"CloudApiLogGroup\",\"Arn\":\"arn:aws:logs:ap-northeast-1:Account_id:log-group:CloudApiLogGroup:*\"}"
+    }
+}
+```
+
+## リソース更新
+リソース更新は`update-resource`です。
+新しい必須オプションとして`--patch-document`を記載します。
+ここではログの保持期間を90日から180日に変更します。
+
+### patch-document
+`patch-document`にはJSONフォーマットで更新情報を記載します。
+以下2つのプロパティを設定します。
+
+- op
+  - オペレーションタイプを指定
+    - add,remove,replace,move,copy,testの中から選択
+- path
+  - リソースプロパティを指定
+    - 今回は`RetentionInDays`を指定します
+
+```bash
+aws cloudcontrol update-resource --type-name AWS::Logs::LogGroup --identifier CloudApiLogGroup --patch-document "[{\"op\":\"replace\",\"path\":\"/RetentionInDays\",\"value\":180}]"
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "e3781812-727f-4af7-9e3f-91fb6b7851e8",
+        "Operation": "UPDATE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-07T23:31:09.989000+09:00",
+        "ResourceModel": "{\"RetentionInDays\":180,\"LogGroupName\":\"CloudApiLogGroup\"}"
+    }
+}
+```
+
+またリクエストトークンが発行されましたので、`get-resource-request-status`でステータスを確認してみます。
+
+
+```powershell
+ aws cloudcontrol get-resource-request-status --request-token e3781812-727f-4af7-9e3f-91fb6b7851e8
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "e3781812-727f-4af7-9e3f-91fb6b7851e8",
+        "Operation": "UPDATE",
+        "OperationStatus": "SUCCESS",
+        "EventTime": "2021-10-07T23:31:10.933000+09:00"
+    }
+}
+```
+
+![](/images/aws-cloudcontrol-handson/image2.png)
+*保持期間が6か月に変更された*
+
+##### おまけ
+PowerShellですとエスケープ文字がきかないのか、うまく更新されませんでした。
+WindowsユーザーはWSL2上で実行してみてください。
+
+```powershell
+ aws cloudcontrol update-resource --type-name AWS::Logs::LogGroup --identifier CloudApiLogGroup --patch-document "[{`"op`":`"replace`",`"path`":`"/RetentionInDays`",`"value`":120}]"
+
+An error occurred (InternalFailure) when calling the UpdateResource operation (reached max retries: 2): Internal Failure
+```
+
+## リソース一覧表示
+特定のAWSリソースのリストを一挙見たい場合は`list-resoureces`を使います。
+
+```powershell
+aws cloudcontrol list-resources --type-name AWS::Logs::LogGroup
+{
+    "TypeName": "AWS::Logs::LogGroup",
+    "ResourceDescriptions": [
+        {
+            "Identifier": "/aws/lambda/Yuta-rds-auto-stop",
+            "Properties": "{\"RetentionInDays\":7,\"LogGroupName\":\"/aws/lambda/Yuta-rds-auto-stop\",\"Arn\":\"arn:aws:logs:ap-northeast-1:Account_id:log-group:/aws/lambda/Yuta-rds-auto-stop:*\"}"
+        },
+        {
+            "Identifier": "/aws/lambda/myfunc01_handler",
+            "Properties": "{\"RetentionInDays\":14,\"LogGroupName\":\"/aws/lambda/myfunc01_handler\",\"Arn\":\"arn:aws:logs:ap-northeast-1:Account_id:log-group:/aws/lambda/myfunc01_handler:*\"}"
+        },
+        {
+            "Identifier": "CloudApiLogGroup",
+            "Properties": "{\"RetentionInDays\":180,\"LogGroupName\":\"CloudApiLogGroup\",\"Arn\":\"arn:aws:logs:ap-northeast-1:Account_id:log-group:CloudApiLogGroup:*\"}"
+        },
+        {
+            "Identifier": "aws-controltower/CloudTrailLogs",
+            "Properties": "{\"RetentionInDays\":14,\"LogGroupName\":\"aws-controltower/CloudTrailLogs\",\"Arn\":\"arn:aws:logs:ap-northeast-1:Account_id:log-group:aws-controltower/CloudTrailLogs:*\"}"
+        }
+    ]
+}
+```
+
+地味に`aws logs`にはそのような機能がなく、ターミナル上でCloud Watch Logsのロググループをリスト表示できるのはこれが初だったりします。(非公式なツールにはあるかも)
+
+## リソース削除
+リソースの削除は`delete-resource`です。
+
+```powershell
+aws cloudcontrol delete-resource --type-name AWS::Logs::LogGroup --identifier CloudApiLogGroup
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "094f5413-ba56-4cec-8049-63fcdcb0288b",
+        "Operation": "DELETE",
+        "OperationStatus": "IN_PROGRESS",
+        "EventTime": "2021-10-08T00:18:08.680000+09:00"
+    }
+}
+
+# リクエストトークンで進捗確認
+aws cloudcontrol get-resource-request-status --request-token 094f5413-ba56-4cec-8049-63fcdcb0288b
+{
+    "ProgressEvent": {
+        "TypeName": "AWS::Logs::LogGroup",
+        "Identifier": "CloudApiLogGroup",
+        "RequestToken": "094f5413-ba56-4cec-8049-63fcdcb0288b",
+        "Operation": "DELETE",
+        "OperationStatus": "SUCCESS",
+        "EventTime": "2021-10-08T00:18:09.200000+09:00"
+    }
+}
+```
+
+![](/images/aws-cloudcontrol-handson/image3.png)
+*削除*
 
 # 参考文献
 https://aws.amazon.com/jp/cloudcontrolapi/
