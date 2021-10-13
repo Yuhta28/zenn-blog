@@ -6,7 +6,7 @@ topics: ["aws","awscli","awscloudcontrol"]
 published: true
 ---
 # 概要
-先月末にAWSからこんな機能がリリースされていました。
+9月末にAWSからこんな機能がリリースされていました。
 https://aws.amazon.com/jp/blogs/news/announcing-aws-cloud-control-api/
 
 今回はAWS Cloud Control APIを使ってAWSリソースの取得や作成などを試してみます。
