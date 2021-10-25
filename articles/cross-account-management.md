@@ -31,7 +31,10 @@ AWSはあるアカウントにログインした場合、同じブラウザで�
 ![](/images/cross-account-management/image2.png)
 
 ジャンプアカウントにIAMユーザーを登録し、それぞれのアカウントにはIAMロールを作成します。
-このIAMロールには今までのIAMユーザーで操作できたIAMポリシーと同じポリシーを付与することでユーザーに今までと同じ操作ができるようにします。
+そしてAWS STSによってジャンプアカウントのIAMユーザーはスイッチ先のIAMロールから一時的な認証情報を取得します。
+スイッチ先のロールはスイッチ用のURLを発行してくれますので、ジャンプアカウントにログインした状態でスイッチURLにアクセスすればスイッチ先のアカウントにスイッチできます。
+##### スイッチURLイメージ
+`https://signin.aws.amazon.com/switchrole?roleName=SwitchRole&account=0123456789`
 
 # 疑問点
 詳細な実装方法について今回は割愛しまして、私が今回AWSマルチアカウント管理を設計してこの場合どうすればよいのか分からなかった点について述べさせていただきます。
@@ -39,18 +42,40 @@ AWSはあるアカウントにログインした場合、同じブラウザで�
 私は本番、検証と複数の環境にそれぞれ存在するエンジニアのIAMユーザーの権限情報を棚卸して開発、SREとチーム単位でIAMロールを作成しIAMポリシーを付与させることで権限管理を分かりやすくしようとしました。
 ![](/images/cross-account-management/image3.png)
 
-こうすることで、DeveloperチームにはCodeシリーズの権限やLambdaアクセスの権限などを渡し、SREチームにはEC2の作成権限を渡すといったチームごとのIAM権限管理を実現しています。
+こうすることで、DevチームにはCodeシリーズの権限やLambdaアクセスの権限などを渡し、SREチームにはEC2の作成権限を渡すといったチームごとのIAM権限管理を実現しています。
 
 基本IAMロールにIAMポリシーを付与しますので、個々人用にIAMロールを作成することがなくなりますので、スイッチ先のIAMロールがスッキリし管理の効率化を狙いました。
 
 ところが今までの運用では同じチームでも権限が異なることがありました。
 
 ## 異なるケース
-例えば検証環境でDevチームに所属している2人のエンジニアA,Bがいたとします。
+例えば検証環境ではDevチームにDynamoDBのアクセス権限を与えないIAM権限にしていたとします。
+ここでDevチームのエンジニアAがDynamoDBを使った新しいアプリ開発の検証をしたいと希望があります。
+![](/images/cross-account-management/image4.png)
+
+もしこの時AにDynamoDBのアクセス権限を渡すとなると、Devチーム全体のIAM RoleにDynamoDBの権限を与える必要が出てきます。
+そうなるともちろんほかのDevチームにもDynamoDBの権限を与えてしまうことになります。
+![](/images/cross-account-management/image5.png)
+こうしたケースが積み重なってくると当初設計していたIAMロールの権限設計から乖離が生じてくると思います。
+IAMロールを別に分けてスイッチしてもらうことも考えましたが、そうなるとスイッチロールの管理をエンジニアに強いてしまい、管理コストの手間が増えてしまうような気がします。
+
+- https://signin.aws.amazon.com/switchrole?roleName=Dev&account=0123456789
+- https://signin.aws.amazon.com/switchrole?roleName=A&account=0123456789
+
+![](/images/cross-account-management/image6.png)
 
 
+ほかの方法としてIAMロールをチーム単位ではなく個人単位で発行して管理するという方法も考えました。
+ただそうなるとエンジニアの数が増えるとIAMロールの数が増え、アカウントごとに管理するということになるとクロスアカウントアクセスの意味がないような気がします🤔
+
+とりあえず現状は、Dev全体のIAMロールにDynamoDBのアクセス権限をつける運用で進めていますが、モヤモヤした気持ちが晴れず本当にこれでいいのかと疑問に思っています。
+
+# 所感
+AWSマルチアカウント管理の疑問点について書き連ねました。
+自分でもこれが正しいのか疑問に思うところがありますが、ベストプラクティスがわからない状態です。
+詳しい人がいましたらアドバイスの程どうかよろしくお願い致します。
 
 # 参考文献
-https://aws.amazon.com/jp/builders-flash/202007/multi-accounts-best-practice/?awsf.filter-name=*all
 https://www.sbcr.jp/product/4815609061/
 https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html
+https://aws.amazon.com/jp/builders-flash/202007/multi-accounts-best-practice/?awsf.filter-name=*all
