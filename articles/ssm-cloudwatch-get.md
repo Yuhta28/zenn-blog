@@ -3,7 +3,7 @@ title: "System Managerを使ってCloudWatchエージェントを導入・設定
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","CloudWatch","SystemManager"]
-published: false
+published: true
 ---
 
 # 背景
