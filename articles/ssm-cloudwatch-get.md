@@ -109,14 +109,113 @@ $ systemctl status amazon-ssm-agent
 # System Manager実行
 SSMエージェントをインストールし、IAMロールをアタッチさせましたらEC2がSystem Manager管理配下になります。
 これでSystem Mananerの`Run Command`を使い、CloudWatchエージェントをインストールしてみます。
+
+:::message alert
+EC2とSystem Managerの接続に若干時間がかかります。
+数分ほど待ってみてください。
+:::
+
 ## Run Command実行
 Run Commandではコマンドドキュメントという事前に定義されたコマンドを実行できます。
-コマンドドキュメントはユーザーが自由に作成することも可能ですし、AWS側でテンプレートドキュメントも多く用意されています。
+コマンドドキュメントはユーザーが自由に作成できますし、AWS側でテンプレートドキュメントも多く用意されています。
 今回CloudWatchエージェントをインストールするドキュメントもすでに用意されていますのでそちらを利用します。
 ドキュメント`AWS-ConfigureAWSPackage`を選択し、インストールするAWSパッケージにCloudWatchエージェントを指定後に、System Manager管理下のEC2インスタンスにエージェントインストールが実行されます。
 
 ![](/images/ssm-cloudwatch/image4.png)
 ![](/images/ssm-cloudwatch/image5.png)
 
+実行が完了しましたらCloudWatchエージェントがインストールされていますので、同じように`systemctl`コマンドで確かめてみます。
+
+```bash
+$ systemctl status amazon-cloudwatch-agent
+● amazon-cloudwatch-agent.service - Amazon CloudWatch Agent
+   Loaded: loaded (/etc/systemd/system/amazon-cloudwatch-agent.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+```
+
+インストールはされていますが、何も設定されていないので起動はされていない状態です。
+CloudWatchエージェントにはウィザードで初期セットアップを簡単に済ませる機能がありますが、対象サーバーが多いと若干面倒な手順になります。
+https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/create-cloudwatch-agent-configuration-file-wizard.html
+
+そこでここでもSystem Managerを使ってCloudWatchエージェントの設定ファイルを複数台に一括で適用させます。
+
+## パラメータ作成
+System Managerのパラメータストアにはパスワード情報やライセンスコードといった機密情報を格納したり、System Manager管理下のサーバーに設定ファイルを配置させることもできます。
+パラメータストアにCloudWatchエージェントの設定ファイルを作成し、`Run Command`で配置、セットアップを行ないます。
+
+```json:AmazonCloudWatch-linux
+{
+	"agent": {
+		"run_as_user": "root"
+	},
+	"logs": {
+		"logs_collected": {
+			"files": {
+				"collect_list": [
+					{
+						"file_path": "/home/bitnami/stack/apache/logs/access_log",
+						"log_group_name": "Apache_access.log",
+						"log_stream_name": "{local_hostname}"
+					}
+				]
+			}
+		}
+	}
+}
+```
+
+## Run Command再実行
+ドキュメントは`AmazonCloudWatch-ManageAgent`を指定し、コマンドパラメータの`Optional Configuration Location`にパラメータストアで作成した設定ファイルを入力します。
+![](/images/ssm-cloudwatch/image6.png)
+
+コマンド実行が完了しますと、設定ファイルがEC2に格納されCloudWatchエージェントが起動されるようになります。
+
+```bash
+$ systemctl status amazon-cloudwatch-agent
+● amazon-cloudwatch-agent.service - Amazon CloudWatch Agent
+   Loaded: loaded (/etc/systemd/system/amazon-cloudwatch-agent.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2021-11-06 15:10:13 UTC; 14min ago
+ Main PID: 2030 (amazon-cloudwat)
+    Tasks: 7 (limit: 1164)
+   Memory: 35.1M
+   CGroup: /system.slice/amazon-cloudwatch-agent.service
+           └─2030 /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent -config /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.toml -envconfig /opt/aws/amazon-cloudwatch-agent
+
+Nov 06 15:10:13 Test-WordPress systemd[1]: Started Amazon CloudWatch Agent.
+Nov 06 15:10:13 Test-WordPress start-amazon-cloudwatch-agent[2030]: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json does not exist or cannot read. Skipping it.
+Nov 06 15:10:13 Test-WordPress start-amazon-cloudwatch-agent[2030]: Valid Json input schema.
+Nov 06 15:10:13 Test-WordPress start-amazon-cloudwatch-agent[2030]: I! Detecting run_as_user...
+
+$ cat /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d/ssm_AmazonCloudWatch-linux
+{
+        "agent": {
+                "run_as_user": "root"
+        },
+        "logs": {
+                "logs_collected": {
+                        "files": {
+                                "collect_list": [
+                                        {
+                                                "file_path": "/home/bitnami/stack/apache/logs/access_log",
+                                                "log_group_name": "Apache_access.log",
+                                                "log_stream_name": "{local_hostname}"
+                                        }
+                                ]
+                        }
+                }
+        }
+}
+```
+これでCloudWatch Logsにログが転送されるようになりました。
+![](/images/ssm-cloudwatch/image7.png)
+
+# 所感
+System Managerを使ってCloudWatchエージェントの導入・設定をしてみました。
+CloudWatchエージェントの設定は面倒な手順も多く、Ansibleで一括反映するにしてもPlaybookの作りこみが面倒だと思いましたが、System Managerを使うことで当初想定していたよりもスムーズにログ集約基盤の構築が完了できました。
+
+System Managerにはまだまだ色々な機能が備わっており、運用作業の自動化推進に向けて積極的に使っていこうと思います。
+
 # 参考文献
 https://github.com/dhoeric/ansible-aws-ssm
+https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/systems-manager-parameter-store.html
+https://www.sbcr.jp/product/4815609061/
