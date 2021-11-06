@@ -69,3 +69,54 @@ $ neofetch
 ![](/images/ssm-cloudwatch/image2.png)
 
 ## SSMエージェントインストール
+まず始めにSSMエージェントのインストールから始めます。
+https://docs.aws.amazon.com/ja_jp/systems-manager/latest/userguide/agent-install-deb.html
+SSMエージェントのインストール方法は公式ドキュメントに記載がありますが、これを一台一台に実行するのはやはり手間ですので簡単なAnsible Playbookを作成して一括導入します。
+
+```yml:SSMエージェントインストールPlaybook
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: install ssm-agent
+    apt:
+      deb: "https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/debian_amd64/amazon-ssm-agent.deb"
+```
+
+とても~~雑~~シンプルなPlaybookですがSSMエージェントをインストールするだけでしたら、これで大丈夫です。
+
+インストールができたかどうかは`systemctl`コマンドで確認できます。
+
+```bash
+$ systemctl status amazon-ssm-agent
+● amazon-ssm-agent.service - amazon-ssm-agent
+   Loaded: loaded (/lib/systemd/system/amazon-ssm-agent.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2021-11-06 10:22:38 UTC; 7min ago
+ Main PID: 2733 (amazon-ssm-agen)
+    Tasks: 14 (limit: 1164)
+   Memory: 30.3M
+   CGroup: /system.slice/amazon-ssm-agent.service
+           ├─2733 /usr/bin/amazon-ssm-agent
+           └─2763 /usr/bin/ssm-agent-worker
+```
+
+インストールできましたら各EC2インスタンスに必要なIAMロールをアタッチさせます。
+## IAMロールアタッチ
+必要なIAMポリシーは`AmazonSSMManagedInstanceCore `になります。
+これを新規に作成したIAMロールにアタッチさせて、このIAMロールもEC2インスタンスにアタッチさせます。
+![](/images/ssm-cloudwatch/image3.png)
+
+# System Manager実行
+SSMエージェントをインストールし、IAMロールをアタッチさせましたらEC2がSystem Manager管理配下になります。
+これでSystem Mananerの`Run Command`を使い、CloudWatchエージェントをインストールしてみます。
+## Run Command実行
+Run Commandではコマンドドキュメントという事前に定義されたコマンドを実行できます。
+コマンドドキュメントはユーザーが自由に作成することも可能ですし、AWS側でテンプレートドキュメントも多く用意されています。
+今回CloudWatchエージェントをインストールするドキュメントもすでに用意されていますのでそちらを利用します。
+ドキュメント`AWS-ConfigureAWSPackage`を選択し、インストールするAWSパッケージにCloudWatchエージェントを指定後に、System Manager管理下のEC2インスタンスにエージェントインストールが実行されます。
+
+![](/images/ssm-cloudwatch/image4.png)
+![](/images/ssm-cloudwatch/image5.png)
+
+# 参考文献
+https://github.com/dhoeric/ansible-aws-ssm
