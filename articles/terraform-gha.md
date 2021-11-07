@@ -19,7 +19,7 @@ Circle CIやGitHub ActionsでAWSを使う場合は事前に環境変数にアク
 https://github.com/aws-actions/configure-aws-credentials
 
 # GitHub Actionsを用いたTerraformのCI/CD
-TerraformでAWSリソースを構築する際GitHub ActionsやCircle CIでCI/CDを構築する場合、事前に環境変数にIAMユーザーのアクセスキーとシークレットキーを登録する必要がありました。
+TerraformでAWSリソースをデプロイする際にGitHub ActionsやCircle CIでCI/CDを構築する場合、事前に環境変数にIAMユーザーのアクセスキーとシークレットキーを登録する必要がありました。
 
 #### 従来のTerraform+GitHub Actions
 ![](/images/terraform-gha/image1.png)
