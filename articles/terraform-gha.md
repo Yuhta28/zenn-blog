@@ -308,3 +308,6 @@ https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 https://zenn.dev/yutaro1985/articles/b012f69b49bec095b9f1
 https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc
 
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/github-actions-cicd-without-aws-credential-information-4no6
