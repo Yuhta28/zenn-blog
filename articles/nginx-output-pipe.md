@@ -32,8 +32,8 @@ $ nginx -v  | head -n 1 | cut -f 3 -d " "
 nginx version: nginx/1.18.0
 ```
 
-ところがパイプでnginxのバージョン情報を`cut`で加工しようとしても上手くいきません。
-試しに`awk`コマンドでも試しましたが結果は変わりません。
+ところがパイプでnginxのバージョン情報を`cut`で加工しようとしても上手くいきませんでした。
+`awk`コマンドでも試しましたが結果は変わりません。
 
 ```shell
 $ httpd -v | head -n 1 | awk '{print $3}' #Apacheではちゃんと上手くいく
