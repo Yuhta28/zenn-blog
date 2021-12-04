@@ -95,7 +95,7 @@ RcloneはGoogleDrive以外にもOneDrive、Dropboxなど40以上のクラウド�
 ![](/images/rclone-upload-gdrive/image3.png)
 *https://rclone.org/downloads/*
 
-## 実施手順
+## セットアップ
 Rcloneをインストールしましたら初期設定として`rclone config`を実行します。
 
 ```powershell
@@ -245,7 +245,7 @@ Leave blank normally.
 Needed only if you want use SA instead of interactive login.
 Leading `~` will be expanded in the file name as will environment variables such as `${RCLONE_CONFIG_DIR}`.
 Enter a string value. Press Enter for the default ("").
-service_account_file> #サービスアカウントの認証情報を入力(空白でOK)
+service_account_file> #認証情報の保存先を指定(空白でOK)
 Edit advanced config?
 y) Yes
 n) No (default)
@@ -256,7 +256,7 @@ Use auto config?
 
 y) Yes (default)
 n) No
-y/n> n #自動設定を使うかどうか選択
+y/n> n #アクセストークンの取得方法を選択(yを選択するとターミナル上で認証を行います)
 Option config_verification_code.
 Verification code
 Go to this URL, authenticate then paste the code here.
@@ -299,8 +299,44 @@ q) Quit config
 e/n/d/r/c/s/q> q #設定を終了
 ```
 
-`rclone config`で対話形式の初期設定し、GoogleDriveとローカルとの連携を行ないます。
+`rclone config`で対話形式の初期設定し、GoogleDriveとローカルの連携を行ないます。
+保存した設定ファイルの格納場所は指定しない場合デフォルトの場所に保存されますが、場所を確認する場合は`rclone config`を実行してください。
+
+```powershell
+rclone config file
+Configuration file is stored at:
+C:\Users\yuta_\scoop\apps\rclone\current\rclone.conf
+
+# 接続先一覧の表示
+rclone listremotes
+googledrive:
+```
+初期設定が完了しましたら、ファイルをアップロードしてみます。
+
+## ファイルアップロード
+
+```powershell
+ls .\sample.txt
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---          2021/12/04    15:54             20 sample.txt
+
+cat .\sample.txt
+file Upload Success!
+rclone copy .\sample.txt googledrive:
+```
+
+![](/images/rclone-upload-gdrive/image4.png)
+![](/images/rclone-upload-gdrive/image5.png)
+ローカルからアップロードしたファイルは、GoogleDriveに格納されました。
+ファイルの中身もちゃんと含まれています。
+
+# Rcloneでできること
+Rcloneはファイルのアップロード/ダウンロード以外にもいくつか機能を持っています。
+
 
 # 参考文献
 https://laboratory.kazuuu.net/upload-files-to-google-drive-with-python/
 https://github.com/rclone/rclone
+https://www.nextdoorwith.info/wp/se/how-to-control-google-drive-from-linux-rclone/
