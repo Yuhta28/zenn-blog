@@ -334,7 +334,7 @@ rclone copy .\sample.txt googledrive:
 
 # Rcloneでできること
 Rcloneはファイルのアップロード/ダウンロード以外にもいくつか機能を持っています。
-ファイル転送時に暗号化して転送することも可能ですのでセキュアな状態でクラウドストレージにファイルを転送できます。
+ファイル転送時に暗号化も可能ですので、セキュアな状態でクラウドストレージにファイルを転送できます。
 暗号化してファイル転送をしたい場合は、`rclone config`でストレージ先を選択したときにGoogleDriveを選択しましたが、ここで`crypt`を選択し暗号化設定を行なっていきます。
 ## 暗号化設定
 
@@ -456,7 +456,7 @@ Remote to encrypt/decrypt.
 Normally should contain a ':' and a path, e.g. "myremote:path/to/dir",
 "myremote:bucket" or maybe "myremote:" (not recommended).
 Enter a string value. Press Enter for the default ("").
-remote> googledrive:encrypt/ #既存のリモートを暗号化したい場合は、リモート名:で設定追加できます。:の後ろにフォルダ名を記載すれば暗号化の範囲を絞ることができます。
+remote> googledrive:encrypt/ #暗号化先を決定、既存ドライブを選択する場合前述で決めたリモート名を書くことで暗号化が可能
 Option filename_encryption.
 How to encrypt the filenames.
 Enter a string value. Press Enter for the default ("standard").
@@ -469,7 +469,7 @@ Choose a number from below, or type in your own value.
    / Don't encrypt the file names.
  3 | Adds a ".bin" extension only.
    \ "off"
-filename_encryption> standard
+filename_encryption> standard #ファイル名の暗号化方法
 Option directory_name_encryption.
 Option to either encrypt directory names or leave them intact.
 NB If filename_encryption is "off" then this option will do nothing.
@@ -478,20 +478,20 @@ Choose a number from below, or type in your own value.
  1 / Encrypt directory names.
    \ "true"
  2 / Don't encrypt directory names, leave them intact.
-   \ "false"
-directory_name_encryption> true
+   \ "false" 
+directory_name_encryption> true #ディレクトリ名の暗号化可否
 Option password.
 Password or pass phrase for encryption.
 Choose an alternative below.
 y) Yes type in my own password
 g) Generate random password
-y/g> g
+y/g> g #gを選択することでランダムなパスワードを生成
 Password strength in bits.
 64 is just about memorable
 128 is secure
 1024 is the maximum
-Bits> 128
-Your password is: bjgmbrCovfSexp9bJmtgbA
+Bits> 128 
+Your password is: XXXXXXXXXXXXXXXXXXXXXX
 Use this password? Please note that an obscured version of this
 password (and not the password itself) will be stored under your
 configuration file, so keep this generated password in a safe place.
@@ -506,13 +506,13 @@ Choose an alternative below. Press Enter for the default (n).
 y) Yes type in my own password
 g) Generate random password
 n) No leave this optional password blank (default)
-y/g/n> g
+y/g/n> g #ソルトを自動生成
 Password strength in bits.
 64 is just about memorable
 128 is secure
 1024 is the maximum
 Bits> 128
-Your password is: mi2ubasAd7BvlgjYD9t78g
+Your password is: XXXXXXXXXXXXXXXXXXXXXX
 Use this password? Please note that an obscured version of this
 password (and not the password itself) will be stored under your
 configuration file, so keep this generated password in a safe place.
@@ -551,6 +551,14 @@ q) Quit config
 e/n/d/r/c/s/q> q
 
 ```
+
+ファイルを転送して暗号化されるか確かめてみます。
+
+```powershell
+echo "hello rclone" | rclone rcat encrypt-drive:encrypt/test.txt
+```
+
+
 
 # 参考文献
 https://laboratory.kazuuu.net/upload-files-to-google-drive-with-python/
