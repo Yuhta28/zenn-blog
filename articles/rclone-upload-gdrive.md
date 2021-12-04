@@ -84,5 +84,8 @@ Details: "[{'domain': 'global', 'reason': 'notFound', 'message': 'File not found
 IDをコピーしてファイルに貼り付けたのですが、どういうわけかそのフォルダが存在しないということでアップロードに失敗しました。
 ![](/images/rclone-upload-gdrive/image2.png)
 
+色々と調べてみましたが、原因を特定することができませんでした。
+(もしかして共有ドライブの権限で許可されていないのかもしれません。)
+
 # 参考文献
 https://laboratory.kazuuu.net/upload-files-to-google-drive-with-python/
