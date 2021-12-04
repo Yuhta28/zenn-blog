@@ -3,7 +3,7 @@ title: "PythonではなくRcloneでGoogle共有ドライブにファイルをア
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["googledrive","rclone"]
-published: false
+published: true
 ---
 
 # 概要
@@ -596,7 +596,7 @@ GUIダッシュボードはこちらのGitHubで開発されているみたい�
 https://github.com/rclone/rclone-webui-react
 
 # 所感
-Rcloneを使って共有ドライブへファイルアップロードする方法について紹介しました。
+Rcloneを使ってGoogle共有ドライブへファイルアップロードする方法について紹介しました。
 個人的にはエンジニアっぽくPythonでAPIを操作して、ファイルアップロードしたかったのですがスキル不足もあり結局はOSSに逃げてしまった感じがします。
 しばらく会社の運用はRcloneに任せますが、何かしらプログラミングを使って改善していけるようにしていきたいです。。。
 # 参考文献
