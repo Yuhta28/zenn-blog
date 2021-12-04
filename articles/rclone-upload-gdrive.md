@@ -90,7 +90,7 @@ IDをコピーしてファイルに貼り付けたのですが、どういうわ
 # RcloneでGoogleDriveへアップロード
 どうしたものかと悩んでいましたが、OSSでRcloneというものの存在を見つけました。
 https://rclone.org/
-RcloneはGoogleDrive以外にもOneDrive、Dropboxなど40以上のクラウドストレージサービスと連携し、ローカル端末とクラウドストレージ間のファイル管理を実現できます。
+RcloneはGo製のOSSでGoogleDrive以外にもOneDrive、Dropboxなど40以上のクラウドストレージサービスと連携し、ローカル端末とクラウドストレージ間のファイル管理を実現できます。
 ダウンロードページを確認するとMac,Linux以外にもWindows用のインストーラーも用意されていて色々とよさそうだったのでこちらを試してみることにしました。
 ![](/images/rclone-upload-gdrive/image3.png)
 *https://rclone.org/downloads/*
@@ -300,7 +300,7 @@ e/n/d/r/c/s/q> q #設定を終了
 ```
 
 `rclone config`で対話形式の初期設定し、GoogleDriveとローカルの連携を行ないます。
-保存した設定ファイルの格納場所は指定しない場合デフォルトの場所に保存されますが、場所を確認する場合は`rclone config`を実行してください。
+保存した設定ファイルの格納場所は指定しない場合デフォルトの場所に保存されますが、場所を確認する場合は`rclone config file`を実行してください。
 
 ```powershell
 rclone config file
@@ -339,7 +339,6 @@ Rcloneはファイルのアップロード/ダウンロード以外にもいく�
 ## 暗号化設定
 
 ```powershell
-
 rclone config
 Current remotes:
 
@@ -554,12 +553,52 @@ e/n/d/r/c/s/q> q
 
 ファイルを転送して暗号化されるか確かめてみます。
 
-```powershell
-echo "hello rclone" | rclone rcat encrypt-drive:encrypt/test.txt
+```powershellt
+rclone copy .\sample.txt encrypt-drive:crypted/
 ```
 
+![](/images/rclone-upload-gdrive/image6.png)
+![](/images/rclone-upload-gdrive/image7.png)
+ファイル名が暗号化され、中身も見れません。
+ちなみにRcloneでファイルを確認するとき、`crypt`で設定したプレフィックス`encrypt-drive`で`ls`コマンドをたたくとファイル情報が見れます。
 
+```powershell
+rclone listremotes
 
+encrypt-drive: #ストレージ設定がGoogleDrive
+googledrive: #ストレージ設定がcrypt
+
+rclone ls googledrive:encrypt
+       68 2qhniiup8u2s3ag18o9h1bmevo/kb6l5jrsndq1qduer20588545c
+
+rclone ls encrypt-drive:
+       20 crypted/sample.txt
+```
+
+## GUIダッシュボード
+これはプレビュー的な機能みたいですが、RcloneにはGUIダッシュボードがあるみたいです。
+https://rclone.org/gui/
+
+```powershell
+rclone rcd --rc-web-gui #GUIダッシュボードを起動
+2021/12/04 18:59:25 ERROR : Error reading tag file at C:\Users\yuta_\AppData\Local\rclone\webgui\tag
+2021/12/04 18:59:25 NOTICE: A new release for gui (v2.0.5) is present at https://github.com/rclone/rclone-webui-react/releases/download/v2.0.5/currentbuild.zip
+2021/12/04 18:59:25 NOTICE: Downloading webgui binary. Please wait. [Size: 4763452, Path :  C:\Users\yuta_\AppData\Local\rclone\webgui\v2.0.5.zip]
+2021/12/04 18:59:25 NOTICE: Unzipping webgui binary
+2021/12/04 18:59:26 NOTICE: Serving Web GUI
+2021/12/04 18:59:26 NOTICE: Serving remote control on http://localhost:5572/
+```
+![](/images/rclone-upload-gdrive/image8.png)
+左のサイドバーを参照すると新規作成や既存のリモート先クラウドストレージの中身を確認できます。
+![](/images/rclone-upload-gdrive/image9.png)
+
+GUIダッシュボードはこちらのGitHubで開発されているみたいですので、興味がある人はOSSコントリビューションしてみてもいいかもしれません。
+https://github.com/rclone/rclone-webui-react
+
+# 所感
+Rcloneを使って共有ドライブへファイルアップロードする方法について紹介しました。
+個人的にはエンジニアっぽくPythonでAPIを操作して、ファイルアップロードしたかったのですがスキル不足もあり結局はOSSに逃げてしまった感じがします。
+しばらく会社の運用はRcloneに任せますが、何かしらプログラミングを使って改善していけるようにしていきたいです。。。
 # 参考文献
 https://laboratory.kazuuu.net/upload-files-to-google-drive-with-python/
 https://github.com/rclone/rclone
