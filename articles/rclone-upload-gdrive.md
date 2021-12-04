@@ -599,6 +599,10 @@ https://github.com/rclone/rclone-webui-react
 Rcloneを使ってGoogle共有ドライブへファイルアップロードする方法について紹介しました。
 個人的にはエンジニアっぽくPythonでAPIを操作して、ファイルアップロードしたかったのですがスキル不足もあり結局はOSSに逃げてしまった感じがします。
 しばらく会社の運用はRcloneに任せますが、何かしらプログラミングを使って改善していけるようにしていきたいです。。。
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](68c1d42e912b4942bde8a1b9fe087293)
 # 参考文献
 https://laboratory.kazuuu.net/upload-files-to-google-drive-with-python/
 https://github.com/rclone/rclone

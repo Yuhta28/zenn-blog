@@ -110,13 +110,13 @@ https://trac.nginx.org/nginx/ticket/592
 
 もしかすると他にも実は標準エラー出力にて表示されるCLIコマンドがあるかもしれないので、もしパイプできないと思ったときは標準エラー出力の存在を疑ってみるのもいいのかもしれません。
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](6daa241108684c9baa423952f1041b31)
+
 # 参考文献
 https://www.cyberciti.biz/faq/unix-linux-bsd-display-nginx-version/
 https://codezine.jp/article/detail/4836
 https://docs.microsoft.com/ja-jp/cpp/c-runtime-library/stdin-stdout-stderr?view=msvc-160
 https://qiita.com/ritukiii/items/b3d91e97b71ecd41d4ea
 https://www.infraeye.com/study/linuxz15.html
-
-# LT資料
-LTのスライド資料です。
-@[speakerdeck](6daa241108684c9baa423952f1041b31)

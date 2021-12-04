@@ -303,11 +303,11 @@ Terraform+GitHub ActionsのCI/CD構築を一通り実践しました。
 LTのスライド資料です。
 @[speakerdeck](b12a92fc9ba3454085aab839e81aedd5)
 
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/github-actions-cicd-without-aws-credential-information-4no6
+
 # 参考文献
 https://dev.classmethod.jp/articles/github-actions-without-permanent-credential/
 https://zenn.dev/yutaro1985/articles/b012f69b49bec095b9f1
 https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-role.html#cli-configure-role-oidc
-
-# 英語記事
-英訳しました。
-https://dev.to/yuta28/github-actions-cicd-without-aws-credential-information-4no6
