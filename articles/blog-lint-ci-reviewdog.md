@@ -198,12 +198,12 @@ https://zenn.dev/yuta28/scraps/221c80e7c07172
 
 https://github.com/Yuhta28/zenn-blog
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](d37f3955e3a143e1a20fb26da3831b31)
+
 # 参考文献
 https://gihyo.jp/book/2020/978-4-297-11411-4
 https://swet.dena.com/entry/2018/09/18/142413
 https://dev.classmethod.jp/articles/shuntaka-github-actions-reviewdog/
 https://www.npmjs.com/package/textlint-rule-preset-smarthr
-
-# LT資料
-LTのスライド資料です。
-@[speakerdeck](d37f3955e3a143e1a20fb26da3831b31)

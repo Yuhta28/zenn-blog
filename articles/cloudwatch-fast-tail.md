@@ -195,10 +195,6 @@ cwを使ってログストリームごとに`tail -f`でログ参照してみま
 CloudWatch LogsのOSSで有名なのはawslogsですが、少し動作がもっさりしていてかつPython製なので使っているホストのバージョン依存で動作に不安な面がありました。
 cwはパッケージ不要でbrewで簡単にインストールできましたが、最後に出てきたエラーだけ気になったのでここを調査して問題なければ会社にも導入しようと思います。
 
-# 参考文献
-https://blog.mmmcorp.co.jp/blog/2021/02/14/best-5ways-searching-cloudwatch-logs/
-https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html
-
 # LT資料
 LTのスライド資料です。
 @[speakerdeck](2c749ceb40034cbea63d55621ed7944c)
@@ -206,3 +202,7 @@ LTのスライド資料です。
 # 英語記事
 英訳しました。
 https://dev.to/yuta28/i-use-cw-which-is-oss-to-tail-aws-cloudwatch-logs-2e9g
+
+# 参考文献
+https://blog.mmmcorp.co.jp/blog/2021/02/14/best-5ways-searching-cloudwatch-logs/
+https://awscli.amazonaws.com/v2/documentation/api/latest/reference/logs/tail.html

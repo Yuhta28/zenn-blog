@@ -412,10 +412,10 @@ Linuxと比較すると独自性があり、面白い結果となりました。
 普段あまり意識しないホスト名の命名規則について調査してみました。
 どの会社でもホスト名の命名規則を定めるかと思いますが、RFCに則った命名規則にしないと思わぬトラブルに巻き込まれることもあり得ますので、皆さまも一度調べてみると面白いかもしれません。
 
-# 参考文献
-https://saku-jp.hatenablog.com/entry/20130612/p1
-https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/identity/naming-conventions-for-computer-domain-site-ou#computer-names
-
 # LT資料
 LTのスライド資料です。
 @[speakerdeck](8e3c0ce8353d40c797362e4b154376c5)
+
+# 参考文献
+https://saku-jp.hatenablog.com/entry/20130612/p1
+https://docs.microsoft.com/ja-jp/troubleshoot/windows-server/identity/naming-conventions-for-computer-domain-site-ou#computer-names

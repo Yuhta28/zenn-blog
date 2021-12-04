@@ -79,9 +79,9 @@ SPやEC2のRIは購入予約できたのだからRDSのRIも予約できると�
 RDSのRIについてやらかしてしまったことを記録しました。
 RDSのRIの公式ドキュメントは意外にも日本語化されておらず、この仕様の違いについて述べている媒体も少なかったので、皆さんもRDSのRIを購入するときは同じ轍を踏まないように気をつけてください。
 
-# 参考文献
-https://docs.amazonaws.cn/en_us/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.html
-
 # LT資料
 LTのスライド資料です。
 @[speakerdeck](87c2cc7b251d4b8c8bf69cffebf2c1a9)
+
+# 参考文献
+https://docs.amazonaws.cn/en_us/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.html
