@@ -203,10 +203,15 @@ Web IDトークンファイルへのパス
 最後のcurl~でWeb IDトークンファイルにトークンを渡すためのパラメーターを渡しています。
 
 - `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
+  - OIDCプロバイダーへのリクエスト用のトークン
 - `ACTIONS_ID_TOKEN_REQUEST_URL`
+  - GitHubのOIDCプロバイダーのURL
 
-この2つはGitHub Actionsの環境変数のようですが、ドキュメントにも記載がなく詳細は不明でした。
-作成したOIDCプロバイダー`token.actions.githubusercontent.com`に対してリクエストを投げてトークンを取得しているみたいですが、詳しいことはドキュメントに記載されたら確認します。
+~~この2つはGitHub Actionsの環境変数のようですが、ドキュメントにも記載なく詳細は不明でした。
+作成したOIDCプロバイダー`token.actions.githubusercontent.com`に対してリクエストを投げてトークンを取得しているみたいで、詳しいことはドキュメントに記載されたら確認します。~~
+###### 2021/12/12追記
+GitHub Actionsのドキュメントに更新がありましたので説明を追記しました。
+https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
 
 このトークンを先ほどのWeb IDトークンファイルへ格納し、次の`configure-aws-credentials`に渡しています。
 
