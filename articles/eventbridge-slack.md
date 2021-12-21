@@ -1,8 +1,8 @@
 ---
-title: "CloudWatch Eventで監視してChatbot経由でSlackに検知させてみた"
+title: "EventBridgeで監視してChatbot経由でSlackに検知させてみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["aws","cloudwatch","slack","chatbot"]
+topics: ["aws","eventbridge","slack","chatbot"]
 published: false
 ---
 
