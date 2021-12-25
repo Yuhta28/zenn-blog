@@ -3,7 +3,7 @@ title: "EventBridgeで監視してChatbot経由でSlackに検知させてみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","eventbridge","slack","chatbot"]
-published: false
+published: true
 ---
 
 # 概要
@@ -45,9 +45,11 @@ ChatbotはIncoming Webhook不要でSlackへの権限リクエストを許可す�
 アクセス許可部分は新規に作成する場合テンプレートで自動作成してくれますので、任意のロール名を決めるだけでOKです。
 最後の通知オプションでは先ほど作成したSNSトピックを選択することで、SNSトピックに登録されたイベントを受け取ることができます。
 ![](/images/eventbridge-slack/image4.png)
+SNSを確認すると自動でサブスクリプションも登録されているので、これで連携していることが確認できます。
+![](/images/eventbridge-slack/image6.png)
 
 ## EventBridge
-元々EventBrdigeはCloudWatch Eventsをベースに構築されたサービスです。
+もともとEventBrdigeはCloudWatch Eventsをベースに構築されたサービスです。
 CloudWatch Eventsと同じAPI、エンドポイントを利用していますのでCloudWatch Eventsを使っていた人なら問題なく慣れると思います。
 メニューサイドバーからルールを選び、ルール作成画面からパターン定義を決めます。
 一定時間ごとのスケジュール呼び出しかイベント条件によって呼び出すイベントパターンがありますが、ここではイベント条件を指定します。
@@ -57,6 +59,33 @@ CloudWatch Eventsと同じAPI、エンドポイントを利用していますの
 右を見ればわかりますが、イベントパターンはJSON形式で書くこともできますので、使いまわしするイベントは保存して別のパターン定義にコピーもできます。
 :::
 
+# 検証
+一連のAWSリソースが作成できましたので、EC2をシャットダウンさせてSlackに通知がくるか確認します。
+
+## 起動中
+![](/images/eventbridge-slack/image7.png)
+
+## 停止直後
+![](/images/eventbridge-slack/image8.png)
+![](/images/eventbridge-slack/image9.png)
+SlackにEC2が停止した通知が来ました。
+
+# できないこと
+Slackに通知を簡単に飛ばしてくれるChatbotですが、その分カスタマイズ性があまりよろしくありません。
+例えば上図のメッセージ内容を編集したり、@hereをつけてメンション通知することは残念ながらできません。
+
+> Q: AWS Chatbot 通知にカスタムフォーマットを追加できますか?
+いいえ。AWS Chatbot の通知のフォーマットをカスタマイズすることはできません。
+
+https://aws.amazon.com/jp/chatbot/faqs/
+
+こうしたカスタマイズをしたい場合、従来通りLambda関数を作成してSlackに通知させます。
+
+# 所感
+EventBridgeとChatbotを使ってEC2に対して簡易的な監視を実装しました。
+本来ならCloudWatchエージェントをインストールして、メトリクス監視も行ない異常検知することが大事ですが、今回のように一時的な監視であればこれくらいで大丈夫かなと思います。
+幸いなことにMackerelメンテナンス期間中に大きな障害は起こらず、会社のEC2は問題なく稼働していたのでよかったです。
+MackerelやDatadogのようなSaaS系監視サービスを導入している企業も多いと思いますが、サービス提供元の都合でサービスが使えなくなる可能性もありますのでその時に備えて簡易的な代替機能は用意したほうがよさそうです。
 
 # 参考文献
 https://www.itmedia.co.jp/enterprise/articles/1707/14/news044.html
