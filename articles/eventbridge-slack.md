@@ -10,17 +10,14 @@ published: true
 弊社では監視サービスとしてはてな社の[Mackerel](https://ja.mackerel.io/)を利用してAWSリソースを監視しています。
 先日Mackerelがメンテナンスのため3時間ほどサービスが利用できないとアナウンスがありました。
 https://mackerel.io/ja/blog/entry/announcement/20211108
-システム監視をするサービスであるとのことからメンテナンス時間は平日水曜日の14:00~17:30でした。
+システム監視するサービスであるとのことからメンテナンス時間は平日水曜日の14:00~17:30でした。
 この時間帯にEC2が落ちているなど異常があった場合、Mackerelで検知できないため一時的な代替措置が必要となりました。
 あくまでも代替的な措置なのであまり作りこまずにサクッとできるもので運用しようと思い、Amazon EventBrdigeでEC2のステータスを監視して停止状態になったらAWS ChatbotでSlackに通知する機能を実装してみました。
-### 余談
-昔はこんな感じでCloudWatch Event(当時)からLambda連携してSlackに通知させていましたが、あれからChatbotの機能もアップデートされてできることが増えました。
-https://zenn.dev/yuta28/articles/d6abcdf226107944197b
 
 # AWS Chatbotについて
 https://aws.amazon.com/jp/chatbot/
-AWS Chatbotは昨年GA(一般公開)された「ChatOps」[^1]を実現するためのインタラクティブエージェントであり、SlackやAmazon ChimeにAWSリソースのモニタリング結果を簡単に連携できます。
-今年大幅なアップデートが行われEventBridgeによって処理されるすべてのサービスイベントを通知させることが可能となりました。
+AWS Chatbotは2020年にGA(一般公開)された「ChatOps」[^1]を実現するためのインタラクティブエージェントであり、SlackやAmazon ChimeにAWSリソースのモニタリング結果を簡単に連携できます。
+2021年に大幅なアップデートが行われEventBridgeによって処理されるすべてのサービスイベントを通知させることが可能となりました。
 https://dev.classmethod.jp/articles/chatbot-supports-all-events-from-eventbridge/
 
 これによってEC2のステータスが変更されたイベントをトリガーにSNSでChatbotに知らせてSlackに通知を送れるようになりました。
@@ -31,7 +28,7 @@ https://dev.classmethod.jp/articles/chatbot-supports-all-events-from-eventbridge
 # アーキテクチャ
 今回構築するアーキテクチャは以下の通りです。
 ![](/images/eventbridge-slack/image1.png)
-EC2が障害か何かで停止した場合、EC2のステータスが変更されたイベントをトリガーにSNSでChatbotに知らせてSlackに通知を送れるようにしています。
+EC2が障害などで停止した場合、EC2のステータスが変更されたイベントをトリガーにSNSでChatbotに知らせてSlackに通知を送れるようにしています。
 ## SNS
 まず最初にSNSの作成からはじめます。
 SNSトピックの作成は特別な設定は不要でスタンダードタイプを選択し、任意の名前をつけるだけでOKです。
@@ -86,6 +83,11 @@ EventBridgeとChatbotを使ってEC2に対して簡易的な監視を実装し�
 本来ならCloudWatchエージェントをインストールして、メトリクス監視も行ない異常検知することが大事ですが、今回のように一時的な監視であればこれくらいで大丈夫かなと思います。
 幸いなことにMackerelメンテナンス期間中に大きな障害は起こらず、会社のEC2は問題なく稼働していたのでよかったです。
 MackerelやDatadogのようなSaaS系監視サービスを導入している企業も多いと思いますが、サービス提供元の都合でサービスが使えなくなる可能性もありますのでその時に備えて簡易的な代替機能は用意したほうがよさそうです。
+
+# 余談
+昔はこんな感じでCloudWatch Event(当時)からLambda連携してSlackに通知させていましたが、あれからChatbotの機能もアップデートされてできることが増えました。
+昔の記事と今とでは状況が異なりますので、自分も記事作成する際やほかの人のブログ記事を参照する場合は気を付けようと思います。
+https://zenn.dev/yuta28/articles/d6abcdf226107944197b
 
 # 参考文献
 https://www.itmedia.co.jp/enterprise/articles/1707/14/news044.html
