@@ -119,7 +119,9 @@ Windows Terminalは上記のターミナル、コマンドラインツールを�
 https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup
 
 私は`posh-git`でGitコマンドのタブ補完と`Oh My Posh`で多少おしゃれなターミナルにカスタマイズしています。
-
+Node.jsのバージョン情報も表示されるようになりました。
+![](/images/windows-development-env/image10.png)
+*私のWindows Terminal*
 # Scoop
 https://scoop.sh/
 Windowsでソフトウェアをインストールする際はGUIでブラウザ画面からダブルクリックしてダウンロードしてインストールすることが一般的です。
