@@ -2,7 +2,7 @@
 title: "WindowsPCでWeb開発におススメなツールを紹介してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["Windows","scoop","WSL2"]
+topics: ["Windows","scoop","WSL2","powershell"]
 published: true
 ---
 # 概要
@@ -60,24 +60,12 @@ https://docs.microsoft.com/ja-jp/windows/wsl/compare-versions
 https://docs.microsoft.com/ja-jp/windows/wsl/install-win10
 
 ### 手順だけ見たい人向け
-#### WSL導入を有効化
 
-```powershell:PowerShell
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-## 再起動する
-```
-#### Linuxカーネル更新プログラムパッケージをダウンロード
-https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-
-#### WSL2を規定のバージョンとして設定
-
-```powershell:powershell
-wsl --set-default-version 2
-```
-#### Microsoft StoreからLinuxディストリビューションをインストール
-![](/images/windows-development-env/image3.png)
+#### 2021/12/31追記
+いつのまにかWSLの導入が簡単になっていました。
+上のインストール手順を見ればわかりますが、下の手順を実施しなくてもワンライナーで一発で実行できます。
+`wsl --install`
+このコマンドを実行すれば自動でUbuntuディストリビューションの最新版インストールまで完了します。
 
 インストール後起動しますと、新規ユーザー登録とパスワード登録を要求されますので設定します。
 初期設定が完了しますとWSLが使えるようになります。
@@ -127,7 +115,13 @@ Windows Terminalは上記のターミナル、コマンドラインツールを�
 ここでターミナルの見た目を変えたり、デフォルトの起動をWSLに変更するなど色々できます。
 私はターミナルごとに背景色を変えたり、最初にPowerShell Coreにするなど自分好みに変えました。
 ![](/images/windows-development-env/image8.png)
+ちなみにMicrosoftの公式ドキュメントを参照するとおすすめのターミナル拡張ツールが紹介されていますのでそちらもおすすめです。
+https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup
 
+私は`posh-git`でGitコマンドのタブ補完と`Oh My Posh`で多少おしゃれなターミナルにカスタマイズしています。
+Node.jsのバージョン情報も表示されるようになりました。
+![](/images/windows-development-env/image10.png)
+*私のWindows Terminal*
 # Scoop
 https://scoop.sh/
 Windowsでソフトウェアをインストールする際はGUIでブラウザ画面からダブルクリックしてダウンロードしてインストールすることが一般的です。
@@ -171,12 +165,11 @@ Creating shim for 'touch'.
 PS C:\Users\yuta_> scoop list
 Installed apps:
 
+  gh 2.4.0 [main]
   ghq 1.2.1 [main]
-  go 1.17.1 [main]
-  grep 2.5.4 [main]
+  go 1.17.5 [main]
   peco 0.5.10 [main]
-  posh-git 1.0.0 [extras]
-  touch 0.2018.07.25 [main]
+  terraform 1.1.2 [main]
   which 2.20 [main]
   ```
 
