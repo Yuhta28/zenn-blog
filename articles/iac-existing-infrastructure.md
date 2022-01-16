@@ -73,6 +73,9 @@ Terraformには`import`サブコマンドを使って既存リソースのイン
 そこでterraformerというOSSを使って、既存リソースをインポートするようにしました。
 https://github.com/GoogleCloudPlatform/terraformer
 
+また個人的な感想ですが、CloudFormationのテンプレートファイル形式であるYAML形式よりもTerraform独自のHCL形式で書かれたTerraformファイルのほうが読みやすいかなと思いました。
+将来的な運用の拡張性でもGitHub ActionsとTerraformを使ったCI/CD環境基盤の構築は可能であることは以前私が書いた記事でも検証済みですので、期待が持てると思いました。
+
 https://zenn.dev/yuta28/articles/terraform-gha
 もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
 https://www.terraform.io/cdktf
