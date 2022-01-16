@@ -3,7 +3,7 @@ title: "既存インフラをコード化する時に気を付けること"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["AWS","Terraform","IaC"]
-published: false
+published: true
 ---
 
 :::message
@@ -59,7 +59,7 @@ AWS CDKはプログラミング言語を使用してAWSリソースを構築し�
 ただチームで対応されている言語を扱ったことのあるメンバーが少なく、私自身もプログラミングがあまり得意ではなかったので、AWS CDKを使ってIaCを行なうことは断念しました。
 またAWS CDKには既存リソースをインポートする機能がなく、OSSの[former2](https://former2.com/)を使えば実現できますが、L1 Constructという抽象度の低いコードが生成されてしまうため、CDKの恩恵が受けづらいと感じました。[^1]
 (あと、生成されるコードが1系でそのまま`cdk`コマンドを実行すると失敗したのですが、あまりPythonに詳しくない私では原因がわからなかったこともあります)
-AWS CDKには下記の日本語のワークショップも用意されていて、少ない記述で簡単にAWSリソースを構築できたのは感動しましたので、後述のCDK for Terraformで再挑戦したみたいと思います。
+AWS CDKには下記の日本語のワークショップも用意されていて、少ない記述で簡単にAWSリソースを構築できたのは感動しましたので、後述のCDK for Terraformで再挑戦してみたいと思います。
 
 https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-9319-727a130e2d57/ja-JP/
 
@@ -74,7 +74,7 @@ Terraformには`import`サブコマンドを使って既存リソースのイン
 https://github.com/GoogleCloudPlatform/terraformer
 
 また個人的な感想ですが、CloudFormationのテンプレートファイル形式であるYAML形式よりもTerraform独自のHCL形式で書かれたTerraformファイルのほうが読みやすいかなと思いました。
-将来的な運用の拡張性でもGitHub ActionsとTerraformを使ったCI/CD環境基盤の構築は可能であることは以前私が書いた記事でも検証済みですので、期待が持てると思いました。
+将来的な運用の拡張性でもGitHub ActionsとTerraformを使ったCI/CD環境基盤の構築は可能であることは以前私が書いた記事でも検証済みですので期待が持てると思いました。
 
 https://zenn.dev/yuta28/articles/terraform-gha
 もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
@@ -223,6 +223,17 @@ JAWS-UGのLTではEBSを含めた状態でほかのAWSリソースをインポ�
 :::
 
 ![](/images/iac-existing-infrastructure/image2.png)
+
+マネージャーにも相談しましたが現状EBSに関しては直接手でtfファイルを書いてコード化しようと考えています。
+
+# 所感
+既存リソースをIaC化することは思ったよりも難しいということがわかりました。
+AWSも既存リソースを簡単にインポートしてくれるツールがまだ提供されていないことから、既存リソースの難しさは最初からコード化するよりも大変ということがわかります。
+今年前半期は主要サービス部分をTerraformでコード管理して、後半期に全リソースをIaC化してチーム内にIaC運用を広めることを目標に今年1年頑張っていきたいと思います。
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](9451b65c43754e65a6ffdaf5c8628c73)
 
 # 参考文献
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
