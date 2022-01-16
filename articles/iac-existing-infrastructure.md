@@ -70,6 +70,8 @@ https://www.terraform.io/
 最終的にTerraformを使ってIaC化を実現することが今のチームにもっとも適していると思いました。
 Terraformには`import`サブコマンドを使って既存リソースのインポートができます。
 ただ`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてインポートできないため、対象リソースの数が多いと辛くなるという問題がありました。
+そこでterraformerというOSSを使って、既存リソースをインポートするようにしました。
+https://github.com/GoogleCloudPlatform/terraformer
 
 https://zenn.dev/yuta28/articles/terraform-gha
 もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
