@@ -65,6 +65,10 @@ https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-931
 
 [^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
 
+## Terraform
+https://www.terraform.io/
+最終的にTerraformを使ってIaC化を実現することが今のチームにもっとも適していると思いました。
+
 https://zenn.dev/yuta28/articles/terraform-gha
 もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
 https://www.terraform.io/cdktf
