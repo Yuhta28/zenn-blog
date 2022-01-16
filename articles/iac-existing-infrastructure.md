@@ -66,7 +66,6 @@ https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-931
 [^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
 
 ## Terraform
-https://www.hashicorp.com/products/terraform
 最終的にTerraformを使ってIaC化を実現するのが今のチームにもっとも適していると思いました。
 Terraformには`import`サブコマンドを使って既存リソースのインポートができます。
 当初はこれを使って既存リソースをコード化しようと思いましたが、`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてのインポートができず、対象リソースの数が多いとコード化することが辛くなるという問題がありました。
@@ -77,6 +76,9 @@ https://zenn.dev/yuta28/articles/terraform-gha
 もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
 https://www.terraform.io/cdktf
 まだベータ版ですので本番運用するのは難しそうですが、これがGAされればTerraformからAWS CDKへの移行も容易になるのかなと思います。
+
+# ハマった点
+ただそれでも既存リソースでハマった点が出てきましたので、その部分について紹介します。
 
 # 参考文献
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
