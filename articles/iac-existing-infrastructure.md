@@ -83,6 +83,33 @@ https://www.terraform.io/cdktf
 
 # ハマった点
 ただそれでも既存リソースでハマった点が出てきましたので、その部分について紹介します。
+## Terraformとterraformerのバージョン差異
+
+```bash
+$ terraform --version
+Terraform v1.1.3
+on linux_amd64
+$ cat terraform.tfstate | jq -r '. | { terroform_version: .terraform_version }'
+{
+  "terroform_version": "0.12.31"
+}
+```
+
+Terraformは`.tfstate`というインフラリソース構成情報を保存するファイルを基にインフラリソースをIaC化しますが、terraformerで既存リソースインポート時に生成される`.tfstate`ファイルはバージョンが0.12系と古いものが生成されます。
+このまま`terraform init`を実行してもバージョンコンフリクトによるエラーが出てしまい、Terraformが実行できません。
+
+```bash
+$ terraform init
+
+Initializing the backend...
+╷
+│ Error: Invalid legacy provider address
+│
+│ This configuration or its associated state refers to the unqualified provider "aws".
+│
+│ You must complete the Terraform 0.13 upgrade process before upgrading to later versions.
+```
+
 
 # 参考文献
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
