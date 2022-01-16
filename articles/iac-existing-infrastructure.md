@@ -66,7 +66,7 @@ https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-931
 [^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
 
 ## Terraform
-https://www.terraform.io/
+https://www.hashicorp.com/products/terraform
 最終的にTerraformを使ってIaC化を実現するのが今のチームにもっとも適していると思いました。
 Terraformには`import`サブコマンドを使って既存リソースのインポートができます。
 当初はこれを使って既存リソースをコード化しようと思いましたが、`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてのインポートができず、対象リソースの数が多いとコード化することが辛くなるという問題がありました。
