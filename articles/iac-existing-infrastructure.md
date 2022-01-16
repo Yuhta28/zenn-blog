@@ -57,17 +57,18 @@ AWS CDKはプログラミング言語を使用してAWSリソースを構築し�
 - Go(preview)
 
 ただチームで対応されている言語を扱ったことのあるメンバーが少なく、私自身もプログラミングがあまり得意ではなかったので、AWS CDKを使ってIaCを行なうことは断念しました。
-またAWS CDKには既存リソースをインポートする機能がなく、OSSの[former2](https://former2.com/)を使えば実現できますが、L1 Constructという抽象度の低いコードが生成されてしまうため、CDKの恩恵が受けづらいと感じました。
+またAWS CDKには既存リソースをインポートする機能がなく、OSSの[former2](https://former2.com/)を使えば実現できますが、L1 Constructという抽象度の低いコードが生成されてしまうため、CDKの恩恵が受けづらいと感じました。[^1]
 (あと、生成されるコードが1系でそのまま`cdk`コマンドを実行すると失敗したのですが、あまりPythonに詳しくない私では原因がわからなかったこともあります)
 AWS CDKには下記の日本語のワークショップも用意されていて、少ない記述で簡単にAWSリソースを構築できたのは感動しましたので、後述のCDK for Terraformで再挑戦したみたいと思います。
 
 https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-9319-727a130e2d57/ja-JP/
 
+[^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
 ## Terraform
 
 https://www.terraform.io/
 
-最終的にTerraformを使ってIaC化を実現することが今のチームにもっとも適していると思いました。
+
 Terraformには`import`サブコマンドを使って既存リソースのインポートができます。
 当初はこれを使って既存リソースをコード化しようと思いましたが、`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてのインポートができず、対象リソースの数が多いとコード化することが辛くなるという問題がありました。
 ですがOSSにterraformerというツールがあり、terraformerを使って既存リソースをコード化した記事も多くありましたので、terraformでIaC化を行なうことにしました。
@@ -82,6 +83,5 @@ https://www.terraform.io/cdktf
 ただそれでも既存リソースでハマった点が出てきましたので、その部分について紹介します。
 
 # 参考文献
-https://dev.classmethod.jp/articles/aws-cdk-layer/
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
 https://beyondjapan.com/blog/2020/05/terraformer-import-existing-infrastructure/
