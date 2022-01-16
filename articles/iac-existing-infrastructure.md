@@ -115,6 +115,114 @@ Initializing the backend...
 詳しい手順はサイバーエージェントさんのテックブログが参考になるかと思います↓
 https://developers.cyberagent.co.jp/blog/archives/33331/
 
+## importできないAWSリソース
+terraformerですが全部のAWSリソースをインポートできるわけではなく、`terraformer import aws list`で一覧にあるリソースのみインポートできます。
+
+```bash
+$ terraformer import aws list
+accessanalyzer
+acm
+alb
+api_gateway
+appsync
+auto_scaling
+batch
+budgets
+cloud9
+cloudformation
+cloudfront
+cloudhsm
+cloudtrail
+cloudwatch
+codebuild
+codecommit
+codedeploy
+codepipeline
+cognito
+config
+customer_gateway
+datapipeline
+devicefarm
+docdb
+dynamodb
+ebs             #EBSについて注目
+ec2_instance
+ecr
+ecrpublic
+ecs
+efs
+eip
+eks
+elastic_beanstalk
+elasticache
+elb
+emr
+eni
+es
+firehose
+glue
+iam
+igw
+iot
+kinesis
+kms
+lambda
+logs
+media_package
+media_store
+msk
+nacl
+nat
+opsworks
+organization
+qldb
+rds
+resourcegroups
+route53
+route_table
+s3
+secretsmanager
+securityhub
+servicecatalog
+ses
+sfn
+sg
+sns
+sqs
+ssm
+subnet
+swf
+transit_gateway
+vpc
+vpc_peering
+vpn_connection
+vpn_gateway
+waf
+waf_regional
+workspaces
+xray
+```
+
+すべてのAWSリソースに対応していないとはいえ主要なAWSリソースは一通りそろっており今回のケースでは問題ないかと思いました。
+ただなぜかEBSはリストにあるにも関わらず、インポートができませんでした。
+
+```bash
+$ terraformer import aws -r ebs
+2022/01/16 14:25:57 aws importing default region
+2022/01/16 14:25:59 aws importing... ebs
+2022/01/16 14:25:59 aws done importing ebs
+2022/01/16 14:25:59 Number of resources for service ebs: 0 #インポートされず
+2022/01/16 14:25:59 aws Connecting....
+2022/01/16 14:25:59 aws save ebs
+2022/01/16 14:25:59 aws save tfstate for ebs
+```
+
+:::message alert
+JAWS-UGのLTではEBSを含めた状態でほかのAWSリソースをインポートしようとするとパニックエラーが表示されましたが、2022/1/16に再実行するとパニックエラーは出なくなりました。
+ただ変わらずEBSのインポート自体はできていませんでした。
+:::
+
+![](/images/iac-existing-infrastructure/image2.png)
 
 # 参考文献
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
