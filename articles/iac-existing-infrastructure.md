@@ -33,12 +33,51 @@ https://jawsug-bgnr.connpass.com/event/235497/
 その中で以下のツールが他社事例や日本語記事も多くありましたので、学習コストの敷居の低さからこの3つの中から検証してみました。
 
 - AWS CloudFormation
-- Terraform
 - AWS CDK
+- Terraform
 
 また選定基準としては、既存リソースをコード化する場合の難易度、コードの可読性、将来的な運用の拡張性をポイントにしました。
 将来的な運用の拡張性ですが、今後Git上にCI/CD環境基盤に構成管理ツールを実装して、`git push`したら自動デプロイされて、インフラリソースが更新されるようになるようにしたいと考えていました。
 
 ## AWS CloudFormation
+https://aws.amazon.com/jp/cloudformation/
 CloudFormationは昨年のメディアサーバー構築でも部分的に使われていて、AWSリソースだけをIaCしたい場合はピッタリなツールです。
 ただ既存リソースをインポートする場合、事前にリソースに合ったテンプレートファイルを用意しなければいけないということがあり、既存リソースのコード化には難しいと感じました。
+
+## AWS CDK
+https://aws.amazon.com/jp/cdk/
+AWS CDKはプログラミング言語を使用してAWSリソースを構築してくれます。
+2022年1月現在は以下のプログラミング言語が対応されています。
+
+- JavaScript
+- TypeScript
+- Python
+- Java
+- C#
+- Go(preview)
+
+ただチームで対応されている言語を扱ったことのあるメンバーが少なく、私自身もプログラミングがあまり得意ではなかったので、AWS CDKを使ってIaCを行なうことは断念しました。
+またAWS CDKには既存リソースをインポートする機能がなく、OSSの[former2](https://former2.com/)を使えば実現することはできますが、L1 Constructという抽象度の低いコードが生成されてしまうため、CDKの恩恵が受けづらいと感じました。[^1]
+(あと、生成されるコードが1系でそのまま`cdk`コマンドを実行すると失敗したのですが、あまりPythonに詳しくない私では原因がわからなかったこともあります)
+AWS CDKには下記の日本語のワークショップも用意されていて、少ない記述で簡単にAWSリソースを構築できたのは感動しましたので、後述のCDK for Terraformで再挑戦したみたいと思います。
+
+https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-9319-727a130e2d57/ja-JP/
+
+[^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
+
+## Terraform
+https://www.terraform.io/
+最終的にTerraformを使ってIaC化を実現するのが今のチームに最も適していると思いました。
+Terraformには`import`サブコマンドを使って既存リソースをインポートすることができます。
+当初はこれを使って既存リソースをコード化しようと思いましたが、`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてインポートすることができず、対象リソースの数が多いとコード化することが辛くなるという問題がありました。
+ですがOSSにterraformerというツールがあり、terraformerを使って既存リソースをコード化した記事も多くありましたので、terraformでIaC化を行なうことにしました。
+また個人的な感想ですが、CloudFormationのテンプレートファイル形式である、YAML形式よりもTerraform独自の言語になりますがHCL形式で書かれたTerraformファイルのほうが読みやすいかなと思いました。
+将来的な運用の拡張性でもGitHub ActionsとTerraformを使ったCI/CD環境基盤の構築は可能であることは以前私が書いた記事でも検証済みですので、期待が持てると思いました。
+https://zenn.dev/yuta28/articles/terraform-gha
+もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
+https://www.terraform.io/cdktf
+まだベータ版ですので本番運用するのは難しそうですが、これがGAされればTerraformからAWS CDKへの移行も容易になるのかなと思います。
+
+# 参考文献
+https://beyondjapan.com/blog/2020/05/terraform-resource-import/
+https://beyondjapan.com/blog/2020/05/terraformer-import-existing-infrastructure/
