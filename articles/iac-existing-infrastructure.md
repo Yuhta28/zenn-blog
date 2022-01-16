@@ -64,10 +64,6 @@ AWS CDKには下記の日本語のワークショップも用意されていて�
 https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-9319-727a130e2d57/ja-JP/
 
 [^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
-## Terraform
-
-https://www.terraform.io/
-
 
 Terraformには`import`サブコマンドを使って既存リソースのインポートができます。
 当初はこれを使って既存リソースをコード化しようと思いましたが、`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてのインポートができず、対象リソースの数が多いとコード化することが辛くなるという問題がありました。
