@@ -65,7 +65,6 @@ https://catalog.us-east-1.prod.workshops.aws/v2/workshops/99731164-1d19-4d2e-931
 
 [^1]: https://dev.classmethod.jp/articles/aws-cdk-layer/
 
-Terraformには`import`サブコマンドを使って既存リソースのインポートができます。
 当初はこれを使って既存リソースをコード化しようと思いましたが、`import`コマンドはEC2やVPC、RDSなど複数のリソースをまとめてインポートできないため、対象リソースの数が多いとコード化することが辛くなるという問題がありました。
 ですがOSSにterraformerというツールがあり、terraformerを使って既存リソースをコード化した記事も多くありましたので、terraformでIaC化を行なうことにしました。
 また個人的な感想ですが、CloudFormationのテンプレートファイル形式である、YAML形式よりもTerraform独自の言語になりますがHCL形式で書かれたTerraformファイルのほうが読みやすいかなと思いました。
