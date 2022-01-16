@@ -110,6 +110,11 @@ Initializing the backend...
 │ You must complete the Terraform 0.13 upgrade process before upgrading to later versions.
 ```
 
+解決方法としてはTerraformのバージョン管理ツールの[tfenv](https://github.com/tfutils/tfenv)で端末のTerraformバージョンを0.12系に変更するか、terraformerのtfstateファイルのバージョンをアップグレードする方法があります。
+私はtfstateファイルのTerraformのバージョンを1系にするほうを選択しました。
+詳しい手順はサイバーエージェントさんのテックブログが参考になるかと思います↓
+https://developers.cyberagent.co.jp/blog/archives/33331/
+
 
 # 参考文献
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
