@@ -104,16 +104,41 @@ limit 1000;
 
 もし他のリージョンのログも出力する設定にしていますとログの件数が増えると思いますので、`awsRegion`カラムで自身のリージョンを指定して検索することを推奨します。
 
-# 気になったこと
+# 良かった点気になった点
 CloudTrail Lakeの機能はAthenaでできることを一通り備えています。
 クエリ履歴を使えば直近使ったクエリ内容を確認できますし、よく使うクエリを保存する機能もあります。
 
+CloudTrail Lakeの優位性としてマルチアカウントに対応している点です。
+Athenaを使ったクエリ分析ではマルチリージョンまではCloudTrailのコンソール画面からAthenaテーブル作成時に対応できますが、別のAWSアカウントのCloudTrailのログまでは対応しきれていません。
+マルチアカウントのログをクエリ分析する場合、AWS Organizationでログアーカイブ用のアカウントを用意し、組織内のログをそのアカウントに一元化させる必要があります。
+CloudTrail Lakeでしたらイベントデータストア作成時にチェックボックスで組織内のすべてのアカウントを含めさせるだけでよいので手間が減ります。
+
 気になったのが料金体系です。
-CloudTrail Lakeもスキャン数に応じて課金され、1GBあたり0.005 USDと1TBで5USDのAthenaと実質同じ料金です。
-ただしCloudTrail Lakeはイベントデータストアを作成し、そこにログを取り込むため保存料が別途かかります。
+CloudTrail Lakeもスキャンサイズに応じて課金され、1GBあたり0.005 USDと1TBで5USDのAthenaと実質同じ料金です。
+ただしCloudTrail Lakeはイベントデータストアを作成し、そこにログを取り込む時に別途料金がかかります。
 ![](/images/cloudtraillake-athena/image9.png)
+若干わかりにくいですが、取り込むときの１回の操作に料金がかかりますので毎月2.5USDコストが請求されるわけではありません。ただし7年以上の長期保存されているログに対しては保存量に応じて課金されるという仕組みです。
+言い換えると最初の7年間は取り込んだ料金のみが請求されます。
+S3に１か月、1GB保存した場合の料金は0.025USD(東京リージョン)ですので仮に7年間1GBのログを保存しますと、 `0.025USD * 12 * 7 = 2.1USD` となりますのでCloudTrail Lakeに保存したほうが若干割高になります。
+(そもそも7年もStandard S3に同一のログを格納するというケースもそんなにないと思います)
+完全にAthenaからのクエリ分析を移行するというよりかはマルチアカウント運用時のログ収集を楽にするといった多少限定的なユースケースになるのかなと個人的には考えています。
+
+ほかに分からなかったことですが、スキャンサイズの基準です。
+Athenaはパーティションを定義することで、スキャン範囲を絞ることができスキャン速度改善、スキャンコスト最適化ができるのですが、CloudTrail Lakeにはパーティションを定義する設定がありません。
+一方でクエリ履歴のクエリサイズ部分を確認するとスキャン範囲が検索ごとに変わっているのが確認できます。
+![](/images/cloudtraillake-athena/image10.png)
+
+これはAWS側でスキャンサイズを最適化してくれるのでしょうか？
+ドキュメントや他の人のブログなど確認しましたが、クエリサイズについて触れているドキュメントは見つかりませんでした。
+もしスキャンサイズの最適化をAWS側で最適化してくれるのならAthenaテーブル作成時にパーティションを定義をする必要がなくなり、パーティションを追加するという手間がなくなります。
+以前S3に保存されているログをAWS Glueを使ってAthenaテーブルを作成し、パーティションを定義したことがあるのですが結構大変で理解が追いつかない部分があったのでここをAWSに任せられるなら便利かもしれませんが、ドキュメントにはっきりと記載もないので確かなことが言えません。
+この辺りわかる人がいましたらアドバイス頂けますと幸いです。
+
+
 # 参考文献
 https://dev.classmethod.jp/articles/aws-cloudtrail-lake-audit-security/
 https://docs.aws.amazon.com/ja_jp/athena/latest/ug/cloudtrail-logs.html
 https://docs.aws.amazon.com/awscloudtrail/latest/userguide/query-limitations.html
 https://aws.amazon.com/jp/cloudtrail/pricing/
+https://dev.classmethod.jp/articles/cloudtrail-lake-pricing/
+https://ermetic.com/blog/aws/testing-the-waters-first-impressions-of-cloudtrail-lake/
