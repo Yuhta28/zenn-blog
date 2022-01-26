@@ -235,6 +235,10 @@ AWSも既存リソースを簡単にインポートしてくれるツールが�
 LTのスライド資料です。
 @[speakerdeck](9451b65c43754e65a6ffdaf5c8628c73)
 
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/keep-in-mind-when-coding-existing-infrastructure-15b3
+
 # 参考文献
 https://beyondjapan.com/blog/2020/05/terraform-resource-import/
 https://beyondjapan.com/blog/2020/05/terraformer-import-existing-infrastructure/
