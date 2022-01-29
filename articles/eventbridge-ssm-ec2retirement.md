@@ -21,6 +21,8 @@ published: false
 
 ビジネス部門から再起動の希望時間をヒアリングし、EventBridgeで時間になったらSystems Managerの機能の一つであるオートメーションを実行させて対象のEC2を再起動させます。
 
+## Systems Manager
+
 ## EventBridge
 EventBridgeも以前[別の記事](https://zenn.dev/yuta28/articles/eventbridge-slack)で似たような使い方をしました。
 あの時は、特定イベントをトリガーにSNSへ通知を飛ばすイベントパターンを使いましたが、今回はスケジューリング設定を使って特定の時間になったらSystems Managerを呼び出してEC2インスタンスを再起動させるようにしました。
