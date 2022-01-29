@@ -106,8 +106,8 @@ $ systemctl status amazon-ssm-agent
 これを新規に作成したIAMロールにアタッチさせて、このIAMロールもEC2インスタンスにアタッチさせます。
 ![](/images/ssm-cloudwatch/image3.png)
 
-# System Manager実行
-SSMエージェントをインストールし、IAMロールをアタッチさせましたらEC2がSystem Manager管理配下になります。
+# Systems Manager実行
+SSMエージェントをインストールし、IAMロールをアタッチさせましたらEC2がSystems Manager管理配下になります。
 これでSystems Mananerの`Run Command`を使い、CloudWatchエージェントをインストールしてみます。
 
 :::message alert
@@ -137,7 +137,7 @@ $ systemctl status amazon-cloudwatch-agent
 CloudWatchエージェントにはウィザードで初期セットアップを簡単に済ませる機能がありますが、対象サーバーが多いと若干面倒な手順になります。
 https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/create-cloudwatch-agent-configuration-file-wizard.html
 
-そこでここでもSystem Managerを使ってCloudWatchエージェントの設定ファイルを複数台に一括で適用させます。
+そこでここでもSystems Managerを使ってCloudWatchエージェントの設定ファイルを複数台に一括で適用させます。
 
 ## パラメータ作成
 Systems Managerのパラメータストアにはパスワード情報やライセンスコードといった機密情報を格納したり、Systems Manager管理下のサーバーに設定ファイルを配置させることもできます。
