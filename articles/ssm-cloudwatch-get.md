@@ -1,8 +1,8 @@
 ---
-title: "System Managerを使ってCloudWatchエージェントを導入・設定してみた"
+title: "Systems Managerを使ってCloudWatchエージェントを導入・設定してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["AWS","CloudWatch","SystemManager"]
+topics: ["AWS","CloudWatch","SystemsManager"]
 published: true
 ---
 
@@ -11,9 +11,9 @@ published: true
 →詳しい内容はこちらの記事をご覧ください。
 https://zenn.dev/yuta28/articles/ae8b1379aa873c
 今の会社でもログ集約基盤の実装を担当していますが、今回はそこまで複雑なクエリ分析が不要である点、数百台のEC2のログ集約を実装したいという要望を踏まえて、CloudWatchエージェントを導入しCloudWatch Logsにログを集約する実装にしました。
-とはいえ一台一台にCloudWatchエージェントをインストールするのは大変ですし、CloudWatchエージェントの設定ファイルを反映するのも面倒なので、AWS System Managerを使って複数のEC2に対して一括で設定反映できる実装に取り組んでみました。
+とはいえ一台一台にCloudWatchエージェントをインストールするのは大変ですし、CloudWatchエージェントの設定ファイルを反映するのも面倒なので、AWS Systems Managerを使って複数のEC2に対して一括で設定反映できる実装に取り組んでみました。
 
-# AWS System Managerについて
+# AWS Systems Managerについて
 https://aws.amazon.com/jp/systems-manager/
 EC2インスタンスやオンプレミスのサーバー管理をエージェントソフトによって管理し、面倒な運用タスクを自動化できます。
 
@@ -23,7 +23,7 @@ EC2インスタンスやオンプレミスのサーバー管理をエージェ�
 残念ながらCentOSにはプリインストールされていないので、エージェントをインストールする必要があります。
 :::
 
-System Managerでできることに以下の機能があります。
+Systems Managerでできることに以下の機能があります。
 
 - SSH接続なしのサーバーログイン
 - 事前定義されたコマンドドキュメントからのコマンド実行
@@ -35,10 +35,10 @@ System Managerでできることに以下の機能があります。
 ![](/images/ssm-cloudwatch/image1.png)
 
 # 下準備
-EC2とSystem Managerの通信を実現するにはEC2に以下の設定が必要です。
+EC2とSystems Managerの通信を実現するにはEC2に以下の設定が必要です。
 
 - SSMエージェント導入
-- System Managerとの通信を許可するIAMロールのアタッチ
+- Systems Managerとの通信を許可するIAMロールのアタッチ
 
 今回EC2はBitnamiのWordPressの公式AMIから起動したものを使いました。
 OS情報は以下のとおりDebianです。
@@ -108,10 +108,10 @@ $ systemctl status amazon-ssm-agent
 
 # System Manager実行
 SSMエージェントをインストールし、IAMロールをアタッチさせましたらEC2がSystem Manager管理配下になります。
-これでSystem Mananerの`Run Command`を使い、CloudWatchエージェントをインストールしてみます。
+これでSystems Mananerの`Run Command`を使い、CloudWatchエージェントをインストールしてみます。
 
 :::message alert
-EC2とSystem Managerの接続に若干時間がかかります。
+EC2とSystems Managerの接続に若干時間がかかります。
 数分ほど待ってみてください。
 :::
 
@@ -119,7 +119,7 @@ EC2とSystem Managerの接続に若干時間がかかります。
 Run Commandではコマンドドキュメントという事前に定義されたコマンドを実行できます。
 コマンドドキュメントはユーザーが自由に作成できますし、AWS側でテンプレートドキュメントも多く用意されています。
 今回CloudWatchエージェントをインストールするドキュメントもすでに用意されていますのでそちらを利用します。
-ドキュメント`AWS-ConfigureAWSPackage`を選択し、インストールするAWSパッケージにCloudWatchエージェントを指定後に、System Manager管理下のEC2インスタンスにエージェントインストールが実行されます。
+ドキュメント`AWS-ConfigureAWSPackage`を選択し、インストールするAWSパッケージにCloudWatchエージェントを指定後に、Systems Manager管理下のEC2インスタンスにエージェントインストールが実行されます。
 
 ![](/images/ssm-cloudwatch/image4.png)
 ![](/images/ssm-cloudwatch/image5.png)
@@ -140,7 +140,7 @@ https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/create-clou
 そこでここでもSystem Managerを使ってCloudWatchエージェントの設定ファイルを複数台に一括で適用させます。
 
 ## パラメータ作成
-System Managerのパラメータストアにはパスワード情報やライセンスコードといった機密情報を格納したり、System Manager管理下のサーバーに設定ファイルを配置させることもできます。
+Systems Managerのパラメータストアにはパスワード情報やライセンスコードといった機密情報を格納したり、Systems Manager管理下のサーバーに設定ファイルを配置させることもできます。
 パラメータストアにCloudWatchエージェントの設定ファイルを作成し、`Run Command`で配置、セットアップを行ないます。
 
 ```json:AmazonCloudWatch-linux
@@ -210,10 +210,10 @@ $ cat /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.d/ssm_AmazonC
 ![](/images/ssm-cloudwatch/image7.png)
 
 # 所感
-System Managerを使ってCloudWatchエージェントの導入・設定をしてみました。
-CloudWatchエージェントの設定は面倒な手順も多く、Ansibleで一括反映するにしてもPlaybookの作りこみが面倒だと思いましたが、System Managerを使うことで当初想定していたよりもスムーズにログ集約基盤の構築が完了できました。
+Systems Managerを使ってCloudWatchエージェントの導入・設定をしてみました。
+CloudWatchエージェントの設定は面倒な手順も多く、Ansibleで一括反映するにしてもPlaybookの作りこみが面倒だと思いましたが、Systems Managerを使うことで当初想定していたよりもスムーズにログ集約基盤の構築が完了できました。
 
-System Managerにはまだまだ色々な機能が備わっており、運用作業の自動化推進に向けて積極的に使っていこうと思います。
+Systems Managerにはまだまだ色々な機能が備わっており、運用作業の自動化推進に向けて積極的に使っていこうと思います。
 
 # 参考文献
 https://github.com/dhoeric/ansible-aws-ssm
