@@ -84,3 +84,8 @@ EventBridgeも以前[別の記事](https://zenn.dev/yuta28/articles/eventbridge-
 あの時は、特定イベントをトリガーにSNSへ通知を飛ばすイベントパターンを使いましたが、今回はスケジューリング設定を使って特定の時間になったらSystems Managerを呼び出してEC2インスタンスを再起動させるようにしました。
 ![](/images/eventbridge-ssm-ec2retirement/image3.png)
 EventBridgeのスケジューリング設定ではcron式も使えるので定期的なバッチ処理の起動トリガーとしても優秀です。
+ターゲットの選択ではSystems Managerオートメーションを選び、ドキュメント選択から先ほど作成したRunbookを選びます。
+InstanceId部分は再起動したいEC2インスタンスのIDを入力します。
+(そのほかはデフォルト設定で大丈夫です)
+![](/images/eventbridge-ssm-ec2retirement/image5.png)
+これでEventBridgeのルールが作成されました。
