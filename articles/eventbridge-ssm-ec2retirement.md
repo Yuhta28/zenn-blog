@@ -3,7 +3,7 @@ title: "EventBridgeとSystems ManagerでEC2 Retirement時の再起動作業を�
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","eventbrige","systemsmanager"]
-published: false
+published: true
 ---
 # 背景
 たまにAWSからこんなお知らせが会社に届くことがあります。
