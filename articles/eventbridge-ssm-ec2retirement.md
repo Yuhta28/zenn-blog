@@ -89,3 +89,39 @@ InstanceId部分は再起動したいEC2インスタンスのIDを入力しま�
 (そのほかはデフォルト設定で大丈夫です)
 ![](/images/eventbridge-ssm-ec2retirement/image5.png)
 これでEventBridgeのルールが作成されました。
+
+# 実行結果
+ビジネス部門からは土曜の深夜に実施してほしいという要望でしたので、1/22(土)の深夜3時に実行するようにセットしました。
+金曜日にEventBridgeで対象EC2のInstanceIdがセットされていることを確認して仕事を終えて翌朝念のためCloudTrailからイベントログを確認してみました。
+## インスタンス停止
+![](/images/eventbridge-ssm-ec2retirement/image6.png)
+## インスタンス起動
+![](/images/eventbridge-ssm-ec2retirement/image7.png)
+
+問題なくログ上で再起動されていることが記録されました。
+EC2イベントにもリタイアメント対象のEC2イベントステータスもcompleteされており、EC2リタイアメント通知後の退避作業を自動化せることができました。
+
+# 課題
+Systems ManagerとEventBridgeを使ってEC2の再起動を自動化させましたが課題はあります。
+弊社ではサーバーの監視ツールにSaaSのMackerelを利用しています。
+https://ja.mackerel.io/
+
+外形監視とホストリソース監視をしていますが、EC2を停止する際に監視アラートが発砲し、Slackに通知が飛んできます。
+![](/images/eventbridge-ssm-ec2retirement/image8.png)
+*503エラーが起きたときのアラート検知*
+
+現状の対応策としては仕事終わりに外形監視とホストリソースを監視を一時的に解除し、翌朝に再度監視設定を戻すようにしました。
+
+MackerelにはCLI[^2]ツールがありますので、将来的にはEventBridgeでEC2を停止する前にLambdaで対象EC2の監視設定を解除して、起動後に監視設定を元に戻すような運用にしていきたいと考えています。
+[^2]: https://mackerel.io/ja/docs/entry/advanced/cli
+
+# 所感
+EventBridgeとSystems Managerを使って定常作業の自動化を実現しました。
+再起動時間に関してはビジネス部門の希望によって異なるのでEC2と時間のセットは手動にしていますが、セットした後は自分で作業しなくても勝手に夜間に再起動してくれるので運用業務改善を実現できて良かったです。
+
+Systems Managerは運用業務自動化を実現できる機能が数多く用意されていて一番気に入っているサービスですので、皆さんも試してみてください。
+
+# 参考文献
+https://dev.classmethod.jp/articles/incident-manager-create-eventbridge/
+https://dev.classmethod.jp/articles/tsnote-ec2-ssm-automation/
+https://aws.amazon.com/jp/blogs/mt/automate-remediation-actions-for-amazon-ec2-notifications-and-beyond-using-ec2-systems-manager-automation-and-aws-health/
