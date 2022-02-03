@@ -2,7 +2,7 @@
 title: "EventBridgeとSystems ManagerでEC2 Retirement時の退避作業を自動化してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["aws","eventbrige","systemsmanager"]
+topics: ["aws","eventbridge","systemsmanager"]
 published: true
 ---
 # 背景
