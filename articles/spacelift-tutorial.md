@@ -23,7 +23,7 @@ Spaceliftは、Spacelift社が開発したクラウドインフラのIaCを支�
 https://spacelift.io/product
 
 2022年現在ではTerraform以外にもPulumiやCloudFormation向けのCI/CDプラットフォームの構築も実現できるみたいです。(サイトを見るとAnsibleも近々実装される？)
-ソース管理もGitHubやBitbucketなど一般的なgitベースのソース管理システムでバージョン管理できます。
+ソース管理もGitHubやBitbucketなど一般的なGitベースのソース管理システムでバージョン管理できます。
 https://spacelift.io/integrations
 
 # 参考文献
