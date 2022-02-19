@@ -148,5 +148,61 @@ https://docs.spacelift.io/concepts/stack
 
 ![](/images/spacelift-tutorial/image5.png)
 次にバックエンドの設定を行ないます。Terraform以外にもCloudFormationやPulumiなども選択できるみたいです。
+
+![](/images/spacelift-tutorial/image6.png)
+ここではStacksの動きについて定義させています。作成するStackに管理者権限を持たせるとリソースの作成、更新、削除ができるようになります。他にもこのアカウント内で作成した別のStacksで管理しているリソースに対しても干渉できますので基本的には１個以上の管理者権限を持つStacksを作成する必要があるようです。
+デフォルトだとオフになっていますので管理者権限をオンにします。
+https://docs.spacelift.io/concepts/stack/stack-settings#administrative
+
+![](/images/spacelift-tutorial/image7.png)
+最後にこのStacksの名前やラベル付けなどを設定して保存します。
+
+![](/images/spacelift-tutorial/image8.png)
+*作成完了画面*
+
+## トリガー実行
+完了画面に記載されているとおり`master`ブランチに新しくコミットされると、Stacksは起動されますし、右上のTRIGGERをクリックしても起動できます。ここではボタンクリックでStacksを起動してみます。
+![](/images/spacelift-tutorial/image9.png)
+失敗してしまいました。
+先に`Preparing`を確認しましたが、どうやらDockerコンテナを起動してその中でStacksで管理しているTerraformを起動しているようです。
+
+```bash: Preparing
+[01FW52JWBQ6VTT4XCWG7STE43K] Pulling Docker image public.ecr.aws/spacelift/runner-terraform:latest...
+[01FW52JWBQ6VTT4XCWG7STE43K] Docker image is GO
+[01FW52JWBQ6VTT4XCWG7STE43K] Downloading Terraform 1.1.6...
+[01FW52JWBQ6VTT4XCWG7STE43K] Terraform 1.1.6 download is GO (/bin/terraform)
+[01FW52JWBQ6VTT4XCWG7STE43K] Creating Docker container...
+[01FW52JWBQ6VTT4XCWG7STE43K] Starting Docker container...
+[01FW52JWBQ6VTT4XCWG7STE43K] Docker container is GO
+```
+`Planning`を確認しましたが、AWSのクレデンシャル情報を渡していないため、Spaceliftが私のAWSアカウントにリソースを作成する権限がなくエラーが起きたようです。
+
+```bash: Planning
+[01FW52JWBQ6VTT4XCWG7STE43K] Planning changes with 0 custom hooks...
+╷
+│ Error: error configuring Terraform AWS Provider: no valid credential sources for Terraform AWS Provider found.
+│ 
+│ Please see https://registry.terraform.io/providers/hashicorp/aws
+│ for more information about providing credentials.
+│ 
+│ Error: no EC2 IMDS role found, operation error ec2imds: GetMetadata, request send failed, Get "http://169.254.169.254/latest/meta-data/iam/security-credentials/": dial tcp 169.254.169.254:80: i/o timeout
+│ 
+│ 
+│   with provider["registry.terraform.io/hashicorp/aws"],
+│   on provider.tf line 1, in provider "aws":
+│    1: provider "aws" {
+│ 
+╵
+[01FW52JWBQ6VTT4XCWG7STE43K] Unexpected exit code when planning changes: 1
+```
+
+なのでSpaceliftに私のAWSアカウントのリソース作成権限を渡してみます。
+上部メニュータブのSettingsをクリックします。
+![](/images/spacelift-tutorial/image10.png)
+## IAMロール権限設定
+![](/images/spacelift-tutorial/image11.png)
+*INTERGRATIONS画面*
+CirlceCIによるCI/CD構築やTerraformをローカル端末で実行する場合、AWSからアクセスキーとシークレットキーをダウンロードして環境変数に登録させて実行権限を付与させていましたが、SpaceliftはIAMロールを渡すことでクレデンシャル情報を渡すことなくIAMの権限を付与することができます。
+
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
