@@ -202,7 +202,7 @@ https://docs.spacelift.io/concepts/stack/stack-settings#administrative
 ## IAMロール権限設定
 ![](/images/spacelift-tutorial/image11.png)
 *INTERGRATIONS画面*
-CirlceCIによるCI/CD構築やTerraformをローカル端末で実行する場合、AWSからアクセスキーとシークレットキーをダウンロードして環境変数に登録させて実行権限を付与させていましたが、SpaceliftはIAMロールを渡すことでクレデンシャル情報を渡すことなくIAMの権限を付与することができます。
+CirlceCIによるCI/CD構築やTerraformをローカル端末で実行する場合、AWSからアクセスキーとシークレットキーをダウンロードして環境変数に登録させて実行権限を付与させていましたが、SpaceliftはIAMロールを渡すことでクレデンシャル情報を渡すことなくIAMの権限を付与できます。
 
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
