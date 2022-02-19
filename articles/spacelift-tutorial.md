@@ -205,7 +205,95 @@ https://docs.spacelift.io/concepts/stack/stack-settings#administrative
 
 
 CirlceCIによるCI/CD構築やTerraformをローカル端末で実行する場合、AWSからアクセスキーとシークレットキーをダウンロードして環境変数に登録させて実行権限を付与させていましたが、SpaceliftはIAMロールを渡すことでクレデンシャル情報を渡すことなくIAMの権限を付与できます。
-上に書かれている
+上に書かれている信頼ポリシーステートメントを新規ロールに付与してAdminポリシーをアタッチさせます。
+
+:::message alert
+今回はハンズオンなのでadminポリシーですが、権限過多ですので実運用では適切な権限ポリシーをアタッチしてください。
+:::
+そして作成したIAMのARNを下の空欄に記載します。
+![](/images/spacelift-tutorial/image12.png)
+これでIAMロールを設定しましたので、もう一度失敗したRunをリトライします。
+
+::: details Planning
+
+```bash:planning
+[01FW52JWBQ6VTT4XCWG7STE43K] Planning changes with 0 custom hooks...
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_vpc.terraform-vpc will be created
+  + resource "aws_vpc" "terraform-vpc" {
+      + arn                                  = (known after apply)
+      + cidr_block                           = "192.168.0.0/16"
+      + default_network_acl_id               = (known after apply)
+      + default_route_table_id               = (known after apply)
+      + default_security_group_id            = (known after apply)
+      + dhcp_options_id                      = (known after apply)
+      + enable_classiclink                   = (known after apply)
+      + enable_classiclink_dns_support       = (known after apply)
+      + enable_dns_hostnames                 = true
+      + enable_dns_support                   = true
+      + id                                   = (known after apply)
+      + instance_tenancy                     = "default"
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      + main_route_table_id                  = (known after apply)
+      + owner_id                             = (known after apply)
+      + tags                                 = {
+          + "Name"      = "terraform-vpc"
+          + "Terraform" = "True"
+        }
+      + tags_all                             = {
+          + "Name"      = "terraform-vpc"
+          + "Terraform" = "True"
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to: spacelift.plan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "spacelift.plan"
+[01FW52JWBQ6VTT4XCWG7STE43K] Changes are GO
+[01FW52JWBQ6VTT4XCWG7STE43K] Uploading the list of managed resources...
+[01FW52JWBQ6VTT4XCWG7STE43K] Please be aware that Run changes calculation includes Terraform output changes.
+[01FW52JWBQ6VTT4XCWG7STE43K] Resource list upload is GO
+[01FW52JWBQ6VTT4XCWG7STE43K] Generating JSON representation of the plan...
+[01FW52JWBQ6VTT4XCWG7STE43K] JSON representation is GO
+[01FW52JWBQ6VTT4XCWG7STE43K] No plan policies to evaluate
+[01FW52JWBQ6VTT4XCWG7STE43K] Encrypting workspace...
+[01FW52JWBQ6VTT4XCWG7STE43K] Uploading workspace...
+[01FW52JWBQ6VTT4XCWG7STE43K] Workspace upload is GO
+```
+
+:::
+
+![](/images/spacelift-tutorial/image13.png)
+
+Planがとおり、`terraform apply`直前の状態になりました。
+これで右上のCONFIRMボタンをクリックして、AWSのリソースを作成します。
+## リソース作成
+![](/images/spacelift-tutorial/image14.png)
+*作成完了画面*
+
+![](/images/spacelift-tutorial/image15.png)
+*VPC作成完了画面*
+
+無事にSpaceliftからVPCを作成できました。
+もちろんGitHubでブランチを切って`master`ブランチへPRがマージされた時も自動でAWSリソースが更新されます。
+![](/images/spacelift-tutorial/image16.png)
+*devブランチからTag名を変更してPR*
+
+![](/images/spacelift-tutorial/image17.png)
+*Tag名が変更された*
 
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
