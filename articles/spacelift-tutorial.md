@@ -138,7 +138,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ## Stacks作成
 次にStacksを作成します。
-StacksはSpaceliftのコンポーネントの中で最も重要な要素です。Stacksにインフラ情報のソースコードや現在のインフラ状態を保持させることでインフラリソースの管理運用ができます。
+StacksはSpaceliftのコンポーネントの中でもっとも重要な要素です。Stacksにインフラ情報のソースコードや現在のインフラ状態を保持させることでインフラリソースの管理運用ができます。
 https://docs.spacelift.io/concepts/stack
 このStacksに先ほど作成したGitHubのリポジトリを登録します。
 `ADD STACK`で新規にStacksを作成します。
