@@ -288,12 +288,15 @@ Planがとおり、`terraform apply`直前の状態になりました。
 *VPC作成完了画面*
 
 無事にSpaceliftからVPCを作成できました。
-もちろんGitHubでブランチを切って`master`ブランチへPRがマージされた時も自動でAWSリソースが更新されます。
+もちろんGitHubでブランチを切って`master`ブランチへPRがマージされたときも自動でAWSリソースが更新されます。
 ![](/images/spacelift-tutorial/image16.png)
 *devブランチからTag名を変更してPR*
 
 ![](/images/spacelift-tutorial/image17.png)
 *Tag名が変更された*
+
+
+# Policy as Code
 
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
