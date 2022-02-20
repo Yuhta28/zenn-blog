@@ -12,12 +12,12 @@ https://zenn.dev/yuta28/articles/iac-existing-infrastructure
 そしてその記事を英訳したものをdev.toにも投稿しました。
 https://dev.to/yuta28/keep-in-mind-when-coding-existing-infrastructure-15b3
 
-するとLinkedInで私の記事をご覧になったエンジニアからメッセージを頂き、やり取りしていたのですがそのエンジニアが所属されている企業のプロダクトが面白そうでしたので、ハンズオンしてみて感想を書いてみました。
+するとLinkedInで私の記事をご覧になったエンジニアからメッセージを頂き、やり取りしていたのですがそのエンジニアが所属されている企業のプロダクトが面白そうでしたので、ハンズオンをして感想を書いてみました。
 https://spacelift.io/
 
 # Spaceliftとは
 Spaceliftは、Spacelift社が開発したクラウドインフラのIaCを支援するサービスです。
-日本語情報が一切なく公式ページの概要を都度都度DeepL翻訳しながら、どうやら[Terraform Cloud](https://cloud.hashicorp.com/products/terraform)や[Atlantis](https://www.runatlantis.io/)のようにTerraformの自動実行を提供してくれるサービスのようです。(IaCのためのCI/CDプラットフォームとサイトには記載されています)
+日本語情報が一切なく公式ページの概要を翻訳して読んでみましたが、どうやら[Terraform Cloud](https://cloud.hashicorp.com/products/terraform)や[Atlantis](https://www.runatlantis.io/)のようにTerraformの自動実行を提供してくれるサービスのようです。(IaCのためのCI/CDプラットフォームとサイトには記載されています)
 
 また昨今注目されている`Policy as Code`と呼ばれるコードでポリシーを定義、管理して柔軟なアクセス制御を実現してインフラ構築の権限管理もできるようです。
 https://spacelift.io/product
@@ -295,8 +295,25 @@ Planがとおり、`terraform apply`直前の状態になりました。
 ![](/images/spacelift-tutorial/image17.png)
 *Tag名が変更された*
 
+Spaceliftを使うことでTerraformのCI/CD基盤の構築が簡単にできることがわかりました。
+次にもう一つの機能の`Policy as Code`について調べてみます。
 
 # Policy as Code
+冒頭のにも触れましたが、Policy as Codeはポリシーと定義された組織が守るべきルールやガイドラインを宣言型の言語を使って記述・管理するアプローチです。
+リソースに対するアクセス制限やリソースの使い方、起動更新削除権限などをコードで定義することで自動化し、日々変わる環境の変化に運用を対応させていく考え方です。
+コードで管理できるメリットはIaCと同じです。
+#### メリット
+- 変更履歴が記録される
+- 以前のポリシーへのロールバックが容易
+- GitHubなどのバージョン管理と連携させることでコードレビュー、CI/CDを実現
+
+Spaceliftはポリシーもコードで管理できるCI/CDプラットフォームとしての一面もあります。
+#### 定義できるポリシー一例
+- Spaceliftによる誰がログインできるか
+- Stacksへのアクセス権限
+- Push権限
+- Stacksの起動権限
 
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
+https://gihyo.jp/magazine/SD/archive/2022/202202
