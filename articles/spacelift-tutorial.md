@@ -335,6 +335,50 @@ https://github.com/spacelift-io/terraform-starter
 チュートリアルを進めますと以下のようにポリシーが作成されます。
 ![](/images/spacelift-tutorial/image18.png)
 
+例えば`Allow only safe commands`というポリシーの中身を見てみます。
+
+```rego: Allow only safe commands
+package spacelift
+
+# This task policy only allows you to exectute a few selected commands.
+#
+# You can read more about task policies here:
+#
+# https://docs.spacelift.io/concepts/policy/task-run-policy
+
+allowlist := {
+    "ls",
+    "terraform taint random_password.secret",
+}
+
+allowed { allowlist[_] == input.request.command }
+deny["Only selected commands are allowed"] { not allowed }
+
+# Learn more about sampling policy evaluations here:
+#
+# https://docs.spacelift.io/concepts/policy#sampling-policy-inputs
+sample { true }
+```
+
+これはタスクで実行できるコマンドについて制限をかけているポリシーで、`ls`と`terraform taint`コマンドのみが実行できるようになっています。
+`Settings`タブから`POLICIES`を選択して、Stacksにアタッチさせたいポリシーを選択します。
+![](/images/spacelift-tutorial/image23.png)
+ポリシーがアタッチされたStacksは操作権限や参照権限を管理できます。
+
+![](/images/spacelift-tutorial/image21.png)
+*lsコマンド*
+![](/images/spacelift-tutorial/image22.png)
+*実行拒否される*
+
+# 所感
+Spaceliftを使ってTerraformのCI/CD基盤の実装と`Policy as Code`を体験してみました。
+インフラリソースをコード化した後は、GitHubに管理してCI/CD基盤を実装することが目標とする会社も多いですが、CI/CD基盤の実装は作りこみも多く時間がかかる作業です。
+SpaceliftではそうしたCI/CD基盤の実装をマネージドに実現してかつポリシーもコード管理できるのでよさそうなサービスだと感じました。
+とは言え今のところ日本語情報が一切なくポリシー言語も独特で私は全く理解できなかったので、まだまだこうしたサービスが広まるのは先になるのかなと個人的には思っています。
+
+個別説明会も実施しているみたいですので英語が堪能で、サービスに興味がある人は申し込んでみてはいかがでしょうか。
+https://spacelift.io/schedule-demo
+
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
 https://gihyo.jp/magazine/SD/archive/2022/202202
