@@ -3,7 +3,7 @@ title: "TerraformのCI/CD基盤を自動構築してくれるサービスSpaceli
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["CI","CD","spacelift","IaC","terraform"]
-published: false
+published: true
 ---
 
 # 概要
