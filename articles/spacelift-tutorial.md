@@ -296,10 +296,22 @@ Planがとおり、`terraform apply`直前の状態になりました。
 *Tag名が変更された*
 
 Spaceliftを使うことでTerraformのCI/CD基盤の構築が簡単にできることがわかりました。
-次にもう一つの機能の`Policy as Code`について調べてみます。
+
+## タスク実行
+SpaceliftにはStacksに対してコマンドを実行できるタスクと呼ばれる機能があります。
+![](/images/spacelift-tutorial/image19.png)
+*state一覧情報*
+![](/images/spacelift-tutorial/image20.png)
+*リソース削除も可能*
+
+`terraform destroy`も実行できてしまうので扱いに注意が必要です。
+間違った操作でリソースの変更や削除が発生しないようにポリシーでルールを設定します。
+このポリシーもコードで設定でき、前述した`Policy as Code`を実現します。
+
+次にもう一つの機能である`Policy as Code`について述べていきます。
 
 # Policy as Code
-冒頭のにも触れましたが、Policy as Codeはポリシーと定義された組織が守るべきルールやガイドラインを宣言型の言語を使って記述・管理するアプローチです。
+冒頭でも触れましたが、Policy as Codeはポリシーと定義された組織が守るべきルールやガイドラインを宣言型の言語を使って記述・管理するアプローチです。
 リソースに対するアクセス制限やリソースの使い方、起動更新削除権限などをコードで定義することで自動化し、日々変わる環境の変化に運用を対応させていく考え方です。
 コードで管理できるメリットはIaCと同じです。
 #### メリット
@@ -313,6 +325,15 @@ Spaceliftはポリシーもコードで管理できるCI/CDプラットフォー
 - Stacksへのアクセス権限
 - Push権限
 - Stacksの起動権限
+
+Spaceliftでは[OPA](https://www.openpolicyagent.org/)(Open Policy Agent)と呼ばれるポリシー管理ツールと[Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)と呼ばれるポリシー言語を使ってPaCを実現しています。
+
+ちょっと初めて触る場合、勝手がわからず混乱しますがSpaceliftにはPaCを生成するチュートリアルリポジトリがありましたのでそれを使ってポリシーを作ってみます。
+https://github.com/spacelift-io/terraform-starter
+
+## ポリシー作成
+チュートリアルを進めますと以下のようにポリシーが作成されます。
+![](/images/spacelift-tutorial/image18.png)
 
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
