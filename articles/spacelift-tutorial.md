@@ -379,6 +379,10 @@ SpaceliftではそうしたCI/CD基盤の実装をマネージドに実現して
 個別説明会も実施しているみたいですので英語が堪能で、サービスに興味がある人は申し込んでみてはいかがでしょうか。
 https://spacelift.io/schedule-demo
 
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](b34cf2c6d7c3425eba9520656f6a6aae)
 # 参考文献
 https://jp.techcrunch.com/2021/02/12/2021-02-11-cloud-automation-startup-spacelift-raises-6m-series-a-led-by-blossom-capital/
 https://gihyo.jp/magazine/SD/archive/2022/202202
