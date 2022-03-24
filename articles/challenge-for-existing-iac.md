@@ -24,11 +24,41 @@ Terraformを活用したIaCで悩まれるポイントなのがディレクト�
 
 いきなりすべてのAWSリソースをIaC化するのではなく、メインプロダクト関連のリソースのみをTerraformで管理することから始めてみて小さく設計するようにしました。
 
-```bash
-ここにディレクトリ構成コピー
+```bash: ディレクトリ構成一部
+$ tree
+.
+├── README.md
+├── env
+│   ├── prd
+│   │   ├── ec2.tf
+│   │   ├── main.tf
+│   │   └── vpc.tf
+│   └── stg
+│       ├── ec2.tf
+│       ├── main.tf
+│       └── vpc.tf
+└── modules
+    ├── ec2
+    │   ├── main.tf
+    │   └── variables.tf
+    └── vpc
+        ├── main.tf
+        ├── output.tf
+        └── variables.tf
 ```
 
 弊社では`module`を使ったディレクトリ設計でIaC化してみました。
 
 
 ## moduleについて
+モジュールはTerraformの設計上で、複数のファイルをまとめて管理することができます。
+https://www.terraform.io/language/modules/syntax
+GitHubのようにTerraformのレジストリ上に他の人が作ったモジュールが、公開されてダウンロードでき自由に組み込めます。
+
+ただ今回は既存インフラリソースをインポートする必要があるため、モジュールを自作し、その中に含めることにしました。
+
+# Terraformアーキテクチャ
+今回設計したTerraformアーキテクチャは以下のようになります。
+![](/images/challenge-for-existing-iac/image1.png)
+
+`env`ディレクトリ配下を環境単位で分けて、その中で`terraform import`して既存リソースをコード管理していきます。
