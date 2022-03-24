@@ -9,7 +9,7 @@ published: true
 先日行われたDevelopers Summit 2021でZennの開発者である、catnose氏がZennの開発秘話を話されました。
 https://event.shoeisha.jp/devsumi/20210218/session/3082/
 Zennを個人で開発されており、個人開発の苦労話やZennの機能紹介などたいへんおもしろい内容でした。
-その中で、GitHubリポジトリとZennの連携、zenn-cliを使い、ローカルエディタでZennの記事作成ができるという話がありました。
+そのなかで、GitHubリポジトリとZennの連携、zenn-cliを使い、ローカルエディタでZennの記事作成ができるという話がありました。
 なのでさっそく一個お試しで作成してみました。
 
 # GitHubリポジトリとの連携

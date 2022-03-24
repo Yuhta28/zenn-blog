@@ -164,7 +164,7 @@ https://docs.spacelift.io/concepts/stack/stack-settings#administrative
 完了画面に記載されているとおり`master`ブランチに新しくコミットされると、Stacksは起動されますし、右上のTRIGGERをクリックしても起動できます。ここではボタンクリックでStacksを起動してみます。
 ![](/images/spacelift-tutorial/image9.png)
 失敗してしまいました。
-先に`Preparing`を確認しましたが、どうやらDockerコンテナを起動してその中でStacksで管理しているTerraformを起動しているようです。
+先に`Preparing`を確認しましたが、どうやらDockerコンテナを起動してそのなかでStacksで管理しているTerraformを起動しているようです。
 
 ```bash: Preparing
 [01FW52JWBQ6VTT4XCWG7STE43K] Pulling Docker image public.ecr.aws/spacelift/runner-terraform:latest...
