@@ -10,7 +10,7 @@ published: false
 この記事は以前書いた記事の続き物みたいなものです。
 https://zenn.dev/yuta28/articles/iac-existing-infrastructure
 
-会社の既存AWSリソースをTerraformを活用してIaC推進していますが、その中で躓いた部分やどのようなTerraformディレクトリ構成にしているか紹介していこうと思います。
+会社の既存AWSリソースをTerraformを活用してIaC推進していますが、そのなかで躓いた部分やどのようなTerraformディレクトリ構成にしているか紹介していこうと思います。
 
 # ディレクトリ設計
 Terraformを活用したIaCで悩まれるポイントなのがディレクトリ設計だと思います。
@@ -51,9 +51,9 @@ $ tree
 
 
 ## moduleについて
-モジュールはTerraformの設計上で、複数のファイルをまとめて管理することができます。
+モジュールは複数のリソースをまとめたテンプレートみたいなものです。
 https://www.terraform.io/language/modules/syntax
-GitHubのようにTerraformのレジストリ上に他の人が作ったモジュールが、公開されてダウンロードでき自由に組み込めます。
+GitHubのようにTerraformのレジストリ上に、他の人が作ったモジュールが公開されて利用者は自由にダウンロードして活用できます。
 
 ただ今回は既存インフラリソースをインポートする必要があるため、モジュールを自作し、その中に含めることにしました。
 
@@ -61,4 +61,4 @@ GitHubのようにTerraformのレジストリ上に他の人が作ったモジ�
 今回設計したTerraformアーキテクチャは以下のようになります。
 ![](/images/challenge-for-existing-iac/image1.png)
 
-`env`ディレクトリ配下を環境単位で分けて、その中で`terraform import`して既存リソースをコード管理していきます。
+`env`ディレクトリ配下を環境単位で分けて、そのなかで`terraform import`して既存リソースをコード管理していきます。
