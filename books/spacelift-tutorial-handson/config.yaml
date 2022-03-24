@@ -1,0 +1,9 @@
+title: "Spaceliftを使ってIaCのCI/CDを体験してみよう"
+summary: "Spaceliftを使えば簡単にIaC用のCI/CD基盤を構築できます。"
+topics: ["Terraform","Spacelift","CI","CD"]
+published: false
+price: 0 # 有料の場合200〜5000
+# 本に含めるチャプターを順番に並べましょう
+chapters:
+  - example1
+  - example2
