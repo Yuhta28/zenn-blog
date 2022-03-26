@@ -297,4 +297,32 @@ resource "aws_nat_gateway" "terraform-nat" {
 ```
 
 `main.tf`からNATゲートウェイ部分だけ抜き出しました。
-大事な要素なるのが、`for_each`と`each.key`です。
+`for_each`の代入先に指定している変数`eip-NAT-AZ`は、NATゲートウェイを作成するAZの識別子です。
+
+```hcl
+# variables.tf
+variable "eip-NAT-AZ" {
+  type        = list(string)
+  description = "NATに割り当てられているEIPのAZ"
+}
+
+# vpc.tf
+module "production-vpc" {
+  source     = "../../modules/vpc"
+
+  eip-NAT-AZ = ["a", "c", "d"]
+}
+```
+先ほど書いた`variables.tf`と`vpc.tf`です。変数`eip-NAT-AZ`はリスト型の変数を指定しています。
+例えば本番環境のNATゲートウェイはすべてのAZに割り当てています。
+イメージとして`for_each = ["a", "c", "d"]`です。そして`each.key`はリストのキーを参照しています。
+少し説明が多くなりわかりにくいかと思いますので、実際に私が実施した具体的なケースに沿って手順を説明します。
+
+## 既存NATゲートウェイのインポート作業
+先ほどの画像から`production-nat-a`のNATゲートウェイをTerraform管理下にインポートします。
+この時のインポートコマンドですが、以下のように実行します。
+
+```bash
+terraform import module.production-vpc.aws_nat_gateway.terraform-nat["a"] nat-0c03b7e0ab223c9cc
+```
+
