@@ -80,6 +80,22 @@ provider "aws" {
 `terraform apply`を実行する場所は`env`ディレクトリ配下の環境ディレクトリ直下で行ないます。リソース単位でtfファイルを作成しており、例として`vpc.tf`の中身は以下のようになります。
 
 ```hcl: vpc.tf
+module "staging-vpc" {
+  source     = "../../modules/vpc"
+  cidr_block = "192.168.0.0/16"
+  Tag_Name   = "staging"
+  public-AZ  = { a = "192.168.0.0/20", c = "192.168.16.0/20" }
+  private-AZ = { a = "192.168.128.0/20", c = "192.168.144.0/20" }
+  eip-NAT-AZ = ["a"]
+}
+```
+
+環境ごとに異なる変数値と`source`でモジュールディレクトリ配下の各種AWSのTerraform`resource`を指定しています。
+`module`ディレクトリの中身がどうなっているか確認してみましょう。
+
+::: details vpc.tf
+
+```hcl: modules/vpc/main.tf
 resource "aws_vpc" "terraform-vpc" {
   cidr_block = var.cidr_block
   tags = {
@@ -169,4 +185,70 @@ resource "aws_route_table" "terraform-private-rt" {
     Terraform = "True"
   }
 }
+```
+
+:::
+
+Terraformのリソースはこの`module`ブロック内で作成されていて、既存のAWSリソースをTerraform管理下に置きたいときは`terraform import`コマンドを実行してstate listに配置します。
+
+`terraform import module.staging-vpc.vpc.terraform-vpc.id <AWS VPC ID>`
+
+stateの詳細を表示する`terraform state show`コマンドで中身を確認してみます。
+
+```bash
+# module.staging-vpc.aws_vpc.terraform-vpc:
+resource "aws_vpc" "terraform-vpc" {
+    arn                              = "arn:aws:ec2:ap-northeast-1:XXXXXXXXXXXX:vpc/vpc-08a74159dc7faf88e"
+    assign_generated_ipv6_cidr_block = false
+    cidr_block                       = "192.168.0.0/16"
+    default_network_acl_id           = "acl-03fd8daab119829af"
+    default_route_table_id           = "rtb-0aa2c5971853c4312"
+    default_security_group_id        = "sg-02bcc9b74701a378a"
+    dhcp_options_id                  = "dopt-8f0156e8"
+    enable_classiclink               = false
+    enable_classiclink_dns_support   = false
+    enable_dns_hostnames             = false
+    enable_dns_support               = true
+    id                               = "vpc-08a74159dc7faf88e"
+    instance_tenancy                 = "default"
+    ipv6_netmask_length              = 0
+    main_route_table_id              = "rtb-0aa2c5971853c4312"
+    owner_id                         = "XXXXXXXXXXXX"
+    tags                             = {
+        "Name"      = "staging-vpc"
+        "Terraform" = "True"
+    }
+    tags_all                         = {
+        "Name"      = "staging-vpc"
+        "Terraform" = "True"
+    }
+}
+```
+
+`terraform state list`でリソースを確認すると、VPCリソースが`staging-vpc`というモジュールの中に作成されていることがわかります。
+
+```bash
+$ terraform state list
+module.staging-ec2.aws_instance.terraform-ec2
+module.staging-ec2.aws_lb.terraform-alb
+module.staging-ec2.aws_lb_listener.terraform-alb-listener
+module.staging-ec2.aws_lb_target_group.terraform-tg
+module.staging-ec2.aws_lb_target_group_attachment.terraform-tg-attach
+module.staging-ec2.aws_security_group.terraform-ec2-sg-for-ssh
+module.staging-ec2.aws_security_group.web_server_sg
+module.staging-ec2.aws_security_group_rule.inbound_http
+module.staging-ec2.aws_security_group_rule.inbound_https
+module.staging-ec2.aws_security_group_rule.outound
+module.staging-vpc.aws_internet_gateway.terraform-igw
+module.staging-vpc.aws_route_table.terraform-private-rt["a"]
+module.staging-vpc.aws_route_table.terraform-private-rt["c"]
+module.staging-vpc.aws_route_table.terraform-public-rt["a"]
+module.staging-vpc.aws_route_table.terraform-public-rt["c"]
+module.staging-vpc.aws_route_table_association.terraform-public-rt-assoc["a"]
+module.staging-vpc.aws_route_table_association.terraform-public-rt-assoc["c"]
+module.staging-vpc.aws_subnet.terraform-private-subnet["a"]
+module.staging-vpc.aws_subnet.terraform-private-subnet["c"]
+module.staging-vpc.aws_subnet.terraform-public-subnet["a"]
+module.staging-vpc.aws_subnet.terraform-public-subnet["c"]
+module.staging-vpc.aws_vpc.terraform-vpc
 ```
