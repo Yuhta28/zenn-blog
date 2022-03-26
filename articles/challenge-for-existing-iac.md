@@ -62,3 +62,32 @@ GitHubのようにTerraformのレジストリ上に、他の人が作ったモ�
 ![](/images/challenge-for-existing-iac/image1.png)
 
 `env`ディレクトリ配下を環境単位で分けて、そのなかで`terraform import`して既存リソースをコード管理していきます。
+
+また会社では環境毎にAWSアカウントを使い分けるマルチアカウントで運用しております。
+このTerraformの実行場所はStg環境内のEC2インスタンスですのでStg環境内のリソースでしたらEC2インスタンスにIAMロールをアタッチさせるだけで問題ありませんが、異なるAWSアカウントへのリソース作成を行なう場合Assume Role[^1]を使ってEC2インスタンスにPrdアカウント内のAWSリソース作成権限を渡していきます。
+[^1]: https://dev.classmethod.jp/articles/iam-role-passrole-assumerole/
+
+```json: env/prd/main.tf
+provider "aws" {
+  region = "ap-northeast-1"
+  assume_role {
+    role_arn  =  "arn:aws:iam::XXXXXXXXXXXXXXXXX:role/Terraform-Prd-Switch"
+  }
+}
+```
+
+# 各種ファイルについて
+`terraform apply`を実行する場所は`env`ディレクトリ配下の環境ディレクトリ直下で行ないます。リソース単位でtfファイルを作成しており、例として`vpc.tf`の中身は以下のようになります。
+
+```hcl: vpc.tf
+module "staging-vpc" {
+  source     = "../../modules/vpc"
+  cidr_block = "192.168.0.0/16"
+  Tag_Name   = "staging"
+  public-AZ  = { a = "192.168.0.0/20", c = "192.168.16.0/20" }
+  private-AZ = { a = "192.168.128.0/20", c = "192.168.144.0/20" }
+  eip-NAT-AZ = ["a"]
+}
+```
+
+環境毎に異なる変数値と`source`でモジュールディレクトリ配下の各種AWSのTerraform`resource`を指定しています。
