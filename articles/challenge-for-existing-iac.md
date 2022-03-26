@@ -83,7 +83,7 @@ provider "aws" {
 module "staging-vpc" {
   source     = "../../modules/vpc"
   cidr_block = "192.168.0.0/16"
-  Tag_Name   = "staging"
+  Tag_Name   = "staging"  # タグのネーミングに使う(後述)
   public-AZ  = { a = "192.168.0.0/20", c = "192.168.16.0/20" }
   private-AZ = { a = "192.168.128.0/20", c = "192.168.144.0/20" }
   eip-NAT-AZ = ["a"]
@@ -93,7 +93,7 @@ module "staging-vpc" {
 環境ごとに異なる変数値と`source`でモジュールディレクトリ配下の各種AWSのTerraform`resource`を指定しています。
 `module`ディレクトリの中身がどうなっているか確認してみましょう。
 
-::: details vpc.tf
+::: details moduleディレクトリ内のリソースファイル
 
 ```hcl: modules/vpc/main.tf
 resource "aws_vpc" "terraform-vpc" {
@@ -189,13 +189,16 @@ resource "aws_route_table" "terraform-private-rt" {
 
 :::
 
-Terraformのリソースはこの`module`ブロック内で作成されていて、既存のAWSリソースをTerraform管理下に置きたいときは`terraform import`コマンドを実行してstate listに配置します。
+Terraformのリソースはこの`module`ブロック内で作成されていて、既存のAWSリソースをTerraform管理下に置きたいときは`terraform import`コマンドを実行します。
+module配下にする場合、`terraform import module.<モジュール名>.<AWSリソース識別子>.<リソース名> リソースID`となります。
 
-`terraform import module.staging-vpc.vpc.terraform-vpc.id <AWS VPC ID>`
+###### 例
+`terraform import module.staging-vpc.aws_vpc.terraform-vpc <AWS VPC ID>`
 
-stateの詳細を表示する`terraform state show`コマンドで中身を確認してみます。
+`terraform state show`コマンドで中身を確認してみます。
 
 ```bash
+$ terraform state show module.staging-vpc.aws_vpc.terraform-vpc
 # module.staging-vpc.aws_vpc.terraform-vpc:
 resource "aws_vpc" "terraform-vpc" {
     arn                              = "arn:aws:ec2:ap-northeast-1:XXXXXXXXXXXX:vpc/vpc-08a74159dc7faf88e"
@@ -215,7 +218,7 @@ resource "aws_vpc" "terraform-vpc" {
     main_route_table_id              = "rtb-0aa2c5971853c4312"
     owner_id                         = "XXXXXXXXXXXX"
     tags                             = {
-        "Name"      = "staging-vpc"
+        "Name"      = "staging-vpc"  #個々のstagingが変数で設定した値
         "Terraform" = "True"
     }
     tags_all                         = {
@@ -225,30 +228,73 @@ resource "aws_vpc" "terraform-vpc" {
 }
 ```
 
-`terraform state list`でリソースを確認すると、VPCリソースが`staging-vpc`というモジュールの中に作成されていることがわかります。
+VPCリソースブロックのみに注目するとStg環境とPrd環境で異なる部分はVPC名部分です。
 
-```bash
-$ terraform state list
-module.staging-ec2.aws_instance.terraform-ec2
-module.staging-ec2.aws_lb.terraform-alb
-module.staging-ec2.aws_lb_listener.terraform-alb-listener
-module.staging-ec2.aws_lb_target_group.terraform-tg
-module.staging-ec2.aws_lb_target_group_attachment.terraform-tg-attach
-module.staging-ec2.aws_security_group.terraform-ec2-sg-for-ssh
-module.staging-ec2.aws_security_group.web_server_sg
-module.staging-ec2.aws_security_group_rule.inbound_http
-module.staging-ec2.aws_security_group_rule.inbound_https
-module.staging-ec2.aws_security_group_rule.outound
-module.staging-vpc.aws_internet_gateway.terraform-igw
-module.staging-vpc.aws_route_table.terraform-private-rt["a"]
-module.staging-vpc.aws_route_table.terraform-private-rt["c"]
-module.staging-vpc.aws_route_table.terraform-public-rt["a"]
-module.staging-vpc.aws_route_table.terraform-public-rt["c"]
-module.staging-vpc.aws_route_table_association.terraform-public-rt-assoc["a"]
-module.staging-vpc.aws_route_table_association.terraform-public-rt-assoc["c"]
-module.staging-vpc.aws_subnet.terraform-private-subnet["a"]
-module.staging-vpc.aws_subnet.terraform-private-subnet["c"]
-module.staging-vpc.aws_subnet.terraform-public-subnet["a"]
-module.staging-vpc.aws_subnet.terraform-public-subnet["c"]
-module.staging-vpc.aws_vpc.terraform-vpc
+```hcl:main.tf
+resource "aws_vpc" "terraform-vpc" {
+  cidr_block = var.cidr_block
+  tags = {
+    Name      = "${var.Tag_Name}-vpc" #VPC名を変数で指定
+    Terraform = "True"
+  }
+}
 ```
+
+変数に関しましては、`variables.tf`で宣言しています。
+
+```hcl:variables.tf
+variable "cidr_block" {
+  type        = string
+  description = "CIDR block"
+}
+
+variable "Tag_Name" {
+  type        = string
+  description = "Tag Name"
+}
+
+variable "public-AZ" {
+  type        = map(string)
+  description = "パブリックサブネットのAZ識別子とCIDRを紐付けたMAP変数"
+}
+
+variable "private-AZ" {
+  type        = map(string)
+  description = "プライベートサブネットのAZ識別子とCIDRを紐付けたMAP変数"
+}
+
+variable "eip-NAT-AZ" {
+  type        = list(string)
+  description = "NATに割り当てられているEIPのAZ"
+}
+```
+
+# 環境によってリソース数が異なるケース
+環境によってはコスト最適化のため、冗長性のためでリソース数が異なるケースがあります。
+例えばNATゲートウェイは冗長性確保のために本番環境は3台運用していますが、検証環境ではコスト最適化のために1台で運用しています。
+![](/images/challenge-for-existing-iac/image2.png)
+このように環境によってリソース数が異なるケースがあるときは、`for_each`を使用してリソースを作成します。
+
+## for_eachによるリソース作成
+`for_each`はTerraformリソースを動的に作成できます。
+https://www.terraform.io/language/meta-arguments/for_each
+
+## NATゲートウェイリソース
+
+```hcl: main.tf
+resource "aws_nat_gateway" "terraform-nat" {
+  for_each  = toset(var.eip-NAT-AZ)
+  subnet_id = aws_subnet.terraform-public-subnet[each.key].id
+  depends_on = [
+    aws_internet_gateway.terraform-igw
+  ]
+  allocation_id = aws_eip.terraform-nat-eip[each.key].id
+  tags = {
+    Name      = "${var.Tag_Name}-nat-${each.key}"
+    Terraform = "True"
+  }
+}
+```
+
+`main.tf`からNATゲートウェイ部分だけ抜き出しました。
+大事な要素なるのが、`for_each`と`each.key`です。
