@@ -326,3 +326,4 @@ module "production-vpc" {
 terraform import module.production-vpc.aws_nat_gateway.terraform-nat["a"] nat-0c03b7e0ab223c9cc
 ```
 
+`for_each`では既存リソースをimportする際、末尾にリスト型変数の値を指定します。
