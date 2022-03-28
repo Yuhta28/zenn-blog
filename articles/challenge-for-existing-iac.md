@@ -327,3 +327,134 @@ terraform import module.production-vpc.aws_nat_gateway.terraform-nat["a"] nat-0c
 ```
 
 `for_each`では既存リソースをimportする際、末尾にリスト型変数の値を指定します。
+
+これで`production-nat-a`のNATゲートウェイはインポートされました。
+![](/images/challenge-for-existing-iac/image3.png)
+
+```bash
+# module.production-vpc.aws_nat_gateway.terraform-nat["a"]:
+resource "aws_nat_gateway" "terraform-nat" {
+    allocation_id        = "eipalloc-08e981b377dffd8c8"
+    connectivity_type    = "public"
+    id                   = "nat-0492b0bd4d7c41925"
+    network_interface_id = "eni-0553f1d8de18c5667"
+    private_ip           = "10.0.12.211"
+    public_ip            = "52.193.71.168"
+    subnet_id            = "subnet-072af301006f0834a"
+    tags                 = {
+        "Name"      = "production-nat-a"
+        "Terraform" = "True"
+    }
+    tags_all             = {
+        "Terraform" = "True"
+    }
+}
+```
+
+同様に`[c, d]`のNATゲートウェイもインポートし、検証環境の`vpc.tf`の変数`eip-NAT-AZ`に対応する値を指定します。
+
+```hcl: vpc.tf
+# vpc.tf
+module "staging-vpc" {
+  source     = "../../modules/vpc"
+
+  eip-NAT-AZ = ["a"]
+}
+```
+
+![](/images/challenge-for-existing-iac/image4.png)
+
+```bash
+# module.staging-vpc.aws_nat_gateway.terraform-nat["a"]:
+resource "aws_nat_gateway" "terraform-nat" {
+    allocation_id        = "eipalloc-07c496c4e7edcaff4"
+    connectivity_type    = "public"
+    id                   = "nat-08e86b7052e12fb47"
+    network_interface_id = "eni-099e3939526a7b7ce"
+    private_ip           = "192.168.1.133"
+    public_ip            = "52.69.170.220"
+    subnet_id            = "subnet-010adb826637c2663"
+    tags                 = {
+        "Name"      = "staging-nat-a"
+        "Terraform" = "True"
+    }
+    tags_all             = {
+        "Name"      = "staging-nat-a"
+        "Terraform" = "True"
+    }
+}
+```
+
+これで環境ごとに差異があるリソースのインポートが完了しました。
+
+# 他モジュールのリソースを使うケース
+
+VPCモジュールで作成したサブネットのIDをEC2モジュールで使いたいケースがあると思います。
+例えば本番環境のEC2インスタンスを作成する場合、VPCモジュールで管理している`moduel.production-vpc.aws_subnet.terraform-subnet["a"]`のサブネットにEC2を配置させたいとします。
+
+```bash
+# module.staging-vpc.aws_subnet.terraform-public-subnet["a"]:
+resource "aws_subnet" "terraform-public-subnet" {
+    arn                                            = "arn:aws:ec2:ap-northeast-1:152231080651:subnet/subnet-010adb826637c2663"
+    assign_ipv6_address_on_creation                = false
+    availability_zone                              = "ap-northeast-1a"
+    availability_zone_id                           = "apne1-az4"
+    cidr_block                                     = "192.168.0.0/20"
+    enable_dns64                                   = false
+    enable_resource_name_dns_a_record_on_launch    = false
+    enable_resource_name_dns_aaaa_record_on_launch = false
+    id                                             = "subnet-010adb826637c2663"
+    ipv6_native                                    = false
+    map_customer_owned_ip_on_launch                = false
+    map_public_ip_on_launch                        = true
+    owner_id                                       = "152231080651"
+    private_dns_hostname_type_on_launch            = "ip-name"
+    tags                                           = {
+        "Name"      = "terraform-staging-public-subnet-a"
+        "Terraform" = "True"
+    }
+    tags_all                                       = {
+        "Name"      = "terraform-staging-public-subnet-a"
+        "Terraform" = "True"
+    }
+    vpc_id                                         = "vpc-08a74159dc7faf88e"
+}
+```
+
+異なるモジュールのリソースを参照する場合、`output`ブロックを使います。
+`for_each`で生成しているサブネットリソースのIDを参照する場合、for構文を使って動的に生成します。
+
+```hcl: output.tf
+output "terraform-public-subnet-id" {
+  value       = toset([for subnet in aws_subnet.terraform-public-subnet : subnet.id])
+  description = "Public Subnet ID"
+}
+```
+
+`output.tf`で宣言した値を`variables.tf`で変数に宣言します。
+
+```hcl: variables.tf
+variable "terraform-public-subnet-id" {
+  type        = list(string)
+  description = "terraform-public-subnet-id"
+}
+```
+
+EC2インスタンス作成時にサブネットIDを指定する時に以下のように変数を設定します。
+
+```hcl: module/ec2/main.tf
+resource "aws_instance" "terraform-ec2" {
+  ami                         = var.ami
+  instance_type               = var.ec2_instance_type
+  subnet_id                   = var.terraform-public-subnet-id[0] # Public Subnet ID
+  associate_public_ip_address = true
+  key_name                    = var.key_name
+  vpc_security_group_ids = [
+    aws_security_group.terraform-ec2-sg-for-ssh.id
+  ]
+  tags = {
+    Name      = "${var.Tag_Name}-ec2"
+    Terraform = "True"
+  }
+}
+```
