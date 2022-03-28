@@ -395,7 +395,7 @@ VPCモジュールで作成したサブネットのIDをEC2モジュールで使
 ```bash
 # module.staging-vpc.aws_subnet.terraform-public-subnet["a"]:
 resource "aws_subnet" "terraform-public-subnet" {
-    arn                                            = "arn:aws:ec2:ap-northeast-1:152231080651:subnet/subnet-010adb826637c2663"
+    arn                                            = "arn:aws:ec2:ap-northeast-1:XXXXXXXXXXXX:subnet/subnet-010adb826637c2663"
     assign_ipv6_address_on_creation                = false
     availability_zone                              = "ap-northeast-1a"
     availability_zone_id                           = "apne1-az4"
@@ -407,7 +407,7 @@ resource "aws_subnet" "terraform-public-subnet" {
     ipv6_native                                    = false
     map_customer_owned_ip_on_launch                = false
     map_public_ip_on_launch                        = true
-    owner_id                                       = "152231080651"
+    owner_id                                       = "XXXXXXXXXXXX"
     private_dns_hostname_type_on_launch            = "ip-name"
     tags                                           = {
         "Name"      = "terraform-staging-public-subnet-a"
@@ -440,7 +440,7 @@ variable "terraform-public-subnet-id" {
 }
 ```
 
-EC2インスタンス作成時にサブネットIDを指定する時に以下のように変数を設定します。
+EC2インスタンス作成時にサブネットIDを指定するときに以下のように変数を設定します。
 
 ```hcl: module/ec2/main.tf
 resource "aws_instance" "terraform-ec2" {
@@ -458,3 +458,79 @@ resource "aws_instance" "terraform-ec2" {
   }
 }
 ```
+
+```bash
+# module.staging-ec2.aws_instance.terraform-ec2:
+resource "aws_instance" "terraform-ec2" {
+    ami                                  = "ami-04204a8960917fd92"
+    arn                                  = "arn:aws:ec2:ap-northeast-1:XXXXXXXXXXXX:instance/i-0648452fe2fd84049"
+    associate_public_ip_address          = true
+    availability_zone                    = "ap-northeast-1a"
+    cpu_core_count                       = 1
+    cpu_threads_per_core                 = 1
+    disable_api_termination              = false
+    ebs_optimized                        = false
+    get_password_data                    = false
+    hibernation                          = false
+    id                                   = "i-0648452fe2fd84049"
+    instance_initiated_shutdown_behavior = "stop"
+    instance_state                       = "running"
+    instance_type                        = "t2.micro"
+    ipv6_address_count                   = 0
+    ipv6_addresses                       = []
+    key_name                             = "WindowsKey"
+    monitoring                           = false
+    primary_network_interface_id         = "eni-04b41dbb7f9efa81d"
+    private_dns                          = "ip-192-168-10-191.ap-northeast-1.compute.internal"
+    private_ip                           = "192.168.10.191"
+    public_ip                            = "54.248.174.200"
+    secondary_private_ips                = []
+    security_groups                      = []
+    source_dest_check                    = true
+    subnet_id                            = "subnet-010adb826637c2663"
+    tags                                 = {
+        "Name"      = "staging-ec2"
+        "Terraform" = "True"
+    }
+    tags_all                             = {
+        "Name"      = "staging-ec2"
+        "Terraform" = "True"
+    }
+    tenancy                              = "default"
+    vpc_security_group_ids               = [
+        "sg-067d2053dfc17b053",
+    ]
+
+    capacity_reservation_specification {
+        capacity_reservation_preference = "open"
+    }
+
+    credit_specification {
+        cpu_credits = "standard"
+    }
+
+    enclave_options {
+        enabled = false
+    }
+
+    metadata_options {
+        http_endpoint               = "enabled"
+        http_put_response_hop_limit = 1
+        http_tokens                 = "optional"
+        instance_metadata_tags      = "disabled"
+    }
+
+    root_block_device {
+        delete_on_termination = true
+        device_name           = "/dev/xvda"
+        encrypted             = false
+        iops                  = 100
+        tags                  = {}
+        throughput            = 0
+        volume_id             = "vol-00dd83a0bd663aa90"
+        volume_size           = 8
+        volume_type           = "gp2"
+    }
+}
+```
+
