@@ -3,7 +3,7 @@ title: "既存インフラのIaC実現へ向けた取り組み"
 emoji: "🐭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["terraform","AWS","IaC"]
-published: false
+published: true
 ---
 
 # 概要
@@ -330,6 +330,7 @@ terraform import module.production-vpc.aws_nat_gateway.terraform-nat["a"] nat-0c
 
 これで`production-nat-a`のNATゲートウェイはインポートされました。
 ![](/images/challenge-for-existing-iac/image3.png)
+*本番環境NATゲートウェイA*
 
 ```bash
 # module.production-vpc.aws_nat_gateway.terraform-nat["a"]:
@@ -363,6 +364,7 @@ module "staging-vpc" {
 ```
 
 ![](/images/challenge-for-existing-iac/image4.png)
+*検証環境NATゲートウェイA*
 
 ```bash
 # module.staging-vpc.aws_nat_gateway.terraform-nat["a"]:
@@ -459,6 +461,14 @@ resource "aws_instance" "terraform-ec2" {
 }
 ```
 
+これで以下のように`import`コマンドを実行します。
+```bash
+terraform import module.staging-ec2.aws_instance.terraform-ec2 i-0648452fe2fd84049
+```
+
+![](/images/challenge-for-existing-iac/image5.png)
+*検証環境EC2インスタンス*
+
 ```bash
 # module.staging-ec2.aws_instance.terraform-ec2:
 resource "aws_instance" "terraform-ec2" {
@@ -534,3 +544,10 @@ resource "aws_instance" "terraform-ec2" {
 }
 ```
 
+# 所感
+既存AWSリソースのインポート取り組みについて紹介しました。
+今現在会社でTerraformを使ったIaCに挑戦中ですが、既存リソースを管理することは他社事例を見てもあまり多くなく難しいということがわかりました。
+まだ道半ばですが、新規でTerraform作成して置き換えることも含めて最適なインフラ運用を目指していきたいと考えていきます。
+
+最後に、今回のTerraformディレクトリ構成をまとめた私のGitHubリポジトリを記載しておきます。
+https://github.com/Yuhta28/terraform-import
