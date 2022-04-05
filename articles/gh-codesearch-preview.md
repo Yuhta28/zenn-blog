@@ -3,7 +3,7 @@ title: "進化したGitHubのコード検索機能を試してみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["GitHub"]
-published: false
+published: true
 ---
 
 # 概要
@@ -37,7 +37,23 @@ https://cs.github.com/
 
 # Tips
 コード検索の検索範囲はデフォルトではGitHub上の全リポジトリが対象ですが、変更もできます。
+![](/images/gh-codesearch-preview/image6.png)
+*自分のリポジトリ内のみを検索範囲にする*
+スコープのカスタイマイズをすることで自分所有以外のリポジトリを検索範囲に含めて検索できます。
+![](/images/gh-codesearch-preview/image7.png)
+![](/images/gh-codesearch-preview/image8.png)
+*Microsoftリポジトリ内のJavaファイルのみを検索に含める*
+
+![](/images/gh-codesearch-preview/image9.png)
+*Javaで作成されたAzure関係のファイルを検索*
+
+# 所感
+強化されたGitHubのコード検索機能について体験してみました。
+今までGitHub内のファイル検索は使いにくいところもあり、自社内のリポジトリ内から特定のファイルを探すのも苦労しましたが、この機能なら探すのが簡単になりそうなので、皆さんも興味ありましたらぜひ使ってみてください。
+
+
+# 紹介動画
+https://www.youtube.com/watch?v=UOIPBfPXkus
 
 # 参考文献
-https://www.youtube.com/watch?v=UOIPBfPXkus
 https://www.publickey1.jp/blog/21/github_8.html
