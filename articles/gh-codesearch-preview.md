@@ -36,7 +36,7 @@ https://cs.github.com/
 *自分のリポジトリ内に存在するREADMEファイル*
 
 # Tips
-デフォルトですと検索範囲は全リポジトリですが、限定することも可能です。
+コード検索の検索範囲はデフォルトではGitHub上の全リポジトリが対象ですが、変更もできます。
 
 # 参考文献
 https://www.youtube.com/watch?v=UOIPBfPXkus
