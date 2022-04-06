@@ -23,7 +23,7 @@ https://textlint.github.io/
 textlintはデフォルトルールというものが存在せず、自分でルールの設定とプラグインが必要になります。
 ルールの設定箇所は`.textlintrc`ファイル内に記述します。
 
-```text:.textlintrc
+```json:.textlintrc
 {
     "rules": {
         "preset-ja-technical-writing": {
@@ -67,7 +67,7 @@ GitHub⇓
 https://github.com/kufu/textlint-rule-preset-smarthr
 私の校正ルールに合いそうだと思いましたので、`.textlintrc`の中身を変更しました。
 
-```text:.textlintrc
+```json:.textlintrc
 {
     "rules": {
         "preset-smarthr":{
@@ -114,7 +114,7 @@ jobs:
   reviewdog-github-check:
     name: reviewdog (github-check)
     runs-on: ubuntu-latest
-
+    
     steps:
         #reviewdogのアクション
       - uses: reviewdog/action-setup@v1
@@ -128,7 +128,7 @@ jobs:
 
       - name: cache-node-modules
         #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         env:
           cache-name: cache-node-modules
         with:
@@ -138,14 +138,15 @@ jobs:
             node-
 
       - name: Install textlint
-        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-prh'
+        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
       
       - name: Install dependent module
         run: npm install
       
-      - name: Execute textlint for ブログ記事
+      - name: Execute textlint for ブログ記事 or 技術同人誌
         run: |
           npx textlint -f checkstyle "articles/*.md" >> .textlint.log
+          npx textlint -f checkstyle "books/*/*.md" >> .textlint.log
 
       - name: Run reviewdog
         # textlintで文章上のミスがあった場合のみ、reviewdogを実行させるようにする
@@ -153,6 +154,7 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          cat .textlint.log
           cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
 ```
 
