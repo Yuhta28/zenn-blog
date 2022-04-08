@@ -8,7 +8,7 @@ published: false
 
 # 概要
 GitHubにはリポジトリにインストールして各種アプリケーションにアクセスを許可するGitHub Appsという仕組みがあります。
-[GitHub marketplace](https://github.com/marketplace)では、様々なAppsを手に入れることができます。
+[GitHub marketplace](https://github.com/marketplace)では、さまざまなAppsを手に入れることができます。
 今回は、GitHubリポジトリへのコミットを視覚化し、`README.md`をリッチなにしてくれるRepographyというアプリケーションをさわってみました。
 
 # Repographyとは
