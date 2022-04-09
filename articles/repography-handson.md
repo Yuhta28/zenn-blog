@@ -38,6 +38,27 @@ Repographyは、マークダウン形式のヴィジュアライズなダッシ�
 GitHub MarketplaceからRepographyをクリックしますと、いくつかプランを選択します。
 ![](/images/repography-handson/image2.png)
 無料プランと複数の有料プランがありますが、基本的な機能に大きな違いはなく、プライベートリポジトリの数の上限を増やすことができるようです。
+インストールできましたら、Repographyと連携させたいリポジトリを選択します。
+![](/images/repography-handson/image3.png)
+後はデモで用意されたリポジトリと同じようにダッシュボードが出力されます。
+![](/images/repography-handson/image4.png)
 
+右のフォーマットからマークダウン形式かreStructuredText形式を選択できます。
+コードをコピーして、`README.md`に張り付ければGitHubリポジトリからもダッシュボードの内容を確認できます。
+# ポスター
+ダッシュボード作成メニューの下にポスターという項目があります。
+![](/images/repography-handson/image5.png)
+かなり変わったサービスですが、Repographyで出力した内容をポスターとしてオフィスに飾ることができるようです。
+![](/images/repography-handson/image6.png)
+![](/images/repography-handson/image7.png)
+*ポスターイメージ*
+
+ポスター料金は60ユーロなので大体8000円くらいですね。
+(送料込みみたいですが、日本へ発送してくれるのでしょうか🤔)
+
+# 所感
+Repositoryについて紹介してみました。
+自分のコミット量をダッシュボードで可視化してくれるので、日々の学習のモチベーションやチームでOSS開発する時に導入すれば、頑張りが可視化されるのでモチベーション向上にもつながるかもしれませんね。
+ポスター制作は日本まで送ってくれるかは不明ですが、オシャレなテック企業っぽくなるかもしれないので、気になる企業さんは検討してみてはいかがでしょうか💡
 # 参考文献
 https://eng-blog.iij.ad.jp/archives/2242
