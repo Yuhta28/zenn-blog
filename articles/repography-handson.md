@@ -65,5 +65,8 @@ Repositoryについて紹介してみました。
 LTのスライド資料です。
 @[speakerdeck](704db58db30d49a8ae9f90b3631c6c08)
 
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/repography-makes-github-repository-beautiful-3dn3
 # 参考文献
 https://eng-blog.iij.ad.jp/archives/2242
