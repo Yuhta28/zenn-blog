@@ -28,7 +28,7 @@ jobs:
 
       - name: cache-node-modules
         #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
-        uses: pat-s/always-upload-cache@master
+        uses: pat-s/always-upload-cache@v3
         env:
           cache-name: cache-node-modules
         with:
