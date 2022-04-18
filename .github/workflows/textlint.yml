@@ -21,7 +21,8 @@ jobs:
           reviewdog_version: latest
 
         #textlintを動かすためのnodeアクション
-      - uses: actions/setup-node@v2
+#      - uses: actions/setup-node@v2
+      - uses: bahmutov/npm-install@v1
 
       - uses: actions/checkout@v2
 
