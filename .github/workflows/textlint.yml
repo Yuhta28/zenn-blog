@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - uses: actions/checkout@v2
+
         #reviewdogのアクション
       - uses: reviewdog/action-setup@v1
         with:
@@ -23,8 +25,6 @@ jobs:
         #textlintを動かすためのnodeアクション
 #      - uses: actions/setup-node@v2
       - uses: bahmutov/npm-install@v1
-
-      - uses: actions/checkout@v2
 
       - name: cache-node-modules
         #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
