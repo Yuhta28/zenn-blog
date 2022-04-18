@@ -15,15 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-        #reviewdogのアクション
-      - uses: reviewdog/action-setup@v1
+      - name: Checkout Repo
+        uses: actions/checkout@master
+
+      - name: Install reviewdog
+        uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
 
-        #textlintを動かすためのnodeアクション
-      - uses: actions/setup-node@v2
-
-      - uses: actions/checkout@v2
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
 
       - name: cache-node-modules
         #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
