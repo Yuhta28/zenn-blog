@@ -200,6 +200,13 @@ https://docs.spacelift.io/concepts/stack/stack-settings#administrative
 上部メニュータブのSettingsをクリックします。
 ![](/images/spacelift-tutorial/image10.png)
 ## IAMロール権限設定
+
+#### 2022/4/20追記
+:::message alert
+IAMロールによる権限設定ですが、これは有料プラン以上の機能のようです。私はトライアル期間中だったので無料プランでも使えるものと勘違いしていました。
+無料プランの場合はアクセスキーとシークレットキーを設定する必要があります。
+:::
+
 ![](/images/spacelift-tutorial/image11.png)
 *[ドキュメントから引用](https://docs.spacelift.io/integrations/cloud-providers/aws#setting-up-the-aws-integration)*
 
@@ -210,6 +217,7 @@ CirlceCIによるCI/CD構築やTerraformをローカル端末で実行する場�
 :::message alert
 今回はハンズオンなのでadminポリシーですが、権限過多ですので実運用では適切な権限ポリシーをアタッチしてください。
 :::
+
 そして作成したIAMのARNを下の空欄に記載します。
 ![](/images/spacelift-tutorial/image12.png)
 これでIAMロールを設定しましたので、もう一度失敗したRunをリトライします。
