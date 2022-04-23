@@ -18,6 +18,8 @@ https://dev.to/maxime1992/manage-your-dev-to-blog-posts-from-a-git-repo-and-use-
 https://dev.to/beeman/automate-your-dev-posts-using-github-actions-4hp3
 
 これらの記事を参考にしてdev.toの記事もGitHubで管理してみました。
+私のdev.toの記事はこちらのリポジトリに管理しています。私のリポジトリをクローンしても下記の手順を実行できると思います。
+https://github.com/Yuhta28/dev-to-blog
 
 # 実装
 
