@@ -22,7 +22,7 @@ https://dev.to/beeman/automate-your-dev-posts-using-github-actions-4hp3
 # 実装
 
 基本的に上の記事の手順を訳して進めますが、一部アレンジした部分もありますのでそこを詳しく説明します。
-## 1. テンプレートコピー
+## 1 テンプレートコピー
 記事作成者のGitHubリポジトリテンプレートをコピーします。
 https://github.com/maxime1992/dev.to
 
@@ -30,15 +30,15 @@ https://github.com/maxime1992/dev.to
 
 コピーできましたら、自分のGitHubにも同じリポジトリが生成されます。
 ただテンプレートにある`package.json`のYarnパッケージが古いので、`yarn upgrade --latest`でパッケージを更新します。
-## 2. dev.to APIキー作成
+## 2 dev.to APIキー作成
 
 dev.toの設定画面からAPIキーを作成します。 ![](/images/dev-github-vscode/image2.png)
 
-## 3. APIキーをGitHubに登録
+## 3 APIキーをGitHubに登録
 記事ではTravisを使って、CIを実装していましたが私はGitHub Actionsを使ってCI/CD実装しました。
 リポジトリの設定ページからGitHub Actionsで使用するシークレットに環境変数を利用できるRepository Secretを登録します。 ![](/images/dev-github-vscode/image3.png)
 
-## 4. GitHub Actions ワークフロー設定
+## 4 GitHub Actions ワークフロー設定
 下記記事では1ジョブで文書構成とdev.toへの記事投稿を同時に行なっていますが、私はジョブを複数に分けてPR時に文書校正させるジョブを実行し、マージ時にdev.toへの記事投稿を行なうジョブを実行させるようにしました。
 https://dev.to/beeman/automate-your-dev-posts-using-github-actions-4hp3
 
@@ -114,7 +114,20 @@ jobs:
         run: DEV_TO_GIT_TOKEN=${{ secrets.DEV_TO_GIT_TOKEN }} yarn run dev-to-git
 ```
 
-## 5. 新規記事作成
+## 5 GitHubとdevの連携
+
+直下の`package.json`内にdev.toの記事を管理するリポジトリのURLを記載します。
+
+```json: package.json
+  "name": "dev.to",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yuhta28/dev-to-blog.git"
+  }
+```
+
+## 6 新規記事作成
+記事IDを取得するために、先にdev.toで新規記事の作成を行なう必要があります。
 新規記事の作成ですが、3パターンあります。
 
 - ブラウザから登録する
@@ -123,10 +136,10 @@ jobs:
 
 それぞれの方法を紹介しますので、好みの方法で作成してください。
 
-### 5-1. ブラウザから登録する
+### 6-1 ブラウザから登録する
 
 これは単純にdev.toのページから記事作成ボタンを押すだけです。![](/images/dev-github-vscode/image4.png)
-### 5-2. APIから登録する
+### 6-2 APIから登録する
 
 dev.toのAPIには記事の新規作成APIがありますので、curlで叩いて記事を作成します。
 (`API_KEY`に先ほど生成したAPIキーを入れてください)
@@ -137,7 +150,7 @@ curl -X POST -H "Content-Type: application/json" \
   -d '{"article":{"title":"Title","body_markdown":"Body","published":false,"tags":["discuss", "javascript"]}}' \
   https://dev.to/api/articles
 ```
-### 5-3. VScodeのプラグインから登録する
+### 6-3 VScodeのプラグインから登録する
 
 VS Codeのプラグインから記事を新規作成します。
 https://marketplace.visualstudio.com/items?itemName=sneezry.vscode-devto
@@ -145,6 +158,15 @@ https://marketplace.visualstudio.com/items?itemName=sneezry.vscode-devto
 +ボタンから新規記事を作成できます。この方法ですと`front matter`とよばれるメタデータのテンプレートも作成してくれます。 ![](/images/dev-github-vscode/image5.png)
 
 個人的にはメタデータを作成してくれるプラグインからの新規作成がおすすめです。
+
+```markdown: front matter
+---
+title: plugin-test
+published: false
+description: 
+tags: Test
+---
+```
 
 ::: message
 APIでもできるはずなんですが、私の環境だとエラーになりました。
@@ -160,13 +182,110 @@ $ curl -X POST -H "Content-Type: application/json" \
 私の方では原因がわからずお手上げです。
 :::
 
-## 6. 記事IDを取得
-後々使う記事の固有IDを取得します。元の記事ではブラウザの開発モードで取得していますが、APIでも取得できますので、APIを使って取得する方法を紹介します。
+## 7 記事IDを取得
+記事を作成しましたらIDを取得します。元の記事ではブラウザの開発モードで取得していますが、APIでも取得できますので、APIを使って取得する方法を紹介します。
 
 ```bash: User's unpublished articles
 $ curl -H "api-key: API_KEY" https://dev.to/api/articles/me/unpublished | jq '.[].id'
 1064058
 ```
+
+## 8 記事フォルダの作成
+
+`blog-posts`ディレクトリ直下が記事フォルダとなります。
+
+テンプレートからコピーしたら`name-of-your-blog-post`ディレクトリが既にあるはずですので、これを同じ階層に新規コピーします。
+私のディレクトリではこのようになっています。
+
+```bash
+$ tree blog-posts/
+blog-posts/
+├── be-attention-to-sshkey
+│   ├── assets
+│   ├── be-attention-to-replace-a-key-pair-for-ec2-4e3j.md
+│   └── code
+├── cw-oss-cloudwatch
+│   ├── assets
+│   ├── code
+│   └── i-use-cw-which-is-oss-to-tail-aws-cloudwatch-logs-2e9g.md
+├── diffrence-ec2-risp-and-rds-ri
+│   ├── assets
+│   ├── code
+│   └── difference-between-ec2-ri-sp-and-rds-ri-1ad.md
+├── gha-with-oidc-terraform
+│   ├── assets
+│   ├── code
+│   └── github-actions-cicd-without-aws-credential-information-4no6.md
+├── keep-in-mind-coding-existing-infra
+│   ├── assets
+│   ├── code
+│   └── keep-in-mind-when-coding-existing-infrastructure-15b3.md
+├── repography-make-readme-rich
+│   ├── assets
+│   │   ├── image1.png
+│   │   └── image2.png
+│   ├── code
+│   └── repography-makes-github-repository-beautiful-3dn3.md
+└── template-posts
+    ├── assets
+    ├── code
+    └── template-blog.md
+
+21 directories, 9 files
+```
+::: message
+###### assests/codeディレクトリ
+記事内に画像やソースコードを挿入したいときはこの中にファイルを置いて相対リンクで記事に埋め込みます。
+:::
+
+## 9 記事リンクの連携
+
+記事フォルダの作成と記事IDを取得できましたら、2つを紐づける作業があります。
+`dev-to-git.json`にIDと記事フォルダにある記事ファイルのパスを記載します。
+
+```json: dev-to-git.json
+[
+  {
+    "id": 773216,
+    "relativePathToArticle": "./blog-posts/cw-oss-cloudwatch/i-use-cw-which-is-oss-to-tail-aws-cloudwatch-logs-2e9g.md"
+  },
+  {
+    "id": 784222,
+    "relativePathToArticle": "./blog-posts/be-attention-to-sshkey/be-attention-to-replace-a-key-pair-for-ec2-4e3j.md"
+  },
+  {
+    "id": 806920,
+    "relativePathToArticle": "./blog-posts/diffrence-ec2-risp-and-rds-ri/difference-between-ec2-ri-sp-and-rds-ri-1ad.md"
+  },
+  {
+    "id": 890855,
+    "relativePathToArticle": "./blog-posts/gha-with-oidc-terraform/github-actions-cicd-without-aws-credential-information-4no6.md"
+  },
+  {
+    "id": 964471,
+    "relativePathToArticle": "./blog-posts/keep-in-mind-coding-existing-infra/keep-in-mind-when-coding-existing-infrastructure-15b3.md"
+  },
+  {
+    "id": 1056501,
+    "relativePathToArticle": "./blog-posts/repography-make-readme-rich/repography-makes-github-repository-beautiful-3dn3.md"
+  }
+]
+```
+## 10 記事投稿
+これでGitHubとdev.toの記事連携は完了です。
+ブランチを切って、`git push`してmainブランチにマージすれば文書校正のCIが走ります。 ![](/images/dev-github-vscode/image6.png)
+textlintかPretterで警告が出たらジョブが失敗しますので、修正とCIを繰り返すことで文章の校正が進みます。
+CIが問題なく完了しましたらマージしてデプロイを走らせます。 ![](/images/dev-github-vscode/image7.png)
+
+先ほどのメタデータで`published`が`true`になっている記事はこの段階でdev.toに公開されうようになります。
+
+# 残課題
+記事の作成ですが、IDを取得する必要がある関係上一度dev.to側で記事を作成し、記事IDを取得してそれを`dev-to-git.json`に記載するという手間がありますので、改善できないかと考えましたがいい手を思いつきませんでした。
+とりあえずVS Codeのプラグインを使って記事の新規作成を簡単にして、IDの取得をAPIで行なうようにすることで、ブラウザ操作の介入をなくすようにしました。
+# 所感
+dev.toの記事をGitHubで管理できるようにしました。
+記事をGitHubで管理できるとバージョン管理が楽になりますし、ローカルの好みのエディターを使って記事を書くことができます。
+私のようにLinterツールを使えば文章のケアレスミスも減らせますので、皆さんもdev.toで記事を書くときはぜひこの方法で試してみてください。
 
 # 参考文献
 
