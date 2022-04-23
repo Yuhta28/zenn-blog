@@ -29,7 +29,7 @@ https://github.com/maxime1992/dev.to
 ![](/images/dev-github-vscode/image1.png)
 
 コピーできましたら、自分のGitHubにも同じリポジトリが生成されます。
-
+ただテンプレートにある`package.json`のYarnパッケージが古いので、`yarn upgrade --latest`でパッケージを更新します。
 ## 2. dev.to APIキー作成
 
 dev.toの設定画面からAPIキーを作成します。 ![](/images/dev-github-vscode/image2.png)
@@ -114,6 +114,61 @@ jobs:
         run: DEV_TO_GIT_TOKEN=${{ secrets.DEV_TO_GIT_TOKEN }} yarn run dev-to-git
 ```
 
+## 5. 新規記事作成
+新規記事の作成ですが、3パターンあります。
+
+- ブラウザから登録する
+- APIから登録する
+- VScodeのプラグインから登録する
+
+それぞれの方法を紹介しますので、好みの方法で作成してください。
+
+### 5-1. ブラウザから登録する
+
+これは単純にdev.toのページから記事作成ボタンを押すだけです。![](/images/dev-github-vscode/image4.png)
+### 5-2. APIから登録する
+
+dev.toのAPIには記事の新規作成APIがありますので、curlで叩いて記事を作成します。
+(`API_KEY`に先ほど生成したAPIキーを入れてください)
+
+```bash: Create a new article
+curl -X POST -H "Content-Type: application/json" \
+  -H "api-key: API_KEY" \
+  -d '{"article":{"title":"Title","body_markdown":"Body","published":false,"tags":["discuss", "javascript"]}}' \
+  https://dev.to/api/articles
+```
+### 5-3. VScodeのプラグインから登録する
+
+VS Codeのプラグインから記事を新規作成します。
+https://marketplace.visualstudio.com/items?itemName=sneezry.vscode-devto
+
++ボタンから新規記事を作成できます。この方法ですと`front matter`とよばれるメタデータのテンプレートも作成してくれます。 ![](/images/dev-github-vscode/image5.png)
+
+個人的にはメタデータを作成してくれるプラグインからの新規作成がおすすめです。
+
+::: message
+APIでもできるはずなんですが、私の環境だとエラーになりました。
+```bash
+$ curl -X POST -H "Content-Type: application/json" \
+-H "api-key: API_KEY" \
+-d '{"article":{"title":"Test-Tile","body_markdown":"---\ntitle:A sample article about...\npublished:false\n---\n...","published":false,"tags":["discuss", "javascript"]}}' https://dev.to/api/articles
+
+{"error":"(\u003cunknown\u003e): could not find expected ':' while scanning a simple key at line 3 column 1","status":422}
+```
+メタデータを明示するハイフン`---`が悪さをしているみたいで、ハイフンを消すと作成できます。
+冒頭のハイフンはエスケープすることで回避できましたが、末尾のハイフンはエスケープができませんでした。
+私の方では原因がわからずお手上げです。
+:::
+
+## 6. 記事IDを取得
+後々使う記事の固有IDを取得します。元の記事ではブラウザの開発モードで取得していますが、APIでも取得できますので、APIを使って取得する方法を紹介します。
+
+```bash: User's unpublished articles
+$ curl -H "api-key: API_KEY" https://dev.to/api/articles/me/unpublished | jq '.[].id'
+1064058
+```
+
 # 参考文献
 
 https://developers.forem.com/api
+https://zenn.dev/hiroga/articles/manage-dev-to-by-git
