@@ -67,21 +67,7 @@ GitHub⇓
 https://github.com/kufu/textlint-rule-preset-smarthr
 私の校正ルールに合いそうだと思いましたので、`.textlintrc`の中身を変更しました。
 
-```json:.textlintrc
-{
-    "rules": {
-        "preset-smarthr":{
-            "sentence-length": false
-        },
-        "prh": {
-            "rulePaths": [
-                "dict/smarthr-prh-basic.yml",
-                "dict/smarthr-prh-tech-word.yml"
-            ]
-        }
-    }
-}
-```
+https://github.com/Yuhta28/zenn-blog/blob/main/.textlintrc
 
 `textlint-rule-prh`の独自辞書の中身も公開してくれましたのでこちらも使ってみました。
 https://github.com/kufu/textlint-rule-preset-smarthr/tree/main/dict
@@ -95,68 +81,7 @@ https://github.com/reviewdog/reviewdog
 紹介した２つのツールを使うことで、ローカルで書く→`git push`→PRする→GtiHub Actionsが動くというCIが構築され、自動でドキュメントの校正が始まります。
 
 それではGitHub Actionsのワークフローファイルの中身を紹介していきます。
-
-# textlint.yml
-
-```yml:textlint.yml
-# This is a basic workflow to help you get started with Actions
-
-name: reviewdog
-
-# Controls when the action will run. 
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  pull_request:
-    branches: [ main ]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  reviewdog-github-check:
-    name: reviewdog (github-check)
-    runs-on: ubuntu-latest
-    
-    steps:
-        #reviewdogのアクション
-      - uses: reviewdog/action-setup@v1
-        with:
-          reviewdog_version: latest
-
-        #textlintを動かすためのnodeアクション
-      - uses: actions/setup-node@v2
-
-      - uses: actions/checkout@v2
-
-      - name: cache-node-modules
-        #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
-        uses: pat-s/always-upload-cache@v2.1.5
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node-
-
-      - name: Install textlint
-        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
-      
-      - name: Install dependent module
-        run: npm install
-      
-      - name: Execute textlint for ブログ記事 or 技術同人誌
-        run: |
-          npx textlint -f checkstyle "articles/*.md" >> .textlint.log
-          npx textlint -f checkstyle "books/*/*.md" >> .textlint.log
-
-      - name: Run reviewdog
-        # textlintで文章上のミスがあった場合のみ、reviewdogを実行させるようにする
-        if: failure()
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cat .textlint.log
-          cat .textlint.log | reviewdog -f=checkstyle -name="textlint" -reporter="github-pr-review"
-```
+https://github.com/Yuhta28/zenn-blog/blob/main/.github/workflows/textlint.yml
 
 中身について解説します。
 # ワークフローファイル解説
@@ -170,11 +95,11 @@ jobs:
 工夫した点としてcacheアクションを使うことで、ワークフローの高速化を図りました。
 ところがGitHub Actionsが提供している[actions/cache](https://github.com/actions/cache)ですが、stepsが失敗しているとキャッシュを取得しないという仕様があります。
 https://github.com/actions/cache/blob/main/action.yml#L24
-この仕様のおかげでドキュメントを校正し、textlintで記載ミスがあるとキャッシュを取得してくれず、毎回textlintのインストールを最初からインストールし直します。
-![](https://storage.googleapis.com/zenn-user-upload/umcoopmh5z5ix9b55qcy22hp6j29)
+この仕様のおかげでドキュメントを校正し、textlintで記載ミスがあるとキャッシュを取得してくれず、毎回textlintのインストールを最初からインストールし直します。 ![](https://storage.googleapis.com/zenn-user-upload/umcoopmh5z5ix9b55qcy22hp6j29)
 調べてみると有志で`actions/cache`をforkしてstepsが失敗してもキャッシュを取得するようにしたアクションを公開してくれる人がいましたので、それを使うことにしました。
-https://github.com/pat-s/always-upload-cache
-こちらを使うことで、stepsが失敗してもキャッシュを取得してくれてワークフローの処理を速めることができました。
+https://github.com/marketplace/actions/always-upload-cache
+
+これでstepsが失敗してもキャッシュを取得してくれてワークフローの処理を速めることができました。
 
 #### キャッシュ取得前
 ![](https://storage.googleapis.com/zenn-user-upload/7waih5q0yowk6bjm1ztmplh0u6b9)
