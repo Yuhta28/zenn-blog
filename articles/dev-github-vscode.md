@@ -190,6 +190,64 @@ $ curl -X POST -H "Content-Type: application/json" \
 $ curl -H "api-key: API_KEY" https://dev.to/api/articles/me/unpublished | jq '.[].id'
 1064058
 ```
+### 追記
+Goで同じようにIDを取得できるソースコードを作成しました。
+curlコマンドを書くのが面倒でしたらこちらもお試しください。
+
+```go: get-blog-id.go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/itchyny/gojq"
+)
+
+func curl() interface{} {
+	DEVAPIKEY := os.Getenv("DEVAPIKEY") //Set your dev.to API key in your environment variables
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", "https://dev.to/api/articles/me/unpublished", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req.Header.Set("api-key", DEVAPIKEY)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+	var data interface{}
+	err = json.NewDecoder(resp.Body).Decode(&data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return data
+}
+
+func main() {
+	// Parse JSON
+	query, err := gojq.Parse(".[].id")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	input := curl()
+	iter := query.Run(input) // or query.RunWithContext
+	for {
+		v, ok := iter.Next()
+		if !ok {
+			break
+		}
+		if err, ok := v.(error); ok {
+			log.Fatalln(err)
+		}
+		fmt.Printf("%1.0f\n", v)
+	}
+}
+```
 
 ## 8 記事フォルダの作成
 
@@ -291,6 +349,10 @@ dev.toの記事をGitHubで管理できるようにしました。
 私のようにLinterツールを使えば文章のケアレスミスも減らせますので、皆さんもdev.toで記事を書くときはぜひこの方法で試してみてください。
 また、記事IDの取得もスクリプトを作成して取得できるようにしたかったのですが、プログラミングスキルが弱いせいで今のところ方法が思いつきません。
 もしいい方法をご存じでしたらアドバイスいただけますと幸いです。
+
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/i-manage-my-devto-blog-in-github-repository-5880
 # 参考文献
 
 https://developers.forem.com/api
