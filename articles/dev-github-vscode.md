@@ -18,32 +18,30 @@ https://dev.to/maxime1992/manage-your-dev-to-blog-posts-from-a-git-repo-and-use-
 https://dev.to/beeman/automate-your-dev-posts-using-github-actions-4hp3
 
 私も記事作成者の[GitHubリポジトリ](https://github.com/maxime1992/dev.to)をコピーして、それを基にdev.toの記事管理専用のリポジトリを作成しました。
-https://github.com/Yuhta28/dev-to-blog
+https://github.com/Yuhta28/dev-to-blog-template
 
 記事の手順を基に自分なりにアレンジしましたので私のdev.toの記事管理の方法について紹介いたします。
 # 実装
 
 ## 1 テンプレートコピー
-記事作成者のGitHubリポジトリテンプレートをコピーします。
-https://github.com/maxime1992/dev.to
-
-![](/images/dev-github-vscode/image1.png)
+GitHubリポジトリテンプレートをコピーします。
+https://github.com/Yuhta28/dev-to-blog-template ![](/images/dev-github-vscode/image1.png)
 
 コピーできましたら、自分のGitHubにも同じリポジトリが生成されます。
-ただテンプレートにある`package.json`のYarnパッケージが古いので、`yarn upgrade --latest`でパッケージを更新します。
-## 2 dev.to APIキー作成
+念のためテンプレートにある`package.json`のYarnパッケージを、`yarn upgrade --latest`で更新します。
+## 2 DEV Community APIキー作成
 
 dev.toの設定画面からAPIキーを作成します。 ![](/images/dev-github-vscode/image2.png)
 
 ## 3 APIキーをGitHubに登録
-記事ではTravisを使って、CIを実装していましたが私はGitHub Actionsを使ってCI/CD実装しました。
+元記事ではTravisを使って、CIを実装していましたが私はGitHub Actionsを使ってCI/CDを実装しました。
 リポジトリの設定ページからGitHub Actionsで使用するシークレットに環境変数を利用できるRepository Secretを登録します。 ![](/images/dev-github-vscode/image3.png)
 
 ## 4 GitHub Actions ワークフロー設定
-下記記事では1ジョブで文書構成とdev.toへの記事投稿を同時に行なっていますが、私はジョブを複数に分けてPR時に文書校正させるジョブを実行し、マージ時にdev.toへの記事投稿を行なうジョブを実行させるようにしました。
+下記記事では1ジョブで文書校正とdev.toへの記事投稿を同時に行なっていますが、私はジョブを複数に分けてPR時に文書校正させ、マージ時にdev.toへの記事投稿を行なうようにしました。
 https://dev.to/beeman/automate-your-dev-posts-using-github-actions-4hp3
 
-元の記事ではPrettierを使ったコードフォーマットのみでしたが、ZennブログのGitHubで管理しているときに使用している、textlintとreviewdogも組み入れました。詳細はこちらの記事をご覧ください。
+元の記事ではPrettierを使ったコードフォーマットのみでしたが、ZennブログのGitHubで管理しているときに使用している、textlintとreviewdogも採用しました。詳細はこちらの記事をご覧ください。
 https://zenn.dev/yuta28/articles/blog-lint-ci-reviewdog
 
 ```yml: build.yml
@@ -151,6 +149,10 @@ curl -X POST -H "Content-Type: application/json" \
   -d '{"article":{"title":"Title","body_markdown":"Body","published":false,"tags":["discuss", "javascript"]}}' \
   https://dev.to/api/articles
 ```
+
+毎回curlコマンドを叩くのが面倒でしたらGoで同じようなことができるソースコードを作成しましたので、`DEVAPIKEY`という環境変数に先ほど取得したAPIキーをセットして実行してみてください。
+https://github.com/Yuhta28/dev-to-blog-template/blob/main/create-post.go
+
 ### 6-3 VScodeのプラグインから登録する
 
 VS Codeのプラグインから記事を新規作成します。
@@ -158,16 +160,6 @@ https://marketplace.visualstudio.com/items?itemName=sneezry.vscode-devto
 
 +ボタンから新規記事を作成できます。この方法ですと`front matter`とよばれるメタデータのテンプレートも作成してくれます。 ![](/images/dev-github-vscode/image5.png)
 
-個人的にはメタデータを作成してくれるプラグインからの新規作成がおすすめです。
-
-```markdown: front matter
----
-title: plugin-test
-published: false
-description: 
-tags: Test
----
-```
 
 ::: message
 APIでもできるはずなんですが、私の環境だとエラーになりました。
@@ -190,73 +182,18 @@ $ curl -X POST -H "Content-Type: application/json" \
 $ curl -H "api-key: API_KEY" https://dev.to/api/articles/me/unpublished | jq '.[].id'
 1064058
 ```
-### 追記
-Goで同じようにIDを取得できるソースコードを作成しました。
-curlコマンドを書くのが面倒でしたらこちらもお試しください。
 
-```go: get-blog-id.go
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-	"log"
-	"net/http"
-	"os"
-
-	"github.com/itchyny/gojq"
-)
-
-func curl() interface{} {
-	DEVAPIKEY := os.Getenv("DEVAPIKEY") //Set your dev.to API key in your environment variables
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", "https://dev.to/api/articles/me/unpublished", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	req.Header.Set("api-key", DEVAPIKEY)
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-	var data interface{}
-	err = json.NewDecoder(resp.Body).Decode(&data)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return data
-}
-
-func main() {
-	// Parse JSON
-	query, err := gojq.Parse(".[].id")
-	if err != nil {
-		log.Fatalln(err)
-	}
-	input := curl()
-	iter := query.Run(input) // or query.RunWithContext
-	for {
-		v, ok := iter.Next()
-		if !ok {
-			break
-		}
-		if err, ok := v.(error); ok {
-			log.Fatalln(err)
-		}
-		fmt.Printf("%1.0f\n", v)
-	}
-}
-```
+こちらも同じようにGoでIDを取得できるソースコードを作成しました。
+curlコマンドを書くのが面倒でしたらお試しください。
+https://github.com/Yuhta28/dev-to-blog-template/blob/main/get-blog-id.go
 
 ## 8 記事フォルダの作成
 
 `blog-posts`ディレクトリ直下が記事フォルダとなります。
-
-テンプレートからコピーしたら`name-of-your-blog-post`ディレクトリがすでにあるはずですので、これを同じ階層に新規コピーします。
+テンプレートからコピーしたら`template-posts`ディレクトリがすでにありますので、これを同じ階層に新規コピーします。
 私のディレクトリではこのようになっています。
 
-```bash
+```powershell
 $ tree blog-posts/
 blog-posts/
 ├── be-attention-to-sshkey
@@ -297,10 +234,8 @@ blog-posts/
 記事内に画像やソースコードを挿入したいときはこの中にファイルを置いて相対リンクで記事に埋め込みます。
 :::
 
-#### 追記
-テンプレートフォルダをコピーして、新規作成するのが面倒でしたのでGoでテンプレートフォルダを作成するソースコードを作成しました。`go run make-template.go`で実行し、任意のフォルダを作成できます。
-
-https://github.com/Yuhta28/dev-to-blog/blob/main/make-template.go
+Goでテンプレートフォルダを作成するソースコードはこちらです。`go run make-template.go`で実行し、任意の名称で記事フォルダを作成できます。
+https://github.com/Yuhta28/dev-to-blog-template/blob/main/make-template.go
 
 ## 9 記事リンクの連携
 
