@@ -20,7 +20,12 @@ WSLでLinuxディストリビューションを起動しなくてもWindowsで�
 
 # Podmanについておさらい
 https://podman.io/
-以前書いた記事と重複しますが、改めてPodmanについて説明いたします。Podmanとはdockerコマンドと互換性のあるコンテナエンジンです。デーモンレスで動かすことができるため、リソース消費を抑えられるというメリットがあります。
+以前書いた記事と重複しますが、あらためてPodmanについて説明いたします。Podmanとはdockerコマンドと互換性のあるコンテナエンジンです。デーモンレスで動かすことができるため、リソース消費を抑えられるというメリットがあります。
+RedHat Enterprise Linuxではdockerに替わりPodmanを使用することが推奨されています。
+RHEL8、もしくはCentOS8以降のOSでしたらPodmanやBuildahを含んだ`container-tools`モジュールをインストールできます。
+```bash
+yum(dnf) module install -y container-tools
+```
 
 
 
