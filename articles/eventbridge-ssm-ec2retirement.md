@@ -24,7 +24,7 @@ published: true
 今回のAWSアーキテクチャは以下のとおりです。
 ![](/images/eventbridge-ssm-ec2retirement/image2.png)
 
-ビジネス部門から作業の希望時間をヒアリングし、EventBridgeで時間になったらSystems Managerの機能の一つであるオートメーションを実行させて対象のEC2を停止して起動させます。
+ビジネス部門から作業の希望時間をヒアリングし、EventBridgeで時間になったらSystems Managerの機能の1つであるオートメーションを実行させて対象のEC2を停止して起動させます。
 
 ## Systems Manager
 Systems Managerは[別の記事](https://zenn.dev/yuta28/articles/ssm-cloudwatch-get)でも使いましたが、その時は`Run Command`という機能を使ってエージェントソフトインストール作業を一括で実行していました。

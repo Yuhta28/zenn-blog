@@ -316,7 +316,7 @@ SpaceliftにはStacksに対してコマンドを実行できるタスクと呼�
 間違った操作でリソースの変更や削除が発生しないようにポリシーでルールを設定します。
 このポリシーもコードで設定でき、前述した`Policy as Code`を実現します。
 
-次にもう一つの機能である`Policy as Code`について述べていきます。
+次にもう1つの機能である`Policy as Code`について述べていきます。
 
 # Policy as Code
 冒頭でも触れましたが、Policy as Codeはポリシーと定義された組織が守るべきルールやガイドラインを宣言型の言語を使って記述・管理するアプローチです。
@@ -336,7 +336,7 @@ Spaceliftはポリシーもコードで管理できるCI/CDプラットフォー
 
 Spaceliftでは[OPA](https://www.openpolicyagent.org/)(Open Policy Agent)と呼ばれるポリシー管理ツールと[Rego](https://www.openpolicyagent.org/docs/latest/policy-language/)と呼ばれるポリシー言語を使ってPaCを実現しています。
 
-ちょっと初めて触る場合、勝手がわからず混乱しますがSpaceliftにはPaCを生成するチュートリアルリポジトリがありましたのでそれを使ってポリシーを作ってみます。
+はじめて触る場合、勝手がわからず混乱しますがSpaceliftにはPaCを生成するチュートリアルリポジトリがありましたのでそれを使ってポリシーを作ってみます。
 https://github.com/spacelift-io/terraform-starter
 
 ## ポリシー作成

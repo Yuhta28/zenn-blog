@@ -66,7 +66,7 @@ AWSコンソール画面からOpsWorksのページを開いてみます。
 ![](https://storage.googleapis.com/zenn-user-upload/mjbaiuq66vpnquhdd1iiz0aqjkbq)
 
 Stackのダッシュボードが表示されますので、Add your first stackを選択します。
-Stackの種類を選ぶことができ、サンプルとChefのバージョンを選ぶことができます。初めてOpsWorksを触るときは、Sampleを選んで使用感を試すのもいいと思います。
+Stackの種類を選ぶことができ、サンプルとChefのバージョンを選ぶことができます。はじめてOpsWorksを触るときは、Sampleを選んで使用感を試すのもいいと思います。
 ![](https://storage.googleapis.com/zenn-user-upload/5f8ok3g0i4bmoz5wfz1acqvqwn3x)
 https://docs.aws.amazon.com/opsworks/latest/userguide/gettingstarted-intro.html
 ## Stackの作成
@@ -78,7 +78,7 @@ https://github.com/Yuhta28/chef-for-opsworks
 Chefのベストプラクティスがどういったものかわからないので、かなり単純なものになりましたがこちらのリポジトリを使うことで各種ミドルウェアとWordPressのインストールがChefで実行できるようになります。
 Stackを作成したら次にLayerを作成します。
 ## Layerの作成
-LayerはStackに一つ以上含まれているコンポーネントを表します。
+LayerはStackに1つ以上含まれているコンポーネントを表します。
 ![](https://storage.googleapis.com/zenn-user-upload/xmt9u7zhyaf5tkb454q09lm1d5eg)
 OpsWorksタブを選択し、名前を作成します。
 名前を作成後、LayerメニューからRecipesタブへ移動します。
@@ -103,7 +103,7 @@ OpsWorksを使ってみましたが、事前にGitでcookbookを格納したリ�
 サーバーを壊して新しく作り直すたびにエージェントをインストールし直すのは若干手間だと感じました。
 エージェントをインストールしたインスタンスからAMIを作成して次回以降はそのAMIから起動するようにすれば多少はマシになりますが、OSを変更した場合また入れ直さないといけないのでどうしたものかと考えます。
 
-もう一つ気になったのが、起動したEC2インスタンスをELBに紐づけることもできるのですがALBは非対応でCLBのみしか対応していないことです。
+もう1つ気になったのが、起動したEC2インスタンスをELBに紐づけることもできるのですがALBは非対応でCLBのみしか対応していないことです。
 現在CLBを使う運用事例は少なく、ALBが使えないのは大きなマイナスだと思います。
 
 # 所感

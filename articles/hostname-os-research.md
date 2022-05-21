@@ -107,8 +107,7 @@ abcdefghijklmnopqrstuvwxyz
 - openSUSE 15.2
 - Debian GNU/Linux 10
 
-OSはAWSのマーケットプレイス上にあるOSを適当にチョイスしました。
-では始めていきます。
+OSはAWSのマーケットプレイス上にあるものを適当にチョイスしました。それでは検証していきます。
 
 # 検証
 
