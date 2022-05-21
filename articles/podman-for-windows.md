@@ -41,7 +41,7 @@ podman 4.1.0   main   2022-05-14 02:09:32
 ```
 
 # 起動方法
-先ほどのREADMEの説明によりますとWindowsでのPodmanはWSLのディストリビューションの一つとして仮想化されたPodman Machineを起動して管理されていると記載されています。
+先ほどのREADMEの説明によりますとWindowsでのPodmanはWSLのディストリビューションの1つとして仮想化されたPodman Machineを起動して管理されていると記載されています。
 > This guest is referred to as a Podman machine and is managed with the podman machine command. On Windows, each Podman machine is backed by a virtualized Windows System for Linux (WSLv2) distribution.
 
 WindowsにPodmanをインストールしましたら、WindowsホストにPodman Machineを作成いたします。
@@ -182,8 +182,49 @@ drwxrwxrwx 1 nobody nobody 512 Apr 18 04:02 gha-with-oidc-terraform
 drwxrwxrwx 1 nobody nobody 512 Apr 18 07:20 keep-in-mind-coding-existing-infra
 drwxrwxrwx 1 nobody nobody 512 Apr 20 14:25 repography-make-readme-rich
 ```
+## Podman環境へのログイン
+Podman MachineはWSLディストリビューションの一つなのでSSHやWindows TerminalでPodman Machineへ直接ログインできます。
 
-注意点としてWindowsのパスは絶対パスでないと失敗してしまうことです。
+```powershell: Podman Machineへのログイン
+podman machine ssh                                                                           pwsh   100  17:06:23 
+Connecting to vm podman-machine-default. To close connection, use `~.` or `exit`
+Warning: Permanently added '[localhost]:64958' (ECDSA) to the list of known hosts.
+[user@Yuta-PC ~]$
+[user@Yuta-PC ~]$ cat /etc/os-release
+NAME="Fedora Linux"
+VERSION="35 (Container Image)"
+ID=fedora
+VERSION_ID=35
+VERSION_CODENAME=""
+PLATFORM_ID="platform:f35"
+PRETTY_NAME="Fedora Linux 35 (Container Image)"
+ANSI_COLOR="0;38;2;60;110;180"
+LOGO=fedora-logo-icon
+CPE_NAME="cpe:/o:fedoraproject:fedora:35"
+HOME_URL="https://fedoraproject.org/"
+DOCUMENTATION_URL="https://docs.fedoraproject.org/en-US/fedora/f35/system-administrators-guide/"
+SUPPORT_URL="https://ask.fedoraproject.org/"
+BUG_REPORT_URL="https://bugzilla.redhat.com/"
+REDHAT_BUGZILLA_PRODUCT="Fedora"
+REDHAT_BUGZILLA_PRODUCT_VERSION=35
+REDHAT_SUPPORT_PRODUCT="Fedora"
+REDHAT_SUPPORT_PRODUCT_VERSION=35
+PRIVACY_POLICY_URL="https://fedoraproject.org/wiki/Legal:PrivacyPolicy"
+VARIANT="Container Image"
+VARIANT_ID=container
+```
+
+![](/images/podman-for-windows/image2.png)
+
+OS情報を確認するとFedora LinuxなのでFedoraのアップデート情報がありましたらこれでアップデートできます。
+
+その他は基本的にDockerと同じように操作できそうです。
+
+# Podman-compose
+Podmanにもpodman-composeというdocker-composeみたいなものがあります。
+https://github.com/containers/podman-compose
+
+
 # 参考文献
 https://crunchtools.com/should-i-use-docker-compose-or-podman-compose-with-podman/
 https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/index
