@@ -77,7 +77,7 @@ https://github.com/GoogleCloudPlatform/terraformer
 将来的な運用の拡張性でもGitHub ActionsとTerraformを使ったCI/CD環境基盤の構築は可能であることは以前私が書いた記事でも検証済みですので期待が持てると思いました。
 
 https://zenn.dev/yuta28/articles/terraform-gha
-もう一つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
+もう1つ面白そうだと思ったのが、CDK for TerraformというCDKを使ってTerraformを実行できる機能です。
 https://www.terraform.io/cdktf
 まだベータ版ですので本番運用するのは難しそうですが、これがGAされればTerraformからAWS CDKへの移行も容易になるのかなと思います。
 

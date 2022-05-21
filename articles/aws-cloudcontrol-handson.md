@@ -152,7 +152,7 @@ https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/supported-res
 
 リリースされたばかりですので定期的に確認して更新されているか確認しておきましょう。
 
-公式ドキュメントにCloud Watch Logsを使ってCRUDL操作まで一通り経験できるチュートリアルがありましたので、早速始めてみたいと思います。
+公式ドキュメントにCloud Watch Logsを使ってCRUDL操作まで一通り経験できるチュートリアルがありましたので、早速はじめてみたいと思います。
 https://docs.aws.amazon.com/ja_jp/cloudcontrolapi/latest/userguide/resource-operations.html
 
 # ハンズオン

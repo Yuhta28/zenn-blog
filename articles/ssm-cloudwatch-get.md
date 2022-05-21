@@ -30,7 +30,7 @@ Systems Managerでできることに以下の機能があります。
 - 明示的なバージョン指定でのパッチ適用
 - 定常タスクのオートメーション
 
-今回は`Run Command`という事前定義されたコマンドドキュメントからのコマンド実行機能を利用して、CloudWatchエージェントのインストールとエージェントの設定反映を行い、複数WebサーバーのApacheログをCloudWatch Logsに集約できるように実装します。
+今回は`Run Command`という事前定義されたコマンドドキュメントからのコマンド実行機能を利用して、CloudWatchエージェントのインストールとエージェントの設定反映を行ない、複数WebサーバーのApacheログをCloudWatch Logsに集約できるように実装します。
 
 ![](/images/ssm-cloudwatch/image1.png)
 
