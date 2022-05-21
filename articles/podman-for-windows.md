@@ -183,7 +183,7 @@ drwxrwxrwx 1 nobody nobody 512 Apr 18 07:20 keep-in-mind-coding-existing-infra
 drwxrwxrwx 1 nobody nobody 512 Apr 20 14:25 repography-make-readme-rich
 ```
 ## Podman環境へのログイン
-Podman MachineはWSLディストリビューションの一つなのでSSHやWindows TerminalでPodman Machineへ直接ログインできます。
+Podman MachineはWSLディストリビューションの1つなのでSSHやWindows TerminalでPodman Machineへ直接ログインできます。
 
 ```powershell: Podman Machineへのログイン
 podman machine ssh                                                                           pwsh   100  17:06:23 
