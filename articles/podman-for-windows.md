@@ -350,7 +350,7 @@ Pythonで作られたシンプルなアプリコンテナを起動します。
 https://github.com/containers/podman-compose/blob/devel/examples/hello-python/App/web.py
 https://github.com/containers/podman-compose/blob/devel/examples/hello-python/docker-compose.yaml
 
-:::details　長いのでたたんでいます
+:::details (長いのでたたんでいます)
 ```powershell:Podmanコンテナ起動
 PS> podman-compose up -d
 ['podman', '--version', '']
@@ -469,7 +469,7 @@ PS> curl localhost:8080/hello.json
 WordPressコンテナも起動してみます。
 https://github.com/containers/podman-compose/blob/devel/examples/wordpress/docker-compose.yaml
 
-::: details　長いのでたたんでいます
+::: details (長いのでたたんでいます)
 ```powershell:Podmanコンテナ起動
 PS> podman-compose up -d
 ['podman', '--version', '']
