@@ -578,9 +578,13 @@ CONTAINER ID  IMAGE                                   COMMAND               CREA
 exit code: 0
 ```
 
-# docker-compose vs podman-compose
+# docker-composeとpodman-composeどっちを使うべきか
 実はPodmanでもdocker-composeは使えます。バージョン3系からdocker-composeが正式にサポートされることになりました。
 https://www.redhat.com/sysadmin/podman-docker-compose
+
+:::message alert
+docker-composeバージョン1系のみ。docker-composeバージョン2系は未対応(2022/5現在)
+:::
 ただし、サービスの有効化が必要なためWSLディストリビューションでは利用できません。
 ```bash
 $ systemctl status podman.socket
@@ -591,13 +595,28 @@ Windowsホストでも環境変数でDockerホストをセットし、Podman Mac
 
 https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md#using-api-forwarding
 
-:::message
-ホストのDockerを消すのをためらっていて未検証です。
+
+一方、podman-composeはサードパーティー製のOSSです。どちらを使う方がいいのでしょうか🤔
+このような記事を見つけました。
+https://crunchtools.com/should-i-use-docker-compose-or-podman-compose-with-podman/
+
+Red Hat社の人が表題の質問への問いに回答を示しています。
+>1. Red Hat generally recommends Kubernetes YAML instead of Compose, and we’re working towards a roadmap to deliver more and more Compose-like functionality with creating and consuming Kubernetes YAML with the podman-play/generate-kube functionality (image builds, application tear down, intiContainers, and expanded support for Kubernetes primitives in general)
+
+
+::: message
+##### 意訳
+Red HatはComposeの代わりにKubernetes YAMLを推奨しています。PodmanはKubernetes YAMLを作成・利用することでComposeライクな機能を提供しています。
 :::
-一方、podman-composeはサードパーティー製のOSSです。
+Red Hatの見解としてCompose機能を使うのではなく、Kubernetesに代表されるPod機能を使うことを推奨しているようです。Compose機能を使う場合、Red Hatはdocker-composeにもpodman-composeにも肩入れはせず中立の立場をとると述べています。
+> 2. If you still want to use Compose, Red Hat/RHEL is neutral between podman-compose and docker-compose
+
+ここで紹介されているPodの作成も以前の記事で試したことがあります。
+https://zenn.dev/yuta28/articles/23d303bb097f69095073#kube-pod-yaml-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90
+
+kubectlコマンドを使って
 # 参考文献
 https://zenn.dev/dozo/articles/0ced3feae9ac63
-https://crunchtools.com/should-i-use-docker-compose-or-podman-compose-with-podman/
 https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/index
 https://rheb.hatenablog.com/entry/2020/07/16/podman_buidah_for_docker_users
 https://rheb.hatenablog.com/entry/podman3-rootless-docker-compose
