@@ -2,8 +2,8 @@
 title: "WindowsでPodmanを触ってみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["podman","Windows","WSL","podmancompose"]
-published: false
+topics: ["podman","Windows","WSL","podmancompose","コンテナ"]
+published: true
 ---
 
 # 概要
@@ -596,7 +596,7 @@ Windowsホストでも環境変数でDockerホストをセットし、Podman Mac
 https://github.com/containers/podman/blob/main/docs/tutorials/podman-for-windows.md#using-api-forwarding
 
 
-一方、podman-composeはサードパーティー製のOSSです。どちらを使う方がいいのでしょうか🤔
+一方、podman-composeはサードパーティー製のOSSです。どちらを使うほうがいいのでしょうか🤔
 このような記事を見つけました。
 https://crunchtools.com/should-i-use-docker-compose-or-podman-compose-with-podman/
 
@@ -611,10 +611,11 @@ Red HatはComposeの代わりにKubernetes YAMLを推奨しています。Podman
 Red Hatの見解としてCompose機能を使うのではなく、Kubernetesに代表されるPod機能を使うことを推奨しているようです。Compose機能を使う場合、Red Hatはdocker-composeにもpodman-composeにも肩入れはせず中立の立場をとると述べています。
 > 2. If you still want to use Compose, Red Hat/RHEL is neutral between podman-compose and docker-compose
 
-ここで紹介されているPodの作成も以前の記事で試したことがあります。
-https://zenn.dev/yuta28/articles/23d303bb097f69095073#kube-pod-yaml-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90
+Podについては[以前試したこと](https://zenn.dev/yuta28/articles/23d303bb097f69095073#kube-pod-yaml-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90)がありますが、もう少し詳しく調べてみて記事にしたいと思います。
 
-kubectlコマンドを使って
+# 所感
+WindowsにPodmanを入れてホスト側で動かせるようにしてみました。Windowsホストでもコンテナ技術関連でやれることが増えてきて、便利だなと感じました。昨今のDocker Desktop有料化の流れもあり、今後Podmanを使う機会が増えそうなのでより理解を深めてみようと思います。
+
 # 参考文献
 https://zenn.dev/dozo/articles/0ced3feae9ac63
 https://access.redhat.com/documentation/ja-jp/red_hat_enterprise_linux/8/html/building_running_and_managing_containers/index
