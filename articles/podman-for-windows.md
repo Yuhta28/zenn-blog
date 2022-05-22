@@ -2,7 +2,7 @@
 title: "WindowsでPodmanを触ってみた"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["podman","Windows","WSL","podmancompose","コンテナ"]
+topics: ["podman","Windows","WSL","podmancompose"]
 published: true
 ---
 
