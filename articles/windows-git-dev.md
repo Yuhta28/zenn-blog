@@ -26,3 +26,23 @@ https://zenn.dev/yuta28/articles/windows-development-env
 
 # Windows Terminalカスタマイズ
 Windows Terminalのデフォルトの背景画面は黒色なので、複数のWSLディストリビューションやPowerShellを入れると、どれがどのターミナルなのかわかりづらくなります。
+設定の配色でターミナルのカラーや文字のフォントを変更できます。
+![](/images/windows-git-dev/image1.png)
+
+配色やフォントはデフォルトでも種類は多いですが、自分でカスタマイズして専用のターミナルを作るのも一興です。
+参考までに私のPowerShellのターミナルの配色とフォントは以下のようにしました。
+
+- 配色
+  - One Half Dark(デフォルトで選択可)
+- フォントフェイス
+  - Nerd Font
+
+Nerd Fontは開発向けのアイコンが豊富にそろっていて便利です。
+https://www.nerdfonts.com/#home
+
+こちらからダウンロードできます。
+https://eng.fontke.com/font/24644369/
+
+
+# 参考文献
+https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup
