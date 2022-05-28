@@ -85,7 +85,7 @@ https://windowsterminalthemes.dev/
 PowerShellでもGit運用を便利にしてくれるツールがいくつかありますので導入していきましょう。
 
 ## oh-my-posh
-https://ohmyposh.dev/
+https://ohmyposh.dev/  
 oh-my-poshはbashやzsh、PowerShellのプロンプトをイケてる感じに見た目のカスタマイズをしてくれる素晴らしいツールです。
 
 ```powershell
@@ -110,7 +110,7 @@ https://ohmyposh.dev/docs/themes
 *アイコンが半分見切れてる…*
 
 ## posh-git
-https://github.com/dahlbyk/posh-git#overview
+https://github.com/dahlbyk/posh-git#overview  
 posh-gitはGitとPowerShellを統合したPowerShellのモジュールです。Gitディレクトリ上に現在のブランチ名やステータス情報を表示してくれて、Gitコマンドのタブ補完機能も提供してくれます。
 
 :::message
@@ -137,8 +137,8 @@ Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 ![](/images/windows-git-dev/image6.gif)
 
 # Scoopのタブ補完
-Scoopでアプリのインストールやアップデートをする時に何度も`scoop install ~`や`scoop update`を実行すると思いますが、デフォルトではScoopのコマンドのタブ補完がないため何度も最後までコマンドをうたなければなりません。
-ScoopのアプリにScoopのタブ補完機能を追加してくれるアプリがありましたので、追加して有効化します。
+Scoopでアプリのインストールやアップデートをするときに何度も`scoop install ~`や`scoop update`を実行すると思いますが、デフォルトではScoopのコマンドのタブ補完がないため何度も最後までコマンドをうたなければなりません。
+Scoopのタブ補完機能を追加してくれるアプリがありましたので、追加して有効化します。  
 https://github.com/Moeologist/scoop-completion
 
 ```powershell
@@ -149,11 +149,11 @@ Import-Module "$($(Get-Item $(Get-Command scoop.ps1).Path).Directory.Parent.Full
 ```
 
 # ターミナルからアイコン表記
-VS Codeからファイルのアイコンを表示してくれるプラグインを実装されている人はいらっしゃいますでしょうか。
-https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+VS Codeからファイルのアイコンを表示してくれるプラグインを実装されている人はいらっしゃいますでしょうか。  
+https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme  
 VS Codeのリストからどんなファイルがあるか視覚的にわかりやすいのでとても便利なプラグインです。
 ![](/images/windows-git-dev/image7.png)
-このアイコン表記をターミナル上からも表示できるようにしてくれるアプリがありますので気になる人はいれてみてください。
+このアイコン表記をターミナル上からも表示できるようにしてくれるアプリがありますので気になる人はいれてみてください。  
 https://github.com/devblackops/Terminal-Icons
 
 ```powershell
@@ -164,7 +164,30 @@ Import-Module Terminal-Icons
 ```
 
 ![](/images/windows-git-dev/image8.png)
+
+# GitHub CLI
+https://cli.github.com/  
+ターミナル上で`git push`した後、GitHubリポジトリにマージするために、毎回ブラウザを開いてPRするのは面倒な気持ちになります。GitHubの操作もターミナルからできるようになればGitコミットからマージまでをターミナルですべて完結できるのでわずらわしさが減ります。
+GitHub CLIはまさにGitHub上で今までやってきたPRやIssueの起票などをターミナル上で実現できます。
+
+```powershell
+scoop install gh
+gh --version
+gh version 2.11.3 (2022-05-25)
+https://github.com/cli/cli/releases/tag/v2.11.3
+
+#はじめてGitHub CLIを使う場合、ターミナルからの認証する必要があります。
+gh auth login
+# SSH秘密鍵もしくはトークン情報を渡してターミナルとGitHubを連携させる。
+
+gh auth status
+github.com
+  ✓ Logged in to github.com as Yuhta28 (C:\Users\yuta_\AppData\Roaming\GitHub CLI\hosts.yml)
+  ✓ Git operations for github.com configured to use ssh protocol.
+  ✓ Token: *******************
+```
+
 # 参考文献
-https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup
-https://git-scm.com/book/ja/v2/%E4%BB%98%E9%8C%B2-A%3A-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%AEGit-Powershell%E3%81%A7Git%E3%82%92%E4%BD%BF%E3%81%86
+https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup  
+https://git-scm.com/book/ja/v2/%E4%BB%98%E9%8C%B2-A%3A-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%AEGit-Powershell%E3%81%A7Git%E3%82%92%E4%BD%BF%E3%81%86  
 https://qiita.com/FKbelm/items/2edb23d4f57e8c0d4fb4
