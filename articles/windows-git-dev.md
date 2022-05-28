@@ -113,6 +113,10 @@ https://ohmyposh.dev/docs/themes
 https://github.com/dahlbyk/posh-git#overview
 posh-gitはGitとPowerShellを統合したPowerShellのモジュールです。Gitディレクトリ上に現在のブランチ名やステータス情報を表示してくれて、Gitコマンドのタブ補完機能も提供してくれます。
 
+:::message
+ブランチ名やステータス情報はoh-my-poshのテーマでも確認できます
+:::
+
 ```powershell
 scoop install posh-git
 ```

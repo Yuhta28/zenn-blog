@@ -17,7 +17,8 @@
                 "フィルタリング",
                 "RHEL",
                 "Debian",
-                "AWS_WEB_IDENTITY_TOKEN_FILE"
+                "AWS_WEB_IDENTITY_TOKEN_FILE",
+                "posh-git"
             ]
         }
     }
