@@ -187,6 +187,31 @@ github.com
   ✓ Token: *******************
 ```
 
+GitHub CLIでマージすればローカルのリポジトリも自動的にmainブランチがpullされ、マージしたブランチを削除できますので不要なブランチが溜まるということがなくなり運用負荷の低下につながります。
+
+```powershell: マージ実行
+gh pr merge
+? What merge method would you like to use? Create a merge commit
+? Delete the branch locally and on GitHub? Yes #マージする際にローカルのブランチも削除するか聞かれるのでYesを選択
+? What's next? Submit
+✓ Merged pull request #139 (feature/add new blog windows git)
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 1 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (1/1), 648 bytes | 49.00 KiB/s, done.
+From github.com:Yuhta28/zenn-blog
+ * branch            main       -> FETCH_HEAD
+   32be209..d7672f3  main       -> origin/main
+Updating 32be209..d7672f3
+Fast-forward
+ .textlintrc                           |   3 +-
+ articles/94744fc7a339cd.md            |   2 +-
+ articles/eventbridge-slack.md         |   2 +-
+ articles/first-article-by-cli-yuta.md |   2 +-
+ articles/windows-git-dev.md           | 193 ++++++++++++++++++++++++++++++++++
+ 
+✓ Deleted branch feature/add-new-blog-windows-git and switched to branch main #マージが完了するとローカルのブランチも削除されて、mainブランチも自動的にpullされる
+```
 # 参考文献
 https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup  
 https://git-scm.com/book/ja/v2/%E4%BB%98%E9%8C%B2-A%3A-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%AEGit-Powershell%E3%81%A7Git%E3%82%92%E4%BD%BF%E3%81%86  
