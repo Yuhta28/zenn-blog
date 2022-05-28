@@ -213,6 +213,11 @@ Fast-forward
 ✓ Deleted branch feature/add-new-blog-windows-git and switched to branch main #マージが完了するとローカルのブランチも削除されて、mainブランチも自動的にpullされる
 ```
 
+GitHub CLIには公式でタブ補完ツールが提供されていますので、補完有効化を`$PROFILE`に貼り付けます。
+
+```powershell
+Invoke-Expression -Command $(gh completion -s powershell | Out-String)
+```
 # 所感
 Windows Terminalをもっと便利に使えるようにするカスタマイズについて紹介しました。
 タブ補完やGitHub CLIなど機能的な面はもちろん、ターミナルのテーマカラーといったデザインの変更も開発効率向上に貢献してくれると考えています。
