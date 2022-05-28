@@ -17,7 +17,7 @@ https://mackerel.io/ja/blog/entry/announcement/20211108
 # AWS Chatbotについて
 https://aws.amazon.com/jp/chatbot/
 AWS Chatbotは2020年にGA(一般公開)された「ChatOps」[^1]を実現するためのインタラクティブエージェントであり、SlackやAmazon ChimeにAWSリソースのモニタリング結果を簡単に連携できます。
-2021年に大幅なアップデートが行われEventBridgeによって処理されるすべてのサービスイベントを通知させることが可能となりました。
+2021年に大幅なアップデートが行なわれEventBridgeによって処理されるすべてのサービスイベントを通知させることが可能となりました。
 https://dev.classmethod.jp/articles/chatbot-supports-all-events-from-eventbridge/
 
 これによってEC2のステータスが変更されたイベントをトリガーにSNSでChatbotに知らせてSlackに通知を送れるようになりました。
