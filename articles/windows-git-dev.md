@@ -10,7 +10,7 @@ published: false
 以前WindowsでおすすめのWeb開発ツールをブログで書きました。
 https://zenn.dev/yuta28/articles/windows-development-env
 
-多少重複しますが、WindowsでGitを使う場合の便利なツール群やWindows Terminalのカスタマイズに焦点をあてて紹介します。
+多少重複しますが、Windows Terminalをより便利にカスタマイズしてターミナル運用を楽しめるようにしました。
 
 前提条件として以下のツールはインストール済とします。
 
@@ -78,5 +78,47 @@ JSONで設定できるということはイイ感じのジェネレーターサ�
 https://windowsterminalthemes.dev/
 ここでよさそうなテーマコードをコピーして`setting.json`に張り付ければあっという間にお気に入りのターミナルが作れます。
 ![](/images/windows-git-dev/image3.png)
+
+# Gitカスタマイズ
+ターミナルの外見の次はターミナルを使った開発作業を便利するツール群をインストールします。まずはGitです。
+皆さんもGitでターミナル操作をする際、プロンプトの表示を見やすくしたり、タブの補完機能を有効活用されていると思います。Macでしたら、`.bashrc`や`.zshrc`ファイルに記述して実現されているでしょう。
+PowerShellでもGit運用を便利にしてくれるツールがいくつかありますので導入していきましょう。
+
+## oh-my-posh
+https://ohmyposh.dev/
+oh-my-poshはbashやzsh、PowerShellのプロンプトをイケてる感じに見た目のカスタマイズをしてくれる素晴らしいツールです。
+
+```powershell
+scoop install oh-my-posh
+```
+
+ #### jandedobbeleer(私のお気に入り)
+![](/images/windows-git-dev/image4.png)
+
+
+インストールできましたらターミナル起動時にoh-my-poshのテーマを読み込ませる`oh-my-posh init pwsh --config <テーマファイル>`コマンドを`$PROFILE`変数に記述します。
+
+```powershell
+oh-my-posh init pwsh --config ~/AppData/Local/Programs/oh-my-posh/themes/jandedobbeleer.omp.json | Invoke-Expression
+```
+
+テーマの種類は多くありますので、お気に入りのものを選択してください。
+https://ohmyposh.dev/docs/themes
+
+私は冒頭の`jandedobbeleer`というものを使っていますが、Macユーザーでしたら`Iterm2`が使いやすいでしょうか。
+![](/images/windows-git-dev/image5.png)
+*アイコンが半分見切れてる…*
+
+## posh-git
+https://github.com/dahlbyk/posh-git#overview
+posh-gitはGitとPowerShellを統合したPowerShellのモジュールです。Gitディレクトリ上に現在のブランチ名やステータス情報を表示してくれて、Gitコマンドのタブ補完機能も提供してくれます。
+
+```powershell
+scoop install posh-git
+```
+
+
 # 参考文献
 https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup
+https://git-scm.com/book/ja/v2/%E4%BB%98%E9%8C%B2-A%3A-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%AEGit-Powershell%E3%81%A7Git%E3%82%92%E4%BD%BF%E3%81%86
+https://qiita.com/FKbelm/items/2edb23d4f57e8c0d4fb4
