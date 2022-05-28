@@ -96,9 +96,9 @@ scoop install oh-my-posh
 ![](/images/windows-git-dev/image4.png)
 
 
-インストールできましたらターミナル起動時にoh-my-poshのテーマを読み込ませる`oh-my-posh init pwsh --config <テーマファイル>`コマンドを`$PROFILE`変数に記述します。
+インストールできましたらターミナル起動時にoh-my-poshのテーマを読み込ませる`oh-my-posh init pwsh --config <テーマファイル>`コマンドを`$PROFILE`に記述します。
 
-```powershell
+```powershell: $PROFILE
 oh-my-posh init pwsh --config ~/AppData/Local/Programs/oh-my-posh/themes/jandedobbeleer.omp.json | Invoke-Expression
 ```
 
@@ -114,14 +114,56 @@ https://github.com/dahlbyk/posh-git#overview
 posh-gitはGitとPowerShellを統合したPowerShellのモジュールです。Gitディレクトリ上に現在のブランチ名やステータス情報を表示してくれて、Gitコマンドのタブ補完機能も提供してくれます。
 
 :::message
-ブランチ名やステータス情報はoh-my-poshのテーマでも確認できます
+ブランチ名やステータス情報はoh-my-poshのテーマでも確認できます。
 :::
 
 ```powershell
 scoop install posh-git
 ```
 
+こちらはインストールしたら`$PROFILE`にモジュール追加するだけ適用されます。
 
+```powershell: $PROFILE
+Import-Module posh-git
+```
+
+ただPowerShellのタブ補完はデフォルトでは、zshみたいに検索候補が一覧で表示されないので若干癖があります。
+タブ補完時に検索候補を複数表示したいと思いましたので、以下のPowerShellコマンドを`$PROFILE`に追加します。
+
+```powershell: $PROFILE
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+```
+
+![](/images/windows-git-dev/image6.gif)
+
+# Scoopのタブ補完
+Scoopでアプリのインストールやアップデートをする時に何度も`scoop install ~`や`scoop update`を実行すると思いますが、デフォルトではScoopのコマンドのタブ補完がないため何度も最後までコマンドをうたなければなりません。
+ScoopのアプリにScoopのタブ補完機能を追加してくれるアプリがありましたので、追加して有効化します。
+https://github.com/Moeologist/scoop-completion
+
+```powershell
+scoop install scoop-completion
+
+# $PROFILEに追加
+Import-Module "$($(Get-Item $(Get-Command scoop.ps1).Path).Directory.Parent.FullName)\modules\scoop-completion"
+```
+
+# ターミナルからアイコン表記
+VS Codeからファイルのアイコンを表示してくれるプラグインを実装されている人はいらっしゃいますでしょうか。
+https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
+VS Codeのリストからどんなファイルがあるか視覚的にわかりやすいのでとても便利なプラグインです。
+![](/images/windows-git-dev/image7.png)
+このアイコン表記をターミナル上からも表示できるようにしてくれるアプリがありますので気になる人はいれてみてください。
+https://github.com/devblackops/Terminal-Icons
+
+```powershell
+scoop install terminal-icons
+
+# $PROFILEに追加
+Import-Module Terminal-Icons
+```
+
+![](/images/windows-git-dev/image8.png)
 # 参考文献
 https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup
 https://git-scm.com/book/ja/v2/%E4%BB%98%E9%8C%B2-A%3A-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%AEGit-Powershell%E3%81%A7Git%E3%82%92%E4%BD%BF%E3%81%86
