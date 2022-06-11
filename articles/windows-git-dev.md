@@ -223,6 +223,11 @@ Windows Terminalをもっと便利に使えるようにするカスタマイズ�
 タブ補完やGitHub CLIなど機能的な面はもちろん、ターミナルのテーマカラーといったデザインの変更も開発効率向上に貢献してくれると考えています。
 
 Windows Terminalで他におすすめのツールなどがありましたらぜひ教えてください。
+
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/customize-windows-terminal-and-git-operations-4el2
+
 # 参考文献
 https://docs.microsoft.com/ja-jp/windows/terminal/tutorials/custom-prompt-setup  
 https://git-scm.com/book/ja/v2/%E4%BB%98%E9%8C%B2-A%3A-%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E7%92%B0%E5%A2%83%E3%81%A7%E3%81%AEGit-Powershell%E3%81%A7Git%E3%82%92%E4%BD%BF%E3%81%86  
