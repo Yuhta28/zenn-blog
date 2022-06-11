@@ -279,13 +279,21 @@ CIが問題なく完了しましたらマージしてデプロイを走らせま
 先ほどのメタデータで`published`が`true`になっている記事はこの段階でdev.toに公開されうようになります。
 
 # 所感
+
 dev.toの記事をGitHubで管理できるようにしました。
 記事をGitHubで管理できるとバージョン管理が楽になりますし、ローカルの好みのエディターを使って記事を書くことができます。
 私のようにLinterツールを使えば文章のケアレスミスも減らせますので、皆さんもdev.toで記事を書くときはぜひこの方法で試してみてください。
 
+# LT資料
+
+LTのスライド資料です。
+https://speakerdeck.com/yuhta28/dev-dot-tofalseji-shi-mogithubdeguan-li-sitemita
+
 # 英語記事
+
 英訳しました。
-https://dev.to/yuta28/i-manage-my-devto-blog-in-github-repository-5880
+@[speakerdeck](a008006a77104f1e9a5f9d975418b945)
+
 # 参考文献
 
 https://developers.forem.com/api
