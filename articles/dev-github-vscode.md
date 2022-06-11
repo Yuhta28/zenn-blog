@@ -287,12 +287,12 @@ dev.toの記事をGitHubで管理できるようにしました。
 # LT資料
 
 LTのスライド資料です。
-https://speakerdeck.com/yuhta28/dev-dot-tofalseji-shi-mogithubdeguan-li-sitemita
+@[speakerdeck](a008006a77104f1e9a5f9d975418b945)
 
 # 英語記事
 
 英訳しました。
-@[speakerdeck](a008006a77104f1e9a5f9d975418b945)
+https://dev.to/yuta28/i-manage-my-devto-blog-in-github-repository-5880
 
 # 参考文献
 
