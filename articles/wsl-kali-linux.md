@@ -7,7 +7,7 @@ published: false
 ---
 
 # 概要
-WSLで動かせるLinux OSはMicrosoft Storeからインストールできますが、Kali LinuxもStoreからインストールしてWSLで操作できます。
+WSLで動かせるLinuxはMicrosoft Storeからインストールできますが、Kali LinuxもStoreからインストールしてWSLで操作できます。
 ![](/images/wsl-kali-linux/image1.png)
 
 Kali Linuxは脆弱性診断に特化したDebian系Linuxディストリビューションで、最初からハッキング系のツールがプリセットされています。
@@ -79,3 +79,9 @@ Win-Kexは3種類のモードがサポートされて、上記コマンドがデ
 
 保存しますとターミナルの一覧からWin-Kexの起動プロファイルが選べますので次回以降はここから選ぶだけですぐにデスクトップでのKali Linuxが使えます。
 ![](/images/wsl-kali-linux/image10.png)
+
+# 所感
+WSLでKali Linuxのセットアップについて紹介しました。
+本格的なKali Linuxの使い方は別の記事で改めて説明しようと思います。
+
+Kali Linuxを使うことでハッキング行為もできますのでくれぐれも自分が管理していないサーバーに対して使うことは控えてください。
