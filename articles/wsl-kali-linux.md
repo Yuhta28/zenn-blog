@@ -26,4 +26,16 @@ https://www.kali.org/tools/
 
 # Kali Linuxの導入
 https://www.kali.org/get-kali/
-WSLにKali Linuxを導入してみます。
+WSLにKali Linuxを導入してみます。上記のページから媒体に合わせた複数のインストール方法が紹介されています。昔は単にISOイメージのダウンロードページしかなかったのですが、コンテナやクラウドなど色々紹介されていびっくりしました。([Live USBの方法も公式で紹介されてる！](https://www.kali.org/get-kali/#kali-live))
+公式ドキュメントではWin-KeXについて紹介していますが、Microsoft StoreからKali Linux Appをインストールしておきましょう。
+https://apps.microsoft.com/store/detail/kali-linux/9PKR34TNCV07?hl=en-us&gl=US
+
+:::message
+ちなみにWSLを動かす場合、Windows Terminal上で動かすことを推奨します。同じように[Storeからインストール](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701?hl=ja-jp&gl=JP)できますので、まだの人はこちらを先にインストールしてください。
+:::
+
+Kali Linuxをインストールし、起動しますと他のLinuxディストリビューション同様にユーザー名とパスワードを聞かれますので設定します。
+![](/images/wsl-kali-linux/image2.png)
+最初からある程度プロンプト設定が組み込まれているみたいで、同じDebian系のUbuntuとは勝手が違いますね。
+私は色々とWSLにLinuxディストリビューション入れていますので一目でKali Linuxのターミナルだと分かるようにデザインを変えてみました。
+![](/images/wsl-kali-linux/image3.png)
