@@ -69,3 +69,13 @@ Win-Kexは3種類のモードがサポートされて、上記コマンドがデ
 ### シームレスモード
 [![シームレス](/images/wsl-kali-linux/image7.png)](https://www.kali.org/docs/wsl/win-kex-sl/)
 
+# ターミナルからの即時起動
+毎回Win-Kexをターミナルからコマンドを打ち込んで起動するのは少々面倒ですので、ターミナルの設定からすぐに起動できるようにします。
+一度ターミナルを閉じて再度起動後、`ctrl+,`で設定画面を開き「新しいプロファイルを追加します」を選びます。
+![](/images/wsl-kali-linux/image8.png)
+
+新規プロファイル作成画面になりますので、コマンドラインにKali Linux起動コマンドと先ほどのWin-Kexコマンドを入力します。
+![](/images/wsl-kali-linux/image9.png)
+
+保存しますとターミナルの一覧からWin-Kexの起動プロファイルが選べますので次回以降はここから選ぶだけですぐにデスクトップでのKali Linuxが使えます。
+![](/images/wsl-kali-linux/image10.png)
