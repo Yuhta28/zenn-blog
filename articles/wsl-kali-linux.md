@@ -3,7 +3,7 @@ title: "WindowsにKali Linuxをセットアップしてみた"
 emoji: "🐈"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Windows", "WSL2", "kalilinux"]
-published: false
+published: true
 ---
 
 # 概要
@@ -85,4 +85,4 @@ WSLでKali Linuxのセットアップについて紹介しました。
 本格的なKali Linuxの使い方は別の記事であらためて説明しようと思います。
 Kali Linuxは昔に比べて大分使うことに対する敷居が下がってきましたので、これを気に本格的に学習してみようかなと思います。
 
-最後に諸注意ですがKali Linuxで勝手に脆弱性診断をするのは犯罪行為になりますので、自分が管理していないサーバーに対して使うことはやめましょう。
+最後に諸注意ですがKali Linuxで勝手に脆弱性診断をするのは犯罪ですので、自分が管理していないサーバーに対して使うことはやめましょう。
