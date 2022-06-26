@@ -42,4 +42,30 @@ Kali Linuxをインストールし、起動しますと他のLinuxディスト�
 ![](/images/wsl-kali-linux/image3.png)
 
 # Win-Kex導入
-Kali LinuxをWSLに導入しましたが、Kali
+Kali LinuxをWSLに導入しましたが、Kali LinuxはGUIアプリが多いのでターミナル上で動かすよりもデスクトップ環境が望ましいです。
+Win-KexはWSL上のKali Linuxをデスクトップで動かすことができるツールでして、公式ドキュメントに紹介されていますのでこちらを導入します。
+https://www.kali.org/docs/wsl/win-kex/
+
+APTパッケージがありますのでAPTコマンドでインストールします。
+
+```bash
+# Win-Kexインストール
+sudo apt install -y kali-win-kex
+
+# Win-Kex起動
+kex --win -s
+```
+
+起動コマンドを実行しますとKali Linuxのデスクトップが表示されます。
+![](/images/wsl-kali-linux/image4.png)
+Win-Kexは3種類のモードがサポートされて、上記コマンドがデスクトップセッションを別ウィンドウで実行するWindowsモード、Windows環境とKali Linux環境を分離し、armデバイスでも使えるESMモード、Windows環境上でシームレスにKali Linuxを利用できるシームレスモードがあります。
+
+### Windowsモード
+[![Windows](/images/wsl-kali-linux/image5.png)](https://www.kali.org/docs/wsl/win-kex-win/)
+
+### ESMモード
+[![ESM](/images/wsl-kali-linux/image6.png)](https://www.kali.org/docs/wsl/win-kex-esm/)
+
+### シームレスモード
+[![シームレス](/images/wsl-kali-linux/image7.png)](https://www.kali.org/docs/wsl/win-kex-sl/)
+
