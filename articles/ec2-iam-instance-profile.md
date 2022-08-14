@@ -132,14 +132,14 @@ EC2を構築するときはインスタンスプロファイルのArnを記載�
 
 # 所感
 IAMインスタンスプロファイルについて紹介しました。
-コンソールからEC2にIAMロールの権限を渡す時はIAMロールを選択するのであまり意識することはありませんが、IaCでAWSリソースを構築するときに思わぬ落とし穴が潜んでいましたので皆さんも注意してみてください。
+コンソールからEC2にIAMロールの権限を渡すときはIAMロールを選択するのであまり意識することはありませんが、IaCでAWSリソースを構築するときに思わぬ落とし穴が潜んでいましたので皆さんも注意してみてください。
 
 疑問点としてなぜEC2はIAMロールからではなくIAMインスタンスプロファイル経由で権限を渡しているのかが気になりましたが、納得のいく回答は見つけられませんでした。
 
 [この記事](https://medium.com/devops-dudes/the-difference-between-an-aws-role-and-an-instance-profile-ae81abd700d)には以下のようにIAMインスタンスプロファイルは自分が誰なのかを定義するためのEC2版IAMユーザーと説明されています。
 >An instance profile, on the other hand, defines “who am I?” Just like an IAM user represents a person, an instance profile represents EC2 instances. The only permissions an EC2 instance profile has is the power to assume a role.
 
-ただ数あるAWSリソースの中でEC2だけがIAMインスタンスプロファイルで対象者を明示的に定義付けしているかまではわかりませんでした。
+ただ数あるAWSリソースのなかでEC2だけがIAMインスタンスプロファイルで対象者を明示的に定義付けしているかまではわかりませんでした。
 (古くからあるAWSリソースだから当時の設計で仕方ない面などがあるのですかね？)
 詳しい人がいましたら教えてくれるとうれしいです🙇
 
