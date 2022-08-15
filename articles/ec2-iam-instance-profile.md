@@ -73,7 +73,7 @@ resource "aws_iam_role" "IAMRole" {
 ```
 
 リソースによって多少表記が異なりますが、だいたい`role`だったり`role_arn`ですので感覚的に理解できると思います。作成したIAMロールのArn情報をAWSリソースに渡せば他リソースへの操作権限が付与されます。
-ですが、EC2にIAM権限を渡すのはIAMロールではなく、IAMインスタンスプロファイルです。IaCでAWSリソースを作成する場合明示的にIAMインスタンスプロファイルを作成し、インスタンスプロファイルのArnをEC2に渡さなければなりません。
+一方、EC2にIAM権限を渡すのはIAMロールではなくIAMインスタンスプロファイルです。IaCでAWSリソースを作成する場合明示的にIAMインスタンスプロファイルを作成しなければなりません。
 
 ## EC2を作成するIaC
 
@@ -93,9 +93,10 @@ Resources:
         Type: "AWS::IAM::Role"
         Properties:
             Path: "/"
-            RoleName: "Yuta20210911"
+            RoleName: "Yuta20220815"
             AssumeRolePolicyDocument: "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
 
+    # IAMインスタンスプロファイルを作成する必要がある
     IAMInstanceProfile:
         Type: "AWS::IAM::InstanceProfile"
         Properties:
@@ -110,25 +111,38 @@ resource "aws_instance" "EC2Instance" {
     tags = {
         Name = "Test"
     }
-    iam_instance_profile = "${aws_iam_role.IAMRole.name}"
+    iam_instance_profile = aws_iam_role.IAMRole.name
 }
 
 resource "aws_iam_role" "IAMRole" {
     path = "/"
-    name = "Yuta20210911"
+    name = "Yuta20220815"
     assume_role_policy = "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"},\"Action\":\"sts:AssumeRole\"}]}"
 }
 
+# IAMインスタンスプロファイルを作成する必要がある
 resource "aws_iam_instance_profile" "IAMInstanceProfile" {
     path = "/"
-    name = "${aws_iam_role.IAMRole.name}"
-    roles = [
-        "${aws_iam_role.IAMRole.name}"
-    ]
+    name = aws_iam_role.IAMRole.name
+    role = aws_iam_role.IAMRole.name
 }
 ```
 
-EC2を構築するときはインスタンスプロファイルのArnを記載する必要があり、インスタンスプロファイルのリソースを明示的に指定する必要があります。ここで **IAMロールのArnを記載するとエラー** となりますので注意が必要です。
+もしIAMインスタンスプロファイルを作成せず、EC2インスタンスとIAMロールだけを作成するコードをデプロイするとエラーとなります。
+
+![](/images/ec2-iam-instance-profile/image4.png)
+*デプロイ失敗(CloudFormation)*
+
+```powershell:デプロイ失敗(Terraform)
+│ Error: creating EC2 Instance: InvalidParameterValue: Value (Yuta20220815) for parameter iamInstanceProfile.name is invalid. Invalid IAM Instance Profile name
+│       status code: 400, request id: 7fe3f4c5-b023-40e9-8d31-69e799d5b18a
+│
+│   with aws_instance.EC2Instance,
+│   on ec2.tf line 1, in resource "aws_instance" "EC2Instance":
+│    1: resource "aws_instance" "EC2Instance" {
+```
+
+EC2を構築するときはインスタンスプロファイルのリソースを明示的に指定する必要があります。
 
 # 所感
 IAMインスタンスプロファイルについて紹介しました。
