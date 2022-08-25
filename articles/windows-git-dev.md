@@ -170,7 +170,7 @@ https://cli.github.com/
 ターミナル上で`git push`した後、GitHubリポジトリにマージするために、毎回ブラウザを開いてPRするのは面倒な気持ちになります。GitHubの操作もターミナルからできるようになればGitコミットからマージまでをターミナルですべて完結できるのでわずらわしさが減ります。
 GitHub CLIはまさにGitHub上で今までやってきたPRやIssueの起票などをターミナル上で実現できます。
 
-```powershell
+```console
 scoop install gh
 gh --version
 gh version 2.11.3 (2022-05-25)
@@ -189,7 +189,7 @@ github.com
 
 GitHub CLIでマージすればローカルのリポジトリも自動的にmainブランチがpullされ、マージしたブランチを削除できますので不要なブランチが溜まるということがなくなり運用負荷の低下につながります。
 
-```powershell: マージ実行
+```console: マージ実行
 gh pr merge
 ? What merge method would you like to use? Create a merge commit
 ? Delete the branch locally and on GitHub? Yes #マージする際にローカルのブランチも削除するか聞かれるのでYesを選択

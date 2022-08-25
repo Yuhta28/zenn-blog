@@ -143,7 +143,7 @@ jobs:
 dev.toのAPIには記事の新規作成APIがありますので、curlで叩いて記事を作成します。
 (`API_KEY`に先ほど生成したAPIキーを入れてください)
 
-```bash: Create a new article
+```console: Create a new article
 curl -X POST -H "Content-Type: application/json" \
   -H "api-key: API_KEY" \
   -d '{"article":{"title":"Title","body_markdown":"Body","published":false,"tags":["discuss", "javascript"]}}' \
@@ -163,7 +163,7 @@ https://marketplace.visualstudio.com/items?itemName=sneezry.vscode-devto
 
 ::: message
 APIでもできるはずなんですが、私の環境だとエラーになりました。
-```bash
+```console
 $ curl -X POST -H "Content-Type: application/json" \
 -H "api-key: API_KEY" \
 -d '{"article":{"title":"Test-Tile","body_markdown":"---\ntitle:A sample article about...\npublished:false\n---\n...","published":false,"tags":["discuss", "javascript"]}}' https://dev.to/api/articles
@@ -178,7 +178,7 @@ $ curl -X POST -H "Content-Type: application/json" \
 ## 7 記事IDを取得
 記事を作成しましたらIDを取得します。元の記事ではブラウザの開発モードで取得していますが、APIでも取得できますので、APIを使って取得する方法を紹介します。
 
-```bash: User's unpublished articles
+```console: User's unpublished articles
 $ curl -H "api-key: API_KEY" https://dev.to/api/articles/me/unpublished | jq '.[].id'
 1064058
 ```
@@ -193,7 +193,7 @@ https://github.com/Yuhta28/dev-to-blog-template/blob/main/get-blog-id.go
 テンプレートからコピーしたら`template-posts`ディレクトリがすでにありますので、これを同じ階層に新規コピーします。
 私のディレクトリではこのようになっています。
 
-```powershell
+```console
 $ tree blog-posts/
 blog-posts/
 ├── be-attention-to-sshkey
