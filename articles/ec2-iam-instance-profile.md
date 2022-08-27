@@ -133,7 +133,7 @@ resource "aws_iam_instance_profile" "IAMInstanceProfile" {
 ![](/images/ec2-iam-instance-profile/image4.png)
 *デプロイ失敗(CloudFormation)*
 
-```powershell:デプロイ失敗(Terraform)
+```console:デプロイ失敗(Terraform)
 │ Error: creating EC2 Instance: InvalidParameterValue: Value (Yuta20220815) for parameter iamInstanceProfile.name is invalid. Invalid IAM Instance Profile name
 │       status code: 400, request id: 7fe3f4c5-b023-40e9-8d31-69e799d5b18a
 │
