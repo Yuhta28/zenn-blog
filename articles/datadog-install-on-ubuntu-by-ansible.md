@@ -17,6 +17,6 @@ https://www.datadoghq.com/ja/
 https://docs.datadoghq.com/ja/agent/
 
 # インストール
-弊社では複数のメディアサーバーに共通のミドルウェアを導入する時はAnsibleの入ったDockerコンテナからインストールするようにしています。
+弊社では複数のメディアサーバーに共通のミドルウェアを導入するときはAnsibleの入ったDockerコンテナからインストールするようにしています。
 Datadog用のロールを用意してplaybookで追加するだけで簡単にインストールできると思い、Ansibleからインストールする方法を選択しました。
 ![](/images/datadog-install-on-ubuntu-by-ansible/image1.png)
