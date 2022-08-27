@@ -3,7 +3,7 @@ title: "Ansible経由でUbuntuにDatadogをインストールするときの注�
 emoji: "🐶"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["datadog","ubuntu","ansible"]
-published: false
+published: true
 ---
 
 # 概要
@@ -17,10 +17,10 @@ https://www.datadoghq.com/ja/
 https://docs.datadoghq.com/ja/agent/
 
 # インストール
-弊社では複数のメディアサーバーに共通のミドルウェアを導入するときにAnsibleの入ったDockerコンテナからインストールするようにしています。
+弊社では複数のメディアサーバーに共通のミドルウェアを導入するときにAnsibleの入ったECSからインストールするようにしています。
 ![](/images/datadog-install-on-ubuntu-by-ansible/image1.png)
 
-Datadogをインストールするロールそのものも公式から提供されているのでそれをダウンロードしてplaybookに追加すれば簡単にできると考えました。
+Datadogをインストールするロールそのものも公式から提供されているのでそれをダウンロードしてPlaybookに追加すれば簡単にできると考えました。
 
 ## Ansible用インストール手順
 https://docs.datadoghq.com/ja/agent/basic_agent_usage/ansible/
@@ -212,8 +212,8 @@ PLAY RECAP *********************************************************************
 172.27.13.181              : ok=33   changed=0    unreachable=0    failed=0    skipped=37   rescued=0    ignored=0
 ```
 
-問題はDockerコンテナの中にAnsible Galaxyでロールインストール後どのようにコメントアウト作業を実施するかです。
-前述のとおり、強引ですが該当箇所を`sed`コマンドを使ってplaybookの中身を書き換えました。
+問題はDockerコンテナの中にAnsible Galaxyでロールインストール後どのようにコメントアウト作業を実行するかです。
+前述のとおり、強引ですが該当箇所を`sed`コマンドを使ってPlaybookの中身を書き換えました。
 
 ```Dockerfile:Dockerfile
 # ansible-galaxy installにdatadogのロールを追加
