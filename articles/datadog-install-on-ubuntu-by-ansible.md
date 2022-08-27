@@ -212,7 +212,7 @@ PLAY RECAP *********************************************************************
 172.27.13.181              : ok=33   changed=0    unreachable=0    failed=0    skipped=37   rescued=0    ignored=0
 ```
 
-問題はDockerコンテナの中にAnsible Galaxyでロールインストール後どのようにコメントアウト作業を実行するかです。
+問題はDockerコンテナの中にAnsible Galaxyでロールインストール後どのようにコメントアウトするかです。
 前述のとおり、強引ですが該当箇所を`sed`コマンドを使ってPlaybookの中身を書き換えました。
 
 ```Dockerfile:Dockerfile
