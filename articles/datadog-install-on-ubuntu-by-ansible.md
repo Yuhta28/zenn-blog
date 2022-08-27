@@ -82,7 +82,7 @@ PLAY RECAP *********************************************************************
 
 Datadogのロールを確認したところ以下のタスクの処理でエラーが起きていました。
 
-```yml: aget-linux.yml
+```yml: agent-linux.yml
 - name: Populate service facts
   service_facts:
 ```
@@ -116,13 +116,128 @@ ansible 2.9.6
   ansible python module location = /usr/lib/python3/dist-packages/ansible
   executable location = /usr/bin/ansible
   python version = 3.8.10 (default, Jun 22 2022, 20:18:18) [GCC 9.4.0]
-
-$ apt search ansible
-Sorting... Done
-Full Text Search... Done
-ansible/focal,now 2.9.6+dfsg-1 all [installed]
-  Configuration management, deployment, and task execution system
 ```
+
+Ubuntu 22.04では2.10系のインストールができますのでこのバグも解消済みです。
+
+```console:Ubuntu22.04
+PRETTY_NAME="Ubuntu 22.04.1 LTS"
+NAME="Ubuntu"
+VERSION_ID="22.04"
+VERSION="22.04.1 LTS (Jammy Jellyfish)"
+VERSION_CODENAME=jammy
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=jammy
+
+$ ansible --version
+ansible [core 2.12.5]
+  config file = None
+  configured module search path = ['/home/yuta0128/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/linuxbrew/.linuxbrew/Cellar/ansible/5.8.0/libexec/lib/python3.10/site-packages/ansible
+  ansible collection location = /home/yuta0128/.ansible/collections:/usr/share/ansible/collections
+  executable location = /home/linuxbrew/.linuxbrew/bin/ansible
+  python version = 3.10.4 (main, Mar 23 2022, 20:25:24) [GCC 5.4.0 20160609]
+  jinja version = 3.1.2
+  libyaml = True
+  ```
+
+  もしくはPyPI(pip)からAnsibleをインストールすれば最新バージョンを取得できます。
+  https://pypi.org/project/ansible/
+
+```console: pip
+$ pip list
+Package      Version
+------------ -------
+ansible      6.0.0
+ansible-core 2.13.1
+```
+
+:::message
+余談ですが、pipからですとansibleのバージョン表記が異なりややこしいです。[^1]
+:::
+
+# やったこと
+ただUbuntuのバージョンをアップグレードするのは修正が面倒だったのとpipパッケージもAnsibleのためだけに追加することが正直気が滅入ったのでやや強引な方法で解決しました。
+先ほどのAnsible Galaxyから取得したDatadogのロールの中身から`service_facts`モジュール部分をコメントアウトすれば、処理が最後まで進みDatadogのインストールができることが確認できました。
+
+```yml: agent-linux.yml
+#- name: Populate service facts
+#  service_facts:
+```
+
+```console: Ansible実行
+TASK [datadog.datadog : Include Gather Ansible Facts task on Ansible >= 2.10] ***********************************************************
+skipping: [172.27.13.181]
+
+TASK [datadog.datadog : Include Gather Ansible Facts task on Ansible < 2.10] ************************************************************
+included: /home/ubuntu/.ansible/roles/datadog.datadog/tasks/facts-ansible9.yml for 172.27.13.181
+
+TASK [datadog.datadog : Gather Ansible Facts] *******************************************************************************************
+ok: [172.27.13.181]
+
+TASK [datadog.datadog : Check if OS is supported] ***************************************************************************************
+included: /home/ubuntu/.ansible/roles/datadog.datadog/tasks/os-check.yml for 172.27.13.181
+
+省略
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+省略
+
+TASK [datadog.datadog : Linux Configuration Tasks (Agent 5)] ****************************************************************************
+skipping: [172.27.13.181]
+
+TASK [datadog.datadog : Linux Configuration Tasks] **************************************************************************************
+included: /home/ubuntu/.ansible/roles/datadog.datadog/tasks/agent-linux.yml for 172.27.13.181
+
+#TASK [datadog.datadog : Populate service facts このタスクが省略されている
+
+TASK [datadog.datadog : Set before 6/7.24.1 flag] ***************************************************************************************
+ok: [172.27.13.181]
+
+TASK [datadog.datadog : Set before 6/7.18.0 flag] ***************************************************************************************
+ok: [172.27.13.181]
+
+省略
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+省略
+
+TASK [datadog.datadog : Integrations Tasks] *********************************************************************************************
+skipping: [172.27.13.181]
+
+PLAY RECAP ******************************************************************************************************************************
+172.27.13.181              : ok=33   changed=0    unreachable=0    failed=0    skipped=37   rescued=0    ignored=0
+```
+
+問題はDockerコンテナの中にAnsible Galaxyでロールインストール後どのようにコメントアウト作業を実施するかです。
+前述のとおり、強引ですが該当箇所を`sed`コマンドを使ってplaybookの中身を書き換えました。
+
+```Dockerfile:Dockerfile
+# ansible-galaxy installにdatadogのロールを追加
+RUN ansible-galaxy collection install community.aws && \
+    ansible-galaxy install datadog.datadog
+# 該当タスク部分を先頭に#をつけてコメントアウト
+RUN sed -i -e "s/- name: Populate service facts/#- name: Populate service facts/" ~/.ansible/roles/datadog.datadog/tasks/agent-linux.yml && \
+    sed -i -e "s/service_facts:/#service_facts:/" ~/.ansible/roles/datadog.datadog/tasks/agent-linux.yml
+```
+
+これでECSでのデプロイ時にAnsibleによるエラーがなくなり、無事Datadogエージェントを各種メディアサーバーに入れることができました。
+
+# 所感
+Ansible経由でUbuntuにDatadogをインストールするときの注意点について紹介しました。
+解決策についてまとめると以下のようになります。
+
+- Ubuntu22.04にアップグレードする
+- PyPIからAnsibleをインストールする
+- Datadogの公式ロールを修正する ※今回やった
+
+正攻法でやるならUbuntu22.04へのアップグレードが最適でしょうか？
+今のところ問題なさそうなのでしばらくPlaybookの中身を修正したままにして進めてみようと思います。
+
+[^1]: くわしくはこちらのブログ記事参照　https://tekunabe.hatenablog.jp/entry/2022/07/08/225248
 
 # 参考文献
 https://github.com/ansible/ansible/blob/stable-2.9/changelogs/CHANGELOG-v2.9.rst#v2-9-8
