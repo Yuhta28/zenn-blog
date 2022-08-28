@@ -59,3 +59,11 @@ CloudFormationから作る方法とTerraformから作る方法が公式から提
 *CloudFormation作成画面*
 
 IMAロール作成後セットアップ画面にIAMロールのARNを入力すればOtterTuneと自身のAWSアカウントの連携が始まり、ダッシュボードに稼働しているAWS RDSの一覧が表示されます。
+![](/images/ottertune-db-ml/image4.png)
+*ottertune ダッシュボード*
+
+RDS一覧からottertuneと連携したいDBを有効化し、エージェントをDBにデプロイします。
+DBへのデプロイ方法ですが、いくつか方法が紹介されていてもっとも簡単なのがCloudFormation経由でのFargateによるデプロイです。
+https://docs.ottertune.com/info/connect-your-database-to-ottertune/add-database/agent
+セットアップ画面にAPIキーが出力されていますのでコピーしてCloudFormationのスタックに張り付けて実行すればエージェントがDBにデプロイされます。
+![](/images/ottertune-db-ml/image5.png)
