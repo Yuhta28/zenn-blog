@@ -54,6 +54,8 @@ OtterTuneはエージェントをRDSに導入し、メトリクスを取得す�
 ![](/images/ottertune-db-ml/image2.png)
 *IAMロール作成の案内*
 
+![](/images/ottertune-db-ml/image6.png)
+
 CloudFormationから作る方法とTerraformから作る方法が公式から提供されていますので好みのツールでIAMロールを作成します。
 ![](/images/ottertune-db-ml/image3.png)
 *CloudFormation作成画面*
@@ -67,3 +69,44 @@ DBへのデプロイ方法ですが、いくつか方法が紹介されていて
 https://docs.ottertune.com/info/connect-your-database-to-ottertune/add-database/agent
 セットアップ画面にAPIキーが出力されていますのでコピーしてCloudFormationのスタックに張り付けて実行すればエージェントがDBにデプロイされます。
 ![](/images/ottertune-db-ml/image5.png)
+
+エージェントデプロイ後はDBのメトリクス情報を収集できるようにするために読み取り用のDBユーザーを作成する必要があります。
+
+```sql
+CREATE USER 'ottertune' IDENTIFIED by 'user-password';
+GRANT PROCESS ON *.* TO 'ottertune';
+GRANT REPLICATION CLIENT ON *.* TO 'ottertune';
+GRANT SHOW VIEW ON *.* TO 'ottertune';
+GRANT SELECT ON mysql.innodb_index_stats TO 'ottertune';
+GRANT SELECT ON performance_schema.table_io_waits_summary_by_index_usage TO 'ottertune';
+GRANT SELECT ON performance_schema.events_statements_summary_by_digest TO 'ottertune';
+-- if mysql version >= 8.0
+GRANT SELECT ON performance_schema.events_statements_histogram_global TO 'ottertune';
+```
+
+読み取り用のDBユーザーを作成すればエージェントとの接続が有効化されます。
+![](/images/ottertune-db-ml/image7.png)
+
+ダッシュボードの見た目はこんな感じです。
+### Overview
+![](/images/ottertune-db-ml/image8.png)
+
+### Performance Charts
+![](/images/ottertune-db-ml/image9.png)
+
+Activeになっている部分がMLで学習した最適値をOtterTuneで自動的に設定された記録になります。
+![](/images/ottertune-db-ml/image10.png)
+チューニングオプションで自動反映の可否や再起動無効化の設定、チューニングのインターバルを決めれます。
+
+### ヘルスダッシュボード
+![](/images/ottertune-db-ml/image11.png)
+Database HealthやTable HealthはAWS側でPerformance Insightsを有効化、DBパラメーターで特定の値を入れることでダッシュボードが表示されます。
+
+![](/images/ottertune-db-ml/image12.png)
+*Performance Insightsを有効化*
+
+![](/images/ottertune-db-ml/image13.png)
+
+| 名前 | 値 |
+| ----       | ---- |
+|innodb_monitor_enable | module_trx |
