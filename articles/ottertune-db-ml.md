@@ -97,6 +97,8 @@ GRANT SELECT ON performance_schema.events_statements_histogram_global TO 'ottert
 Activeになっている部分がMLで学習した最適値をOtterTuneで自動的に設定された記録になります。
 ![](/images/ottertune-db-ml/image10.png)
 チューニングオプションで自動反映の可否や再起動無効化の設定、チューニングのインターバルを決めれます。
+https://speakerdeck.com/hankehly/ottertune-mldedbwozui-shi-hua-suruturufalseshao-jie?slide=7
+
 
 ### ヘルスダッシュボード
 ![](/images/ottertune-db-ml/image11.png)
@@ -110,3 +112,80 @@ Database HealthやTable HealthはAWS側でPerformance Insightsを有効化、DB�
 | 名前 | 値 |
 | ----       | ---- |
 |innodb_monitor_enable | module_trx |
+
+### Configurations
+![](/images/ottertune-db-ml/image14.png)
+OtterTuneがDBのパラメーターを変更できるようにするために冒頭で作成したIAMロール`OtterTuneRole`にDBパラメーターグループ(DBクラスターパラメーターグループ)の修正許可ポリシーをアタッチさせます。
+
+:::message
+作成時点でアタッチされていなかったので、パラメーター変更ができませんでした。最初から付けてもいいのにとは思いますが
+:::
+
+```json:OtterTuneDBPolicy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "rds:List*",
+                "cloudwatch:List*",
+                "cloudwatch:Describe*",
+                "ce:Describe*",
+                "rds:ModifyDBParameterGroup", #手動追加
+                "iam:SimulatePrincipalPolicy",
+                "rds:Describe*",
+                "ce:List*",
+                "budgets:Describe*",
+                "pi:DescribeDimensionKeys",
+                "ce:Get*",
+                "rds:ModifyDBClusterParameterGroup", #手動追加
+                "cloudwatch:Get*",
+                "pi:GetResourceMetrics"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+OtterTuneはSlack連携もできまして、パラメーターチューニングが完了したらSlackに通知もしてくれるAppも提供されています。
+![](/images/ottertune-db-ml/image15.png)
+*Setting画面からSlack連携*
+
+![](/images/ottertune-db-ml/image16.png)
+*Apply完了を通知*
+あくまでも通知機能しかないので、Slackから操作はできなさそうです。
+https://docs.ottertune.com/info/slack-integration
+> Notifications sent by the app
+Tuning Disabled
+Configuration Applied
+Configuration Ready (Manual Review turned on)
+
+# 備考
+FAQを眺めていますといくとか気になった点がありましたので訳して紹介します。
+https://docs.ottertune.com/info/frequently-asked-questions
+
+#### Q.OtterTuneはクエリやインデックスのチューニングはしてくれますか？
+現在、OtterTune はデータベース構成設定の解析と調整のみを行います。クエリ、インデックス、データベース設計の解析や変更を推奨するものではありません。
+
+#### Q.エージェントデプロイ時にCloudFormationの入力値に使うSecurityGroupやSubnetは何ですか？
+エージェントをデプロイする時に使うSecurityGroupとSubnetの要件は以下2つです。
+
+1. デプロイするECS FargateからRDSに接続できるアクセス権があること。
+2. 0.0.0.0/0のアウトバウンドhttpsアクセス権があること
+
+## Hank Ehlyさんのスライドから抜粋
+#### Q.パフォーマンス向上はどれくらいか？
+デフォルトの設定から5%-15%ほど向上できるとのこと
+https://speakerdeck.com/hankehly/ottertune-mldedbwozui-shi-hua-suruturufalseshao-jie?slide=12
+
+#### Q.何台までのDBをサポートしてくれる？
+詳細不明。公式ページにはEnterprise priceがあるみたいです。(LTのときは6台以上から別途相談になるかもと話されていました)
+https://ottertune.com/pricing/
+
+# 所感
+OtterTuneについて紹介しました。
+LTで初めて存在を知ったサービスで導入も難しくなかったので、こんなサービスがあるということを知れて良かったです。
+1台までなら無料で利用できるので、会社で使えないか提案してみようかなと思います。
