@@ -168,10 +168,10 @@ FAQを眺めていますといくとか気になった点がありましたの�
 https://docs.ottertune.com/info/frequently-asked-questions
 
 #### Q.OtterTuneはクエリやインデックスのチューニングはしてくれますか？
-現在、OtterTune はデータベース構成設定の解析と調整のみを行います。クエリ、インデックス、データベース設計の解析や変更を推奨するものではありません。
+現在、OtterTuneはデータベース構成設定の解析と調整のみを行ないます。クエリ、インデックス、データベース設計の解析や変更を推奨するものではありません。
 
 #### Q.エージェントデプロイ時にCloudFormationの入力値に使うSecurityGroupやSubnetは何ですか？
-エージェントをデプロイする時に使うSecurityGroupとSubnetの要件は以下2つです。
+エージェントをデプロイするときに使うSecurityGroupとSubnetの要件は以下2つです。
 
 1. デプロイするECS FargateからRDSに接続できるアクセス権があること。
 2. 0.0.0.0/0のアウトバウンドhttpsアクセス権があること
@@ -187,5 +187,10 @@ https://ottertune.com/pricing/
 
 # 所感
 OtterTuneについて紹介しました。
-LTで初めて存在を知ったサービスで導入も難しくなかったので、こんなサービスがあるということを知れて良かったです。
+LTではじめて存在を知ったサービスで導入も難しくなかったので、こんなサービスがあるということを知れて良かったです。
 1台までなら無料で利用できるので、会社で使えないか提案してみようかなと思います。
+
+# 参考文献
+@[speakerdeck](bff21bdd55ad405ba94cac4931372152)
+https://docs.ottertune.com/
+https://youtu.be/SJdnpAMI_q4
