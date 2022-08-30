@@ -3,7 +3,8 @@ title: "MLでDBをイイ感じにしてくれるOtterTuneを使ってみた"
 emoji: "🦦"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["database","ottertune","RDS"]
-published: false
+published: true
+published_at: 2022-08-31 11:50
 ---
 
 # 概要
