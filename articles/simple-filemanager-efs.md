@@ -9,13 +9,13 @@ published: false
 # 概要
 AWSは[ソリューションライブラリ](https://aws.amazon.com/jp/solutions/)とよばれるビジネス課題、技術的課題を解決するためのテンプレートソリューションを数多く提供しています。
 
-その中でEFSのファイル管理をGUIから管理できる「Simple File Manager for Amazon EFS」というものを見つけました。
+そのなかでEFSのファイル管理をGUIから管理できる「Simple File Manager for Amazon EFS」というものを見つけました。
 https://aws.amazon.com/jp/solutions/implementations/simple-file-manager-for-amazon-efs/
 
 ![](/images/simple-filemanager-efs/image1.png)
 *アーキテクチャ図(上記サイトより引用)*
 
-通常EFSにあるファイル管理はマウントされたEC2を経由してファイルコピーや削除をする必要があります。このソリューションではCloudFrontをフロントに配置することで、web UIを提供し任意のデバイスから自由にEFSへアクセスできるようにします。
+通常EFSにあるファイル管理はマウントされたEC2を経由してファイルコピーや削除をする必要があります。このソリューションではCloudFrontをフロントに配置することで、Web UIを提供し任意のデバイスから自由にEFSへアクセスできるようにします。
 
 # 実装
 実装ガイドに飛んでステップ1のスタック起動からソリューション起動をクリックしますとCloudFormationのスタックテンプレートが起動します。
@@ -25,7 +25,7 @@ https://aws.amazon.com/jp/solutions/implementations/simple-file-manager-for-amaz
 ![](/images/simple-filemanager-efs/image4.png)
 
 後はデフォルトのまま次へを選択し、CloudFormationを作成します。
-ネストされて複数のスタックがデプロイされるので15分間前後で完了します。
+ネストされて複数のスタックがデプロイされるので15分間程で完了します。
 記載したメールアドレスに初期パスワードが添付されたメールが届いていますので控えておきます。
 CloudFormationの出力タブにWeb UIのログイン画面へのURLが表示されています。
 ![](/images/simple-filemanager-efs/image5.png)
