@@ -20,8 +20,23 @@ https://aws.amazon.com/jp/solutions/implementations/simple-file-manager-for-amaz
 # 実装
 実装ガイドに飛んでステップ1のスタック起動からソリューション起動をクリックしますとCloudFormationのスタックテンプレートが起動します。
 ![](/images/simple-filemanager-efs/image3.png)
-(起動リージョンがデフォルトでバージニアになっていますので東京リージョンに変えても問題ありません)
-パラメーターのメールアドレスではSimple File Managerへログインするためのメールアドレスを記載します。
+(起動リージョンがバージニアになっていますので必要に応じて東京リージョンに変えます)
+パラメーターにはSimple File Managerへログインするためのメールアドレスを記載します。
 ![](/images/simple-filemanager-efs/image4.png)
+
+後はデフォルトのまま次へを選択し、CloudFormationを作成します。
+ネストされて複数のスタックがデプロイされるので15分間前後で完了します。
+記載したメールアドレスに初期パスワードが添付されたメールが届いていますので控えておきます。
+CloudFormationの出力タブにWeb UIのログイン画面へのURLが表示されています。
+![](/images/simple-filemanager-efs/image5.png)
+ログイン画面でメールアドレスとパスワードを入力すれば作成されたEFSのリストが表示されます。
+![](/images/simple-filemanager-efs/image6.png)
+
+# 使い方
+新規に作成したEFSのManagedステータスはfalseになっています。Web UIからファイル管理できるようにするためにTrueに変更します。false部分をクリックし、管理したいルートディレクトリを指定すればsubmitします。(UserIDとGroupIDはEFS側でよっぼど変な設定をしていない限りデフォルトで大丈夫です)
+![](/images/simple-filemanager-efs/image7.png)
+ManagedのステータスがTrueに変更されたらWeb UI経由でEFS内のファイルを管理できるようになります。EFS IDをクリックすればEFSディレクトリ構造を確認できます。
+![](/images/simple-filemanager-efs/image8.png)
+これでWeb UI経由でファイルのアップロード、ダウンロード、EFSのディレクトリの変更ができます。
 # 参考資料
 https://d1.awsstatic.com/Solutions/ja_JP/simple-file-manager-for-amazon-efs.pdf
