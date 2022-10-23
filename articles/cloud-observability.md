@@ -32,8 +32,18 @@ https://aws.amazon.com/jp/products/management-and-governance/use-cases/monitorin
 # 可観測性と監視の違い
 可観測性という新しい言葉を使わなくてもログ取得やメトリクス取得は監視という運用で昔からサービス運用で使われてきたと思います。
 この2つの違いはなんでしょうか。
-## 可観測性の三本柱
+いくつかの記事を参照するとこの2つは比較するものではなく、可観測性は考え方であり監視は手段であると述べています。可観測性は複雑なシステムを適切に管理するためにも重要です。特にクラウド上で稼働するシステムはマイクロサービス化が進み、障害やパフォーマンス低下時にどこから調査すればいいかわからなくなります。
+
+**監視はシステムの状態を見続けることに対し、可観測性はシステムで何が起きているのかを把握するためのものと言えます。**
+
+### 可観測性の三本柱
+- メトリクス
+- ログ
+- トレース
+
 
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
+https://newrelic.com/jp/topics/what-is-observability
+https://www.splunk.com/ja_jp/data-insider/what-is-observability.html
