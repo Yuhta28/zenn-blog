@@ -47,7 +47,7 @@ https://aws.amazon.com/jp/products/management-and-governance/use-cases/monitorin
     - 特定地点の記録を示す(なぜ起きたか)
 
 # AWSでの可観測性
-AWSで可観測性を実現するためには様々なマネージドサービスやオープンソースが提供されています。
+AWSで可観測性を実現するためにはさまざまなマネージドサービスやオープンソースが提供されています。
 ![](/images/cloud-observability/image2.png)
 さらにAWSで可観測性を実現するためのワークショップもあります。
 https://catalog.workshops.aws/observability/ja-JP
