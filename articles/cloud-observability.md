@@ -31,7 +31,7 @@ https://aws.amazon.com/jp/products/management-and-governance/use-cases/monitorin
 
 # 可観測性と監視の違い
 可観測性という新しい言葉を使わなくてもログ取得やメトリクス取得は監視という運用で昔からサービス運用で使われてきたと思います。
-この二つの違いはなんでしょうか。
+この2つの違いはなんでしょうか。
 ## 可観測性の三本柱
 
 # 参考資料
