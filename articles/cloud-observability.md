@@ -76,7 +76,7 @@ CloudWatch ServiceLensはトレース、メトリクス、ログなどのリソ�
 
 ## CloudWatch Synthetics
 https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html
-CloudWatch SyntheticsはCanaryとよばれるスケジュールに沿って実行されるスクリプトを作成し、エンドポイントとAPIをモニタリングできます。Canaryで顧客が操作するアクションを記述し、顧客が遭遇する問題にいち早く発見することができます。
+CloudWatch SyntheticsはCanaryとよばれるスケジュールに沿って実行されるスクリプトを作成し、エンドポイントとAPIをモニタリングできます。Canaryで顧客が操作するアクションを記述し、顧客が遭遇する問題にいちはやく発見できます。
 
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
