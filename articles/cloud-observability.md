@@ -1,20 +1,20 @@
 ---
-title: "監視から可観測性へ"
+title: "監視からオブザーバビリティへ"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["監視","可観測性","AWS"]
+topics: ["監視","オブザーバビリティ","AWS"]
 published: false
 ---
 
 # 概要
-先日弊社の監視運用をMackerelからDatadogへ切り替えました。その時監視だけでなく、OpenSearchによるログ集約運用も見直しそちらもDatadogの中にまとめました。
+先日弊社の監視運用をMackerelからDatadogへ切り替えました。その時監視だけでなく、OpenSearchによるログ集約運用も見直しそちらもDatadogにまとめました。
 ![](/images/cloud-observability/image1.png)
 
 Datadogは前の会社でも使っていましたが、すでに導入済みで特に私自身使う機会がなかったので今回の導入に向けて色々とDatadogの導入方法や監視そのものの運用について色々と調べてみました。
-そのなかで可観測性という用語が気になりましたので、私が調べて感じた事、AWSで実践できるワークショップの紹介も兼ねて紹介いたします。
+そのなかでオブザーバビリティという用語が気になりましたので、私が調べて感じた事、AWSで実践できるワークショップの紹介も兼ねて紹介いたします。
 
-# 可観測性とは
-英語ではObservabilityと紹介され、直訳すると観察する能力という意味合いになります。何を観察するか。エンジニアがシステムやプロダクトを
+# オブザーバビリティとは
+日本語訳では可観測性とも紹介され観察する能力という意味合いになります。何を観察するか。エンジニアがシステムやプロダクトを
 リリースした後の運用でログの取得やCPU使用率、パフォーマンスデータの確認など多くの指標を取得すると思います。
 これらを取得する目的はなんでしょうか。おそらく企業ごとに取得する目的は異なると思います。
 https://www.datadoghq.com/ja/resources/business-value-of-observability-ebook/
@@ -29,15 +29,15 @@ AWSブログでも観測する目的としてシステムのどこで何が起�
 https://aws.amazon.com/jp/products/management-and-governance/use-cases/monitoring-and-observability/
 > オブザーバビリティの主な目的は、システムのどこで何が起こっているか知ることです。
 
-## 可観測性と監視の違い
-可観測性という新しい言葉を使わなくてもログ取得やメトリクス取得は監視という運用で昔からサービス運用で使われてきたと思います。
+## オブザーバビリティと監視の違い
+オブザーバビリティという新しい言葉を使わなくてもログ取得やメトリクス取得は監視という運用で昔からサービス運用で使われてきたと思います。
 この2つの違いはなんでしょうか。
-いくつかの記事を参照するとこの2つは比較するものではなく、可観測性は考え方であり監視は手段であると述べています。可観測性は複雑なシステムを適切に管理するためにも重要です。特にクラウド上で稼働するシステムはマイクロサービス化が進み、障害やパフォーマンス低下時にどこから調査すればいいかわからなくなります。
+いくつかの記事を参照するとこの2つは比較するものではなく、オブザーバビリティは考え方であり監視は手段であると述べています。オブザーバビリティは複雑なシステムを適切に管理するためにも重要です。特にクラウド上で稼働するシステムはマイクロサービス化が進み、障害やパフォーマンス低下時にどこから調査すればいいかわからなくなります。
 
-**監視はシステムの状態を見続けることに対し、可観測性はシステムで何が起きているのかを把握するためのものと言えます。**
+**監視はシステムの状態を見続けることに対し、オブザーバビリティはシステムで何が起きているのかを把握するためのものと言えます。**
 
-## 可観測性の三本柱
-可観測性には何が、どこで、なぜ発生したのかを把握するために3つの要素があります。
+## オブザーバビリティの三本柱
+オブザーバビリティには何が、どこで、なぜ発生したのかを把握するために3つの要素があります。
 
 - メトリクス
     - 特定期間のデータの集計値(何が起きたか)
@@ -46,14 +46,14 @@ https://aws.amazon.com/jp/products/management-and-governance/use-cases/monitorin
 - ログ
     - 特定地点の記録を示す(なぜ起きたか)
 
-# AWSでの可観測性
-AWSで可観測性を実現するためにはさまざまなマネージドサービスやオープンソースが提供されています。
+# AWSでのオブザーバビリティ
+AWSでオブザーバビリティを実現するためにはさまざまなマネージドサービスやオープンソースが提供されています。
 ![](/images/cloud-observability/image2.png)
-さらにAWSで可観測性を実現するためのワークショップもあります。
+さらにAWSでオブザーバビリティを実現するためのワークショップもあります。
 https://catalog.workshops.aws/observability/ja-JP
 こちらのワークショップではX-Ray、CloudWatch、Prometheusなどボリュームたっぷりな内容になっています。
 
-ワークショップではデモ用のペット保護のボランティアサイトを構築して、サイトの可観測性を実装します。
+ワークショップではデモ用のペット保護のボランティアサイトを構築して、サイトのオブザーバビリティを実装します。
 ![](/images/cloud-observability/image3.png)
 *デモサイト*
 ![](/images/cloud-observability/image14.png)
@@ -64,8 +64,23 @@ EKS上で構築されたペットサイトに対して、GrafanaやPrometheusな
 説明では3~4時間と記載されていましたが、全部を一通りやろうとすると1日超えました。扱うリソースが多く、何日も放置したままにするとAWSコストが結構かかりましたのでハンズオンは余裕をもって始めたほうがよろしいです。
 :::
 
+# オブザーバビリティサービス紹介
+ワークショップにそっていくつかのサービスを紹介します。
+全部を紹介するとなると膨大な量になりますので全部気になる人はぜひワークショップに挑戦してみてください。
+
+## CloudWatch ServiceLens
+https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/ServiceLens.html
+CloudWatch ServiceLensはトレース、メトリクス、ログなどのリソースヘルス情報を1か所に統合しサービスアプリケーションの監視強化を行ないます。サービスマップが各リソースとエンドポイント間のトラフィックやレイテンシー、エラー状態を表示しアプリケーションの影響を迅速に調査できます。
+![](/images/cloud-observability/image4.png)
+*デモサイトのサービスマップ*
+
+## CloudWatch Synthetics
+https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html
+CloudWatch SyntheticsはCanaryとよばれるスケジュールに沿って実行されるスクリプトを作成し、エンドポイントとAPIをモニタリングできます。Canaryで顧客が操作するアクションを記述し、顧客が遭遇する問題にいち早く発見することができます。
+
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
 https://newrelic.com/jp/topics/what-is-observability
 https://www.splunk.com/ja_jp/data-insider/what-is-observability.html
+https://d1.awsstatic.com/events/jp/2020/innovate/pdf/S-8_AWSInnovate_Online_Conference_2020_Spring_management_monitoring.pdf
