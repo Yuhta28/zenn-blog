@@ -92,7 +92,14 @@ RUMとはリアルユーザーモニタリング(Real User Monitoring)を意味�
 
 ## Container Insights
 https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/ContainerInsights.html
-CloudWatch Container InsightsはECSやEKS、Fargateなどコンテナ上で生成されるメトリクスやログを収集、集計できます。
+CloudWatch Container InsightsはECSやEKS、Fargateなどコンテナ上で生成されるメトリクスやログを収集、集計できます。収集したメトリクスはCloudWatchダッシュボード上でも表示できますので、アラート監視を設定しメトリクス異常が見つかったらSlackに通知するようにしてモニタリングできます。
+![](/images/cloud-observability/image8.png)
+*コンテナマップ ノードをクリックするとメトリクスが表示される*
+
+![](/images/cloud-observability/image10.png)
+*EKSポッドのCPU使用率情報*
+
+
 
 [^1]: https://docs.datadoghq.com/ja/real_user_monitoring/browser/
 # 参考資料
