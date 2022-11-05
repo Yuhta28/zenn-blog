@@ -76,8 +76,25 @@ CloudWatch ServiceLensはトレース、メトリクス、ログなどのリソ�
 
 ## CloudWatch Synthetics
 https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries.html
-CloudWatch SyntheticsはCanaryとよばれるスケジュールに沿って実行されるスクリプトを作成し、エンドポイントとAPIをモニタリングできます。Canaryで顧客が操作するアクションを記述し、顧客が遭遇する問題にいちはやく発見できます。
+CloudWatch SyntheticsはCanaryとよばれるスケジュールに沿って実行されるNode.jsまたはPythonのスクリプトを作成し、エンドポイントとAPIをモニタリングできます。Canaryで顧客が操作するアクションを記述し、顧客が遭遇する問題にいちはやく発見できます。
+![](/images/cloud-observability/image5.png)
+*Canary成否結果*
+![](/images/cloud-observability/image15.png)
+*自分で書かなくても事前に提供されているブループリントから簡易的なテストを実装できる*
 
+## CloudWatch RUM
+https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/CloudWatch-RUM.html
+RUMとはリアルユーザーモニタリング(Real User Monitoring)を意味し、ユーザーが体験するアプリケーションパフォーマンスと信頼性をモニタリングします。ユーザーセッション情報を収集し、ページ読み込み時間、クライアントエラー、ユーザー活動などを可視化、分析できます。Datadogにも同様の機能[^1]がマネージドサービスとして提供されており、UX最適化のために大事なモニタリングサービスになります。
+弊社でもRUMを実装して、WPコンテンツのレスポンス速度やユーザージャーニーでユーザーのページ遷移をビジネス分析できないか検討している最中になります。
+
+![](/images/cloud-observability/image7.png)
+*ウェブバイタル情報 入力レイテンシーがどれくらいかわかる*
+
+## Container Insights
+https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/ContainerInsights.html
+CloudWatch Container InsightsはECSやEKS、Fargateなどコンテナ上で生成されるメトリクスやログを収集、集計できます。
+
+[^1]: https://docs.datadoghq.com/ja/real_user_monitoring/browser/
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
