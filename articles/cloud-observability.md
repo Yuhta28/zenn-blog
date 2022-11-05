@@ -90,6 +90,8 @@ RUMとはリアルユーザーモニタリング(Real User Monitoring)を意味�
 ![](/images/cloud-observability/image7.png)
 *ウェブバイタル情報 入力レイテンシーがどれくらいかわかる*
 
+[^1]: https://docs.datadoghq.com/ja/real_user_monitoring/browser/
+
 ## Container Insights
 https://docs.aws.amazon.com/ja_jp/AmazonCloudWatch/latest/monitoring/ContainerInsights.html
 CloudWatch Container InsightsはECSやEKS、Fargateなどコンテナ上で生成されるメトリクスやログを収集、集計できます。収集したメトリクスはCloudWatchダッシュボード上でも表示できますので、アラート監視を設定しメトリクス異常が見つかったらSlackに通知するようにしてモニタリングできます。
@@ -99,9 +101,19 @@ CloudWatch Container InsightsはECSやEKS、Fargateなどコンテナ上で生�
 ![](/images/cloud-observability/image10.png)
 *EKSポッドのCPU使用率情報*
 
+## Lambda Insights
+https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/monitoring-insights.html
+CloudWatch Lambda InsightsはLambdaで実行されたアプリケーションのメトリクス情報を収集、集計できます。Lambda InsightsはLambdaの拡張機能であり、対象Lambda関数を有効化する必要があります。[^2]
+Lambdaの実行時間には上限が決まっているのでInsightsで定期的に実行時間をウォッチングして、上限を超えないようにモニタリングする、メモリサイズが適切か使用量をチェックして最適化するといった使い方ができます。
+[^2]: ワークショップのLambda関数は最初から有効化されています。
 
+![](/images/cloud-observability/image11.png)
+*複数のLambda関数を同時に見ることも可能*
 
-[^1]: https://docs.datadoghq.com/ja/real_user_monitoring/browser/
+## Amazon Managed Service for Prometheus
+https://aws.amazon.com/jp/prometheus/
+AWSはOSS監視ツールとして有名なPrometheusをフルマネージドサービスとして提供してくれています。OSS版とも互換性がありますのでインフラ基盤をAWSへ移行する際にPrometheusもまとめて移行するということも検討できます。
+
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
