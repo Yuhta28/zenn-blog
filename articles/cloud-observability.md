@@ -53,6 +53,17 @@ AWSで可観測性を実現するためにはさまざまなマネージドサ�
 https://catalog.workshops.aws/observability/ja-JP
 こちらのワークショップではX-Ray、CloudWatch、Prometheusなどボリュームたっぷりな内容になっています。
 
+ワークショップではデモ用のペット保護のボランティアサイトを構築して、サイトの可観測性を実装します。
+![](/images/cloud-observability/image3.png)
+*デモサイト*
+![](/images/cloud-observability/image14.png)
+*アーキテクチャ図*
+EKS上で構築されたペットサイトに対して、GrafanaやPrometheusなどの監視サービスを利用し、モニタリングしていきます。
+
+:::message alert
+説明では3~4時間と記載されていましたが、全部を一通りやろうとすると1日超えました。扱うリソースが多く、何日も放置したままにするとAWSコストが結構かかりましたのでハンズオンは余裕をもって始めたほうがよろしいです。
+:::
+
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
