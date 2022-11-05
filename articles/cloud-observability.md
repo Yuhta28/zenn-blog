@@ -112,7 +112,40 @@ Lambdaの実行時間には上限が決まっているのでInsightsで定期的
 
 ## Amazon Managed Service for Prometheus
 https://aws.amazon.com/jp/prometheus/
-AWSはOSS監視ツールとして有名なPrometheusをフルマネージドサービスとして提供してくれています。OSS版とも互換性がありますのでインフラ基盤をAWSへ移行する際にPrometheusもまとめて移行するということも検討できます。
+AWSはOSS監視ツールとして有名なPrometheus[^3]をフルマネージドサービスとして提供してくれています。OSS版とも互換性がありますのでインフラ基盤をAWSへ移行する際にPrometheusもまとめて移行するということも検討できます。
+ECSやEKSなどのコンテナのメトリクス取得やアプリケーション監視するための重い負担を減らせるのはエンジニアにとって大きなメリットになります。
+Prometheusは後述のGrafanaと連携することでデータの可視化、ダッシュボードへのログイン認証・認可を簡略化できます。
+[^3]: https://prometheus.io/
+
+
+## Amazon Managed Grafana
+https://aws.amazon.com/jp/grafana/
+Grafana[^4]はモニタリング結果を可視化するためのダッシュボードを提供してくれるOSSです。
+こちらもAWSがフルマネージドにパッケージされたサービスとして提供しており、先のPrometheusと連携することで収集データの可視化を実現できます。
+![](/images/cloud-observability/image12.png)
+*Prometheusで収集したデータをGrafanaで可視化*
+
+Prometheus以外にもAWSサービスのX-RayやCloudWatch、OpenSearchで収集したデータも可視化できますし、DatadogやOracle Databaseなどのサードパーティーツールで取得したデータも可視化できます。
+![](/images/cloud-observability/image16.png)
+[^4]: https://grafana.com/
+
+# 負荷テストとトラブルシューティング
+ワークショップの最後に今までのオブザーバビリティサービスを活用して負荷テストで生じたサービス障害の調査分析を体験できます。
+負荷テスト用のコンテナを起動させて、数分後にサイトがつながりにくくするようにします。
+
+```console:トラフィックジェネレーターコンテナを5台起動
+PETLISTADOPTIONS_CLUSTER=$(aws ecs list-clusters | jq '.clusterArns[]|select(contains("PetList"))' -r)
+TRAFFICGENERATOR_SERVICE=$(aws ecs list-services --cluster $PETLISTADOPTIONS_CLUSTER | jq '.serviceArns[]|select(contains("trafficgenerator"))' -r)
+aws ecs update-service --cluster $PETLISTADOPTIONS_CLUSTER --service $TRAFFICGENERATOR_SERVICE --desired-count 5
+```
+
+サービスマップを確認すると障害発生の原因となっているリソースが赤くなり、ログで詳細な記録が確認できます。
+![](/images/cloud-observability/image13.png)
+
+ワークショップ内にはパフォーマンス改善する方法についても触れられていますので気になる人はチェックしてみてください。
+
+# 所感
+
 
 # 参考資料
 https://licensecounter.jp/devops-hub/blog/splunk1/
