@@ -149,7 +149,11 @@ aws ecs update-service --cluster $PETLISTADOPTIONS_CLUSTER --service $TRAFFICGEN
 今回はAWSが提供するオブザーバビリティサービス中心に説明を進めてきましたが、監視SaaSとして有名なDatadogやNew Relicを活用してオブザーバビリティを推進していくのも良いです。
 
 プロダクト開発は作ることに意識を向けられがちでリリース後の運用についてはあまり目を向けないかもしれません。プロダクトは作ってユーザーに体験してもらってようやくスタート地点に立てます。障害からの迅速な復旧やユーザーがどう行動しているのかを知るための分析はプロダクトをグロースさせるために必要な要素ですので、ぜひともオブザーバビリティを高めた運用を目指してみてください。
-# 参考資料
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](9341e97fbbf04b0e8c3d1702ab372c05)
+# 参考文献
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
 https://newrelic.com/jp/topics/what-is-observability
