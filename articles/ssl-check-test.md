@@ -3,7 +3,8 @@ title: "SSL脆弱性診断テストでA評価をとってみよう"
 emoji: "🐁"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["ssl","セキュリティ"]
-published: false
+published: true
+published_at: 2022-11-16 08:00
 ---
 
 # 概要
