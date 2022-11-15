@@ -89,24 +89,24 @@ TLS1.3が有効化されていませんが、AWSの最新セキュリティポ�
 セキュリティポリシーを変更しましたがまだ最高評価のA+になっていません。ここからさらに評価を上げるためにHSTS Preloadにドメインを登録します。
 
 ## HSTS
-HSTS(Hypertext Strict Transport Security)は、HTTPでの通信を強制的にHTTPS通信にリダイレクトする仕組みです。ApacheやNginxの設定でレスポンスヘッダに`Strict-Transport-Secutiry`を追加することでHSTSが有効化されます。
+HSTS(Hypertext Strict Transport Security)は、HTTPでの通信を強制的にHTTPS通信にリダイレクトする仕組みです。Apacheやnginxの設定でレスポンスヘッダーに`Strict-Transport-Secutiry`を追加することでHSTSが有効化されます。
 
 ## HSTSの問題点
-HSTSの仕組み上初回のアクセスはHTTP通信を許してしまうことが挙げられます。初めてそのサイトにアクセスしたとき、そのアクセスがHTTP通信の場合レスポンス時に次回以降にHTTPS通信でアクセスするように返します。なので最初のアクセス時にセキュアな情報を持っていた場合、悪意ある第三者に盗み見られるリスクが出てきます。
+HSTSの仕組み上初回のアクセスはHTTP通信を許してしまうことが挙げられます。はじめてそのサイトにアクセスしたとき、そのアクセスがHTTP通信の場合レスポンス時に次回以降にHTTPS通信でアクセスするように返します。なので最初のアクセス時にセキュアな情報を持っていた場合、悪意ある第三者に盗み見られるリスクが出てきます。
 この問題点を解決する仕組みがHSTS Preloadです。
 https://hstspreload.org/
 
-HTST PreloadはGoogleが提供する先読みサービスです。レスポンスヘッダに`Strict-Transport-Security`を追加する設定をWebサーバーに設定した後、対象ドメインをHTST Preloadリストに登録することでブラウザ側でHTST対象のドメインを先読みし初回アクセスからHTTPS通信を実現します。
+HTST PreloadはGoogleが提供する先読みサービスです。レスポンスヘッダーに`Strict-Transport-Security`を追加する設定をWebサーバーに設定した後、対象ドメインをHTST Preloadリストに登録することでブラウザ側でHTST対象のドメインを先読みし初回アクセスからHTTPS通信を実現します。
 
 # HSTS設定
-それではWordPressを動かしているApacheのレスポンスヘッダに`Strict-Transport-Security`を追加します。
+それではWordPressを動かしているApacheのレスポンスヘッダーに`Strict-Transport-Security`を追加します。
 `.htaccess`に以下の記述を追加するだけです。
 
 ```conf
 Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 ```
 
-WordPressにアクセスし、デベロッパーツールでレスポンスヘッダを確認すると`Strict-Transport-Security`が追加されていることが確認できます。
+WordPressにアクセスし、デベロッパーツールでレスポンスヘッダーを確認すると`Strict-Transport-Security`が追加されていることが確認できます。
 ![](/images/ssl-check-test/image9.png)
 
 [HSTS Preloadリストの申請フォーム](https://hstspreload.org/)にドメインを入力して確認事項にチェックを入れてPreloadに申請します。
