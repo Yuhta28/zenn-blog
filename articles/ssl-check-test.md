@@ -9,7 +9,7 @@ published_at: 2022-11-16 08:00
 
 # 概要
 Googleが常時SSL化しているサイトへのSEO評価を高めると発表してからずいぶん時間が経ちました。[^1]
-日本国内の上場企業およそ9割がサイトの常時SSL化を対応しています。[^2]
+日本国内のおよそ9割の上場企業がサイトの常時SSL化を対応しています。[^2]
 もちろん諸外国でも同様の動きがみられます。
 ![](/images/ssl-check-test/image3.png)
 *Google Transparency Reportより[^3]*
@@ -25,7 +25,7 @@ https://www.ssllabs.com/ssltest/index.html
 # SSL Server Testについて
 前述したとおりSSL Server Testはドメインを入力することでそのサイトのSSL設定が正しく設定されているか診断してくれるサイトになります。
 ![](/images/ssl-check-test/image1.png)
-適当にEC2+RDSでWordPressを立ててACM[^4]の証明書でSSL化した私のサイトはB評価と出ています。最高評価がA+になり、B以下には脆弱性が含まれる結果となりました。このサイトをA+に持っていけるようにSSL設定の見直しを行なっていきます。
+適当にEC2+RDSでWordPressを立ててACM[^4]の証明書でSSL化した私のサイトはB評価と出ています。最高評価がA+で、B以下には脆弱性が含まれます。このサイトをA+に持っていけるようにSSL設定の見直しを行なっていきます。
 
 [^4]: https://aws.amazon.com/jp/certificate-manager/
 
