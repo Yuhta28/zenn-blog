@@ -37,7 +37,7 @@ TLS 1.0とTLS 1.1をサポートしていると最大でもBまでの評価し�
 ![](/images/ssl-check-test/image2.png)
 
 ## TLSとSSL
-あらためてSSLについて説明しますと、SSL(Secure Socket Layer)とはデータを暗号化して送受信できるプロトコルです。1990年代にリリースされましたが深刻な脆弱性があるため今はほとんど使われていません。現在はSSLの後継のTLS(Transport Layer Security)をつかってサイトSSL化を実現しています。
+今一度SSLについて説明しますと、SSL(Secure Socket Layer)とはデータを暗号化して送受信できるプロトコルです。1990年代にリリースされましたが深刻な脆弱性があるため今はほとんど使われていません。現在はSSLの後継のTLS(Transport Layer Security)をつかってサイトSSL化を実現しています。
 
 ::: message
 厳密性を求めるとTLS通信と表現するのが正しいのかもしれませんが、SSLの名称が広く使用されてきた経緯がありますので、今でもTLSのことをSSLもしくはTLS/SSLと表記することが多いです。
@@ -76,7 +76,7 @@ SSL Server Testに対応ブラウザの結果も出力されますが、よっ�
 
 TLS1.0/1.1を無効化したことで評価がAに変わりました。
 ![](/images/ssl-check-test/image7.png)
-セキュリティポリシーを変更しても私のスマホやPCからは問題なく表示されていました。
+セキュリティポリシーを変更しても私のスマートフォンやPCからは問題なく表示されていました。
 
 ::: message
 TLS1.3が有効化されていませんが、AWSの最新セキュリティポリシーがまだ非対応みたいです。ちなみにAzureのL7Load BalancerであるApplication GatewayもTLS1.3はまだプレビュー段階でした。[^6] GCPは対応しているみたいです。[^7]

@@ -237,7 +237,7 @@ Ansible経由でUbuntuにDatadogをインストールするときの注意点に
 正攻法でやるならUbuntu22.04へのアップグレードが最適でしょうか？
 今のところ問題なさそうなのでしばらくPlaybookの中身を修正したままにして進めてみようと思います。
 
-[^1]: くわしくはこちらのブログ記事参照　https://tekunabe.hatenablog.jp/entry/2022/07/08/225248
+[^1]: 詳しくはこちらのブログ記事参照　https://tekunabe.hatenablog.jp/entry/2022/07/08/225248
 
 # 参考文献
 https://github.com/ansible/ansible/blob/stable-2.9/changelogs/CHANGELOG-v2.9.rst#v2-9-8

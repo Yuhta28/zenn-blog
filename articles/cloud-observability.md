@@ -152,7 +152,7 @@ aws ecs update-service --cluster $PETLISTADOPTIONS_CLUSTER --service $TRAFFICGEN
 
 # LT資料
 LTのスライド資料です。
-@[speakerdeck](9341e97fbbf04b0e8c3d1702ab372c05)
+@[speakerdeck](d28c76a6b92e40ebb0b3b6e608123416)
 # 参考文献
 https://licensecounter.jp/devops-hub/blog/splunk1/
 https://www.oreilly.co.jp/books/9784873118642/
