@@ -31,3 +31,22 @@ EC2からECSへのDatadogエージェント移行は後日会社のテックブ�
 App Runner上のDatadogエージェントから弊社のメディアサーバーに外形監視し、取得したレスポンスタイムのグラフ結果は以下のようになります。
 ![](/images/app-runner-proxy/image3.png)
 *メディアサーバー毎のレスポンスタイム取得値*
+
+最初に数メディアをECS Fargateから監視し挙動を確認した後に、DatadogエージェントをApp Runnerに乗せ換えてみました。それがお昼時くらいのことですが移行直後から急激にレスポンスタイムが上昇していることがわかります。最初は移行直後だからと様子見しましたが、丸一日経っても改善しなかったため翌日にFargateに切り戻ししました。
+
+# Curl検証
+DatadogエージェントがApp Runnerと相性が良くないのではと思いましたが、curlで単純なレスポンスタイムを取得するコンテナを用意してFargateからとApp Runnerからそれぞれ計測してみることにしました。
+
+```Dockerfile:Dockerfile
+FROM  curlimages/curl:latest
+
+CMD  curl -s -o /dev/null -w '%{time_starttransfer}' <うちのメディアURL>
+```
+
+ローカルPCからこのコンテナを起動すると対象URLのレスポンスタイムを取得してくれます。
+
+```console
+$ docker build -t curl-yuta .
+$ docker run --rm curl-yuta
+0.252717
+```
