@@ -50,3 +50,20 @@ $ docker build -t curl-yuta .
 $ docker run --rm curl-yuta
 0.252717
 ```
+
+FargateとApp Runnerから取得できたレスポンスタイムはこちらです。
+
+### Fargateコンテナ
+![](/images/app-runner-proxy/image1.png)
+
+### App Runnerコンテナ
+![](/images/app-runner-proxy/image2.png)
+
+Datadogエージェントほど露骨ではありませんが、curlでもApp Runner経由で実行した方がレスポンスタイムが遅くなっていることがわかります。
+
+# 謎のコンテナ
+Datadogではエージェントを導入したホスト/コンテナが自動的にダッシュボードに登録されます。
+![](/images/app-runner-proxy/image4.png)
+*コンテナ画面*
+
+FargateでDatadogエージェントコンテナを導入した時は1台登録されていました。
