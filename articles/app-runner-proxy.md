@@ -103,7 +103,7 @@ https://github.com/aws/apprunner-roadmap/issues/96
 ![](/images/app-runner-proxy/image5.png)
 さきほどのApp RunnerコンテナのCPU使用率をみてますと値が0%のまま取得できていなかったのはコンテナがプロビジョニングされているからです。
 ただプロビジョニング状態で(レスポンスタイムが遅くなっているとはいえ)、Datadogにデータを送信できているのは興味深いとも仰っていました。
-こちらのissueについては機能リクエストも上がっており、対応中らしいので来年にはもしかするとDatadogエージェントコンテナをApp Runnerでも利用できるかもしれません。私はFargateで構築しましたので再構築はしませんが、興味ある人がいましたらApp Runnerのロードマップを確認して是非試してみてください。
+こちらのissueについては機能リクエストも上がっており、対応中らしいので来年にはもしかするとDatadogエージェントコンテナをApp Runnerでも利用できるかもしれません。私はFargateで構築しましたので再構築はしませんが、興味ある人がいましたらApp Runnerのロードマップを確認してぜひ試してみてください。
 
 # 参考文献
 https://zenn.dev/taxin/articles/curl-time-measure
