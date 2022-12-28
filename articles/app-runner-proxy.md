@@ -105,6 +105,10 @@ https://github.com/aws/apprunner-roadmap/issues/96
 ただプロビジョニング状態で(レスポンスタイムが遅くなっているとはいえ)、Datadogにデータを送信できているのは興味深いとも仰っていました。
 こちらのissueについては機能リクエストも上がっており、対応中らしいので来年にはもしかするとDatadogエージェントコンテナをApp Runnerでも利用できるかもしれません。私はFargateで構築しましたので再構築はしませんが、興味ある人がいましたらApp Runnerのロードマップを確認してぜひ試してみてください。
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](5173c852c04a4f12b347fff499d871c7)
+
 # 参考文献
 https://zenn.dev/taxin/articles/curl-time-measure
 https://www.thousandeyes.com/ja/blog/measuring-performance-with-http-proxies
