@@ -94,6 +94,17 @@ FargateでDatadogエージェントコンテナを導入したときは1台登�
 App Runnerをチュートリアル以外ではじめて使ってみましたが、残念ながら仕事に活用できませんでした。
 個人的には簡単にコンテナのデプロイができたので、別の機会で使ってみたいなと思います。
 
+# 追記
+弊社で契約しているAWS SAに聞いてみましたが、現在App Runnerは非同期処理が難しくWebリクエストベースでの利用に限定されているそうです。
+https://github.com/aws/apprunner-roadmap/issues/96
+案内されたissueによりますと、App Runnerは同時リクエストベースでスケールし、リクエストが来なければCPUをスロットリングし、メモリ課金のみの[プロビジョニングされたコンテナインスタンス](https://aws.amazon.com/jp/apprunner/pricing/)に状態遷移されるそうです。
+上図のようにApp Runnerへのリクエストが発生しないプッシュ型のエージェントコンテナではコンテナが自動的にプロビジョニングされCPUがうまく動かないからだと思われます。
+
+![](/images/app-runner-proxy/image5.png)
+さきほどのApp RunnerコンテナのCPU使用率をみてますと値が0%のまま取得できていなかったのはコンテナがプロビジョニングされているからです。
+ただプロビジョニング状態で(レスポンスタイムが遅くなっているとはいえ)、Datadogにデータを送信できているのは興味深いとも仰っていました。
+こちらのissueについては機能リクエストも上がっており、対応中らしいので来年にはもしかするとDatadogエージェントコンテナをApp Runnerでも利用できるかもしれません。私はFargateで構築しましたので再構築はしませんが、興味ある人がいましたらApp Runnerのロードマップを確認して是非試してみてください。
+
 # 参考文献
 https://zenn.dev/taxin/articles/curl-time-measure
 https://www.thousandeyes.com/ja/blog/measuring-performance-with-http-proxies
