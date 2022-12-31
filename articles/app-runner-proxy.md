@@ -109,6 +109,10 @@ https://github.com/aws/apprunner-roadmap/issues/96
 LTのスライド資料です。
 @[speakerdeck](5173c852c04a4f12b347fff499d871c7)
 
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/not-documented-app-runner-specification-1929
+
 # 参考文献
 https://zenn.dev/taxin/articles/curl-time-measure
 https://www.thousandeyes.com/ja/blog/measuring-performance-with-http-proxies
