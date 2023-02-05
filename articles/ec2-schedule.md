@@ -60,7 +60,7 @@ https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/aws-i
 - UseCloudWatchLogs
   - CloudWatchによるロギング設定の有効可否
 - EnableSSMMaintenanceWindows
-  - SSMメンテナンスウインドウをロードしてEC2のスケジューラーの設定有効可否
+  - SSMメンテナンスウィンドウをロードしてEC2のスケジューラーの設定有効可否
 
 #### Other parameters
 - LogRetentionDays
