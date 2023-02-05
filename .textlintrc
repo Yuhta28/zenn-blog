@@ -19,7 +19,7 @@
             "no-exclamation-question-mark": {
             "allowFullWidthExclamation": true,
             "allowFullWidthQuestion": true,
-            "sentence-length": false
+            "sentence-length": 300
           },
           "no-doubled-joshi": {
              "strict": false,
