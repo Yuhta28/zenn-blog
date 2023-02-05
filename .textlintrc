@@ -25,8 +25,7 @@
              "strict": false,
              "allow": ["か"]
           }
-        },
-        "sentence-length": false
+        }
     },
     "preset-ja-spacing": {
         "ja-space-between-half-and-full-width": {
