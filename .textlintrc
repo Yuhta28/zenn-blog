@@ -19,7 +19,12 @@
             "no-exclamation-question-mark": {
             "allowFullWidthExclamation": true,
             "allowFullWidthQuestion": true,
-            "sentence-length": false
+            "ja-no-mixed-period": {
+                "allowPeriodMarks": [":"]
+            },
+            "sentence-length": {
+                "max": 300
+            }
           },
           "no-doubled-joshi": {
              "strict": false,
@@ -36,9 +41,6 @@
           "before": true,
           "after": true
         }
-    },
-    "ja-technical-writing/ja-no-mixed-period": {
-        "allowPeriodMarks": [":"]
     },
     "filters": {
         "allowlist": {
