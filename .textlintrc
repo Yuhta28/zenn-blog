@@ -11,26 +11,27 @@
         },
         "preset-ja-technical-writing": {
             "no-exclamation-question-mark": {
-            "allowFullWidthExclamation": true,
-            "allowFullWidthQuestion": true,
-            "ja-no-mixed-period": {
-                "allowPeriodMarks": [":"]
+                "allowFullWidthExclamation": true,
+                "allowFullWidthQuestion": true
             },
-            "sentence-length": false,
-          "no-doubled-joshi": {
-             "strict": false,
-             "allow": ["か"]
-          }
-        }
-    },
-    "preset-ja-spacing": {
-        "ja-space-between-half-and-full-width": {
-          "space": "always",
-          "exceptPunctuation": true
+            "no-doubled-joshi": {
+                "strict": false,
+                "allow": ["か"]
+            }
         },
-        "ja-space-around-code": {
-          "before": true,
-          "after": true
-        }
+        "preset-ja-spacing": {
+            "ja-space-between-half-and-full-width": {
+              "space": "always",
+              "exceptPunctuation": true
+            },
+            "ja-space-around-code": {
+              "before": true,
+              "after": true
+            }
+        },
+        "ja-technical-writing/ja-no-mixed-period": {
+            "allowPeriodMarks": [":"]
+        },
+        "ja-technical-writing/sentence-length": false
     }
 }
