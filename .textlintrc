@@ -9,12 +9,6 @@
             "sentence-length": false,
             "ja-no-mixed-period": false
         },
-        "prh": {
-            "rulePaths": [
-                "dict/smarthr-prh-basic.yml",
-                "dict/smarthr-prh-tech-word.yml"
-            ]
-        },
         "preset-ja-technical-writing": {
             "no-exclamation-question-mark": {
             "allowFullWidthExclamation": true,
@@ -22,10 +16,7 @@
             "ja-no-mixed-period": {
                 "allowPeriodMarks": [":"]
             },
-            "sentence-length": {
-                "max": 300
-            }
-          },
+            "sentence-length": false,
           "no-doubled-joshi": {
              "strict": false,
              "allow": ["か"]
@@ -40,17 +31,6 @@
         "ja-space-around-code": {
           "before": true,
           "after": true
-        }
-    },
-    "filters": {
-        "allowlist": {
-            "allow": [
-                "フィルタリング",
-                "RHEL",
-                "Debian",
-                "AWS_WEB_IDENTITY_TOKEN_FILE",
-                "posh-git"
-            ]
         }
     }
 }
