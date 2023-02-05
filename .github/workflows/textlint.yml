@@ -18,10 +18,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
 
-      - name: Install reviewdog
-        uses: reviewdog/action-setup@v1
-        with:
-          reviewdog_version: latest
+#      - name: Install reviewdog
+#        uses: reviewdog/action-setup@v1
+#        with:
+#          reviewdog_version: latest
 
       - name: Install Dependencies
         uses: bahmutov/npm-install@v1
