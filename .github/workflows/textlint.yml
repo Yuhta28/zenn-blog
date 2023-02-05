@@ -38,8 +38,8 @@ jobs:
             node-
 
       - name: Install textlint
-        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-preset-ja-technical-writing textlint-rule-preset-ja-spacing'
- 
+        run:  'npm install --save-dev textlint textlint-rule-preset-ja-technical-writing textlint-rule-preset-ja-spacing'
+
       - name: textlint-reviewdog
         uses: tsuyoshicho/action-textlint@v3
         with:
