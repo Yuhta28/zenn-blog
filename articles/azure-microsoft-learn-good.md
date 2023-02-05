@@ -1,7 +1,7 @@
 ---
-title: "Azureの勉強はMicrosoft Learnがいいよねって話"
-emoji: "🐕"
-type: "tech" # tech: 技術記事 / idea: アイデア
+title: "AWSを触っているエンジニアがAzureのお勉強を始めてみた"
+emoji: "🐈"
+type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["Azure", "microsoft", "初心者"]
 published: false
 ---
@@ -17,7 +17,7 @@ published: false
 *クラウドプロバイダーマーケットシェアトレンド[^5]*
 
 企業規模別のクラウドサービスシェアという調査を見つけることができなかったので主観になりますが、AzureはMicrosoft 365を利用しているエンタープライズ系企業に好まれ、GCPはKubernetesベースのマイクロサービスアーキテクチャを活用する企業で採用、AWSは個人・企業問わず広く採用されるといった印象です。
-また最近はマルチクラウド[^6]という言葉があるとおり複数のクラウドサービスを構築して運用する手法も増えてきています。
+また最近はマルチクラウド[^6]という言葉があるとおり複数のクラウドサービスを構築して運用する手法も増えてきています。私もAWSばかり学習していると偏りが激しいと思い、もう一つなにか別のクラウドサービスを学びたいと思いAzureのお勉強を最近はじめてみました。Azureのお勉強でわかったことやおすすめの学習サイトについて紹介します。
 
 [^1]: https://www.crn.com/news/cloud/top-5-cloud-market-share-leaders-aws-microsoft-google-in-q3-2022/1
 [^2]: https://www.publickey1.jp/blog/22/awssiersiersi.html
