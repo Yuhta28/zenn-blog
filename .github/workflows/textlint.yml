@@ -38,7 +38,7 @@ jobs:
             node-
 
       - name: Install textlint
-        run:  'npm install --save-dev textlint textlint-rule-preset-smarthr textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
+        run:  'npm install --save-dev textlint  textlint-rule-preset-ja-technical-writing textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
       
       - name: Execute textlint for ブログ記事 or 技術同人誌
         run: |
