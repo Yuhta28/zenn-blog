@@ -43,7 +43,8 @@ jobs:
             node-
 
       - name: Install textlint
-        run:  'npm install --save-dev textlint  textlint-rule-preset-ja-technical-writing textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
+        run:  'npm install --save-dev textlint  textlint-rule-preset-ja-technical-writing textlint-rule-preset-ja-spacing
+ textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
 
       - name: Exec textlint-githu-pr-check
         uses: tsuyoshicho/action-textlint@v3
