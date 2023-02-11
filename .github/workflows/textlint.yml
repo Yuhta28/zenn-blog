@@ -31,16 +31,16 @@ jobs:
         with:
           node-version: 15
 
-      - name: cache-node-modules
-        #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
-        uses: pat-s/always-upload-cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node-
+#      - name: cache-node-modules
+#        #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
+#        uses: pat-s/always-upload-cache@v3
+#        env:
+#          cache-name: cache-node-modules
+#        with:
+#          path: ~/.npm
+#          key: node-${{ hashFiles('**/package-lock.json') }}
+#          restore-keys: |
+#            node-
 
       - name: Install textlint
         run:  'npm install --save-dev textlint  textlint-rule-preset-ja-technical-writing textlint-rule-preset-ja-spacing
