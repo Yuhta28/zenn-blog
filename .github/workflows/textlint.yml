@@ -46,15 +46,15 @@ jobs:
         run:  'npm install --save-dev textlint  textlint-rule-preset-ja-technical-writing textlint-rule-preset-ja-spacing
  textlint-rule-prh textlint-filter-rule-allowlist textlint-rule-aws-spellcheck'
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+#      - name: Setup tmate session
+#        uses: mxschmitt/action-tmate@v3
 
       - name: Exec textlint-githu-pr-check
         uses: tsuyoshicho/action-textlint@v3
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          level: error
+          level: warning
           textlint_flags: "articles/**"
 
 #      - name: Execute textlint for ブログ記事 or 技術同人誌
