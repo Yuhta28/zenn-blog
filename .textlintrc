@@ -15,12 +15,6 @@
                 "allow": ["か"]
             }
         },
-        "preset-ja-spacing": {
-            "ja-space-between-half-and-full-width": {
-                "space": "never"
-            },
-            "ja-space-around-code": false
-        },
         "prh": {
             "rulePaths": [
                 "dict/smarthr-prh-basic.yml",
