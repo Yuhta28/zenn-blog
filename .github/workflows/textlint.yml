@@ -29,7 +29,7 @@ jobs:
       - name: Setup Node/npm
         uses: actions/setup-node@v3
         with:
-          node-version: 15
+          node-version: 18
 
 #      - name: cache-node-modules
 #        #stepsが失敗(文章の乱れ)した場合でもcacheを取得するようにする
