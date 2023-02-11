@@ -12,7 +12,7 @@
             },
             "no-doubled-joshi": {
                 "strict": false,
-                "allow": ["か"],
+                "allow": ["か"]
             }
         },
         "preset-ja-spacing": {
