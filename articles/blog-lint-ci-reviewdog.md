@@ -74,6 +74,19 @@ https://github.com/kufu/textlint-rule-preset-smarthr/tree/main/dict
 みなさんが使う場合は、ローカルのPCにSmart HRさんの辞書を格納しておいてください。
 (私はdictディレクトリを作成してその中に置きました)
 
+#### 2023/2追記
+Smart HRさんのルールプリセットですが頻繁にルールが更新され、新しいルールが投稿済みの記事の校正を行ない大量にルール検知するということがありましたので一旦取りやめました。
+2023/2現在で私が利用しているtextlintのルールは以下のものを使用しています。
+
+- `textlint-rule-preset-ja-technical-writing`
+    - https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing
+- `textlint-rule-prh`
+    - https://github.com/textlint-rule/textlint-rule-prh
+- `textlint-filter-rule-allowlist`
+    - https://github.com/textlint/textlint-filter-rule-allowlist
+- `textlint-rule-aws-spellcheck`
+    - https://github.com/37108/textlint-rule-aws-spellcheck
+
 ## reviewdog
 `reviewdog`はtextlintなどLinterツールの結果を、GitHubのPRにレビューコメントを投稿してくれるGoで記述されたOSSツールです。
 https://github.com/reviewdog/reviewdog
@@ -87,27 +100,27 @@ https://github.com/Yuhta28/zenn-blog/blob/main/.github/workflows/textlint.yml
 # ワークフローファイル解説
 大まかなステップの流れとしては次の通りです。
 
-- reviewdog,nodeのアクションを起動
+- Nodeセットアップ
+- キャッシュ取得
 - textlintのインストール
-- textlintを記事に対して実行
-- 何かしらの記載ミスが有った場合のみtextlintの出力結果をreviewdogに渡してGitHubにレビューコメントを投稿
+- デバッグできるようにGitHub Actions内にSSH接続するジョブ(通常時はコメントアウト)
+- textlintの実行
+- reviewdogでPRコメントに通知
 
-工夫した点としてcacheアクションを使うことで、ワークフローの高速化を図りました。
-ところがGitHub Actionsが提供している[actions/cache](https://github.com/actions/cache)ですが、stepsが失敗しているとキャッシュを取得しないという仕様があります。
-https://github.com/actions/cache/blob/main/action.yml#L24
-この仕様のおかげでドキュメントを校正し、textlintで記載ミスがあるとキャッシュを取得してくれず、毎回textlintのインストールを最初からインストールし直します。 ![](https://storage.googleapis.com/zenn-user-upload/umcoopmh5z5ix9b55qcy22hp6j29)
-調べてみると有志で`actions/cache`をforkしてstepsが失敗してもキャッシュを取得するようにしたアクションを公開してくれる人がいましたので、それを使うことにしました。
-https://github.com/marketplace/actions/always-upload-cache
-
-これでstepsが失敗してもキャッシュを取得してくれてワークフローの処理を速めることができました。
+毎回のPRでNPMパッケージのインストールが走ると時間がかかります。数秒程度の差ですがキャッシュを使うことで短縮できます。
 
 #### キャッシュ取得前
 ![](https://storage.googleapis.com/zenn-user-upload/7waih5q0yowk6bjm1ztmplh0u6b9)
 #### キャッシュ取得後
 ![](https://storage.googleapis.com/zenn-user-upload/0eph9zjbzvfnylyh7jxid7rfeirv)
 
-またtextlintで特に問題が見つからない場合、reviewdogを実行するのは無駄なstepsになりますので、`if: failure()`で前述のtextlintで異常が見つかった場合のみ実行するようにしました。
+## 2023/2更新
+今まで純正のreviewdogアクションを利用していましたが、textlintとセットになったアクションを提供している人がいらっしゃいましたのでこちらを利用することにしました。
 
+https://github.com/tsuyoshicho/action-textlint
+
+こちらのアクションはvimのLinterツールである[Vint](https://github.com/Vimjas/vint)が含まれる[reviewdogアクション](https://github.com/reviewdog/action-vint)をベースにしたアクションで、PRへのレビュー体験が向上したものになります。
+まれに純正のreviewdogアクションでtextlintの実行結果がPRコメントに通知されないことがありましたので、こちらをしばらく試してみます。
 # デモ実行
 実際に`git push`して`develop`ブランチから`main`ブランチにPRし、何かしらの表現ミスがありましたら、reviewdogがこのようにレビューコメントを出してくれます。
 ![](https://storage.googleapis.com/zenn-user-upload/ybiyeuxyl6nxr41xt8eizy7qf2h7)
@@ -134,3 +147,4 @@ https://gihyo.jp/book/2020/978-4-297-11411-4
 https://swet.dena.com/entry/2018/09/18/142413
 https://dev.classmethod.jp/articles/shuntaka-github-actions-reviewdog/
 https://www.npmjs.com/package/textlint-rule-preset-smarthr
+https://zenn.dev/tsuyoshicho/articles/2021-04-20-action-textv3
