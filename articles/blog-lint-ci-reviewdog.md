@@ -78,13 +78,13 @@ https://github.com/kufu/textlint-rule-preset-smarthr/tree/main/dict
 Smart HRさんのルールプリセットですが頻繁にルールが更新され、新しいルールが投稿済みの記事の校正を行ない大量にルール検知するということがありましたので一旦取りやめました。
 2023/2現在で私が利用しているtextlintのルールは以下のものを使用しています。
 
-- textlint-rule-preset-ja-technical-writing
+- `textlint-rule-preset-ja-technical-writing`
     - https://github.com/textlint-ja/textlint-rule-preset-ja-technical-writing
-- textlint-rule-prh
+- `textlint-rule-prh`
     - https://github.com/textlint-rule/textlint-rule-prh
-- textlint-filter-rule-allowlist
+- `textlint-filter-rule-allowlist`
     - https://github.com/textlint/textlint-filter-rule-allowlist
-- textlint-rule-aws-spellcheck
+- `textlint-rule-aws-spellcheck`
     - https://github.com/37108/textlint-rule-aws-spellcheck
 
 ## reviewdog
@@ -120,7 +120,7 @@ https://github.com/Yuhta28/zenn-blog/blob/main/.github/workflows/textlint.yml
 https://github.com/tsuyoshicho/action-textlint
 
 こちらのアクションはvimのLinterツールである[Vint](https://github.com/Vimjas/vint)が含まれる[reviewdogアクション](https://github.com/reviewdog/action-vint)をベースにしたアクションで、PRへのレビュー体験が向上したものになります。
-まれに純正のreviewdogアクションでtextlintの実行結果がPRコメントに通知されないことがありましたので、こちらをしばらく試してみようと思います。
+まれに純正のreviewdogアクションでtextlintの実行結果がPRコメントに通知されないことがありましたので、こちらをしばらく試してみます。
 # デモ実行
 実際に`git push`して`develop`ブランチから`main`ブランチにPRし、何かしらの表現ミスがありましたら、reviewdogがこのようにレビューコメントを出してくれます。
 ![](https://storage.googleapis.com/zenn-user-upload/ybiyeuxyl6nxr41xt8eizy7qf2h7)
