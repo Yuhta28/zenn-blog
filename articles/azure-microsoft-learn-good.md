@@ -80,7 +80,7 @@ https://learn.microsoft.com/ja-jp/certifications/exams/az-104/
 https://learn.microsoft.com/ja-jp/certifications/azure-administrator/
 
 # Azure資格
-Microsoftの資格はAzure以外にもMicrosoft 365やWindows Serverなど数多くあり、すべての資格がラーニングパスに表示されるのでAzure特化した資格情報ページが中々見つからず分かりづらいです。
+Microsoftの資格はAzure以外にもMicrosoft 365やWindows Serverなど数多くあり、すべての資格がラーニングパスに表示されるのでAzure特化した資格情報ページが中々見つからず分かりづらいと思いました。
 ![](/images/azure-microsoft-learn-good/image3.jpg)
 
 Azureだけに絞った資格表探しましたが、公式だとこれしか見つからなかったです。
@@ -105,16 +105,33 @@ https://learn.microsoft.com/ja-jp/certifications/azure-administrator/
 # Azure Administrator Associate資格
 先日AZ-104試験に合格し、Azure Administrator Associateに認定されました。
 ![](/images/azure-microsoft-learn-good/image5.jpg)
-学習に利用したのは先ほど紹介したラーニングパスだけです。AZ-104と検索すればAZ-104の試験範囲を網羅したラーニングパスが出てきますのでこれを一通り触ることで理解を深めることができました。
+学習に利用したのは先ほど紹介したラーニングパスだけです。AZ-104と検索すればAZ-104の試験範囲を網羅したラーニングパスが出てきますのでこれを一通り触ることで理解を深めることができました。注意点としてすべてのモジュールが日本語化されているわけではないので日本語ページだと達成度が100%になっていないにも関わらず、モジュールが見つからないということがありますので適宜英語で見直しましょう。
 https://learn.microsoft.com/ja-jp/training/browse/?terms=AZ-104
 
-# 30日間で資格取得チャレンジ
+![](/images/azure-microsoft-learn-good/image6.jpg)
+Microsoftの日本語訳なので不安に思う人もいらっしゃると思いますが、そこまで不自然な日本語はなく学習する分には問題ありませんでした。ラーニングパスはすべて無料にも関わらずAzureやWeb開発向けの学習コンテンツが豊富に存在するので皆さんもぜひとも触ってみてください。
 
+# 30日間で資格取得チャレンジ
+MicrosoftはAzureのシェアを伸ばしたい戦略の一環なのかAzure資格の受験料クーポンを用意しています。
+30 Days to Learn Itでは30日間以内に決められたモジュールをすべて完了すれば50%割引のクーポンチケットがもらえます。
+https://developer.microsoft.com/ja-jp/offers/30-days-to-learn-it
+
+昨年はMicrosoft Ignite開催を記念してエキスパートレベルの資格試験が無料で受験できるクーポンが手に入るThe Microsoft Learn Cloud Skills Challengeが用意されていました。
+https://www.microsoft.com/ja-jp/cloudskillschallenge/ignite/registration/2022
+
+また一度落ちても再受験が無料で受験できるExam Replyというのものあります。
+https://www.microsoft.com/ja-jp/learning/local-exam-replay.aspx
+
+お試しで受験して2回目に本気を出すということもできます。
+
+# 所感
+Microsoft Learnについて紹介しました。
+無料でここまで学べるのはさすがMicrosoftだと思いますので、Azureに限らずGitHubやC#などを学びたいはこちらから手に取ってみるのが一番だと思います。AzureにはAWSとは違った特徴もありますので次回はAzureならではの機能について書こうかと思います。
 
 [^1]: https://www.crn.com/news/cloud/top-5-cloud-market-share-leaders-aws-microsoft-google-in-q3-2022/1
 [^2]: https://www.publickey1.jp/blog/22/awssiersiersi.html
 [^3]: https://explore.skillbuilder.aws/learn
-[^4]: レバテックフリーランスで案件数を調べたらAWSが4,231件、Azureが730件、GCPが546件でした(2023/2月時点)
+[^4]: レバテックフリーランスで案件数を調べたらAWSが4,231件、Azureが730件、GCPが546件でした(2023/1月時点)
 [^5]: https://www.srgresearch.com/articles/as-quarterly-cloud-spending-jumps-to-over-50b-microsoft-looms-larger-in-amazons-rear-mirror
 [^6]: https://www.redhat.com/ja/topics/cloud-computing/what-is-multicloud
 [^7]: https://aws.amazon.com/jp/developer/
