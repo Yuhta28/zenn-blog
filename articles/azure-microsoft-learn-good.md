@@ -3,7 +3,7 @@ title: "Azureの勉強はMicrosoft Learnがいいよねって話"
 emoji: "🐈"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["Azure", "microsoft", "初心者"]
-published: false
+published: true
 ---
 # 背景
 昨今クラウドサービスを利用することが個人・企業問わず広く使われています。特に有名なのがAWS、Azure、GCPの3大クラウドサービスです。
