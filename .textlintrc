@@ -14,7 +14,8 @@
                 "strict": false,
                 "allow": ["か","が"]
             },
-            "sentence-length": false
+            "sentence-length": false,
+            "ja-no-weak-phrase": false
         },
         "prh": {
             "rulePaths": [
