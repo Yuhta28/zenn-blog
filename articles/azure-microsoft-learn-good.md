@@ -39,9 +39,9 @@ https://learn.microsoft.com/ja-jp/azure/architecture/gcp-professional/
 
 ### Azureアーキテクチャセンター
 https://learn.microsoft.com/ja-jp/azure/architecture/
-Azureを活用した設計ガイダンス集です。まずはここから入ってAzureの概念や設計原則について学習すると良いと思います。
+Azureを活用した設計ガイダンス集です。まずはここから入ってAzureの概念や設計原則について学ぶとよいです。
 :::message
-AWSでいうところのデベロッパーセンター[^7]ですね
+AWSでいうところのデベロッパーセンター[^7]ですね。
 :::
 
 ### Microsoft Azure Well-Architected Framework
@@ -51,28 +51,28 @@ AWS[^8]にもありますがクラウドサービスにはアーキテクチャ�
 Azureにも5つの柱が紹介されており、高品質で安定した効率的なクラウドアーキテクチャの構築するために大事なことをまとめています。
 
 :::message
-実は全部AWSと同じです。(AWSは持続可能性の柱が後から追加され6本ありますが、それ以外の5つはAzureと全く同じです)
+実は全部AWSと同じです。(AWSは持続可能性の柱が後から追加され6本ありますが、それ以外の5つはAzureと全く同じです。)
 :::
 
 ### Azure向けのMicrosoft Cloud導入フレームワーク
 https://learn.microsoft.com/ja-jp/azure/cloud-adoption-framework/
-ITプロフェッショナルやビジネス意思決定者が自社のシステムをクラウド化するにあたりどのように目標を達成するべきか道標となってくれるフレームワークです。
+ITプロフェッショナルやビジネス意思決定者が自社のシステムをクラウド化するにあたりどのようにして目標を達成するべきか道標となってくれるフレームワークです。
 当たり前ですがすべてのシステムがクラウドに適しているわけではありませんので本当にクラウド移行するのがベストかどうかは移行前に入念に確認しておきましょう。
 :::message
-AWSにも(ry[^9]
+AWSにもry[^9]
 :::
 
 ### キャリアパス
 https://learn.microsoft.com/ja-jp/training/career-paths/
 
-自分がなりたいキャリアとそのための技術スキルを身につけるためのトレーニングや資格情報をまとめたものになります。クラウド管理者やデータアナリスト、DevOpsエンジニアなど様々なキャリアが紹介されていますので、ご自身の興味のあるキャリアについて調べてみるといいでしょう。
+自分がなりたいキャリアとそのための技術スキルを身につけるためのトレーニングや資格情報をまとめたものになります。クラウド管理者やデータアナリスト、DevOpsエンジニアなどさまざまなキャリアが紹介されていますので、ご自身の興味のあるキャリアについて調べてみるといいでしょう。
 
 # ラーニングパス
 https://learn.microsoft.com/ja-jp/training/azure/
 ラーニングパスには前述したMicrosoft製品が学べるハンズオンがまとめられています。製品別以外にもロール別、難易度別に検索できますので、ご自身のスキルに応じてフィルタリングしてどこから学ぶかの足がかりにしてもいいでしょう。
 ![](/images/azure-microsoft-learn-good/image2.jpg)
 
-Azureの資格についても検索できますが、認定資格と試験が分けられていて個人的にわかりにくいとは思っています。
+Azureの資格についても検索できますが、認定資格と試験が分けられていて個人的にわかりにくいと感じています。
 ### 例 AZ-104試験に合格することでAzure Administrator Associate資格に認定
 - AZ-104
 https://learn.microsoft.com/ja-jp/certifications/exams/az-104/
@@ -89,7 +89,7 @@ Azureだけに絞った資格表探しましたが、公式だとこれしか見
 https://career.levtech.jp/guide/knowhow/article/639/
 
 :::message alert
-Azureの試験は頻繁に更新されるので古い記事ですと齟齬が出てきます。最初にMicrosoft公式ページを確認してから解説記事を探したほうが良いです。
+Azureの試験は頻繁に更新されるので古い記事ですと違うことが書かれていることがあります。最初にMicrosoft公式ページを確認してから解説記事を探したほうが良いです。
 :::
 
 AzureがはじめてのクラウドでしたらまずはAzure Fundamentals取得を目標にするのがいいと思います。
@@ -97,7 +97,7 @@ https://learn.microsoft.com/ja-jp/certifications/azure-fundamentals/
 この資格はMicrosoft Virtual Training Daysで試験代免除のクーポン付きセミナーが定期的に開催されますので、受験する場合はセミナーを受講したほうがいいです。
 https://www.microsoft.com/ja-jp/events/top/training-days
 
-他のクラウドサービスを経験済みかつAzureでクラウドアーキテクチャ設計を学びたい場合はAzure Solutions Architect Expertがありますが、このこの資格は上級資格でかつ前提条件としてAzure Administrator Associate資格保持が条件です。
+他のクラウドサービスを経験済みかつAzureでクラウドアーキテクチャ設計を学びたい場合はAzure Solutions Architect Expertがありますが、この資格は上級資格でかつ前提条件としてAzure Administrator Associate資格保持が条件です。
 https://learn.microsoft.com/ja-jp/certifications/azure-solutions-architect/
 
 なので最初はAzure Administrator Associate資格から挑戦してみてもいいと思います。
