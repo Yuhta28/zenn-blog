@@ -12,8 +12,10 @@
             },
             "no-doubled-joshi": {
                 "strict": false,
-                "allow": ["か"]
-            }
+                "allow": ["か","が"]
+            },
+            "sentence-length": false,
+            "ja-no-weak-phrase": false
         },
         "prh": {
             "rulePaths": [
