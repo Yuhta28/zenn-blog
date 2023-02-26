@@ -141,4 +141,5 @@ Microsoft Learnについて紹介しました。
 [^9]: https://aws.amazon.com/jp/professional-services/CAF/
 # 参考文献
 https://qiita.com/lazy-kz/items/699ee26b7b6b89c6614d
+https://qiita.com/lazy-kz/items/7dc9a61ddfa5b2a81632
 https://www.whizlabs.com/blog/azure-certifications-path/
