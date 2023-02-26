@@ -23,7 +23,9 @@ AzureはAWSと比べて書籍や学習サイトが少なく自学自習が大変
 # Microsoft Learnについて
 https://learn.microsoft.com/ja-jp/
 
-Microsoft LearnはMicrosoft製品に関するドキュメントやハンズオントレーニング、認定資格をまとめた学習コンテンツサイトになります。
+Microsoft LearnはMicrosoft製品に関するドキュメントやハンズオントレーニング、認定資格をまとめた**無料**の学習コンテンツサイトになります。はじめてアクセスする時に何から始めたらいいかわからなければMicrosoftの公式YouTube動画を参考にしてみてください。
+https://www.youtube.com/watch?v=9usUqNhK7xw
+
 Microsoft製品はAzure、Windowsはもちろん、.NETやJava、JavaScriptなどのプログラミング言語もありますし、GitHubやGitHub Actions、Visual Studioを使ったWeb開発のについて説明もありますので普段Macを使ってWeb開発をしている人も見てみるとよいでしょう。またAWS、GCPを使っている人がAzureとの違いについて比較するための記事も用意されていますので違いについて簡単に知りたい場合は以下の記事をご覧ください。
 
  - AWSとAzureとの比較
