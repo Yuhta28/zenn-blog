@@ -139,6 +139,11 @@ Microsoft Learnについて紹介しました。
 [^7]: https://aws.amazon.com/jp/developer/
 [^8]: https://aws.amazon.com/jp/architecture/well-architected/?wa-lens-whitepapers.sort-by=item.additionalFields.sortDate&wa-lens-whitepapers.sort-order=desc&wa-guidance-whitepapers.sort-by=item.additionalFields.sortDate&wa-guidance-whitepapers.sort-order=desc
 [^9]: https://aws.amazon.com/jp/professional-services/CAF/
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](929384a7ffcd4de4886e525c3e09c0be)
+
 # 参考文献
 https://qiita.com/lazy-kz/items/699ee26b7b6b89c6614d
 https://qiita.com/lazy-kz/items/7dc9a61ddfa5b2a81632
