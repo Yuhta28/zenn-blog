@@ -7,9 +7,42 @@ published: false
 ---
 
 # 概要
-Datadog RUMについて学んでみた。
-Datadogには公式で学習センターを提供している。
-RUMを触れる仮想環境を提供している。
+昨年会社の監視運用をDatadog[^1]に切り替えてから私が主な担当者としてモニタリング基盤の実装を進めています。
+ホスト監視や外形監視、プロセス監視など前監視サービスで運用していた部分は大体移行が完了し、今はDatadogでよりビジネス分析に貢献できるようにDatadog RUMを使ったフロントエンド監視の実装を進めています。
+Datadog RUMを使った監視運用自体はそのうち会社のテックブログで公開したいと考えていますが、私自身Datadog RUMで何ができるかもわからなかったので、どういったことができるのか調べてみようと考えました。
+色々と調べたりしているうちにDatadogは学習サイトを提供しており、Datadogの使い方を学べるハンズオンやDatadogの資格など学ぶのにピッタリでしたので、今回はDatadogラーニングセンターでDatadog RUMを学んだことを紹介いたします。
+
+[^1]: https://www.datadoghq.com/ja/
+
+# RUMについて
+Datadog RUMについて話す前にそもそもRUMとはなにかについて説明します。
+RUMはReal User Monitoringの略で、ユーザーエクスペリエンスを測定することを目的としたフロントエンド監視で、ユーザーの行動、Webサイトアプリケーションパフォーマンスを収集・分析しWebサイトのパフォーマンスがどのようにユーザー体験に影響を与えているのかを調べることを目的としています。
+# Datadogラーニングセンター
+https://learn.datadoghq.com/
+
+前述したとおりDatadogには自前でDatadogを学べる学習サイトを提供しています。まだ数はそこまで多くありませんが、すべてのコースが無料で受講でき中には仮想環境上でDatadogを実際に触って理解を深められるコースもあります。
+https://learn.datadoghq.com/collections
+
+今回の記事の主題とは外れるので深掘りはしませんが、Datadogは認定資格も提供しているみたいでラーニングセンターから受験申し込みができます。
+https://www.datadoghq.com/ja/certification/overview/
+### 認定資格一覧
+- Datadog Fundamentals[^2]
+- Log Management Fundamentals[^3]
+- APM and Distributed Tracing Fundamentals[^4]
+
+受講できるコースの中にDatadog RUMを使って架空サイトのCore Web Vitalsを監視するというまさに私が学びたかったコースがありましたのでこちらを受講してみました。
+https://learn.datadoghq.com/courses/core-web-vitals-lab
+
+
+
+[^2]: https://www.datadoghq.com/pdf/Datadog_Fundamentals.pdf
+[^3]: https://www.datadoghq.com/pdf/Log_Management_Fundamentals.pdf
+[^4]: https://www.datadoghq.com/pdf/APM_Distributed_Tracing_Fundamentals.pdf
+
+ここからはコースで学習したことをベースにメモを記します。
+
+# Datadog RUMについて
+
 
 Datadog RUM
 
@@ -26,3 +59,5 @@ Datadog RUM
 
 # 参考文献
 https://web.dev/vitals-business-impact/
+https://www.datadoghq.com/ja/product/real-user-monitoring/
+https://www.splunk.com/ja_jp/data-insider/what-is-real-user-monitoring.html
