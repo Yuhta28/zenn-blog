@@ -17,7 +17,7 @@
     "url": "https://github.com/Yuhta28/zenn-blog/issues"
   },
   "homepage": "https://github.com/Yuhta28/zenn-blog#readme",
-  "dependencies": {
-    "zenn-cli": "^0.1.117"
+  "devDependencies": {
+    "zenn-cli": "^0.1.141"
   }
 }
