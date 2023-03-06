@@ -16,7 +16,27 @@ Datadog RUMを使った監視運用自体はそのうち会社のテックブロ
 
 # RUMについて
 Datadog RUMについて話す前にそもそもRUMとはなにかについて説明します。
-RUMはReal User Monitoringの略で、ユーザーエクスペリエンスを測定することを目的としたフロントエンド監視で、ユーザーの行動、Webサイトアプリケーションパフォーマンスを収集・分析しWebサイトのパフォーマンスがどのようにユーザー体験に影響を与えているのかを調べることを目的としています。
+RUMはReal User Monitoringの略で、ユーザーエクスペリエンスを測定することを目的としたフロントエンド監視で、ユーザーの行動、Webサイトアプリケーションパフォーマンスを収集・分析し**Webサイトのパフォーマンスがどのようにユーザー体験に影響を与えているのか**を調べることを目的としています。
+以下の４つのユースケースを解決するのに役立ちます。
+- パフォーマンス改善
+    - Webページ、ユーザーアクション、フロントエンドコードのパフォーマンス追跡
+- エラー原因特定
+    - アプリケーションバグの監視、検知
+- ユーザー分析
+    - サイト利用者の位置情報、デバイス等の収集、監視しページ訪問、クリック数の分析
+- サポート
+    - ユーザー問い合わせ対応に必要なセッション時間、リソースエラーの収集
+
+2020年5月にGoogleはUXパフォーマンス監視の指標としてCore Web Vitalsを発表しました。
+https://developers-jp.googleblog.com/2020/05/web-vitals.html
+
+RUMはCore Web Vitalsを収集、評価することでユーザー体験向上に役立てることができます。
+
+# Core Web Vitalsについて
+Core Web Vitalsはユーザー体験を評価するために3つの指標があります。
+- LCP(Largest Contentful Paint)
+- FID(First Input Delay)
+- CLS(Cumulative Layout Shift)
 # Datadogラーニングセンター
 https://learn.datadoghq.com/
 
