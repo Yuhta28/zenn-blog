@@ -106,19 +106,21 @@ Datadog RUMを開始するためにはDatadog側でアプリケーションを�
 ![](/images/datadog-rum-handson/image7.png)
 *エラー測定ダッシュボード*
 
-Datadog RUMはユーザーのブラウジング体験をキャプチャして行動を視覚的に再生できるセッションリプレイという機能を提供しています。
+測定以外にもDatadog RUMはユーザーのブラウジング体験をキャプチャして行動を視覚的に再生できるセッションリプレイという機能を提供しています。
 https://docs.datadoghq.com/ja/real_user_monitoring/session_replay/
 
 ユーザー毎に一意のセッションID付与し、そのユーザーの行動を追えることができます。
 ![](/images/datadog-rum-handson/image8.png)
-
+*私のサイト操作を記録したセッションリプレイ*
 
 - step5 プロダクションでCWVレポートを理解するためにRUMを使う
 - step6 悪いCWLレポートとは何か
 
 
-
-
+# 所感
+Datadog RUMのハンズオンを経験し、RUMの使い道や実装方法について学びました。
+フロントエンド監視なのでSREだけではなくフロントエンドエンジニアにも意識を向いて欲しい領分です。
+従来監視と言えばインフラエンジニアの役割であることも多かったですが、RUMはフロントエンドのソースコード改修作業も発生しますので、フロントエンドエンジニアと協力して取り組むことが大事です。
 
 # 参考文献
 https://web.dev/vitals-business-impact/
