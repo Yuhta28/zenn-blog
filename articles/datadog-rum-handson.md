@@ -4,6 +4,7 @@ emoji: "🐕"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["datadog", "監視", "RUM"]
 published: true
+published_at: 2023-03-08 11:30
 ---
 
 # 概要
