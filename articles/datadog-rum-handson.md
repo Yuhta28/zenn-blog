@@ -109,20 +109,47 @@ Datadog RUMを開始するためにはDatadog側でアプリケーションを�
 測定以外にもDatadog RUMはユーザーのブラウジング体験をキャプチャして行動を視覚的に再生できるセッションリプレイという機能を提供しています。
 https://docs.datadoghq.com/ja/real_user_monitoring/session_replay/
 
-ユーザー毎に一意のセッションID付与し、そのユーザーの行動を追えることができます。
+ユーザー毎に一意のセッションID付与し、そのユーザーの行動を追うことができます。
 ![](/images/datadog-rum-handson/image8.png)
 *私のサイト操作を記録したセッションリプレイ*
 
-- step5 プロダクションでCWVレポートを理解するためにRUMを使う
-- step6 悪いCWLレポートとは何か
+## 4. Datadog RUMでCore Web Vitalsをチェック
+パフォーマンスダッシュボードを確認しますとCore Web Vitalsを確認できますがLCPの値が目標値よりも悪いことがわかります。
+![](/images/datadog-rum-handson/image9.png)
+*読み込みに2.5秒以上かかる*
 
+下の方までスクロールしますとページ別のCore Web Vitals情報が確認できトップページが最も遅いことがわかります。
+![](/images/datadog-rum-handson/image10.png)
+
+さらにスクロールしますとXHR[^9]やFetch API[^10]の実行についてもモニタリングしています。
+LCPのスコアが高いのは`/discounts`と`/ads`リソースの実行感覚が長いことと関係しているのではないかと推測できます。
+![](/images/datadog-rum-handson/image11.png)
+
+セッションリプレイを使ってトップページでのRUMイベントについてチェックしてみます。
+![](/images/datadog-rum-handson/image12.png)
+
+Loading TimeがIn Progressではないものはデータ処理が完了しているイベントです。
+より詳細を確認しますとJSやCSS、画像などの静的コンテンツでキャッシュが効いておらず時間がかかっていることがわかります。
+![](/images/datadog-rum-handson/image13.png)
+
+デモ環境を動かすソースコード修正できますのでキャッシュ設定を有効化した状態でdocker-composeを再起動しますとキャッシュが有効化されたデモ環境が開きます。
+キャッシュが有効化された状態でLCPを確認しますとスコアが改善されていることがわかります。
+![](/images/datadog-rum-handson/image14.png)
+
+さらにハンズオン内で指示されている改善を続けていくとLCPスコアが目標値である2.5秒以下を出すことができました。
+![](/images/datadog-rum-handson/image15.png)
+
+以上がDatadog RUMを使ったアプリケーションパフォーマンス改善になります。
+
+[^9]: https://developer.mozilla.org/ja/docs/Web/API/XMLHttpRequest
+[^10]: https://developer.mozilla.org/ja/docs/Web/API/Fetch_API
 
 # 所感
-Datadog RUMのハンズオンを経験し、RUMの使い道や実装方法について学びました。
-フロントエンド監視なのでSREだけではなくフロントエンドエンジニアにも意識を向いて欲しい領分です。
-従来監視と言えばインフラエンジニアの役割であることも多かったですが、RUMはフロントエンドのソースコード改修作業も発生しますので、フロントエンドエンジニアと協力して取り組むことが大事です。
-
+Datadog RUMのハンズオンを経験し、RUMの使い方や実装方法について学びました。
+アプリケーションパフォーマンスの改善はSREとフロントエンドエンジニアが協力することで実現するということがわかりました。
+今現在社内にDatadog RUMの導入検証を進めていますが、ハンズオンで学んだことを基に会社のサイトパフォーマンス改善につなげられるように頑張っていきます。
 # 参考文献
 https://web.dev/vitals-business-impact/
 https://www.datadoghq.com/ja/product/real-user-monitoring/
 https://www.splunk.com/ja_jp/data-insider/what-is-real-user-monitoring.html
+https://memo.ag2works.tokyo/post-4424/
