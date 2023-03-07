@@ -3,7 +3,7 @@ title: "Datadog RUMを学んでみる"
 emoji: "🐕"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["datadog", "監視", "RUM"]
-published: false
+published: true
 ---
 
 # 概要
@@ -147,7 +147,7 @@ Loading TimeがIn Progressではないものはデータ処理が完了してい
 # 所感
 Datadog RUMのハンズオンを経験し、RUMの使い方や実装方法について学びました。
 アプリケーションパフォーマンスの改善はSREとフロントエンドエンジニアが協力することで実現するということがわかりました。
-今現在社内にDatadog RUMの導入検証を進めていますが、ハンズオンで学んだことを基に会社のサイトパフォーマンス改善につなげられるように頑張っていきます。
+今現在会社ではDatadog RUMの導入検証を進めていますが、ハンズオンで学んだことを基に会社サイトのパフォーマンス改善へつなげられるように頑張っていきます。
 # 参考文献
 https://web.dev/vitals-business-impact/
 https://www.datadoghq.com/ja/product/real-user-monitoring/
