@@ -10,6 +10,9 @@ published: false
 オライリーから発売された「オブザーバビリティ・エンジニアリング[^1]」は非ベンダー依存を目指したアプリケーションモニタリングの実装方法としてOpenTelemetryを紹介しています。
 監視基盤を実装する場合、Datadog[^2]やNew Relic[^3]などの監視SaaSを利用するかAWSやAzureが提供しているマネージドな監視サービスを利用すると思います。
 少なくとも直近の業務で使う機会はなさそうですが、アプリケーションモニタリングを収集するためのAPI、ライブラリ、エージェントを提供するOpenTelemetryという技術に興味が出てきましたので、概要やデモなどを触ったことまとめてみます。
+またOpenTelemetryのドキュメントは開発者向けと運用者向けでスタートガイドが明確に分けられていました。
+https://opentelemetry.io/docs/getting-started/
+私は運用側のエンジニアなので運用視点でOpenTelemetryについて紹介していきます。(開発者は上のリンクからDevを参照してみてください)
 
 [^1]: https://www.oreilly.co.jp/books/9784814400126/
 [^2]: https://www.datadoghq.com/ja/
@@ -23,10 +26,197 @@ https://opentelemetry.io/
 ## テレメトリー
 テレメトリーとはなんでしょうか。「オブザーバビリティ・エンジニアリング」では、アプリケーションから送られるログ、メトリクスなどのデータをテレメトリーとよんでいます。特定のリクエストからの処理に対してコードがどう影響しているのか記録し、システムの動作やユーザー体験を可視化、最適化することを目的としています。
 
+# OpenTelemetryコンポーネント
+OpenTelemetryにコンポーネントについていくつか紹介します。
+- コレクター
+    - テレメトリーデータを受信、処理、エクスポートできる非ベンダー依存のプロキシ(サイドカー)です。PrometheusやJaegerなどのデータを受け取って複数のバックエンド先にデータを送信できます。
+- スパン
+    - 特定の操作の始まりから終わりまでをまとめた作業単位。ユーザーが会員サイトにログインする場合、ログイン処理が完了するまでの一連の流れをトレースすることで、ログイン失敗時にどこでエラーがおきたのか特定しやすくなります。
+- トレーサー
+    - サービス内のリクエストなど、実行した操作で何が起こっているのか詳細な情報を含むスパンを生成します。
+- コンテキスト伝搬
+    - 分散トレーシングを可能にする最も重要なコンセプトです。関連したスパン同士を紐づけ、トレースを組み立てます。
 
 [^4]:https://opentracing.io/
 [^5]:https://opencensus.io/
 [^6]: https://www.cncf.io/
+
+# テレメトリーの取得
+OpenTelemetryは多くの言語で書かれたコードの計装をサポートしています。さらにそれらの言語は直接アプリケーションコードに手を加える必要がなく、自動計装を活用することで短時間でテレメトリーの収集が可能になります。
+2023年4月現在のサポート言語は以下のとおり[^7]です。
+
+| Language | Traces | Metrics | Logs |
+| :--- | :---: | :---: | ---: |
+| C++ | Stable | Stable | 検証中 |
+| C#/.NET | Stable | Stable | 検証中 |
+| Erlang/Elixir | Stable | 検証中 | 検証中 |
+| Go | Stable | ベータ版 | 未実装 |
+| Java | Stable | Stable | 検証中 |
+| JavaScript/TypeScript | Stable | Stable | 開発版 |
+| PHP | ベータ版 | ベータ版 | アルファ版 |
+| Python | Stable | Stable | 検証中 |
+| Ruby | Stable | 未実装 | 未実装 |
+| Rust | ベータ版 | アルファ版 | 未実装 |
+| Swift | Stable | 検証中 | 開発中 |
+
+ログに関してはまだどの言語も開発途中といったところのようです。
+ここでは試しにTypeScriptでトレーシングできるかハンズオンしてみます。
+https://opentelemetry.io/docs/instrumentation/js/getting-started/nodejs/
+
+## TypeScriptハンズオン
+まずはトレーシング対象となる簡易的なアプリケーションを用意します。
+
+```shell-session: expressのインストール
+$ npm install --save-dev typescript \
+  ts-node \
+  @types/node \
+  express \
+  @types/express \
+
+$ ./node_modules/.bin/tsc --init
+```
+
+```ts:app.ts
+import express, { Express } from "express";
+
+const PORT: number = parseInt(process.env.PORT || "8080");
+const app: Express = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
+app.listen(PORT, () => {
+  console.log(`Listening for requests on http://localhost:${PORT}`);
+});
+```
+
+```shell-session:アプリ実行
+$ ./node_modules/.bin/ts-node ./app.ts
+Listening for requests on http://localhost:8080
+```
+
+![](/images/what-is-opentelemetry/image1.png =1000x)
+*Hello World*
+
+アプリケーションが実行できましたらトレーシングコードを実装します。
+
+```shell-session:自動実装インストール
+$ npm install --save-dev @opentelemetry/sdk-node \
+  @opentelemetry/auto-instrumentations-node
+```
+
+```ts:tracing.ts
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { ConsoleSpanExporter } from '@opentelemetry/sdk-trace-node';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+
+const sdk = new NodeSDK({
+  traceExporter: new ConsoleSpanExporter(),
+  instrumentations: [getNodeAutoInstrumentations()]
+});
+
+sdk
+  .start()
+```
+
+```shell-session:アプリ実行
+$ ./node_modules/.bin/ts-node --require ./tracing.ts app.ts
+Listening for requests on http://localhost:8080
+```
+
+何回か`http://localhost:8080`にアクセスしますとコンソール上にトレーシング情報が出力されます。
+
+```powershell:トレーシング情報
+{
+  traceId: '78aaa7b5db4ab17ad10668e53d3aea6e',
+  parentId: 'bcd528ec1efd529f',
+  traceState: undefined,
+  name: 'middleware - query',
+  id: 'c2db165d1b7289c9',
+  kind: 0,
+  timestamp: 1680404455241000,
+  duration: 37,
+  attributes: {
+    'http.route': '/',
+    'express.name': 'query',
+    'express.type': 'middleware'
+  },
+  status: { code: 0 },
+  events: [],
+  links: []
+}
+{
+  traceId: '78aaa7b5db4ab17ad10668e53d3aea6e',
+  parentId: 'bcd528ec1efd529f',
+  traceState: undefined,
+  name: 'middleware - expressInit',
+  id: '41131b313aea88c1',
+  kind: 0,
+  timestamp: 1680404455241000,
+  duration: 54,
+  attributes: {
+    'http.route': '/',
+    'express.name': 'expressInit',
+    'express.type': 'middleware'
+  },
+  status: { code: 0 },
+  events: [],
+  links: []
+}
+{
+  traceId: '78aaa7b5db4ab17ad10668e53d3aea6e',
+  parentId: 'bcd528ec1efd529f',
+  traceState: undefined,
+  name: 'request handler - /',
+  id: '001fa0f7ed43abaf',
+  kind: 0,
+  timestamp: 1680404455242000,
+  duration: 5,
+  attributes: {
+    'http.route': '/',
+    'express.name': '/',
+    'express.type': 'request_handler'
+  },
+  status: { code: 0 },
+  events: [],
+  links: []
+}
+{
+  traceId: '78aaa7b5db4ab17ad10668e53d3aea6e',
+  parentId: undefined,
+  traceState: undefined,
+  name: 'GET /',
+  id: 'bcd528ec1efd529f',
+  kind: 1,
+  timestamp: 1680404455241000,
+  duration: 1706,
+  attributes: {
+    'http.url': 'http://localhost:8080/',
+    'http.host': 'localhost:8080',
+    'net.host.name': 'localhost',
+    'http.method': 'GET',
+    'http.scheme': 'http',
+    'http.target': '/',
+    'http.user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.62',
+    'http.flavor': '1.1',
+    'net.transport': 'ip_tcp',
+    'net.host.ip': '::1',
+    'net.host.port': 8080,
+    'net.peer.ip': '::1',
+    'net.peer.port': 56849,
+    'http.status_code': 304,
+    'http.status_text': 'NOT MODIFIED',
+    'http.route': ''
+  },
+  status: { code: 0 },
+  events: [],
+  links: []
+}
+```
+直接アプリケーションコードに改修を加えることなくトレーシング情報を取得できました。
+
+[^7]: https://opentelemetry.io/docs/instrumentation/
 
 # 参考文献
 https://www.oreilly.co.jp/books/9784814400126/
