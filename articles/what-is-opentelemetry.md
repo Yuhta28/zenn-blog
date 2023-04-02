@@ -9,10 +9,10 @@ published: false
 # 概要
 オライリーから発売された「オブザーバビリティ・エンジニアリング[^1]」は非ベンダー依存を目指したアプリケーションモニタリングの実装方法としてOpenTelemetryを紹介しています。
 監視基盤を実装する場合、Datadog[^2]やNew Relic[^3]などの監視SaaSを利用するかAWSやAzureが提供しているマネージドな監視サービスを利用すると思います。
-少なくとも直近の業務で使う機会はなさそうですが、アプリケーションモニタリングを収集するためのAPI、ライブラリ、エージェントを提供するOpenTelemetryという技術に興味が出てきましたので、概要やデモなどを触ったことまとめてみます。
+直近の業務で使う機会はなさそうですが、アプリケーションモニタリングを収集するためのAPI、ライブラリ、エージェントを提供するOpenTelemetryという技術に興味が出てきましたので、概要やデモなどを紹介します。
 またOpenTelemetryのドキュメントは開発者向けと運用者向けでスタートガイドが明確に分けられていました。
 https://opentelemetry.io/docs/getting-started/
-私は運用側のエンジニアなので運用視点でOpenTelemetryについて紹介していきます。(開発者は上のリンクからDevを参照してみてください)
+私は運用側のエンジニアなので運用視点でOpenTelemetryについて書き記します。(開発者は上のリンクからDevを参照してみてください)
 
 [^1]: https://www.oreilly.co.jp/books/9784814400126/
 [^2]: https://www.datadoghq.com/ja/
@@ -23,15 +23,16 @@ OpenTelemetryとは分散トレーシングやメトリクスなどのオブザ�
 https://opentelemetry.io/
 最初モニタリングやオブザーバビリティのオープンソースコミュニティはOpenTracing[^4]とOpenCensus[^5]というプロジェクトを立ち上げました。この2つのプロジェクトはテレメトリーデータを収集してリアルタイムに好きなプログラミング言語でバックエンドに転送できることを目的にライブラリを提供してきました。両グループは2019年にCNCF[^6]傘下のOpenTelemetryプロジェクトとして統合されました。
 
-## テレメトリー
-テレメトリーとはなんでしょうか。「オブザーバビリティ・エンジニアリング」では、アプリケーションから送られるログ、メトリクスなどのデータをテレメトリーとよんでいます。特定のリクエストからの処理に対してコードがどう影響しているのか記録し、システムの動作やユーザー体験を可視化、最適化することを目的としています。
+:::message
+「オブザーバビリティ・エンジニアリング」では、アプリケーションから送られるログ、メトリクスなどのデータをテレメトリーとよんでいます。特定のリクエストからの処理に対してコードがどう影響しているのか記録し、システムの動作やユーザー体験を可視化、最適化することを目的としています。
+:::
 
 # OpenTelemetryコンポーネント
-OpenTelemetryにコンポーネントについていくつか紹介します。
+OpenTelemetryのコンポーネントについていくつか紹介します。
 - コレクター
     - テレメトリーデータを受信、処理、エクスポートできる非ベンダー依存のプロキシ(サイドカー)です。PrometheusやJaegerなどのデータを受け取って複数のバックエンド先にデータを送信できます。
 - スパン
-    - 特定の操作の始まりから終わりまでをまとめた作業単位。ユーザーが会員サイトにログインする場合、ログイン処理が完了するまでの一連の流れをトレースすることで、ログイン失敗時にどこでエラーがおきたのか特定しやすくなります。
+    - 特定の操作の始まりから終わりまでをまとめた作業単位。ユーザーが会員サイトにログインする場合、ログイン処理が完了するまでの一連の流れをトレースすることで、ログイン失敗時にどこでエラーが起きたのか特定しやすくなります。
 - トレーサー
     - サービス内のリクエストなど、実行した操作で何が起こっているのか詳細な情報を含むスパンを生成します。
 - コンテキスト伝搬
@@ -60,7 +61,7 @@ OpenTelemetryは多くの言語で書かれたコードの計装をサポート�
 | Swift | Stable | 検証中 | 開発中 |
 
 ログに関してはまだどの言語も開発途中といったところのようです。
-ここでは試しにTypeScriptでトレーシングできるかハンズオンしてみます。
+ここでは試しにTypeScriptによるトレーシングハンズオンを体験してみます。
 https://opentelemetry.io/docs/instrumentation/js/getting-started/nodejs/
 
 ## TypeScriptハンズオン
@@ -96,7 +97,7 @@ $ ./node_modules/.bin/ts-node ./app.ts
 Listening for requests on http://localhost:8080
 ```
 
-![helloworld](/images/what-is-opentelemetry/image1.png =1000x)
+![](/images/what-is-opentelemetry/image1.png =1000x)
 *Hello World*
 
 アプリケーションが実行できましたらトレーシングコードを実装します。
@@ -120,7 +121,7 @@ sdk
   .start()
 ```
 
-```shell-session:アプリ実行
+```shell-session:アプリ再実行
 $ ./node_modules/.bin/ts-node --require ./tracing.ts app.ts
 Listening for requests on http://localhost:8080
 ```
@@ -217,6 +218,66 @@ Listening for requests on http://localhost:8080
 直接アプリケーションコードに改修を加えることなくトレーシング情報を取得できました。
 
 [^7]: https://opentelemetry.io/docs/instrumentation/
+
+# エクスポート
+取得したトレースを分析するためにはJaeger[^8]やZipkin[^9]などの分析ツールにデータをエクスポートする必要があります。OpenTelemetryはOpenTelemetry Protocol(OTLP)と呼ばれるエクスポーターが提供されています。OTLPを使って収集したデータをJaegerに送信してみます。
+
+まずOTLPエクスポーターをインストールします。
+```shell-session:エクスポーターインストール
+$ npm install --save-dev @opentelemetry/exporter-trace-otlp-http
+```
+
+次に先ほど書いた`tracing.ts`を以下のように書き換えます。
+
+```ts:tracing.ts
+import * as opentelemetry from '@opentelemetry/sdk-node';
+import {
+  getNodeAutoInstrumentations,
+} from "@opentelemetry/auto-instrumentations-node";
+import {
+  OTLPTraceExporter,
+} from "@opentelemetry/exporter-trace-otlp-http";
+
+const sdk = new opentelemetry.NodeSDK({
+  traceExporter: new OTLPTraceExporter({
+    // optional - default url is http://localhost:4318/v1/traces
+    // optional - collection of custom headers to be sent with each request, empty by default
+    headers: {},
+  }),
+  instrumentations: [getNodeAutoInstrumentations()],
+});
+sdk.start();
+```
+
+JaegerのDockerコンテナを実行します。
+
+```shell-session:Jaegerコンテナ起動
+$ docker run -d --name jaeger \
+  -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
+  -e COLLECTOR_OTLP_ENABLED=true \
+  -p 6831:6831/udp \
+  -p 6832:6832/udp \
+  -p 5778:5778 \
+  -p 16686:16686 \
+  -p 4317:4317 \
+  -p 4318:4318 \
+  -p 14250:14250 \
+  -p 14268:14268 \
+  -p 14269:14269 \
+  -p 9411:9411 \
+  jaegertracing/all-in-one:latest
+  ```
+
+`http://localhost:16686/search`にアクセスするとJaegerのUI画面にアクセスできます。
+![](/images/what-is-opentelemetry/image2.png)
+*Jaeger画面*
+
+トレースの中にスパンが構成されており、トレース情報をクリックすると各スパンの詳細情報がチェックできます。
+![](/images/what-is-opentelemetry/image3.png)
+*トレース情報*
+
+[^8]: https://www.jaegertracing.io/
+[^9]: https://zipkin.io/
 
 # 参考文献
 https://www.oreilly.co.jp/books/9784814400126/
