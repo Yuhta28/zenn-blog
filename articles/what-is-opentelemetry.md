@@ -42,7 +42,7 @@ OpenTelemetryにコンポーネントについていくつか紹介します。
 [^6]: https://www.cncf.io/
 
 # テレメトリーの取得
-OpenTelemetryは多くの言語で書かれたコードの計装をサポートしています。さらにそれらの言語は直接アプリケーションコードに手を加える必要がなく、自動計装を活用することで短時間でテレメトリーの収集が可能になります。
+OpenTelemetryは多くの言語で書かれたコードの計装をサポートしています。さらにそれらの言語は直接アプリケーションコードに手を加える必要がなく、自動計装を活用すれば短時間でテレメトリーの収集が可能になります。
 2023年4月現在のサポート言語は以下のとおり[^7]です。
 
 | Language | Traces | Metrics | Logs |
@@ -96,7 +96,7 @@ $ ./node_modules/.bin/ts-node ./app.ts
 Listening for requests on http://localhost:8080
 ```
 
-![](/images/what-is-opentelemetry/image1.png =1000x)
+![helloworld](/images/what-is-opentelemetry/image1.png =1000x)
 *Hello World*
 
 アプリケーションが実行できましたらトレーシングコードを実装します。
