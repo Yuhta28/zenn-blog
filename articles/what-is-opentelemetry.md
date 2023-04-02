@@ -3,7 +3,7 @@ title: "OpenTelemetryに触れてみた"
 emoji: "🔭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["監視","opentelemetry","初心者"]
-published: false
+published: true
 ---
 
 # 概要
@@ -279,5 +279,49 @@ $ docker run -d --name jaeger \
 [^8]: https://www.jaegertracing.io/
 [^9]: https://zipkin.io/
 
+# コレクター
+コンポーネントの項目でも説明したとおりOpenTelemetryコレクターはテレメトリーデータの受信、処理、エクスポートの方法についてベンダーにとらわれない実装を提供します。先ほどの言語別の計測ライブラリにあるエクスポーターを使えばコレクターを使ってエクスポートする必要はないと考えます。
+OpenTelemetryコレクターはデフォルトでローカルのコレクターエンドポイントを想定しているため本番利用ではなく、開発環境ですぐのテレメトリーが欲しいときにおススメです。こちらにローカルで実行できるデモ環境が用意されていますのでこちらを使ってOpenTelemetryコレクターをハンズオンしてみます。
+https://opentelemetry.io/docs/collector/getting-started/
+
+```shell-session:デモ環境起動
+$ git clone git@github.com:open-telemetry/opentelemetry-collector-contrib.git
+$ cd opentelemetry-collector-contrib/examples/demo
+$ docker-compose up -d
+```
+
+Dockerコンテナを起動すると下図のデモ環境が立ち上がります。
+
+![](/images/what-is-opentelemetry/image4.png)
+*デモアーキテクチャ*
+
+定期的にクライアントサーバーが出もサーバーにHTTPリクエストを送り、スパン情報をOpenTelemetryコレクターが集計し、JaegerやPrometheus[^10]などのバックエンドにエクスポートされます。
+
+- Jaeger http://localhost:16686
+- Zipkin http://localhost:9411
+- Prometheus http://localhost:9090
+
+### Jaeger
+![](/images/what-is-opentelemetry/image5.png)
+*クライアントからサーバーへのリクエスト数のトレース*
+
+### Zipkin
+![](/images/what-is-opentelemetry/image6.png)
+*特定トレース情報の詳細*
+
+### Prometheus
+![](/images/what-is-opentelemetry/image7.png)
+*クライアントリクエスト数の推移*
+
+[^10]: https://prometheus.io/
+
+ちょっとこのハンズオンは触ってみましたが各ツールがどのような役割を果たしているのかわからず、わかったことが少なかったです。3つとも使ったことなかったのでどのように本番利用するのかイメージが見えず、とりあえず表示されている画面をスクショするに留めました。
+
+# 所感
+OpenTelemetryについて色々触ってみました。冒頭で書いたとおり監視基盤の実装はSaaSやパブリッククラウドのマネージドサービスで実装するケースが多いと思いますので、中々自前で構築するということは少ないと思いますがベンダー依存から脱却した監視基盤の構築はこれからのクラウドネイティブアーキテクチャでは大事ですので、面白い学びになりました。こちらは架空のWebサイトにOpenTelemetryを実装してみたデモ環境ですので、より実践的なOpenTelemetryの実装について知りたい人は是非体験してみてください。
+https://opentelemetry.io/docs/demo/
+
 # 参考文献
 https://www.oreilly.co.jp/books/9784814400126/
+https://aws.amazon.com/jp/otel/
+https://learn.microsoft.com/ja-jp/azure/azure-monitor/app/opentelemetry-overview
