@@ -117,8 +117,7 @@ const sdk = new NodeSDK({
   instrumentations: [getNodeAutoInstrumentations()]
 });
 
-sdk
-  .start()
+sdk.start()
 ```
 
 ```shell-session:アプリ再実行
