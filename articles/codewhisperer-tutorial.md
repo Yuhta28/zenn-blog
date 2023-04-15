@@ -46,7 +46,7 @@ https://aws.amazon.com/jp/codewhisperer/pricing/
 
 https://docs.aws.amazon.com/codewhisperer/latest/userguide/user-types.html
 
-GitHub Copilotと異なり、コード生成される言語は2023年4月現在は数が決まっているみたいで以下の言語がサポートされています。
+GitHub Copilotと異なり、コード生成される言語は2023年4月時点で数が決まっているみたいで以下の言語がサポートされています。
 
 - Python
 - Java
@@ -73,11 +73,31 @@ GitHub Copilotと異なり、コード生成される言語は2023年4月現在�
 [^3]: https://dev.classmethod.jp/articles/amazon-codewhisperer-ga/
 
 # VS Codeへの導入
-VS Codeに導入してみます。ローカルのIDEにCodeWhispererを導入する場合AWSアカウントは必ずしも必要ではありません。個人プランではAWS Builder IDを利用します。
+VS Codeに導入してみます。ローカルのIDEにCodeWhispererを導入する場合AWSアカウントは必要でありません。個人プランではAWS Builder IDを利用しますので事前に作成しておきます。
+詳しい手順についてはドキュメントをご覧ください。
+https://docs.aws.amazon.com/codewhisperer/latest/userguide/whisper-setup-indv-devs.html
+
+:::message
 
 ##### AWS Builder IDって?
-https://docs.aws.amazon.com/signin/latest/userguide/sign-in-aws_builder_id.html
-AWS Builder IDはAWS上で構築する人のための新しい個人プロファイルです。会社ではAWSアカウント自体、皆さん共通のアカウントを使い、IAMユーザー毎に認証情報を持っていると思いますが、AWS Builder IDは開発者1人1人に紐づきます。
+AWS Builder ID[^4]はAWS上で構築する人のための新しい個人プロファイルです。会社ではAWSアカウント自体、皆さん共通のアカウントを使い、IAMユーザー毎に認証情報を持っていると思いますが、AWS Builder IDは開発者1人1人に紐づきます。
+今のところAWS BUilder IDを利用するサービスは以下の通りです。
+- Amazon CodeCatalyst[^5]
+- AWS re:Post[^6]
+- Amazon CodeWhisperer
+:::
+
+VS CodeをAWS Builderと紐づけましたら利用可能になります。
+![](/images/codewhisperer-tutorial/image2.png)
+
+[^4]: https://docs.aws.amazon.com/signin/latest/userguide/sign-in-aws_builder_id.html
+[^5]: https://codecatalyst.aws/explore
+[^6]: https://repost.aws/ja
+
+# コード生成
+試しにEC2インスタンスを作成するAWS CDK(TypeScript)を生成してみました。
+最初のコメント部分が私が書いた日本語です。改行した後CodeWhispererが動いて次々とコードを生成してくれます。ただバージニアリージョンのせいかわかりませんが、動作がもっさりしていてコード生成も1行ずつの出力で毎回改行Enterを押していたのでGitHub Copilotほど爽快感のあるコード生成体験はできませんでした。
+![](/images/codewhisperer-tutorial/image3.png)
 
 # 参考文献
 https://docs.aws.amazon.com/codewhisperer/latest/userguide/what-is-cwspr.html
