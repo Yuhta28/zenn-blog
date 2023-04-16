@@ -18,7 +18,7 @@
             "sentence-length": false,
             "ja-no-weak-phrase": false,
             "ja-no-mixed-period": {
-                "allowPeriodMarks": false
+                "allowEmojiAtEnd": true
             }
         },
         "prh": {
