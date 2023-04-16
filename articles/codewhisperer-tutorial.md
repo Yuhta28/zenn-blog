@@ -135,7 +135,8 @@ GAされたばかりのCodeWhispererを試してみました。個人利用は�
 AWS製ですしCDKやSDK関連のコードならGitHub Copilotよりも優秀だったら嬉しいという今後の発展に期待します。
 
 この文章は絵文字が許可されているかテスト🤔
-こっちはミスになる
+
+バージニアリージョンのみでしたので今後東京リージョンでも使えるようになれば速くなれるのでしょうか
 
 # 参考文献
 https://docs.aws.amazon.com/codewhisperer/latest/userguide/what-is-cwspr.html
