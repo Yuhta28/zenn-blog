@@ -16,7 +16,10 @@
                 "allow": ["か","が"]
             },
             "sentence-length": false,
-            "ja-no-weak-phrase": false
+            "ja-no-weak-phrase": false,
+            "ja-no-mixed-period": {
+                "allowPeriodMarks": true
+            }
         },
         "prh": {
             "rulePaths": [
