@@ -2,8 +2,8 @@
 title: "GAされたAmazon CodeWhispererを試してみる"
 emoji: "😮‍💨"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["aws","codewhisperer"]
-published: false
+topics: ["aws","codewhisperer","vscode","lambda"]
+published: true
 ---
 
 # 概要
@@ -96,10 +96,43 @@ VS CodeをAWS Builderと紐づけましたら利用可能になります。
 
 # コード生成
 試しにEC2インスタンスを作成するAWS CDK(TypeScript)を生成してみました。
-最初のコメント部分が私が書いた日本語です。改行した後CodeWhispererが動いて次々とコードを生成してくれます。ただバージニアリージョンのせいかわかりませんが、動作がもっさりしていてコード生成も1行ずつの出力で毎回改行Enterを押していたのでGitHub Copilotほど爽快感のあるコード生成体験はできませんでした。
+最初のコメント部分が私が書いた日本語です。改行した後CodeWhispererが動いて次々とコードを生成してくれます。ただバージニアリージョンのせいかわかりませんが、動作がもっさりしていてコード生成も一行ずつの出力で毎回改行Enterを押していたのでGitHub Copilotほど爽快感のあるコード生成体験はできませんでした。
 ![](/images/codewhisperer-tutorial/demo1.gif)
 *もう少し速く出力したい*
 
+# Lambdaで実装
+VS CodeだともっさりしていたのでLambdaではどうなのか試してみました。
+2023年4月時点でバージニアリージョンのLambdaのみとなっています。またPythonとNode.jsのランタイムを使用する関数のみをサポートしています。
+LambdaでCodeWhispererを実装する場合、Lambdaの実行ロールにCodeWhispererの権限を付与する必要があります。
+
+```json:CodeWhispererポリシー
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "codewhisperer:GenerateRecommendations",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+LambdaのToolsタブをクリックするとCodeWhispererの有効化を選択できます。
+![](/images/codewhisperer-tutorial/image4.png)
+
+どうやら`alt+c`ボタンを押すことでコード生成してくれますが自動では生成してくれないようです。
+![](/images/codewhisperer-tutorial/demo2.gif)
+*コメントアウトされてる…*
+
+出力速度自体はVS Codeよりかは速いような気もしますが、一行ずつ出力することに変わりはなくやはりもっさりとした印象は否めませんでした。
+
+# 所感
+GAされたばかりのCodeWhispererを試してみました。個人利用は無料で使えること、AWSアカウントがなくても個人のIDEで利用できることなど便利な要素もありますが、まだGitHub Copilotほど便利な面は感じませんでした。
+バージニアリージョンのみでしたので今後東京リージョンでも使えるようになれば速くなれるのでしょうか🤔
+
+AWS製ですしCDKやSDK関連のコードならGitHub Copilotよりも優秀だったら嬉しいという今後の発展に期待します。
 # 参考文献
 https://docs.aws.amazon.com/codewhisperer/latest/userguide/what-is-cwspr.html
 https://dev.classmethod.jp/articles/amazon-codewhisperer-ga/
