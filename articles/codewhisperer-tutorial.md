@@ -97,7 +97,8 @@ VS CodeをAWS Builderと紐づけましたら利用可能になります。
 # コード生成
 試しにEC2インスタンスを作成するAWS CDK(TypeScript)を生成してみました。
 最初のコメント部分が私が書いた日本語です。改行した後CodeWhispererが動いて次々とコードを生成してくれます。ただバージニアリージョンのせいかわかりませんが、動作がもっさりしていてコード生成も1行ずつの出力で毎回改行Enterを押していたのでGitHub Copilotほど爽快感のあるコード生成体験はできませんでした。
-![](/images/codewhisperer-tutorial/image3.png)
+![](/images/codewhisperer-tutorial/demo1.gif)
+*もう少し速く出力したい*
 
 # 参考文献
 https://docs.aws.amazon.com/codewhisperer/latest/userguide/what-is-cwspr.html
