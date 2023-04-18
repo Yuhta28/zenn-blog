@@ -149,6 +149,11 @@ Loading TimeがIn Progressではないものはデータ処理が完了してい
 Datadog RUMのハンズオンを経験し、RUMの使い方や実装方法について学びました。
 アプリケーションパフォーマンスの改善はSREとフロントエンドエンジニアが協力することで実現するということがわかりました。
 今現在会社ではDatadog RUMの導入検証を進めていますが、ハンズオンで学んだことを基に会社サイトのパフォーマンス改善へつなげられるように頑張っていきます。
+
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](d39578c1c6284ed09d2b11773f005509)
+
 # 参考文献
 https://web.dev/vitals-business-impact/
 https://www.datadoghq.com/ja/product/real-user-monitoring/
