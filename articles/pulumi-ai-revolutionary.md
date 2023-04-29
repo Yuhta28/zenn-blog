@@ -78,7 +78,7 @@ https://www.pulumi.com/ai/
 Pulumiには世界中のユーザーと競ってハンズオンを体験した感想をブログやSNSで発信した人の中からSWAGをプレゼントしてくれる企画型のワークショップがあります。Pulumi AIを学べるワークショップもありましたので早速やってみることにしました。
 
 ### 始め方
-ワークショップではAWSのKinesis Data Streams[^7]、RDS[^8]、DynamoDB[^9]、TimeStream[^10]をデプロイするコードを生成しています。
+ワークショップではAWSのKinesis Data Streams[^7]、RDS[^8]、DynamoDB[^9]、Timestream[^10]をデプロイするコードを生成しています。
 必要なものはPulumiとAWSアクセスキー、シークレットキー、OpenAIのAPIキーになります。
 
 まずPulumiをローカルにインストールします。OS毎にインストーラーが用意されているので、インストールは難しくないと思います。
