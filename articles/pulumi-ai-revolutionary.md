@@ -43,7 +43,7 @@ Terraformの最大の障壁となるのがHCL(HashiCorp Language)と呼ばれる
 https://github.com/pulumi/tf2pulumi
 
 ### VS AWS CDK
-プログラミング言語でインフラストラクチャーを構成するIaCツールといえばAWS CDKがあります。AWS CDKと違いについてPUlumiではこのように述べています。
+プログラミング言語でインフラストラクチャーを構成するIaCツールといえばAWS CDKがあります。AWS CDKとの違いについてPUlumiではこのように述べています。
 
 | 項目 | Pulumi | AWS CDK |
 | --- | --- | --- |
@@ -52,18 +52,25 @@ https://github.com/pulumi/tf2pulumi
 | テスト | ユニットテスト、プロパティテストなど一般的なテストフレームワークをサポート | 合成されたYAML/JSONに対してアサートするユニットテストのみ |
 | 既存リソースインポート | 可 | プレビュー対応 |
 
+AWS CDKはAWSに対応したプロビジョニングツールなので他のクラウドサービスには対応していないことが大きな違いです。またAWS CDKは既存リソースに対するインポート機能を正式にまだリリースしていません。
+:::message alert
+CDK for Terraform(CDKTF)[^5]がGAされたのでこの問題は多少改善されたかもしれません。まだ触れていないので検証してみます。
+:::
+
+機密情報の保持についてはSecrets Manager[^6]を使って格納するようにしていますが、Pulumiはマネージドなクラウドサービスが提供する暗号化キーを使い、暗号化し保護します。
+
 [^1]: https://www.terraform.io/
 [^2]: https://aws.amazon.com/jp/cdk/
 [^3]: https://www.pulumi.com/docs/intro/vs/terraform/#dynamic-providers
 [^4]:https://www.pulumi.com/docs/intro/languages/
-
-
+[^5]:https://developer.hashicorp.com/terraform/cdktf
+[^6]:https://aws.amazon.com/jp/secrets-manager/
 
 
 
 # 所感
 
-PulumiはTerraformやAWS CDKに比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、是非今回のアップデートを機にIaCツール採用に検討してみてください。
+PulumiはTerraformやAWS CDKと比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、是非今回のアップデートを機にIaCツール採用に検討してみてください。
 
 # 参考文献
 https://www.pulumi.com/blog/pulumi-ai
