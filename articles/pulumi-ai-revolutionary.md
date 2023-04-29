@@ -13,6 +13,7 @@ https://twitter.com/PulumiCorp/status/1646530231639867392?s=20
 ここ最近、コード生成系AIが増えてきましたがIaCに特化したツールは珍しいと思いましたので触って感想を述べていきます。
 
 # Pulumiとは
+https://www.pulumi.com/
 まずPulumiについて説明いたします。
 Pulumiはプログラミング言語でインフラストラクチャーを作成できるプロビジョニングツールです。
 プロビジョニングツールで有名なものですとTerraform[^1]やAWS CDK[^2]があり比較するとPulumiはやや知名度が低いです。
@@ -73,11 +74,25 @@ https://www.pulumi.com/ai/
 大規模言語モデルのGPTを活用して、自然言語でPulumiのコードを自動生成してくれるAIアシスタントツールになります。無料で使えユーザー登録も不要で上のURLから作りたい構成を質問すればPulumiのソースコードが生成されます。GPTはv3とv4の2つが選択できるので無料でV4を使えるというのはChatGPTよりも優位性があるのではないかと思います。
 ![](/images/pulumi-ai-revolutionary/image9.png)
 
-## 使い方
+## Pulumi Challenges
+Pulumiには世界中のユーザーと競ってハンズオンを体験した感想をブログやSNSで発信した人の中からSWAGをプレゼントしてくれる企画型のワークショップがあります。Pulumi AIを学べるワークショップもありましたので早速やってみることにしました。
+
+### 始め方
+ワークショップではAWSのKinesis Data Streams[^7]、RDS[^8]、DynamoDB[^9]、TimeStream[^10]をデプロイするコードを生成しています。
+必要なものはPulumiとAWSアクセスキー、シークレットキー、OpenAIのAPIキーになります。
+
 まずPulumiをローカルにインストールします。OS毎にインストーラーが用意されているので、インストールは難しくないと思います。
 https://www.pulumi.com/docs/get-started/install/
 
-次にPulumiを実行する作業ディレクトリを作成し、実行プロジェクトを作成します。ここではTypeScriptを使ったプロジェクトを作成します。
+AWSのアクセスキー、シークレットキー、OpenAIのAPIキーをセットします。
+
+```shell
+export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>
+export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>
+export OPENAI_API_KEY=<YOUR_API_KEY>
+```
+
+Pulumiを実行するためのプロジェクトを作成します。ワークショップではPythonで実施していますが慣れ親しんだプログラミング言語で問題ないと思います。私はTypeScriptで新規プロジェクトを作成しました。
 
 ```terminal
 $ pulumi new typescript
@@ -118,194 +133,92 @@ To perform an initial deployment, run `pulumi up`
 プロジェクトを作成するとPulumiを実行するために必要なテンプレートファイルが作成されます。
 ![](/images/pulumi-ai-revolutionary/image2.png)
 
-準備ができましたのでPulumi AIを使ってソースコードを生成していきます。
-超シンプルな静的ホスティングサイトを公開するS3バケットを生成してもらいました。
+準備ができましたのでPulumi AIを使ってソースコードを生成していきます。ワークショップと一言一句同じプロンプトを使いました。
+`Deploy a Kinesis Data Stream, RDS database, DynamoDB database, and Timestream database.`
 ![](/images/pulumi-ai-revolutionary/image3.png)
 
-### 静的ホスティングS3バケット
+言語の違いはありますが私が生成されたコードは以下の通りでした。
 
-AIで生成されたコードがこちらです。
-```typescript:index.ts
+```ts:index.ts
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
-// S3バケットの作成
-const websiteBucket = new aws.s3.BucketV2("websiteBucket", {});
-
-// 静的ウェブサイト構成を設定
-const websiteConfiguration = new aws.s3.BucketWebsiteConfigurationV2("websiteConfiguration", {
-  bucket: websiteBucket.id,
-  indexDocument: {
-    suffix: "index.html",
-  },
-  errorDocument: {
-    key: "error.html",
-  },
+// Kinesis Data Stream
+const kinesisStream = new aws.kinesis.Stream("my-stream", {
+    shardCount: 1,
 });
 
-// スタック出力
-export const bucketName = websiteBucket.id;
-export const websiteEndpoint = pulumi.interpolate`http://${websiteBucket.websiteEndpoint}`;
-```
-
-コードが生成された`pulumi up`でデプロイされS3が作成されます。
-S3が作成されましたので後はindex.htmlファイルをS3にアップロードし、エンドポイントURLへアクセスしましたが403エラーが表示されました。バケットポリシーに何も記述がなく公開許可されていなかったことが原因でした。
-![](/images/pulumi-ai-revolutionary/image4.png)
-
-Pulumi AIはチャット形式で前の文章から引き続きコードの修正を命令できます。
-![](/images/pulumi-ai-revolutionary/image6.png)
-
-修正されたコードが生成されたのでもう一度デプロイしましたが、バケットポリシーの作成がうまくいきませんでした。
-![](/images/pulumi-ai-revolutionary/image7.png)
-
-一旦手作業でバケットポリシーを修正してバケットエンドポイントURLにアクセスすると静的サイトが表示されることを確認できました。
-![](/images/pulumi-ai-revolutionary/image5.png)
-
-今度は新規VPCの中にEC2、RDS、ALBを作成する基本的なLAMP構成のインフラストラクチャーを生成してもらいました。
-
-### LAMPアーキテクチャー
-
-```typescript:index.ts
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-
-// Create a new VPC
-const vpc = new aws.ec2.Vpc("my-vpc", {
-    cidrBlock: "10.0.0.0/16",
+// RDS database
+const dbSubnetGroup = new aws.rds.SubnetGroup("my-dbsubnetgroup", {
+    subnetIds: ["subnet-12345678", "subnet-abcdefgh"], // Replace with your subnet IDs
 });
 
-// Create an Internet Gateway
-const internetGateway = new aws.ec2.InternetGateway("internetGateway", {
-  vpcId: vpc.id,
-});
-
-// Attach the Internet Gateway to the VPC
-const vpcGatewayAttachment = new aws.ec2.InternetGatewayAttachment("InternetGatewayAttachment", {
-  vpcId: vpc.id,
-  internetGatewayId: internetGateway.id,
-});
-
-// Create two subnets in different Availability Zones (AZs)
-const subnet1 = new aws.ec2.Subnet("subnet-1", {
-    cidrBlock: "10.0.1.0/24",
-    availabilityZone: "ap-northeast-1a",
-    vpcId: vpc.id,
-});
-
-const subnet2 = new aws.ec2.Subnet("subnet-2", {
-    cidrBlock: "10.0.2.0/24",
-    availabilityZone: "ap-northeast-1c",
-    vpcId: vpc.id,
-});
-
-// Create a DB Subnet Group for the RDS instance
-const dbSubnetGroup = new aws.rds.SubnetGroup("db-subnet-group", {
-    subnetIds: [subnet1.id, subnet2.id],
-});
-
-// Create an EC2 instance with a LAMP stack in the first subnet
-const userData = 
-    `#!/bin/bash
-     sudo yum -y update
-     sudo yum -y install httpd mysql php
-     sudo systemctl enable httpd
-     sudo systemctl start httpd`;
-
-const ec2SecurityGroup = new aws.ec2.SecurityGroup("ec2SG", {
-    vpcId:vpc.id,
-    ingress: [{
-        description: "default",
-        fromPort: 443,
-        toPort: 443,
-        protocol: "tcp",
-        cidrBlocks: [vpc.cidrBlock],
-    }]
-})
-
-const ec2Instance = new aws.ec2.Instance("web-server", {
-    ami: "ami-01b32aa8589df6208", // Replace this with the ID of the Linux (Amazon Linux 2) AMI in your region
-    instanceType: "t2.micro",
-    subnetId: subnet1.id,
-    userData: userData,
-    vpcSecurityGroupIds: [ec2SecurityGroup.id],
-});
-
-const RDSSecurityGroup = new aws.ec2.SecurityGroup("RDSSG", {
-    vpcId:vpc.id,
-    ingress: [{
-        description: "default",
-        fromPort: 3306,
-        toPort: 3306,
-        protocol: "tcp",
-        cidrBlocks: [vpc.cidrBlock],
-    }]
-})
-
-// Create an RDS instance in the DB subnet group
-const rdsInstance = new aws.rds.Instance("db-server", {
+const dbInstance = new aws.rds.Instance("my-db-instance", {
     engine: "mysql",
     instanceClass: "db.t2.micro",
     allocatedStorage: 20,
-    name: "mydb",
     username: "admin",
-    password: "yourd4t4b4sepa45w0rd",
+    password: "your-db-password", // Replace with a real password
     dbSubnetGroupName: dbSubnetGroup.name,
-    vpcSecurityGroupIds: [RDSSecurityGroup.id],
+    skipFinalSnapshot: true,
 });
 
-
-const ALBSecurityGroup = new aws.ec2.SecurityGroup("ALBSG", {
-    vpcId:vpc.id,
-    ingress: [{
-        description: "default",
-        fromPort: 80,
-        toPort: 80,
-        protocol: "tcp",
-        cidrBlocks: [vpc.cidrBlock],
-    }]
-})
-
-// Create an ALB in VPC
-const alb = new aws.lb.LoadBalancer("my-alb", {
-    securityGroups: [ALBSecurityGroup.id],
-    subnets: [subnet1.id, subnet2.id],
+// DynamoDB database
+const dynamoTable = new aws.dynamodb.Table("my-dynamodb-table", {
+    attributes: [
+        { name: "id", type: "S" },
+    ],
+    hashKey: "id",
+    readCapacity: 1,
+    writeCapacity: 1,
 });
 
-// Create a Target Group for instances
-const targetGroup = new aws.lb.TargetGroup("target-group", {
-    port: 80,
-    protocol: "HTTP",
-    targetType: "instance",
-    vpcId: vpc.id,
+// Timestream database
+const timestreamDatabase = new aws.timestreamwrite.Database("my-timestream-db", {
+    databaseName: "mytimestreamdb",
 });
 
-// Create a Listener for ALB
-const listener = new aws.lb.Listener("listener", {
-    loadBalancerArn: alb.arn,
-    port: 80,
-    protocol: "HTTP",
-    defaultActions: [{
-        type: "forward",
-        targetGroupArn: targetGroup.arn,
-    }],
-});
-
-// Export the ALB DNS name
-export const albDns = alb.dnsName;
+// Stack exports
+export const kinesisStreamArn = kinesisStream.arn;
+export const dbInstanceEndpoint = dbInstance.endpoint;
+export const dynamoTableName = dynamoTable.name;
+export const timestreamDatabaseName = timestreamDatabase.databaseName;
 ```
 
-こちらも一発で作成できず、セキュリティグループやインターネットゲートウェイの作成を追加することでリソースの作成に成功しました。
-中々一発でうまくいかず少なくともAIで生成されたコードだけでは実践で使うことは難しいように思えます。
+このコードを`index.ts`に張り付けてデプロイを実行するとデプロイ途中でエラーが出ました。
+![](/images/pulumi-ai-revolutionary/image5.png)
+
+ワークショップでも出力された内容は違いますがエラーが出ること自体は想定内のようです。ワークショップでは出力されたエラーをそのままPulumi AIに張り付けてエラーを修正してもらっています。私も同じように出力されたエラーをそのまま張り付けて`fix this error`と記載してみました。
+![](/images/pulumi-ai-revolutionary/image4.png)
+
+するとPulumi AIがエラーの内容を分析して原因と修正方法を提示してくれます。今回のエラー内容はDBサブネットを新規作成する際に既存のサブネットを指定している箇所があるのですが存在するサブネットIDを記載していないことが原因でした。
+修正されたコードではわかりやすく既存のサブネットIDを指定するように修正されたコードを提示されました。
+
+```ts:index.ts
+// RDS database
+const dbSubnetGroup = new aws.rds.SubnetGroup("my-dbsubnetgroup", {
+    subnetIds: ["your-subnet-id-1", "your-subnet-id-2"], // Replace with your subnet IDs
+});
+```
+
+既存サブネットIDを記載してもう一度デプロイすると今度はすべてのデプロイがうまくいきAWSリソースの作成に成功しました。
+![](/images/pulumi-ai-revolutionary/image6.png)
+
+これでこのチャレンジは成功です。リソースは`pulumi destroy -rf --remove`で強制的に削除できます。
+このワークショップについてブログで発信していますが、日本在住の私にSWAGは貰えるのでしょうか🤔
+
+[^7]: https://aws.amazon.com/jp/kinesis/data-streams/
+[^8]: https://aws.amazon.com/jp/rds/
+[^9]: https://aws.amazon.com/jp/dynamodb/
+[^10]: https://aws.amazon.com/jp/timestream/
 
 # 所感
-Pulumi AIを使ってPulumiでIaCを体験してみました。Pulumi AIですが少し目を離すと接続が途切れてしまいスレッドが最初からやり直しになることが多々ありました。
+Pulumi AIを使ってPulumiのIaCを体験してみました。気になった点ですが少し目を離すと接続がすぐに途切れてしまいスレッドが最初からやり直しになることが多々ありました。
 ![](/images/pulumi-ai-revolutionary/image8.png)
+履歴を保存してくれるわけではないので一度やり直しになると作成途中のソースコードの質問ができなくなるので、もう少し接続時間を伸ばしてほしいという気持ちがあります。
 
-まだ使い勝手は難しいと感じましたがPulumi公式でハンズオンがありましたのでもう少しこちらを使って理解を深めてみようと思います。
-https://www.pulumi.com/challenge/ai-architecture/
-
-やや挑戦的なタイトルになってしまいましたが、個人的にはもう少し機能拡張に期待したいなと思いました。
-PulumiはTerraformやAWS CDKと比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、気になりましたら今回のアップデートを機に採用を検討してみてください。
+やや挑戦的なタイトルになってしまいましたが、個人的にはもう少し今後のアップデートに期待したいと思いました。
+PulumiはTerraformやAWS CDKと比べると知名度が弱いと思いますが、2つの良いところを取り入れてる部分もありますので、気になりましたら採用を検討してみてください。
 
 # 参考文献
 https://www.pulumi.com/blog/pulumi-ai
