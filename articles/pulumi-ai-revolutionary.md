@@ -304,7 +304,8 @@ Pulumi AIを使ってPulumiでIaCを体験してみました。Pulumi AIです�
 まだ使い勝手は難しいと感じましたがPulumi公式でハンズオンがありましたのでもう少しこちらを使って理解を深めてみようと思います。
 https://www.pulumi.com/challenge/ai-architecture/
 
-PulumiはTerraformやAWS CDKと比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、是非今回のアップデートを機にIaCツール採用に検討してみてください。
+やや挑戦的なタイトルになってしまいましたが、個人的にはもう少し機能拡張に期待したいなと思いました。
+PulumiはTerraformやAWS CDKと比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、気になりましたら今回のアップデートを機にIaCツールの採用にPulumiを検討してみてください。
 
 # 参考文献
 https://www.pulumi.com/blog/pulumi-ai
