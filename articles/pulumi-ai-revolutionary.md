@@ -53,8 +53,8 @@ https://github.com/pulumi/tf2pulumi
 | 既存リソースインポート | 可 | プレビュー対応 |
 
 AWS CDKはAWSに対応したプロビジョニングツールなので他のクラウドサービスには対応していないことが大きな違いです。またAWS CDKは既存リソースに対するインポート機能を正式にまだリリースしていません。
-:::message alert
-CDK for Terraform(CDKTF)[^5]がGAされたのでこの問題は改善されたかもしれません。まだ触れていないのでいつか検証します。
+:::message
+CDK for Terraform(CDKTF)[^5]がGAされたのでこの問題は改善されたかもしれません。
 :::
 
 機密情報の保持についてはSecrets Manager[^6]を使って格納するようにしていますが、Pulumiはマネージドなクラウドサービスが提供する暗号化キーを使い、暗号化し保護します。
@@ -161,7 +161,7 @@ Pulumi AIはチャット形式で前の文章から引き続きコードの修�
 一旦手作業でバケットポリシーを修正してバケットエンドポイントURLにアクセスすると静的サイトが表示されることを確認できました。
 ![](/images/pulumi-ai-revolutionary/image5.png)
 
-やや消化不良気味でしたので今度は新規VPCの中にEC2、RDS、ALBを作成する基本的なLAMP構成のインフラストラクチャーを構築するように命令しました。
+今度は新規VPCの中にEC2、RDS、ALBを作成する基本的なLAMP構成のインフラストラクチャーを生成してもらいました。
 
 ### LAMPアーキテクチャー
 
@@ -305,7 +305,8 @@ Pulumi AIを使ってPulumiでIaCを体験してみました。Pulumi AIです�
 https://www.pulumi.com/challenge/ai-architecture/
 
 やや挑戦的なタイトルになってしまいましたが、個人的にはもう少し機能拡張に期待したいなと思いました。
-PulumiはTerraformやAWS CDKと比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、気になりましたら今回のアップデートを機にIaCツールの採用にPulumiを検討してみてください。
+PulumiはTerraformやAWS CDKと比べると知名度が弱い気がしますが、2つの良いところを取り入れてる部分もありますので、気になりましたら今回のアップデートを機に採用を検討してみてください。
 
 # 参考文献
 https://www.pulumi.com/blog/pulumi-ai
+https://www.publickey1.jp/blog/23/pulumipulumi_aiawsazurecloudflarekubernetesdatadog130infra-as-code.html
