@@ -3,7 +3,7 @@ title: "PRやissuesの一覧をターミナル上でイイ感じにまとめるg
 emoji: "💨"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["github","githubcli","ghdash"]
-published: false
+published: true
 ---
 
 # 概要
@@ -13,7 +13,7 @@ https://github.blog/2020-02-12-supercharge-your-command-line-experience-github-c
 その後2021年にGitHub CLI 2.0をリリースしました。
 https://github.blog/2021-08-24-github-cli-2-0-includes-extensions/
 
-2.0では拡張機能をサポートしており、誰でもカスタムコマンドを作成できます。 `gh extension browse`もしくは`gh extension search`で他の人が作成し公開した拡張機能を表示させられます。
+2.0では拡張機能をサポートしており、誰でもカスタムコマンドを作成できます。 `gh extension browse`もしくは`gh extension search`で他の人が作成し公開した拡張機能を表示させます。
 
 - gh extension brose
 
@@ -55,14 +55,14 @@ Showing 30 of 336 extensions
    vilmibm/gh-user-status        set and get github user statuses
 ```
 
-このリストの並びはデフォルトではスターの数が多い順に表示されているのですが、トップの`dlvhdr/gh-dash`は2位と比べて10倍近い差をつけてスターを獲得しています。
+このリストの並びはデフォルトでスターの数が多い順に表示されているのですが、トップの`dlvhdr/gh-dash`は2位と比べて10倍近い差をつけてスターを獲得しています。
 - gh-dash
 ![](/images/gh-dash-introduction/image2.png)
 
 - gh-poi
 ![](/images/gh-dash-introduction/image3.png)
 
-gh-dashの機能をインストールして試してみます。
+このgh-dashとはどんな機能なのかインストールして試してみます。
 
 # gh-dash
 https://github.com/dlvhdr/gh-dash
@@ -183,13 +183,13 @@ issuesSections:
 gh dash -c <path/to/config.yml>
 ```
 
-- GitHub CLIリポジトリのクローズされたissuesを表示
+- GitHub CLIリポジトリのクローズされてるissuesのみを表示
 ![](/images/gh-dash-introduction/image5.png)
 
 ## テーマカスタマイズ
 `theme`セクションで自由にダッシュボードの文字色や背景色をカスタマイズできます。
 
-```yml
+```yml:カスタム例
 theme:
   colors:
     text:
