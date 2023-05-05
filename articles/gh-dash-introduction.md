@@ -2,7 +2,7 @@
 title: "PRやissuesの一覧をターミナル上でイイ感じにまとめるgh dashを使ってみた"
 emoji: "💨"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["github","githubcli"]
+topics: ["github","githubcli","ghdash"]
 published: false
 ---
 
@@ -154,7 +154,7 @@ pager:
 ```
 
 `prSections`がPRで`issuesSections`がissuesのダッシュボード構成になります。`title`セクションにダッシュボード上の項目名、`filters`セクションにどのリポジトリか、起案中かクローズ済みか、特定作者のみを表示させるか除外させるかなどルール付けを設定できます。
-またconfig.ymlを明示的に指定することも可能で、複数のconfig.ymlを作成することで仕事用、個人用と複数のダッシュボードを用意できます。
+またconfig.ymlは明示的に指定でき、config.ymlを複数作成することで仕事用と個人用で複数のダッシュボードを用意できます。
 
 
 ```yml:config.yml
@@ -183,8 +183,45 @@ issuesSections:
 gh dash -c <path/to/config.yml>
 ```
 
-- GitHub CLIのクローズされたissuesを表示
+- GitHub CLIリポジトリのクローズされたissuesを表示
 ![](/images/gh-dash-introduction/image5.png)
+
+## テーマカスタマイズ
+`theme`セクションで自由にダッシュボードの文字色や背景色をカスタマイズできます。
+
+```yml
+theme:
+  colors:
+    text:
+      primary: "ff7f00"
+      secondary: "#666CA6"
+      inverted: "#242347"
+      faint: "#3E4057"
+      warning: "#F23D5C"
+      success: "#3DF294"
+    background:
+      selected: "#39386B"
+    border:
+      primary: "#383B5B"
+      secondary: "#39386B"
+      faint: "#2B2B40"
+```
+
+- デフォルトテーマ
+![](/images/gh-dash-introduction/image6.png)
+
+- カスタマイズテーマ
+![](/images/gh-dash-introduction/image7.png)
+
+前述のように仕事用と個人用のリポジトリで分けてカスタマイズすればダッシュボードの取り違いを減らせると思います。
+
+# 所感
+GitHub CLIの拡張機能で最もスターが多いgh-dashについて紹介しました。
+本当はキーバインド機能も紹介したかったのですが、やり方が悪かったのかうまく試せませんでした。
+GitHub CLIの登場以降どんどんGitHub上の操作がコマンドライン上で完結できるようになったと感じます。ブラウザとターミナル間を何回も行き来するのは地味にストレスでしたので開発体験も向上すると思います。
+GitHub CLIの拡張機能は他にも面白いものがありますので気になりましたら`gh extension browse`で探してみてください。
 
 # 参考文献
 https://zenn.dev/aiiro/articles/8cf5d1ef6443ce
+https://cli.github.com/manual/gh_extension_search
+https://cli.github.com/manual/gh_extension_browse
