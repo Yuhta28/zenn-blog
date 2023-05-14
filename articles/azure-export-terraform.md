@@ -12,9 +12,9 @@ https://zenn.dev/yuta28/articles/iac-existing-infrastructure
 https://zenn.dev/yuta28/articles/challenge-for-existing-iac
 
 記事の総括で既存リソースをIaC化することは難しいと述べました。
-というのもTerraformは複数リソースを一括でインポートする機能がなく、一つ一つのリソースに対して`terraform import ~`を実施しなければならず手間がかかるからです。
+というのもTerraformは複数リソースを一括でインポートする機能がなく、リソースに対して一回ずつ`terraform import ~`を実施しなければならず手間がかかるからです。
 
-私のリポジトリからの引用ですが、コンソールからVPCを作成する際に自動的に作成されるサブネットやインターネットゲートウェイ、ルートテーブルなども全部Terraformに落とし込むとするとこのように一つ一つインポートしなければならず、手間と労力がかかります。
+私のリポジトリからの引用ですが、コンソールからVPCを作成する際に自動的に作成されるサブネットやインターネットゲートウェイ、ルートテーブルなども全部Terraformに落とし込むとするとこのように数が増え手間と労力がかかります。
 https://github.com/Yuhta28/terraform-on-AWS/blob/main/modules/vpc/network.tf
 
 Azureも同じ苦労を持っているのかと思いましたが、Azureにはリソースグループ単位で既存リソースをTerraform配下にエクスポートしてくれる**Azure Export for Terraform**というOSSツールがありました。
@@ -27,7 +27,7 @@ https://learn.microsoft.com/ja-jp/azure/developer/terraform/overview
 Azure Export for Terraformは次の3つの方法でリソースをTerraformにエクスポートできます。
 | タスク | 説明 | 例示 |
 | --- | --- | --- |
-| single resource | 一つのリソースをエクスポート | `aztfexport resource <リソースid>` |
+| single resource | 1つのリソースをエクスポート | `aztfexport resource <リソースid>` |
 | resource group  | リソースグループ単位でエクスポート | `aztfexport resource-group <リソースグループ名>` |
 | query | Azure Resource Graph[^1]クエリを使用してエクスポート | `aztfexport query <ARG where predicate>` |
 
@@ -48,7 +48,7 @@ Azure Export for TerraformはGo製のツールですのでGoコマンドでイ�
 ```terminal:Go toolchain
 go install github.com/Azure/aztfexport@latest
 ```
-他にもWindows、Mac、Linux別にパッケージマネージャからインストールも可能です。
+他にもWindows、Mac、Linux別にパッケージマネージャーからインストールも可能です。
 
 ```terminal:Windows
 scoop install aztfexport
