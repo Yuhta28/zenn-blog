@@ -12,7 +12,7 @@ https://zenn.dev/yuta28/articles/iac-existing-infrastructure
 https://zenn.dev/yuta28/articles/challenge-for-existing-iac
 
 記事の総括で既存リソースをIaC化することは難しいと述べました。
-というのもTerraformは複数リソースを一括でインポートする機能がなく、リソースに対して一回ずつ`terraform import ~`を実施しなければならず手間がかかるからです。
+というのもTerraformは複数リソースを一括でインポートする機能がなく、リソースに対して1回ずつ`terraform import ~`を実施しなければならず手間がかかるからです。
 
 私のリポジトリからの引用ですが、コンソールからVPCを作成する際に自動的に作成されるサブネットやインターネットゲートウェイ、ルートテーブルなども全部Terraformに落とし込むとするとこのように数が増え手間と労力がかかります。
 https://github.com/Yuhta28/terraform-on-AWS/blob/main/modules/vpc/network.tf
@@ -122,7 +122,7 @@ d----        2023/05/14     15:19                  .terraform
 -a---        2023/05/14     15:27          18449   terraform.tfstate
 ```
 
-`terraform init`して、`terraform plan`するとtfstateファイルとAzureリソース間に差異が出ないと表示されれば無事AzureのリソースがTerraformにエクスポートされたことになります。
+`terraform init`して、`terraform plan`を実行後tfstateファイルとAzureリソース間で差異が出ないと表示されれば無事AzureのリソースがTerraformにエクスポートされたことになります。
 ![](/images/azure-export-terraform/image6.png)
 
 # 所感
