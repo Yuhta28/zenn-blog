@@ -122,7 +122,7 @@ d----        2023/05/14     15:19                  .terraform
 -a---        2023/05/14     15:27          18449   terraform.tfstate
 ```
 
-`terraform init`して、`terraform plan`を実行後tfstateファイルとAzureリソース間で差異が出ないと表示されれば無事AzureのリソースがTerraformにエクスポートされたことになります。
+`terraform init`して`terraform plan`を実行後、tfstateファイルとAzureリソース間で差異が出ないと表示されればAzureのリソースがTerraformにエクスポートされます。
 ![](/images/azure-export-terraform/image6.png)
 
 # 所感
