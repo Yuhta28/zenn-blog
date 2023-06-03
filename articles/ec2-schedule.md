@@ -26,7 +26,7 @@ https://aws.amazon.com/jp/solutions/implementations/instance-scheduler/
 CloudFormationテンプレートファイルが用意されていますので、自前で上記アーキテクチャを構築する必要はなく、簡単に作成できますのでまずはテンプレートファイルをダウンロードし、CloudFormationを実行します。
 
 :::details テンプレートファイル
-```yaml:
+```json:
 {
  "Description": "(SO0030) - The AWS CloudFormation template for deployment of the aws-instance-scheduler, version: 1.5.0",
  "AWSTemplateFormatVersion": "2010-09-09",
