@@ -45,7 +45,7 @@ IAMのコンソール画面から作成しても大丈夫ですがクラスメ�
 
 ```yml:CloudFormation
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "IAM Role for GHA"
+Description: "OIDC for GitHubActions"
 
 Parameters:
   RepoName:
@@ -70,7 +70,7 @@ Resources:
   Policy:
     Type: AWS::IAM::Policy
     Properties:
-      PolicyName: test-gha
+      PolicyName: OIDCforGitHubActions
       Roles:
        - !Ref Role
       PolicyDocument:
@@ -87,8 +87,8 @@ Resources:
     Type: AWS::IAM::OIDCProvider
     Properties:
       Url: https://token.actions.githubusercontent.com
-      ClientIdList: [sigstore]
-      ThumbprintList: [a031c46782e6e6c662c2c87c76da9aa62ccabd8e]
+      ClientIdList: [sts.amazonaws.com]
+      ThumbprintList: [6938fd4d98bab03faadb97b34396831e3780aea1]
 
 Outputs:
   Role:
