@@ -10,9 +10,9 @@ published: false
 2022年11月にPulumiはGitHubと連携することでCI/CDプラットフォームを自動構築してくれるPulumi DeploymentをPulumi Cloud上でリリースしました。
 https://www.pulumi.com/blog/pulumi-deployments/
 
-Pulumiで記述されたIaCソースコードが存在するGitHubリポジトリと連携することでGitHubにPRすることでPulumi Cloud上で`pulumi preview`(Terraformでいうところのplanコマンド)が実施され、マージすることで`pulumi up`(Terraformでいうところのapplyコマンド)が走り、GitHubフローにそったIaC開発が実現できるようになりました。
+Pulumiで記述された構成ファイルが含まれるGitHubリポジトリと連携し、PRすることでPulumi Cloud上で`pulumi preview`(Terraformでいうところのplanコマンド)が実施され、マージすることで`pulumi up`(Terraformでいうところのapplyコマンド)が走り、GitHubフローにそったIaC開発が実現できました。
 
-ただ当初はAWSのシークレットキーなどの秘文情報を変数化してスタックファイル内に渡すといった運用しかできませんでした。
+ただ当初はAWSのシークレットキーなどの秘文情報を変数化して構成ファイル内に渡さなければなりませんでした。
 ```ts:IAMユーザーの認証情報を渡す
 const stack = await RemoteWorkspace.createOrSelectStack({
     stackName,
