@@ -36,6 +36,7 @@ console.log(`url: ${upRes.outputs.websiteUrl.value}`);
 https://www.pulumi.com/blog/oidc-blog/
 
 これによりクレデンシャル情報を保存する必要性がなくなり、デプロイしたときだけPulumi側で一時的な認証情報を発行し、完了したら自動的に削除してくれるため最小限のアクセス管理ができます。
+ややPulumi Cloudの手順書が
 
 # 参考文献
 https://openid.net/foundation/
