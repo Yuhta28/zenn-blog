@@ -42,19 +42,19 @@ RFCとはインターネット上にまつわるさまざまな技術的使用�
 インターネットホストテーブルの仕様についてまとめたRFC 952には以下の内容が書かれています。
 
 >  A "name" (Net, Host, Gateway, or Domain name) is a text string up
->   to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus
-   sign (-), and period (.).  Note that periods are only allowed when
-   they serve to delimit components of "domain style names". (See
-   RFC-921, "Domain Name System Implementation Schedule", for
-   background).  No blank or space characters are permitted as part of a
-   name. No distinction is made between upper and lower case.  The first
-   character must be an alpha character.  The last character must not be
-   a minus sign or period.  A host which serves as a GATEWAY should have
-   "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as
-   Internet gateways should not use "-GATEWAY" and "-GW" as part of
-   their names. A host which is a TAC should have "-TAC" as the last
-   part of its host name, if it is a DoD host.  Single character names
-   or nicknames are not allowed.
+>  to 24 characters drawn from the alphabet (A-Z), digits (0-9), minus
+>  sign (-), and period (.).  Note that periods are only allowed when
+>  they serve to delimit components of "domain style names". (See
+>  RFC-921, "Domain Name System Implementation Schedule", for
+>  background).  No blank or space characters are permitted as part of a
+>  name. No distinction is made between upper and lower case.  The first
+>  character must be an alpha character.  The last character must not be
+>  a minus sign or period.  A host which serves as a GATEWAY should have
+>  "-GATEWAY" or "-GW" as part of its name.  Hosts which do not serve as
+>  Internet gateways should not use "-GATEWAY" and "-GW" as part of
+>  their names. A host which is a TAC should have "-TAC" as the last
+>  part of its host name, if it is a DoD host.  Single character names
+>  or nicknames are not allowed.
 
 :::message
 訳：ホスト名は24文字以下で英字、数字、ハイフン(-)、ピリオド(.)が使用できます。ピリオドは、ドメイン名の区切りに限ってのみ使用できます。

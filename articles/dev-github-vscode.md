@@ -230,7 +230,7 @@ blog-posts/
 21 directories, 9 files
 ```
 ::: message
-###### assests/codeディレクトリ
+###### `assests/code`ディレクトリ
 記事内に画像やソースコードを挿入したいときはこの中にファイルを置いて相対リンクで記事に埋め込みます。
 :::
 

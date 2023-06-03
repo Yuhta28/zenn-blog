@@ -41,7 +41,7 @@ jobs:
 #      - name: Setup tmate session
 #        uses: mxschmitt/action-tmate@v3
 
-      - name: Exec textlint-githu-pr-check
+      - name: Exec textlint-github-pr-check
         uses: tsuyoshicho/action-textlint@v3
         with:
           github_token: ${{ secrets.github_token }}
