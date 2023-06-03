@@ -67,7 +67,7 @@ cwはターミナル画面からCloudWatch Logsのログを**高速**で取得�
 https://github.com/lucagrulla/cw
 
 珍しく`pip`や`npm`などの外部パッケージを必要とせず、OS依存となる実行アプリになります。
-CloudWatch Logsの補助ツールで有名なawslogs[^1]と比較すると実行が速く、複数のロググループを指定することが大きな利点となります。
+CloudWatch Logsの補助ツールで有名な`awslogs`[^1]と比較すると実行が速く、複数のロググループを指定することが大きな利点となります。
 今回はcwを使ってログストリームごとに`tail -f`を実行して、ログ参照してみたいと思います。
 [^1]: https://github.com/jorgebastida/awslogs
 
@@ -81,7 +81,7 @@ brew install cw
 
 # ハンズオン
 インストールできましたので、早速使っていきます。
-ローカルにAWS CLIをインストールしている場合、`aws configure`で認証情報をローカルマシンに登録していると思いますが、もしIAMロールを付与したEC2インスタンス内でaws cliを利用していた場合は、`~/.aws/config`ファイルにデフォルトのリージョン情報を設定する必要があります。
+ローカルにAWS CLIをインストールしている場合、`aws configure`で認証情報をローカルマシンに登録していると思いますが、もしIAMロールを付与したEC2インスタンス内でAWS CLIを利用していた場合は、`~/.aws/config`ファイルにデフォルトのリージョン情報を設定する必要があります。
 ```bash:config
 [default]
 region = ap-northeast-1
@@ -192,7 +192,7 @@ operation error CloudWatch Logs: FilterLogEvents, exceeded maximum number of att
 https://github.com/lucagrulla/cw/issues/214
 # 所感
 cwを使ってログストリームごとに`tail -f`でログ参照してみました。
-CloudWatch LogsのOSSで有名なのはawslogsですが、少し動作がもっさりしていてかつPython製なので使っているホストのバージョン依存で動作に不安な面がありました。
+CloudWatch LogsのOSSで有名なのは`awslogs`ですが、少し動作がもっさりしていてかつPython製なので使っているホストのバージョン依存で動作に不安な面がありました。
 cwはパッケージ不要でbrewで簡単にインストールできましたが、最後に出てきたエラーだけ気になったのでここを調査して問題なければ会社にも導入しようと思います。
 
 # LT資料
