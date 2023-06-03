@@ -32,5 +32,10 @@ const upRes = await stack.up({ onOutput: console.log });
 console.log(`url: ${upRes.outputs.websiteUrl.value}`);
 ```
 
+専用のIAMユーザーを作成したらアクセスキーとシークレットキーの管理負担が重くなるところですが、2023年1月にPulumiはOpenID Connect(OIDC)との統合を開始しました。
+https://www.pulumi.com/blog/oidc-blog/
+
+これによりクレデンシャル情報を保存する必要性がなくなり、デプロイしたときだけPulumi側で一時的な認証情報を発行し、完了したら自動的に削除してくれるため最小限のアクセス管理ができます。
+
 # 参考文献
 https://openid.net/foundation/
