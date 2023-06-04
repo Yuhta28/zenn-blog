@@ -3,7 +3,7 @@ title: "OIDC認証でPulumi CloudとAWSを連携してみた"
 emoji: "🌎"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["pulumi","aws","oidc"]
-published: false
+published: publish
 ---
 
 # 概要
