@@ -26,8 +26,7 @@
                 "dict/smarthr-prh-basic.yml",
                 "dict/smarthr-prh-tech-word.yml"
             ]
-        },
-        "aws-spellcheck": true
+        }
     },
     "filters": {
         "allowlist": {
