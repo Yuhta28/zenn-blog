@@ -30,7 +30,7 @@ https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/Connect-using-EC2-Inst
 もしプライベートサブネットに配置されているEC2に秘密鍵なしでSSH接続する場合はSystems ManagerのSession Managerによる接続で実現できます[^1]が、インターフェース型のVPCエンドポイントを3つ作成しなければならず、VPCエンドポイント料金が約$30/月ほど発生しました。[^2]
 検証環境などあまりコストをかけたくない環境ではSession Managerを使わず踏み台サーバー経由でプライベートサブネットに配置されているEC2に接続するという運用をとる人も多かったと思います。
 
-そこで今回発表されたEC2 Instance Connect Endpointを使うことでプライベートサブネットに配置されているEC2に対してSSH接続が実現できました。VPCエンドポイントに新しくEC2 Instance Connect用のエンドポイントが用意されユーザーはこのエンドポイント経由でプライベートサブネットに配置されているEC2に接続することができます。
+そこで今回発表されたEC2 Instance Connect Endpointを使うことでプライベートサブネットに配置されているEC2に対してSSH接続が実現できました。VPCエンドポイントに新しくEC2 Instance Connect用のエンドポイントが用意されユーザーはこのエンドポイント経由でプライベートサブネットに配置されているEC2に接続できます。
 ![](/images/ec2-connect-ssh/image1.png)
 *AWSブログより引用[^3]*
 
@@ -88,12 +88,12 @@ $  aws ec2-instance-connect ssh --instance-id <instance-id>
 SSH公開鍵がないプライベートサブネットに配置されているEC2に対してターミナルからSSH接続できました。
 
 # 所感
-AWS CLI経由でターミナルからプライベートサブネットに配置されているEC2に対してSSH接続しました。
-このアップデートでより低コストで外部公開されていないEC2に対してSSH接続できるようになりました。
-コンソールから接続した場合ですとクリップボードなどにコピーしたコマンドを`Ctrl+V`でペーストすることができず、プレーンテキストとして貼り付けないとペーストできなかったため偶にコマンド操作をミスって面倒だと感じていました。
+AWS CLI経由でターミナルからプライベートサブネットに配置されているEC2へSSH接続しました。
+このアップデートでより低コストでプライベートサブネットに配置されているEC2にSSH接続ができるので嬉しい限りです。
+また個人的に良かった点ですとコンソールから接続した場合ですとクリップボードなどにコピーしたコマンドを`Ctrl+V`でペーストできず、プレーンテキストとして貼り付けないとペーストできなかったためまれにコマンド操作をミスって面倒だと感じていましたが、コンソールから接続することで`Ctrl+V`キーでコマンドを貼り付けができるのが嬉しかったです。
 ![](/images/ec2-connect-ssh/image5.png)
 *この表記に共感してくれるはず*
-ターミナルからなら`Ctrl+V`キーでコマンド貼り付けができますので是非ターミナルからEC2 Instance Connect Endpointを試してみてください。
+簡単に試せますのでぜひターミナルからEC2 Instance Connect Endpointを試してみてください。
 
 # 参考文献
 https://dev.classmethod.jp/articles/demystifying-ec2-instance-connect-implementation/
