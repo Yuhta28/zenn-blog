@@ -3,7 +3,7 @@ title: "ログコスパ最強!?OpenObserveを触ってみた"
 emoji: "🔭"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["openobserve","aws","ログ","オブザーバビリティ"]
-published: false
+published: true
 ---
 
 # 概要
@@ -74,7 +74,7 @@ GitHubページ[^1]によるとElasticsearch、Splunk、Datadogの代替を目�
 
 ![](/images/openobserve-tutorial/image6.png)
 
-ただそうなるとデータコレクターをインストールできないサーバレスサービスのログは取り込められないと思うかもしれません。
+ただそうなるとデータコレクターをインストールできないサーバーレスサービスのログは取り込められないと思うかもしれません。
 Kinesis Data Firehose[^4]やPub/Sub[^5]を転送できるサービスならOpenObserveにログを送信できるみたいです。
 FargateコンテナのログをFluentBitで、CloudTrailのログをKinesis Data Firehoseで送信してみます。
 
@@ -82,7 +82,7 @@ FargateコンテナのログをFluentBitで、CloudTrailのログをKinesis Data
 ECSにはFireLensというコンテナログを他に送信できるログルーターがあります。このログルーター機能はFluent Bitで動いておりAWS公式にてイメージが配布されています。[^6]
 
 ECSからのログをOpenObserveに送る手順もこのFireLensを使った手順が紹介されています。
-以下はFluent BitのコンテナとNginxのコンテナを記述したタスク定義ファイルになります。
+以下はFluent Bitのコンテナとnginxのコンテナを記述したタスク定義ファイルになります。
 
 :::details タスク定義ファイル
 ```json: nginx_firelens_zo_task_def.json
@@ -147,12 +147,12 @@ ECSからのログをOpenObserveに送る手順もこのFireLensを使った手�
 }
 ```
 
-Nginxコンテナのログ設定にOpenObserveの認証情報を記載します。
+nginxコンテナのログ設定にOpenObserveの認証情報を記載します。
 >          "http_User": "account_mail",
 >          "http_Passwd": "XXXXXXXXXXXXXXXXXX"
 :::
 
-Fargateへのデプロイが完了し、NginxにアクセスするとログがOpenObserveに記録されるようになります。
+Fargateへのデプロイが完了し、nginxにアクセスするとログがOpenObserveに記録されます。
 
 ![](/images/openobserve-tutorial/image7.png)
 *Nginxページ*
