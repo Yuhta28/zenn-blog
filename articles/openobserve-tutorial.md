@@ -30,14 +30,6 @@ https://openobserve.ai/
 - ログ運用でコストに悩んでいる人
 - 新しいもの好きな人
 
-# 目次
-- [OpenObserveとは](#openobserveとは)
-- [セットアップ](#セットアップ)
-    - [ログ取り込み](#ログ取り込み)
-    - [ダッシュボード構築](#ダッシュボード構築)
-- [所感](#所感)
-- [参考文献](#参考文献)
-
 # OpenObserveとは
 公式ページの説明によるとログ、メトリクス、トレース監視を効率化できるRust製のオブザーバビリティプラットフォームと紹介されています。
 GitHubページ[^1]によるとElasticsearch、Splunk、Datadogの代替を目指しているそうです。ElasticSearchとは[Bulk API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html)で互換性があり、FluentdやFluent Bitなどのログフォワーダーが使用できます。

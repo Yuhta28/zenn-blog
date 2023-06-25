@@ -17,12 +17,6 @@ published: true
 - SSH秘密鍵の管理が面倒と感じている人
 - ターミナルからプライベートサブネットに配置されているEC2にSSH接続したい人
 
-# 目次
-- [EC2 Instance Connectについて](#ec2-instance-connectについて)
-- [AWS CLI経由でSSH接続](#aws-cli経由でssh接続)
-- [所感](#所感)
-- [参考文献](#参考文献)
-
 # EC2 Instance Connectについて
 あらためてEC2 Instance Connectについて説明しますとコンソール画面からSSH秘密鍵が不要でIAMベースによる認証でEC2にSSHログインできる接続方式です。ローカルマシンに秘密鍵ファイルを保管する必要がないため新規ユーザーに秘密鍵を渡すことなくEC2に公開鍵認証ができるのは便利ですが、パブリックサブネットに配置されているEC2のみにしか対応していませんでした。
 https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/Connect-using-EC2-Instance-Connect.html
