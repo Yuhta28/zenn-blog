@@ -2,7 +2,7 @@
 title: "ログコスパ最強!?OpenObserveを触ってみた"
 emoji: "🔭"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["openobserve","aws","ログ","オブザーバビリティ"]
+topics: ["openobserve","aws","ログ","オブザーバビリティ","初心者"]
 published: true
 ---
 
