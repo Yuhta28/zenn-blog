@@ -194,6 +194,10 @@ DatadogやSumo Logic[^7]のようにログに対応したインテグレーシ�
 クラウド版なら簡単に始められるので皆さんもお試しで触ってみてください。
 [^7]: https://www.sumologic.jp/
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](f0ce80504f7248b49aa31056240dd45d)
+
 # 参考文献
 https://zenn.dev/y_k/articles/0528b27b0d0512
 https://github.com/openobserve/openobserve
