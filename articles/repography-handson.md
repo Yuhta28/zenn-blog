@@ -8,7 +8,7 @@ published: true
 
 # 概要
 昨今、ソフトウェア開発チームのパフォーマンスを示す4つの要素(=Four Keys[^1])が重要視され、エンジニア組織はいかに速くビジネス成果を出すかが問われています。
-Repographyを導入することで開発チームがどれだけコミットできているか可視化してくれるためパフォーマンス成果を対外アピールする時に役立ちます。
+Repographyを導入することで開発チームがどれだけコミットできているか可視化してくれるためパフォーマンス成果を対外にアピールする時に役立ちます。
 Repographyがどういったアプリケーションなのか使い方を含めて紹介いたします。
 
 [^1]: https://cloud.google.com/blog/ja/products/gcp/using-the-four-keys-to-measure-your-devops-performance
@@ -16,14 +16,14 @@ Repographyがどういったアプリケーションなのか使い方を含め�
 # 対象読者
 - 自社のソフトウェア開発チームのパフォーマンスを可視化したい人
 - 商用サービスを使う前にOSSで可視化できないか知りたい人
-- オフィスに開発チームの成果を飾りたい人
+- オフィスをテック企業っぽくしたい人
 
 # Repographyとは
 https://github.com/marketplace/repography
 Repographyは、リポジトリ単位でどれだけのユーザーがコミットしたかをグラフィカルに可視化してくれるGitHub Apps[^2]です。
 マークダウン形式で出力されるので、対象リポジトリの`README.md`に埋め込めば過去のコミットやIssue、上位コントリビューターのランキングが表示されます。
 
-無料版と有料版が存在しますが、機能的な違いはなくプライベートリポジトリの上限数のみとなっています。無料版ならプライベートリポジトリは一個まで使えます。
+無料版と有料版が存在しますが、機能的な違いはなくプライベートリポジトリの上限数のみとなっていまして無料版ならプライベートリポジトリは一個まで使えます。
 ![](/images/repography-handson/image12.png)
 *パブリックリポジトリなら制限なし*
 
@@ -33,20 +33,22 @@ Repographyは、リポジトリ単位でどれだけのユーザーがコミッ�
 Repographyの使い方について説明します。
 
 ## Step1 リポジトリ選択
-Repography Appをインストール後にリポジトリの選択ができますので自分のGitHubリポジトリで追加したいリポジトリを選びます。
+Repography Appをインストール後、リポジトリの選択ができますので自分のGitHubリポジトリで追加したいリポジトリを選びます。
 ![](/images/repography-handson/image10.png)
 
 ## Step2 プロダクト選択
 次にダッシュボードを選択します。
-後述しますが、コミット量に応じたポスター制作もここで選びます。
+後述しますが、コミット量に応じたポスター制作もここで選べます。
 ![](/images/repography-handson/image11.png)
 
 ## Step3 ダッシュボード設定
 現在提供されているダッシュボードは3種類です。
-私のリポジトリだとコミット数が少なく見栄えが悪いため、ここからはデモ用に提供されているNeovimのRepographyで説明します。
+私のリポジトリだとコミット数が少なく見栄えが悪いため、ここからはデモ用に提供されているNeovim[^3]のRepographyで説明します。
+
+[^3]: https://neovim.io/
 
 ### Recent activity
-Recent activityでは直近のコミット数が可視化されます。コミット数以外にもIssueやPRの起票数やステータス状況なども可視化されます。コードのPRやIssueがどれだけ残っているかが一目でわかるのでパフォーマンス目視に最適です。
+Recent activityでは直近のコミット数が可視化されます。コミット数以外にもIssueやPRの起票数やステータス状況なども可視化されます。コードのPRやIssueがどれだけ残っているかが一目でわかるのでパフォーマンスの可視化に最適です。
 
  [![Time period](https://images.repography.com/0/neovim/neovim/recent-activity/d751713988987e9331980363e24189ce_badge.svg)](https://repography.com)
 [![Timeline graph](https://images.repography.com/0/neovim/neovim/recent-activity/d751713988987e9331980363e24189ce_timeline.svg)](https://github.com/neovim/neovim/commits)
