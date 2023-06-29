@@ -9,7 +9,15 @@ published: true
 # 概要
 GitHubにはリポジトリにインストールして、各種アプリケーションにアクセスを許可するGitHub Appsという仕組みがあります。
 [GitHub marketplace](https://github.com/marketplace)では、さまざまなAppsを手に入れることができます。
-今回は、GitHubリポジトリへのコミットを視覚化し、`README.md`をリッチにしてくれるRepographyというアプリケーションを触ってみました。
+
+昨今、ソフトウェア開発チームのパフォーマンスを示す4つの要素(=Four Keys[^1])が重要視され、エンジニア組織はいかに速くビジネス成果を出すかが問われています。
+このアプリを導入することで開発チームがどれだけコミットできているか可視化してくれるためパフォーマンス成果を対外アピールする時に役立ちます。
+Repographyがどういったアプリケーションなのか使い方を含めて紹介いたします。
+
+[^1]: https://cloud.google.com/blog/ja/products/gcp/using-the-four-keys-to-measure-your-devops-performance
+
+# 対象読者
+- 
 
 # Repographyとは
 https://github.com/marketplace/repography
@@ -20,6 +28,9 @@ Repographyは、マークダウン形式のヴィジュアライズなダッシ�
 - [neovim](https://github.com/neovim/neovim)
 - [strawberry](https://github.com/strawberry-graphql/strawberry)
 - [xdebug](https://github.com/xdebug/xdebug)
+
+# 使い方
+Repography Appをインストール後にリポジトリの選択ができますので自分のGitHubリポジトリで追加したいリポジトリを選びます。
 
 適当なインストール済みのOSSをクリックすれば、そのOSSのアウトプット情報をRepographyがダッシュボードに出力してくれます。
 ## [![Repography logo](https://images.repography.com/logo.svg)](https://repography.com) / Recent activity [![Time period](https://images.repography.com/0/neovim/neovim/recent-activity/d751713988987e9331980363e24189ce_badge.svg)](https://repography.com)
