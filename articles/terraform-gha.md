@@ -50,7 +50,7 @@ Description: "OIDC for GitHubActions"
 Parameters:
   RepoName:
     Type: String
-    Default: Yuhta28/terraform-githubaction-ci
+    Default: Enter Your GitHub repository name
 
 Resources:
   Role:
@@ -88,7 +88,10 @@ Resources:
     Properties:
       Url: https://token.actions.githubusercontent.com
       ClientIdList: [sts.amazonaws.com]
-      ThumbprintList: [6938fd4d98bab03faadb97b34396831e3780aea1]
+      ThumbprintList: [
+        6938fd4d98bab03faadb97b34396831e3780aea1,
+        1c58a3a8518e8759bf075b76b750d4f2df264fcd
+      ]
 
 Outputs:
   Role:
