@@ -56,7 +56,7 @@ AWSで利用できるパブリックIPアドレスは4種類あります。
 | EC2のパブリックIPアドレス | 無料 | $0.005/h |
 | Elastic IPアドレス | $0.005/h | $0.005/h |
 | サービス管理のパブリックIPアドレス | 無料 | $0.005/h |
-| BYOIPアドレス | 無料 | $0.005/h |
+| BYOIPアドレス | 無料 | 無料 |
 
 [^2]: 1か月720hで計算
 [^3]: https://aws.amazon.com/jp/elasticloadbalancing/
