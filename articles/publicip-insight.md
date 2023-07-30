@@ -19,7 +19,7 @@ AWSは既存サービスの値下げを発表することはよくありまし�
 この背景にはIPv4アドレスを取得するコストが年々高まっていることが理由に挙げられます。
 
 >As you may know, IPv4 addresses are an increasingly scarce resource and the cost to acquire a single public IPv4 address has risen more than 300% over the past 5 years. This change reflects our own costs and is also intended to encourage you to be a bit more frugal with your use of public IPv4 addresses and to think about accelerating your adoption of IPv6 as a modernization and conservation measure.
-DeepL訳)ご存知のように、IPv4アドレスはますます希少な資源となっており、単一のパブリックIPv4アドレスを取得するためのコストは、過去5年間で300％以上上昇しています。この変更は、私たち自身のコストを反映したものであると同時に、パブリックIPv4アドレスの使用をもう少し倹約し、近代化および保全対策としてIPv6の採用を加速することをお考えいただくためのものでもあります。
+DeepL訳)ご存じのように、IPv4アドレスはますます希少な資源となっており、単一のパブリックIPv4アドレスを取得するためのコストは、過去5年間で300％以上上昇しています。この変更は、私たち自身のコストを反映したものであると同時に、パブリックIPv4アドレスの使用をもう少し倹約し、近代化および保全対策としてIPv6の採用を加速することをお考えいただくためのものでもあります。
 
 AWSはIPv4アドレスの利用を抑えてもらい、IPv6アドレスの採用を検討してほしいと同記事にて述べています。
 
