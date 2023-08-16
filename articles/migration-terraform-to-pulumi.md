@@ -121,7 +121,6 @@ resource "aws_s3_bucket" "migration_S3" {
 pulumi convert --from terraform --language typescript
 ```
 
-`--language`部分に対応言語で述べたプログラミング言語を指定することでTerraformをPulumiへ変換できます。
 上記コマンドを実行するとディレクトリ直下にPulumiで使われるプロジェクト一式が生成されます。
 
 ```console
@@ -183,7 +182,7 @@ const s3BucketName = new random.RandomString("s3BucketName", {
 const migrationS3 = new aws.s3.BucketV2("migrationS3", {bucket: pulumi.interpolate`yuta-${s3BucketName.id}`});
 ```
 
-せっかくなので他の言語でS3を作成する構成情報ファイルをまとめました。本題とはそれるのでトグルで丸めてますが興味ありましたらどうぞ。
+せっかくなので他の言語でS3を作成する構成情報ファイルをまとめました。本題とはそれるのでトグルで丸めてますが興味ありましたらご覧ください。
 :::details おまけ
 
 ### Python
@@ -302,8 +301,9 @@ Duration: 8s
 ![](/images/migration-terraform-to-pulumi/image5.png)
 
 # 既存リソースの移行
-画像見てわかる通り生成されたコードをデプロイすると新規にリソースが作成されます。実際はTerraformで作成した既存リソースをPulumiに移したいと考える人も多いと思います。
-Pulumiにはステートファイルに保存されている既存リソース情報をPulumiのステートファイルにインポートする手順が用意されています。Terraformのステートファイルをローカルに用意します。外部ストレージに保存している場合`terraform state pull`コマンドでローカルにステートファイルをダウンロードできます。
+生成されたコードをデプロイすると新規にリソースが作成されます。ただ実際はTerraformで作成した既存リソースをPulumiに移したいと考える人も多いと思います。
+Pulumiにはステートファイルに保存されている既存リソース情報をPulumiのステートファイルにインポートする手順が用意されています。
+まず始めにTerraformのステートファイルをローカルに用意します。外部ストレージに保存している場合`terraform state pull`コマンドでローカルにステートファイルをダウンロードできます。
 
 下記の`import.ts`ファイルをステートファイルが存在するディレクトリにコピーします。
 https://github.com/pulumi/tf2pulumi/blob/master/misc/import/import.ts
@@ -320,11 +320,11 @@ $ pulumi config set importFromStatefile ./terraform.tfstate
 ```
 
 `pulumi up`コマンドでインポートしたリソースをPulumiで管理できるようになります。
-しかし、ドキュメントにはそう書いていますが実際のところ以下のようなエラーが発生し、インポートができませんでした。
+と、ドキュメントにはそう書いていますが実際のところ以下のようなエラーが発生し、インポートができませんでした。
 ![](/images/migration-terraform-to-pulumi/image6.png)
 
-エラー内容を確認するとステートファイルのバージョンが3でないため失敗したと出ています。現在のTerraformのステートファイルは最新が4でありますが、バージョン3はTerraformのバージョンが0.13以下の時のもので現在のバージョンとは互換性の保証がありません。ドキュメントで参照している`import.ts`はアーカイブされたリポジトリにあるものを参照しておりメンテナンスされていないファイルです。
-個人的にこれはドキュメントの記載ミスではないかと感じましたのでissueを立てて問い合わせている最中です。
+エラー内容を確認するとステートファイルのバージョンが3でないため失敗したと出ています。現在のTerraformのステートファイルはバージョン4ですが、バージョン3はTerraformのバージョンが0.13以下のもので現在のバージョンとは互換性の保証がありません。ドキュメントで参照している`import.ts`はアーカイブされたリポジトリにあるものでメンテナンスされていないファイルです。
+個人的にこれはドキュメントの記載ミスではないかと思いましたのでissueを立てて問い合わせている最中です。
 https://github.com/pulumi/pulumi-hugo/issues/3265
 
 続報がありましたら更新いたします。
