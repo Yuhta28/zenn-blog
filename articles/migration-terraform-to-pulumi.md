@@ -233,6 +233,7 @@ func main() {
 	})
 }
 ```
+
 ### C#
 ```cs:Program.rs
 using System.Collections.Generic;
@@ -298,7 +299,38 @@ Duration: 8s
 
 デプロイが完了するとS3が新規に作成されます。
 ![](/images/migration-terraform-to-pulumi/image5.png)
+
+# 既存リソースの移行
+画像見てわかる通り生成されたコードをデプロイすると新規にリソースが作成されます。実際はTerraformで作成した既存リソースをPulumiに移したいと考える人も多いと思います。
+Pulumiにはステートファイルに保存されている既存リソース情報をPulumiのステートファイルにインポートする手順が用意されています。Terraformのステートファイルをローカルに用意します。外部ストレージに保存している場合`terraform state pull`コマンドでローカルにステートファイルをダウンロードできます。
+
+下記の`import.ts`ファイルをステートファイルが存在するディレクトリにコピーします。
+https://github.com/pulumi/tf2pulumi/blob/master/misc/import/import.ts
+
+`index.ts`ファイルの先頭に次のコードを追加します。
+```ts:index.ts
+import "./import"
+```
+
+次にTerraformのステート情報を`import.ts`の`importFromStatefile`変数にセットすることで既存リソースをインポートできます。
+
+```powershell
+$ pulumi config set importFromStatefile ./terraform.tfstate
+```
+
+`pulumi up`コマンドでインポートしたリソースをPulumiで管理できるようになります。
+しかし、ドキュメントにはそう書いていますが実際のところ以下のようなエラーが発生し、インポートができませんでした。
+![](/images/migration-terraform-to-pulumi/image6.png)
+
+エラー内容を確認するとステートファイルのバージョンが3でないため失敗したと出ています。現在のTerraformのステートファイルは最新が4でありますが、バージョン3はTerraformのバージョンが0.13以下の時のもので現在のバージョンとは互換性の保証がありません。ドキュメントで参照している`import.ts`はアーカイブされたリポジトリにあるものを参照しておりメンテナンスされていないファイルです。
+個人的にこれはドキュメントの記載ミスではないかと感じましたのでissueを立てて問い合わせている最中です。
+https://github.com/pulumi/pulumi-hugo/issues/3265
+
+続報がありましたら更新いたします。
+
 # 所感
+TerraformからPulumiへの移行方法について説明しました。
+Pulumiは機能開発が活発で昨年あたりから様々なアップデートが発表されています。Terraformのライセンス変更自体はユーザーに影響はないものと考えていますが、Pulumiも面白いツールだと思いますのでぜひとも手に取ってみてください。
 
 # 参考文献
 https://www.pulumi.com/docs/concepts/
