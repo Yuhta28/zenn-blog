@@ -3,7 +3,8 @@ title: "TerraformからPulumiへの移行方法"
 emoji: "🚀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["pulumi","terraform","typescript","aws"]
-published: false
+published: true
+published_at: 2023-08-17 11:00
 ---
 
 # 序論
@@ -330,7 +331,7 @@ https://github.com/pulumi/pulumi-hugo/issues/3265
 
 # 所感
 TerraformからPulumiへの移行方法について説明しました。
-Pulumiは機能開発が活発で昨年あたりから様々なアップデートが発表されています。Terraformのライセンス変更自体はユーザーに影響はないものと考えていますが、Pulumiも面白いツールだと思いますのでぜひとも手に取ってみてください。
+Pulumiは機能開発が活発で昨年あたりから多くの機能アップデートが発表されています。Terraformのライセンス変更自体はユーザーに影響はないものと考えていますが、Pulumiも面白いツールだと思いますのでぜひとも手に取ってみてください。
 
 # 参考文献
 https://www.pulumi.com/docs/concepts/
