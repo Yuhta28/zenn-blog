@@ -42,13 +42,13 @@ Pulumiは他のプロビジョニングツールからの移行を提供する�
 # Pulumiとは
 https://www.pulumi.com/
 
-先にPulumiについて簡単に紹介しますとプログラミング言語でインフラを構築することができるプロビジョニングツールとなります。以前[私が書いた記事](https://zenn.dev/yuta28/articles/pulumi-ai-revolutionary)と重複している部分もありますのでよろしければそちらもご覧ください。
+先にPulumiについて簡単に紹介しますとプログラミング言語でインフラ開発できるプロビジョニングツールとなります。以前[私が書いた記事](https://zenn.dev/yuta28/articles/pulumi-ai-revolutionary)と重複している部分もありますのでよろしければそちらもご覧ください。
 Terraformで利用されるHCLのような独自言語とは異なり、TypeScriptやPython、Goなど開発者が慣れ親しんだ言語でインフラをコーディングできます。
 ## 対応言語[^7]
 - Node.js(JavaScript,TypeScript)
 - Python
 - Go
-- .NET(C#,F#,VB)
+- .NET(C#,F#,Visual Basic)
 - Java
 - Pulumi YAML
 
@@ -77,9 +77,122 @@ https://www.pulumi.com/blog/converting-full-terraform-programs-to-pulumi/
 [^8]: これにともないtf2pulumiの使用は非推奨になりました
 
 ## サンプルコード
+サンプル用にS3バケット作成するシンプルなTerraformコードを用意しました。
+
+```hcl:main.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.5.1"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "ap-northeast-1"
+}
+provider "random" {}
+
+# 一意のバケット名となるSuffix
+resource "random_string" "s3_bucket_name" {
+  length  = 8
+  special = false
+  upper   = false
+}
+# Create S3
+resource "aws_s3_bucket" "migration_S3" {
+  bucket = "yuta-${random_string.s3_bucket_name.id}"
+}
+```
+
+`terraform apply`コマンドでデプロイするとS3が作成されます。
+![](/images/migration-terraform-to-pulumi/image4.png)
+
+このTerraformファイルが配置されているディレクトリ上でPulumiのコンバーターコマンドを実行します。
+
+```console
+pulumi convert --from terraform --language typescript
+```
+
+`--language`部分に対応言語で述べたプログラミング言語を指定することでTerraformをPulumiへ変換できます。
+上記コマンドを実行するとディレクトリ直下にPulumiで使われるプロジェクト一式が生成されます。
+
+```console
+$ tree -L 1
+.
+├── Pulumi.yaml
+├── index.ts
+├── main.tf
+├── node_modules
+├── package-lock.json
+├── package.json
+├── terraform.tfstate
+└── tsconfig.json
+
+1 directory, 9 files
+```
+
+`index.ts`ファイルが構成ファイルになります。
+
+```typescript:index.ts
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+import * as random from "@pulumi/random";
+
+const s3BucketName = new random.RandomString("s3BucketName", {
+    length: 8,
+    special: false,
+    upper: false,
+});
+// Create S3
+const migrationS3 = new aws.s3.BucketV2("migrationS3", {bucket: pulumi.interpolate`yuta-${s3BucketName.id}`});
+```
+
+`pulumi up`コマンドでS3を作成します。
+
+:::message
+初めてPulumiコマンドを実行するとPulumi Cloudへログインが求められます。
+:::
+
+```powershell
+$ pulumi up
+Please choose a stack, or create a new one: <create a new stack>
+Please enter your desired stack name.
+To create a stack in an organization, use the format <org-name>/<stack-name> (e.g. `acmecorp/dev`): Yuhta28/migration-terraform
+Created stack 'migration-terraform'
+Previewing update (migration-terraform)
+
+     Type                          Name                      Plan
+ +   pulumi:pulumi:Stack           temp-migration-terraform  create
+ +   ├─ random:index:RandomString  s3BucketName              create
+ +   └─ aws:s3:BucketV2            migrationS3               create
+
+Resources:
+    + 3 to create
+
+Do you want to perform this update? yes
+Updating (migration-terraform)
+
+     Type                          Name                      Status
+ +   pulumi:pulumi:Stack           temp-migration-terraform  created (1s)
+ +   ├─ random:index:RandomString  s3BucketName              created (0.23s)
+ +   └─ aws:s3:BucketV2            migrationS3               created (1s)
+
+Resources:
+    + 3 created
+
+Duration: 8s
+```
 
 # 所感
 
 # 参考文献
 https://www.pulumi.com/docs/concepts/
 https://www.pulumi.com/docs/pulumi-cloud/
+https://www.pulumi.com/docs/cli/commands/pulumi_convert/
