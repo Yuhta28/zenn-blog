@@ -72,7 +72,7 @@ https://www.pulumi.com/product/pulumi-cloud/
 以前は[tf2pulumi](https://github.com/pulumi/tf2pulumi)と呼ばれるコンバーターツールを公式が提供していましたが、2023年6月に新たに`pulumi convert`サブコマンドの実装を発表しました。[^8]
 https://www.pulumi.com/blog/converting-full-terraform-programs-to-pulumi/
 
-`pulumi convert`を使ってTerraformで書いたコードをPulumiに移行してみようと思います。
+このコマンドは2023年8月現在でTypeScript、Python、Go、C#に対応しています。`pulumi convert`を使ってTerraformで書いたコードをPulumiに移行してます。
 
 [^8]: これにともないtf2pulumiの使用は非推奨になりました
 
@@ -137,8 +137,36 @@ $ tree -L 1
 
 1 directory, 9 files
 ```
+Terraform関係のファイルと一緒の場所に置きたくない場合、`--out <ディレクトリ名>`で違う場所にプロジェクトが生成されます。
 
-`index.ts`ファイルが構成ファイルになります。
+```powershell
+$ pulumi convert --from terraform --language typescript --out typescript-convert
+Converting from terraform...
+Converting to nodejs...
+Installing dependencies...
+
+added 215 packages, and audited 216 packages in 45s
+
+68 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+Finished installing dependencies
+
+$ ls .\typescript-convert\
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d----        2023/08/16     22:38                  node_modules
+-a---        2023/08/16     22:38             20   .gitignore
+-a---        2023/08/16     22:38            366   index.ts
+-a---        2023/08/16     22:38          83688   package-lock.json
+-a---        2023/08/16     22:38            203   package.json
+-a---        2023/08/16     22:38             75   Pulumi.yaml
+-a---        2023/08/16     22:38            354   tsconfig.json
+```
+
+`index.ts`ファイルにインフラの構成情報が記載されます。
 
 ```typescript:index.ts
 import * as pulumi from "@pulumi/pulumi";
@@ -153,6 +181,84 @@ const s3BucketName = new random.RandomString("s3BucketName", {
 // Create S3
 const migrationS3 = new aws.s3.BucketV2("migrationS3", {bucket: pulumi.interpolate`yuta-${s3BucketName.id}`});
 ```
+
+せっかくなので他の言語でS3を作成する構成情報ファイルをまとめました。本題とはそれるのでトグルで丸めてますが興味ありましたらどうぞ。
+:::details おまけ
+
+### Python
+```python:__main__.py
+import pulumi
+import pulumi_aws as aws
+import pulumi_random as random
+
+s3_bucket_name = random.RandomString("s3BucketName",
+    length=8,
+    special=False,
+    upper=False)
+# Create S3
+migration_s3 = aws.s3.BucketV2("migrationS3", bucket=s3_bucket_name.id.apply(lambda id: f"yuta-{id}"))
+```
+
+### Go
+```go:main.go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-aws/sdk/v5/go/aws/s3"
+	"github.com/pulumi/pulumi-random/sdk/v4/go/random"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		s3BucketName, err := random.NewRandomString(ctx, "s3BucketName", &random.RandomStringArgs{
+			Length:  pulumi.Int(8),
+			Special: pulumi.Bool(false),
+			Upper:   pulumi.Bool(false),
+		})
+		if err != nil {
+			return err
+		}
+		_, err = s3.NewBucketV2(ctx, "migrationS3", &s3.BucketV2Args{
+			Bucket: s3BucketName.ID().ApplyT(func(id string) (string, error) {
+				return fmt.Sprintf("yuta-%v", id), nil
+			}).(pulumi.StringOutput),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
+```
+### C#
+```cs:Program.rs
+using System.Collections.Generic;
+using System.Linq;
+using Pulumi;
+using Aws = Pulumi.Aws;
+using Random = Pulumi.Random;
+
+return await Deployment.RunAsync(() => 
+{
+    var s3BucketName = new Random.RandomString("s3BucketName", new()
+    {
+        Length = 8,
+        Special = false,
+        Upper = false,
+    });
+
+    // Create S3
+    var migrationS3 = new Aws.S3.BucketV2("migrationS3", new()
+    {
+        Bucket = s3BucketName.Id.Apply(id => $"yuta-{id}"),
+    });
+
+});
+```
+:::
 
 `pulumi up`コマンドでS3を作成します。
 
@@ -190,6 +296,8 @@ Resources:
 Duration: 8s
 ```
 
+デプロイが完了するとS3が新規に作成されます。
+![](/images/migration-terraform-to-pulumi/image5.png)
 # 所感
 
 # 参考文献
