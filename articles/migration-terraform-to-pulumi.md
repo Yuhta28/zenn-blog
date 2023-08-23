@@ -329,6 +329,98 @@ https://github.com/pulumi/pulumi-hugo/issues/3265
 
 続報がありましたら更新いたします。
 
+### 2023/8/24追記
+回答がありましてどうやらこの方法はもうサポートしないということでした。ドキュメントも更新されまして上記の`import.ts`ファイルへの導線もドキュメントからなくなりました。
+
+>This is the same issue that had been tracked in pulumi/tf2pulumi#241. However, we've since moved to a new model for conversion from Terraform as part of https://www.pulumi.com/blog/converting-full-terraform-programs-to-pulumi/. That new model does not yet have a replacement for the state conversion. We are tracking adding that in pulumi/pulumi#5953 (comment) and pulumi/pulumi-converter-terraform#23.
+In the meantime, we will want to update the docs here to not point at the archived (and not currently working for v4 state) import scripts.
+
+https://github.com/pulumi/pulumi-hugo/issues/3265#issuecomment-1688608046
+
+PulumiにはTerraformと同じように`pulumi import`コマンドも提供されており、このコマンドを実行すれば既存リソースのインポートができます。
+https://www.pulumi.com/docs/using-pulumi/adopting-pulumi/import/
+
+Terraformで作成したS3を`pulumi import`でPulumi配下にインポートしてみます。
+## pulumi import手順
+![](/images/migration-terraform-to-pulumi/image7.png)
+*インポート対象S3*
+
+`pulumi import`コマンドを実行する場合最初にスタックを作成する必要があります。
+スタックは`pulumi stack init <スタック名>`で作成できます。
+
+```terminal
+$ pulumi stack init import-s3
+Created stack 'import-s3'
+```
+
+スタックを作成したディレクトリ上でインポートしたいリソースのタイプ、リソース名、任意のPulumi IDを引数に指定します。先ほどのS3をインポートしたい場合以下のコマンドを実行します。
+
+```terminal
+$ pulumi import aws:s3/bucket:Bucket import-s3 yuta-fmajk8l4
+Previewing import (import-s3)
+
+     Type                 Name            Plan
+ +   pulumi:pulumi:Stack  temp-import-s3  create
+ =   └─ aws:s3:Bucket     import-s3       import
+
+Resources:
+    + 1 to create
+    = 1 to import
+    2 changes
+
+Do you want to perform this import? yes
+Importing (import-s3)
+
+     Type                 Name            Status
+ +   pulumi:pulumi:Stack  temp-import-s3  created (3s)
+ =   └─ aws:s3:Bucket     import-s3       imported (1s)
+
+Resources:
+    + 1 created
+    = 1 imported
+    2 changes
+
+Duration: 4s
+
+Please copy the following code into your Pulumi application. Not doing so
+will cause Pulumi to report that an update will happen on the next update command.
+
+Please note that the imported resources are marked as protected. To destroy them
+you will need to remove the `protect` option and run `pulumi update` *before*
+the destroy will take effect.
+```
+
+インポートが成功しますとターミナル上にPulumiのソースコードが表示されます。
+
+```typescript
+import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
+
+const imoprt_s3 = new aws.s3.Bucket("import-s3", {
+    arn: "arn:aws:s3:::yuta-fmajk8l4",
+    bucket: "yuta-fmajk8l4",
+    hostedZoneId: "Z2M4EHUR26P7ZW",
+    requestPayer: "BucketOwner",
+    serverSideEncryptionConfiguration: {
+        rule: {
+            applyServerSideEncryptionByDefault: {
+                sseAlgorithm: "AES256",
+            },
+        },
+    },
+}, {
+    protect: true,
+});
+```
+
+Pulumi Cloud上にも作成したスタックとインポートしたリソース情報が記録されています。
+![](/images/migration-terraform-to-pulumi/image8.png)
+
+ただTerraformでのインポート作業を経験した人ならご存知だと思いますがこのインポートコマンドは一つ一つのリソース毎にコマンド実行しなければならないため手間がかかります。別ツールからの移行は労力のかかる作業なのでPulumi社も移行支援するサービスを提供しているようです。
+https://www.pulumi.com/migrate/
+
+さすがに日本語対応はしていないと思いますが、もし興味ありましたら問い合わせた感想などお待ちしております。
+
 # 所感
 TerraformからPulumiへの移行方法について説明しました。
 Pulumiは機能開発が活発で昨年あたりから多くの機能アップデートが発表されています。Terraformのライセンス変更自体はユーザーに影響はないものと考えていますが、Pulumiも面白いツールだと思いますのでぜひとも手に取ってみてください。
@@ -337,3 +429,4 @@ Pulumiは機能開発が活発で昨年あたりから多くの機能アップ�
 https://www.pulumi.com/docs/concepts/
 https://www.pulumi.com/docs/pulumi-cloud/
 https://www.pulumi.com/docs/cli/commands/pulumi_convert/
+https://www.pulumi.com/docs/cli/commands/pulumi_import/
