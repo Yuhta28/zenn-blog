@@ -425,6 +425,10 @@ https://www.pulumi.com/migrate/
 TerraformからPulumiへの移行方法について説明しました。
 Pulumiは機能開発が活発で昨年あたりから多くの機能アップデートが発表されています。Terraformのライセンス変更自体はユーザーに影響はないものと考えていますが、Pulumiも面白いツールだと思いますのでぜひとも手に取ってみてください。
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](f23ed669ce0e4f2184a14486ed2991fe)
+
 # 参考文献
 https://www.pulumi.com/docs/concepts/
 https://www.pulumi.com/docs/pulumi-cloud/
