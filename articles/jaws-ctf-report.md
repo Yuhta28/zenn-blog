@@ -25,14 +25,14 @@ https://www.seccon.jp/2023/
 
 ネットワークやプログラミング、暗号技術など幅広い分野の知識が求められますが初心者でも解ける問題もあり、初心者から上級者までさまざまなエンジニアが楽しむことができます。
 
-今回のJAWS Security支部主催のCTFはAWSに特化したCTFとなっておりAWSインフラ上で構成されたサービスの脆弱性をつくものから権限が限定されたIAMユーザを使って旗(スコア)を手に入れるものでCTF初心者でも楽しめる内容となっていました。
+今回のJAWS Security支部主催のCTFはAWSに特化したCTFとなっておりAWSインフラ上で構成されたサービスの脆弱性をつくものから権限が限定されたIAMユーザーを使って旗(スコア)を手に入れるものでCTF初心者でも楽しめる内容となっていました。
 
 すでにイベント用環境は破棄されているのでもう一度解くことはできませんが、イベント当日のアーカイブ動画は配信され、問題を作成された作問者たちの解説記事も公開されていますので当日の雰囲気やどういった問題が出題された気になる人は覗いてみてください。
 - アーカイブ動画
 
 https://youtu.be/y7RnYJq02iM
 
-- 作問者解説記事
+- 作問者による解説記事
 
 https://ken5scal.notion.site/Security-JAWS-Days-CTF-Write-up-9da13cc1f7534bd0a4add75ec3f16f22
 https://speakerdeck.com/tigerszk/security-jaws-days-ctf-zuo-wen-zhe-jie-shuo
@@ -41,7 +41,8 @@ https://scgajge12.hatenablog.com/entry/security_jaws_days_2023
 私が解けた問題のいくつかについて感想を述べていきます。
 
 # Show IAM policy
-
+あるIAMユーザーに含まれているIAMポリシーについて調べる問題です。アクセスキーとシークレットキー情報だけ貰えた状態で解法を求められたのでAWS CLIコマンドを使ってアタッチされているIAMポリシーについて調べていきます。
+IAMユーザーにアタッチされているポリシー情報を調べる場合は`aws iam list-user-policies`コマンドを使えばいいと考えました。
 
 # 参考文献
 https://cybersecurity-jp.com/column/33780
