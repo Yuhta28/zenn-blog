@@ -3,7 +3,7 @@ title: "JAWS CTFに参加してきました"
 emoji: "🦈"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","ctf","セキュリティ"]
-published: false
+published: true
 ---
 
 # 概要
@@ -179,10 +179,12 @@ aws s3 ls ctf-yuta-furikaeri
 SJAWS{yokumitukemasitane!}
 ```
 
+この問題は削除されたオブジェクトの削除マーカーをどうやってCLIから確認するのかドキュメントを探して解けた問題でしたのでフラッグを見つけたときはとても嬉しかったです。
+
 [^2]: https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/Versioning.html
 
 # 所感
-JAWS Security主催のCTFに参加した感想についてまとめました。最初は1問も解けなくて楽しめるか不安な気持ちで参加しましたが、何とか知識を総動員して解ける問題もあり初めての参加でしたがとても楽しかったです。運営の皆様には心より感謝します。
+JAWS Security主催のCTFに参加した感想についてまとめました。最初は1問も解けなくて楽しめるか不安な気持ちで参加しましたが、初めての参加でも解ける問題もありとても楽しかったです。企画されたJAWS運営の皆さまには心より感謝します。
 
 次回はもっと問題を解けるようにセキュリティ知識を身に着けてまた参加してみようと思います。
 
