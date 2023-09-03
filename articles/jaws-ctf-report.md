@@ -40,9 +40,77 @@ https://scgajge12.hatenablog.com/entry/security_jaws_days_2023
 
 私が解けた問題のいくつかについて感想を述べていきます。
 
+::: message
+ターミナルコマンドは私の環境で再現したものになります。
+:::
+
 # Show IAM policy
 あるIAMユーザーに含まれているIAMポリシーについて調べる問題です。アクセスキーとシークレットキー情報だけ貰えた状態で解法を求められたのでAWS CLIコマンドを使ってアタッチされているIAMポリシーについて調べていきます。
-IAMユーザーにアタッチされているポリシー情報を調べる場合は`aws iam list-user-policies`コマンドを使えばいいと考えました。
+IAMユーザーにアタッチされているポリシー情報を調べる場合は`aws iam list-attached-user-policies`コマンドを使えばいいと考えました。ですがアタッチされているポリシーが出てきません。
+
+```terminal
+$ aws iam list-attached-user-policies --user-name CTF-user
+{
+    "AttachedPolicies": []
+}
+```
+
+このことからIAMユーザーには直接ポリシーがアタッチされておらず、IAMユーザーグループに属しているのではないかと考え、所属グループについて調べてみました。
+
+```
+# 所属IAMユーザーグループを確認
+$ aws iam list-groups-for-user --user-name CTF-user
+{
+    "Groups": [
+        {
+            "Path": "/",
+            "GroupName": "CTF-Group",
+            "GroupId": "AGPASG4NN6LFS67TPLCJT",
+            "Arn": "arn:aws:iam::XXXXXXXXX:group/CTF-group",
+            "CreateDate": "2023-09-03T02:30:39+00:00"
+        }
+    ]
+}
+
+# IAMユーザーグループにアタッチされているポリシーを確認
+$ aws iam list-group-policies --group-name CTF-group
+{
+    "PolicyNames": [
+        "selfcheck"
+    ]
+}
+
+# アタッチされているポリシーの詳細を確認
+$ aws iam get-group-policy --group-name CTF-group --policy-name selfcheck --query 'PolicyDocument'
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "SGVsbG8gQ1RG",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+```
+
+アタッチされているIAMポリシー`selfcheck`が怪しいと感じましたがこの後どうすればいいかしばらく悩みました。
+ここで注目するポイントは`Sid`です。ここはユーザー自身が任意で名づけられるステートメント識別子であり、何も設定しなかった場合も`Statement1`みたいなものが付与されます。わざわざ法則性のない文字の羅列がついているということは何か意味があるのではと思いました。じつは、これBase64[^1]方式にエンコードされた文字列です。
+この文字列を`base64 -d`コマンドでデコードすれば読める文字が出力されます。(WindowsPCだとちょっと面倒でしたので変換してくれるオンラインエディターを使いました。)
+![](/images/jaws-ctf-report/image1.png)
+*実際はフラッグ情報が出てきました*
+
+Base64はAWS外の知識だったためIAMポリシーまで判明してもここからどうやってフラッグ情報を取得すればいいか悩んだ回答者多かったらしいです。
+
+[^1]: https://e-words.jp/w/Base64.html
+
+# Find data
+S3に隠されたフラッグを見つける問題です。全部で3問ありまして私は問1と問3が解けました。
 
 # 参考文献
 https://cybersecurity-jp.com/column/33780
