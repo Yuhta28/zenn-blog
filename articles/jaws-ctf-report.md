@@ -57,7 +57,7 @@ $ aws iam list-attached-user-policies --user-name CTF-user
 
 このことからIAMユーザーには直接ポリシーがアタッチされておらず、IAMユーザーグループに属しているのではないかと考え、所属グループについて調べてみました。
 
-```
+```terminal
 # 所属IAMユーザーグループを確認
 $ aws iam list-groups-for-user --user-name CTF-user
 {
@@ -100,7 +100,8 @@ $ aws iam get-group-policy --group-name CTF-group --policy-name selfcheck --quer
 ```
 
 アタッチされているIAMポリシー`selfcheck`が怪しいと感じましたがこの後どうすればいいかしばらく悩みました。
-ここで注目するポイントは`Sid`です。ここはユーザー自身が任意で名づけられるステートメント識別子であり、何も設定しなかった場合も`Statement1`みたいなものが付与されます。わざわざ法則性のない文字の羅列がついているということは何か意味があるのではと思いました。じつは、これBase64[^1]方式にエンコードされた文字列です。
+ここで注目するポイントは`Sid`です。ここはユーザー自身が任意で名づけられるステートメント識別子であり、何も設定しなかった場合`Statement1`みたいなものが付与されます。わざわざ法則性のない文字の羅列がついているということは何か意味があるのではと思いました。
+じつは、これBase64[^1]方式にエンコードされた文字列です。
 この文字列を`base64 -d`コマンドでデコードすれば読める文字が出力されます。(WindowsPCだとちょっと面倒でしたので変換してくれるオンラインエディターを使いました。)
 ![](/images/jaws-ctf-report/image1.png)
 *実際はフラッグ情報が出てきました*
@@ -111,6 +112,79 @@ Base64はAWS外の知識だったためIAMポリシーまで判明してもこ�
 
 # Find data
 S3に隠されたフラッグを見つける問題です。全部で3問ありまして私は問1と問3が解けました。
+問1はコンソール画面からS3バケットにアクセスして中のオブジェクトからフラッグを取得できましたので難しくありませんでした。
+問2はCLIコマンドのみ許可されたIAMユーザーからアクセスする必要がありましたので`aws s3`コマンドを使って該当S3バケットの中身を見ると1,000個のバケットの中に同名の`flag.jpg`が大量にありました。とりあえず全部ローカルにコピーして一個中身を確認しましたがハズレと書かれており、どうやらこの中から当たりを見つける必要があることがわかりました。
+![](/images/jaws-ctf-report/image2.jpg)
+
+私は1,000個のバケットの中に実は`.log`形式のファイルがあるのではと考えて、`grep`などを使ってファイルを当たりのフラッグファイルを探しましたが、全部`.jpg`ファイルでどれが本物か時間内に見つけられませんでした。
+解説によりますと本物だけファイルサイズが違うということでしたので、`sort`コマンドでファイルサイズを並べ直せば本物が見つけられるという内容でした。
+
+Windowsを使っていると少々面倒でしたが以下のコマンドを使って`444`バケットにある`flag.jpg`が他と異なるサイズであることがわかりました。
+
+```powershell
+ls -R  | Select-Object FullName,Length | Sort-Object -Descending Length  | Select-Object -first 5
+
+FullName                                     Length
+--------                                     ------
+C:\Users\yuta_\Downloads\secret\444\flag.jpg  72674
+C:\Users\yuta_\Downloads\secret\999\flag.jpg  62896
+C:\Users\yuta_\Downloads\secret\403\flag.jpg  62896
+C:\Users\yuta_\Downloads\secret\402\flag.jpg  62896
+C:\Users\yuta_\Downloads\secret\401\flag.jpg  62896
+```
+![](/images/jaws-ctf-report/image3.jpg)
+*444バケットのflag.jpg*
+
+問3もCLIコマンドを使ってS3バケットに隠されているフラッグを見つける問題です。S3バケットの中を見ますと機密情報だからファイルを削除したというreadme.txtのみがありました。
+
+```txt:readme.txt
+It was pointed out that placing sensitive data on S3 is not recommended, so I removed it.
+```
+
+S3でオブジェクトを削除してもS3バージョニング[^2]を有効化していると過去の状態をバージョンとして保持してくれます。バージョン管理されたオブジェクトを削除しても復元できますのでこの問題も削除されたフラッグを復元して取得することが模範解答となるようです。
+
+
+```terminal
+# s3バケット内にフラッグがない
+$ aws s3 ls ctf-yuta-furikaeri
+2023-09-03 12:42:01         89 readme.txt
+
+# バージョニング情報を確認。FLAG.txtが削除され削除マーカーがついていることがわかる。
+$ aws s3api list-object-versions --bucket ctf-yuta-furikaeri --query 'DeleteMarkers'
+[
+    {
+        "Owner": {
+            "DisplayName": "yuta"
+        },
+        "Key": "FLAG.txt",
+        "VersionId": "qOywKQfEEzfOyFW05NdxlCCeLKMWtJg5",
+        "IsLatest": true,
+        "LastModified": "2023-09-03T03:42:17+00:00"
+    }
+]
+# 削除されたフラッグを復元
+aws s3api delete-object --bucket ctf-yuta-furikaeri --key FLAG.txt --version-id qOywKQfEEzfOyFW05NdxlCCeLKMWtJg5
+{
+    "DeleteMarker": true,
+    "VersionId": "qOywKQfEEzfOyFW05NdxlCCeLKMWtJg5"
+}
+
+# フラッグが復元された
+aws s3 ls ctf-yuta-furikaeri
+2023-09-03 12:42:00         46 FLAG.txt
+2023-09-03 12:42:01         89 readme.txt
+```
+
+```txt:FLAG.txt
+SJAWS{yokumitukemasitane!}
+```
+
+[^2]: https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/userguide/Versioning.html
+
+# 所感
+JAWS Security主催のCTFに参加した感想についてまとめました。最初は1問も解けなくて楽しめるか不安な気持ちで参加しましたが、何とか知識を総動員して解ける問題もあり初めての参加でしたがとても楽しかったです。運営の皆様には心より感謝します。
+
+次回はもっと問題を解けるようにセキュリティ知識を身に着けてまた参加してみようと思います。
 
 # 参考文献
 https://cybersecurity-jp.com/column/33780
