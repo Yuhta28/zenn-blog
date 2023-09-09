@@ -111,7 +111,7 @@ HashiCorp社がライセンス変更した背景にはOSSにフリーライド�
 > This is inaccurate and misleading. First of all, many of the vendors affected by the change to BUSL have made considerable contributions to the Terraform community.
 訳)これは不正確で誤解を招く。第一にBSLへの変更によって影響を受ける多くのベンダーはTerraformコミュニティに多大なる貢献をしてきた。
 
-貢献してきた内容としてTerraformのバイナリやモジュール、Terragrunt[^8]やtflint[^9]等のサードパーティーツール、有志が作成した学習リソースなどを例に挙げています。
+貢献してきた内容としてTerraformのバイナリやモジュール、Terragrunt[^8]やtflint[^9]などのサードパーティーツール、有志が作成した学習リソースなどを例に挙げています。
 
 TerraformはLinuxやGoなどツールのように大きなエコシステムの一部であり、HashiCorp社以外のベンダーがコミュニティに貢献したからこそ発展してきた。
 これはTerraformがオープンソースだからこそ発展してきたものであり、ベンダーの働きを認めないのは悪いことだと述べています。
@@ -127,7 +127,7 @@ Terraformのステート管理を効率化してくれるアメリカのSaaS企�
 > Asked why HashiCorp opted for a change of license, Stadil claimed: "The reality here is that HashiCorp is not executing well on its Terraform cloud product. And because they're not executing well, other competitors like my company Scalr and a number of others have stepped in."
 訳)HashiCorpがライセンス変更を選択した理由を尋ねられたStadil氏は、次のように主張した：「HashiCorpはTerraform Cloudでうまくいっていないというのが現実だ。HashiCorpがTerraform Cloudをうまく使いこなせていないため、私の会社Scalrやその他多くの競合他社が参入してきたのです」
 
-正直なところTerraform Cloudは課金プランが変更されたことでやや使いにくくなりました。以前までは1チーム5人までなら無料でTerraform Cloudを利用できましたが、新しい課金プランでは500リソースまで無料と人単位からリソース単位に課金体系が変更されました。500リソースだと直ぐに無料枠を超えてしまうため小規模な会社でも有料プランに切り替えたところは多いのではないかと思います。
+正直なところTerraform Cloudは課金プランが変更されたことでやや使いにくくなりました。以前までなら1チーム5人までなら無料でTerraform Cloudを利用できましたが、新しい課金プランでは500リソースまで無料と人単位からリソース単位に課金体系が変更されました。500リソースだと直ぐに無料枠を超えてしまうため小規模な会社でも有料プランに切り替えたところは多いのではないかと思います。
 
 [^8]: https://terragrunt.gruntwork.io/
 [^9]: https://github.com/terraform-linters/tflint
