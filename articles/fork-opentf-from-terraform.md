@@ -7,7 +7,7 @@ published: false
 ---
 
 ::: message alert
-OpenTFは2023年9月にパブリックになった新しいOSSです。この記事は2023/9/9時点の情報を基にしたものになります。
+OpenTFは2023年9月にパブリックされた新しいOSSです。この記事は2023/9/9時点の情報を基にしてます。
 :::
 # 概要
 2023年8月にTerraformなどのOSSを開発しているHashiCorp社は自社製品のライセンスを変更することを発表しました。
@@ -18,7 +18,7 @@ https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license
 それがOpenTF Foundationです。
 https://opentf.org/
 
-OpenTF Foundationは上記マニフェスト(宣言書)によるとTerraformを真のオープンソースであり続けるためにHashiCorp社にライセンス変更の撤廃を要求、それができないならTerraformからフォークしたOSSであるOpenTFを管理することを宣言しています。
+OpenTF Foundationは上記マニフェスト(宣言書)によるとTerraformを真のオープンソースであり続けるためにはHashiCorp社へライセンス変更の撤廃を要求、それができないならTerraformからフォークしたOSSであるOpenTFを管理すると宣言しています。
 
 そして2023/9/6にOpenTFがフォークされパブリック利用できるようになりました。
 https://twitter.com/opentforg/status/1699076153968095494?s=20
@@ -59,7 +59,10 @@ https://opensource.org/definition-annotated/
 - 他のソフトウェアを制限するライセンスの禁止
 - ライセンスは技術中立でなければならない
 
-HashiCorp社が新たに採用したライセンス、Business Source License(BSL)[^4]はソースコードは公開されますが、商用利用を制限するライセンスです。利用を制限するライセンスのためBSLはオープンソースライセンスではないとライセンス元も明記しています。
+
+# HashiCorp社のライセンス変更による影響
+
+HashiCorp社が新たに採用したライセンス、Business Source License(BSL)[^4]はソースコードを公開していますが、商用利用を制限するライセンスです。利用を制限するライセンスのためBSLはオープンソースライセンスではないとライセンス元も明記しています。
 
 > The BSL does not meet the Open Source Definition (OSD) maintained by the Open Source Initiative (OSI). [^5]
 
@@ -74,13 +77,17 @@ Under the HashiCorp BSL license, the term “embedded” means including the sou
 
 かいつまんで訳すとHashiCorp社のプロダクト内のソースコードを競合プロダクトのソースコード内に組み込むことを`embedded`と定義しているようです。
 
-また勘違いしてはいけないのは、HashiCorpの競合プロダクトを作る場合でも、Terraformと競合するプロダクトをセキュアにするために同社のVaultを使う、Vaultと競合するプロダクトを構築するためにTerraformでデプロイすることは問題ないとのことです。[^7]
+また勘違いしてはいけないのは、HashiCorpの競合プロダクトを作る場合でも、Terraformと競合するプロダクトをセキュアにすることを目的に同社のVaultを使う、Vaultと競合するプロダクトを構築するためにTerraformでデプロイすることは問題ないとのことです。[^7]
+
+
+# 財団の主張
 
 先のマニフェストで財団はHashiCorp社に対して、BSLはTerraformにとって毒薬だという強い言葉で非難しています。
 > Our concern: the BUSL license is a poison pill for Terraform.
 
 現時点でTerraformを利用するエンドユーザーやインテグレーションパートナーに対しては影響のないライセンス変更だとしても今後HashiCorp社がライセンス条項を変更したり、競合の解釈を変更することで自由に使えなくなるのではないのかと主張しています。
 
+開発者、企業はインフラストラクチャーを管理するツール選定時にTerraformを選定から外すことで既存のTerraformでのIaCは負債となり、コミュニティも衰退することを危惧しています。
 
 [^1]: https://opensource.jp/
 [^2]: https://opensource.jp/osg/trademark/
