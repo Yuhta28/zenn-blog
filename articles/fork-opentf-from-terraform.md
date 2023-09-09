@@ -1,22 +1,29 @@
 ---
-title: "TerraformからforkされるOpenTFについて"
+title: "TerraformからforkされるOpenTFがパブリックになりました"
 emoji: "🍴"
-type: "idea" # tech: 技術記事 / idea: アイデア
+type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["OSS","Terraform","OpenTF"]
 published: false
 ---
 
+::: message alert
+OpenTFは2023年9月にパブリックになった新しいOSSです。この記事は2023/9/9時点の情報を基にしたものになります。
+:::
 # 概要
 2023年8月にTerraformなどのOSSを開発しているHashiCorp社は自社製品のライセンスを変更することを発表しました。
 https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license
-以前もこのことについて[記事](https://zenn.dev/yuta28/articles/migration-terraform-to-pulumi)で軽く触れていますが、このライセンス変更でTerraformなどを利用するHashiCorpユーザーに直接の影響はありません。
+以前もこのことについて[記事](https://zenn.dev/yuta28/articles/migration-terraform-to-pulumi)で軽く触れていますが、このライセンス変更によってTerraformなどを利用するHashiCorpユーザーに直接の影響はありません。
 
 ただHashiCorp社のライセンス変更に反対する動きもありTerraformからフォークされた真のオープンソースを目指してるという団体が出てきました。
-それがOpenTFです。
+それがOpenTF Foundationです。
 https://opentf.org/
 
-OpenTFは上記のマニフェスト(宣言書)によるとTerraformを真のオープンソースであり続けるためにHashiCorp社にライセンス変更の撤廃を要求、それができないならTerraformからフォークしたOSSを管理することを宣言しています。
-OpenTFとはどのような団体か、なぜTerraformからフォークしたOSSを目指そうとしているのかマニフェストの中身をみていきます。
+OpenTF Foundationは上記マニフェスト(宣言書)によるとTerraformを真のオープンソースであり続けるためにHashiCorp社にライセンス変更の撤廃を要求、それができないならTerraformからフォークしたOSSであるOpenTFを管理することを宣言しています。
+
+そして2023/9/6にOpenTFがフォークされパブリック利用できるようになりました。
+https://twitter.com/opentforg/status/1699076153968095494?s=20
+
+OpenTFはどのようなOSSなのか、またなぜTerraformからフォークしようとしたのかマニフェストの中身を見てみます。
 
 # 対象読者
 - OpenTFについて知りたい人
