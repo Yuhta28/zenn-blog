@@ -1,5 +1,5 @@
 ---
-title: "TerraformからforkされるOpenTFがパブリックになりました"
+title: "TerraformからforkされるOpenTFが利用可能になりました"
 emoji: "🍴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["OSS","Terraform","OpenTF"]
@@ -134,13 +134,254 @@ Terraformのステート管理を効率化してくれるアメリカのSaaS企�
 [^10]: https://www.scalr.com/
 
 
-# OpenTF
+# フォークされたOpenTF
 
 https://opentf.org/fork
 2023/9/6にフォークされたOpenTFはすでに5,000以上ものスターを獲得しています。
 ![](/images/fork-opentf-from-terraform/image1.png)
 
-2023/9時点でOpenTFはローカルでのテストと開発をサポートしています。
+もちろんリポジトリをクローンすれば自分のローカルマシン上でもOpenTFを動かすことができます。
+
+```terminal
+$ git clone git@github.com:opentffoundation/opentf.git
+$ cd opentf
+
+# Makefile内でgo generateによるコード生成が実行される
+$ make
+# Goコマンドでインストール
+$ go install
+
+$ opentf version
+OpenTF v1.6.0-dev
+on linux_amd64
+```
+
+## ハンズオン
+実際のところOpenTFはどのようなものか触って試してみます。
+Nginxコンテナの起動をOpenTFからデプロイするハンズオンとなります。
+https://developer.hashicorp.com/terraform/tutorials/docker-get-started
+
+```hcl:main.tf
+terraform {
+  required_providers {
+    docker = {
+      source = "kreuzwerker/docker"
+      version = "~> 3.0.1"
+    }
+  }
+}
+
+provider "docker" {}
+
+resource "docker_image" "nginx" {
+  name         = "nginx:latest"
+  keep_locally = false
+}
+
+resource "docker_container" "nginx" {
+  image = docker_image.nginx.image_id
+  name  = "tutorial"
+  ports {
+    internal = 80
+    external = 8000
+  }
+}
+```
+
+`main.tf`ファイルを置いたディレクトリ上でTerraformと同じように`opentf init`コマンドを実行するとプロジェクトが作成されます。
+
+```terminal:プロジェクト作成
+$ opentf init
+~~~~~~~~~~~~~~~~~~~~~~~
+OpenTF has been successfully initialized!
+
+You may now begin working with OpenTF. Try running "opentf plan" to see
+any changes that are required for your infrastructure. All OpenTF commands
+should now work.
+~~~~~~~~~~~~~~~~~~~~~~~
+
+```
+
+`opentf apply`コマンドでデプロイするとDockerコンテナが起動され、Nginxもブラウザで表示されました。
+
+```terminal:OpenTFデプロイ
+$ opentf apply
+
+OpenTF used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+OpenTF will perform the following actions:
+
+  # docker_container.nginx will be created
+  + resource "docker_container" "nginx" {
+      + attach                                      = false
+      + bridge                                      = (known after apply)
+      + command                                     = (known after apply)
+      + container_logs                              = (known after apply)
+      + container_read_refresh_timeout_milliseconds = 15000
+      + entrypoint                                  = (known after apply)
+      + env                                         = (known after apply)
+      + exit_code                                   = (known after apply)
+      + hostname                                    = (known after apply)
+      + id                                          = (known after apply)
+      + image                                       = (known after apply)
+      + init                                        = (known after apply)
+      + ipc_mode                                    = (known after apply)
+      + log_driver                                  = (known after apply)
+      + logs                                        = false
+      + must_run                                    = true
+      + name                                        = "tutorial"
+      + network_data                                = (known after apply)
+      + read_only                                   = false
+      + remove_volumes                              = true
+      + restart                                     = "no"
+      + rm                                          = false
+      + runtime                                     = (known after apply)
+      + security_opts                               = (known after apply)
+      + shm_size                                    = (known after apply)
+      + start                                       = true
+      + stdin_open                                  = false
+      + stop_signal                                 = (known after apply)
+      + stop_timeout                                = (known after apply)
+      + tty                                         = false
+      + wait                                        = false
+      + wait_timeout                                = 60
+
+      + ports {
+          + external = 8000
+          + internal = 80
+          + ip       = "0.0.0.0"
+          + protocol = "tcp"
+        }
+    }
+
+  # docker_image.nginx will be created
+  + resource "docker_image" "nginx" {
+      + id           = (known after apply)
+      + image_id     = (known after apply)
+      + keep_locally = false
+      + name         = "nginx:latest"
+      + repo_digest  = (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  OpenTF will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+docker_image.nginx: Creating...
+docker_image.nginx: Still creating... [10s elapsed]
+docker_image.nginx: Creation complete after 10s [id=sha256:f5a6b296b8a29b4e3d89ffa99e4a86309874ae400e82b3d3993f84e1e3bb0eb9nginx:latest]
+docker_container.nginx: Creating...
+docker_container.nginx: Creation complete after 2s [id=7440041e3dfebcd576edc3aacd39ce16601447b87bde79ac97f72d20996f78e6]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+
+![](/images/fork-opentf-from-terraform/image2.png)
+*Nginx画面*
+
+## 既存リソースの移行は可能か
+OpenTFを使って新規でリソースを作ることは確認できました。ですがすでにTerraformでIaCしてたら新規作成ではなく移行したいという要望があると思います。
+これに関しては移行というよりかはすでにあるTerraformディレクトリ上でそのままOpenTFのコマンドが使えることを確認しました。
+Terraformで作成したリソースに対してOpenTFコマンドで更新をデプロイしたり、リソース削除できました。
+
+```terminal
+#Terraformで作成したリソース管理
+$ terraform state list
+module.module-network.aws_db_subnet_group.database[0]
+module.module-network.aws_default_network_acl.this[0]
+module.module-network.aws_default_route_table.default[0]
+module.module-network.aws_default_security_group.this[0]
+module.module-network.aws_internet_gateway.this[0]
+module.module-network.aws_route.public_internet_gateway[0]
+module.module-network.aws_route_table.private[0]
+module.module-network.aws_route_table.private[1]
+module.module-network.aws_route_table.private[2]
+module.module-network.aws_route_table.public[0]
+module.module-network.aws_route_table_association.database[0]
+module.module-network.aws_route_table_association.database[1]
+module.module-network.aws_route_table_association.database[2]
+module.module-network.aws_route_table_association.private[0]
+module.module-network.aws_route_table_association.private[1]
+module.module-network.aws_route_table_association.private[2]
+module.module-network.aws_route_table_association.public[0]
+module.module-network.aws_route_table_association.public[1]
+module.module-network.aws_route_table_association.public[2]
+module.module-network.aws_subnet.database[0]
+module.module-network.aws_subnet.database[1]
+module.module-network.aws_subnet.database[2]
+module.module-network.aws_subnet.private[0]
+module.module-network.aws_subnet.private[1]
+module.module-network.aws_subnet.private[2]
+module.module-network.aws_subnet.public[0]
+module.module-network.aws_subnet.public[1]
+module.module-network.aws_subnet.public[2]
+module.module-network.aws_vpc.this[0]
+
+#OpenTFでも管理されていることを確認
+$ opentf state list
+module.module-network.aws_db_subnet_group.database[0]
+module.module-network.aws_default_network_acl.this[0]
+module.module-network.aws_default_route_table.default[0]
+module.module-network.aws_default_security_group.this[0]
+module.module-network.aws_internet_gateway.this[0]
+module.module-network.aws_route.public_internet_gateway[0]
+module.module-network.aws_route_table.private[0]
+module.module-network.aws_route_table.private[1]
+module.module-network.aws_route_table.private[2]
+module.module-network.aws_route_table.public[0]
+module.module-network.aws_route_table_association.database[0]
+module.module-network.aws_route_table_association.database[1]
+module.module-network.aws_route_table_association.database[2]
+module.module-network.aws_route_table_association.private[0]
+module.module-network.aws_route_table_association.private[1]
+module.module-network.aws_route_table_association.private[2]
+module.module-network.aws_route_table_association.public[0]
+module.module-network.aws_route_table_association.public[1]
+module.module-network.aws_route_table_association.public[2]
+module.module-network.aws_subnet.database[0]
+module.module-network.aws_subnet.database[1]
+module.module-network.aws_subnet.database[2]
+module.module-network.aws_subnet.private[0]
+module.module-network.aws_subnet.private[1]
+module.module-network.aws_subnet.private[2]
+module.module-network.aws_subnet.public[0]
+module.module-network.aws_subnet.public[1]
+module.module-network.aws_subnet.public[2]
+module.module-network.aws_vpc.this[0]
+
+#OpenTFでリソース削除
+$ opentf destroy
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Plan: 0 to add, 0 to change, 29 to destroy.
+
+Do you really want to destroy all resources?
+  OpenTF will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+~~~~~~~~~~~~~~~~~~~~~~~
+Destroy complete! Resources: 29 destroyed.
+```
+
+ただしOpenTFはまだアルファ版リリースに向けて開発中であり、サポートしているのもテスト環境や開発環境に限られます。[^11]
+> Currently, OpenTF supports local testing and development: you can build the code, run the tests, build opentf binaries, and so on. That means you can now start experimenting with OpenTF and contributing back via Issues, PRs, and RFCs.
+訳)現在、OpenTFはローカルでのテストと開発をサポートしています。コードのビルド、テストの実行、opentfバイナリのビルドなどが可能です。コードをビルドし、テストを実行し、opentfバイナリをビルドすることができます。つまり、OpenTFの実験を開始し、Issues、PR、RFCを通じて貢献することができます。
+
+
+記載されているとおり不備やエラーなどを見つけましたら積極的にIssueやPRを立ててコミュニティに貢献してみてください。
+
+[^11]: https://opentf.org/fork
+
+
+# 所感
+TerraformからフォークされたOpenTFを試してみました。
+財団が主張している内容については賛否があると思います。今後IaCのデファクトスタンダードがどのようなツールに変化していくのか注目していきたいと思います。
 
 # 参考文献
 https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AE%E6%AD%B4%E5%8F%B2
