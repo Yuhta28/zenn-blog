@@ -3,7 +3,7 @@ title: "TerraformからforkされるOpenTFが利用可能になりました"
 emoji: "🍴"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["OSS","Terraform","OpenTF"]
-published: false
+published: true
 ---
 
 ::: message alert
@@ -127,7 +127,7 @@ Terraformのステート管理を効率化してくれるアメリカのSaaS企�
 > Asked why HashiCorp opted for a change of license, Stadil claimed: "The reality here is that HashiCorp is not executing well on its Terraform cloud product. And because they're not executing well, other competitors like my company Scalr and a number of others have stepped in."
 訳)HashiCorpがライセンス変更を選択した理由を尋ねられたStadil氏は、次のように主張した：「HashiCorpはTerraform Cloudでうまくいっていないというのが現実だ。HashiCorpがTerraform Cloudをうまく使いこなせていないため、私の会社Scalrやその他多くの競合他社が参入してきたのです」
 
-正直なところTerraform Cloudは課金プランが変更されたことでやや使いにくくなりました。以前までなら1チーム5人までなら無料でTerraform Cloudを利用できましたが、新しい課金プランでは500リソースまで無料と人単位からリソース単位に課金体系が変更されました。500リソースだと直ぐに無料枠を超えてしまうため小規模な会社でも有料プランに切り替えたところは多いのではないかと思います。
+正直なところTerraform Cloudは課金プランが変更されたことでやや使いにくくなりました。従来のプランですと1組織5人まで無料でTerraform Cloudを利用できましたが、新しい課金プランでは500リソースまで無料に変更されました。500リソースだと直ぐに無料枠を超えてしまうため有料プランに変更したユーザーは多いと思います。
 
 [^8]: https://terragrunt.gruntwork.io/
 [^9]: https://github.com/terraform-linters/tflint
@@ -158,7 +158,7 @@ on linux_amd64
 
 ## ハンズオン
 実際のところOpenTFはどのようなものか触って試してみます。
-Nginxコンテナの起動をOpenTFからデプロイするハンズオンとなります。
+nginxコンテナの起動をOpenTFからデプロイするハンズオンとなります。
 https://developer.hashicorp.com/terraform/tutorials/docker-get-started
 
 ```hcl:main.tf
@@ -202,7 +202,7 @@ should now work.
 
 ```
 
-`opentf apply`コマンドでデプロイするとDockerコンテナが起動され、Nginxもブラウザで表示されました。
+`opentf apply`コマンドでデプロイするとDockerコンテナが起動され、nginxもブラウザで表示されました。
 
 ```terminal:OpenTFデプロイ
 $ opentf apply
@@ -370,8 +370,9 @@ Destroy complete! Resources: 29 destroyed.
 ```
 
 ただしOpenTFはまだアルファ版リリースに向けて開発中であり、サポートしているのもテスト環境や開発環境に限られます。[^11]
+
 > Currently, OpenTF supports local testing and development: you can build the code, run the tests, build opentf binaries, and so on. That means you can now start experimenting with OpenTF and contributing back via Issues, PRs, and RFCs.
-訳)現在、OpenTFはローカルでのテストと開発をサポートしています。コードのビルド、テストの実行、opentfバイナリのビルドなどが可能です。コードをビルドし、テストを実行し、opentfバイナリをビルドすることができます。つまり、OpenTFの実験を開始し、Issues、PR、RFCを通じて貢献することができます。
+訳)現在、OpenTFはローカルでのテストと開発をサポートしています。コードのビルド、テストの実行、opentfバイナリのビルドなどが可能です。コードをビルドし、テストを実行し、opentfバイナリをビルドできます。つまり、OpenTFの実験を開始し、Issues、PR、RFCを通じて貢献できます。
 
 
 記載されているとおり不備やエラーなどを見つけましたら積極的にIssueやPRを立ててコミュニティに貢献してみてください。
