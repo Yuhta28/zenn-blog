@@ -43,6 +43,11 @@ Terraformの最大の障壁となるのがHCL(HashiCorp Language)と呼ばれる
 またPulumiはすでに他のツールで構築されているIaCソースコードをPulumiのソースコードに変換してくれるツールを提供してくれます。Terraformから移行する場合は`tf2pulumi`とよばれるマイグレーションツールがあります。
 https://github.com/pulumi/tf2pulumi
 
+::: message alert
+2023年6月にconvertサブコマンドが登場したことによりtf2pulumiは非推奨になりました。
+https://www.pulumi.com/blog/converting-full-terraform-programs-to-pulumi/
+:::
+
 ### VS AWS CDK
 プログラミング言語でインフラストラクチャーを構成するIaCツールといえばAWS CDKがあります。AWS CDKとの違いについてPUlumiではこのように述べています。
 
