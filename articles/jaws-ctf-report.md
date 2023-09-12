@@ -6,7 +6,7 @@ topics: ["aws","ctf","セキュリティ"]
 published: true
 ---
 
-# 概要
+# 序論
 2023/8/27(日)にJAWS Security支部主催のCapture The Flag(CTF)に参加してきました。
 https://s-jaws.doorkeeper.jp/events/155025
 

@@ -6,7 +6,7 @@ topics: ["pulumi","ai","aws"]
 published: true
 ---
 
-# 概要
+# 序論
 2023年4月にPulumi社はPulumiサービスにAIを組み込んだ機能を実装したと発表しました。
 https://twitter.com/PulumiCorp/status/1646530231639867392?s=20
 
