@@ -9,7 +9,7 @@ published: true
 ::: message alert
 OpenTFは2023/9/9時点でアルファ版リリース前です。この記事は2023/9/9時点の情報を基にしてます。
 :::
-# 概要
+# 序論
 2023年8月にTerraformなどのOSSを開発しているHashiCorp社は自社製品のライセンスを変更することを発表しました。
 https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license
 以前もこのことについて[記事](https://zenn.dev/yuta28/articles/migration-terraform-to-pulumi)で軽く触れていますが、このライセンス変更によってTerraformなどを利用するHashiCorpユーザーに直接の影響はありません。
