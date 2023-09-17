@@ -116,7 +116,7 @@ HashiCorp社がライセンス変更した背景にはOSSにフリーライド�
 TerraformはLinuxやGoのような大きなエコシステムの一部であり、HashiCorp社以外のベンダーがコミュニティに貢献したからこそ発展してきた。
 これはTerraformがオープンソースだからこそ発展してきたものであり、ベンダーの働きを認めないのは悪いことだと述べています。
 
-またベンダーからの貢献に対して、Terraform CloudやTerraform Enterpriseへのマネタイズ誘導ができないからissueやPRを対応しきれていないことも問題と主張しています。
+また、Terraform CloudやTerraform Enterpriseへのマネタイズ誘導ができなくなるからTerraform OSSのissueやPRを対応していないのではないかとも主張しています。
 
 
 #### Terraformのマネタイズに関して
