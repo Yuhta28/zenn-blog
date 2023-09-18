@@ -113,10 +113,10 @@ HashiCorp社がライセンス変更した背景にはOSSにフリーライド�
 
 貢献してきた内容としてTerraformのバイナリやモジュール、Terragrunt[^8]やtflint[^9]などのサードパーティーツール、有志が作成した学習リソースなどを例に挙げています。
 
-TerraformはLinuxやGoなどツールのように大きなエコシステムの一部であり、HashiCorp社以外のベンダーがコミュニティに貢献したからこそ発展してきた。
+TerraformはLinuxやGoのような大きなエコシステムの一部であり、HashiCorp社以外のベンダーがコミュニティに貢献したからこそ発展してきた。
 これはTerraformがオープンソースだからこそ発展してきたものであり、ベンダーの働きを認めないのは悪いことだと述べています。
 
-またベンダーからの貢献に対して、Terraform CloudやTerraform Enterpriseへのマネタイズ誘導ができないからissueやPRを対応しきれていないことも問題と主張しています。
+また、Terraform CloudやTerraform Enterpriseへのマネタイズ誘導ができなくなるからTerraform OSSのissueやPRを対応していないのではないかとも主張しています。
 
 
 #### Terraformのマネタイズに関して
