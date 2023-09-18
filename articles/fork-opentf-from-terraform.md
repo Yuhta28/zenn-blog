@@ -384,6 +384,10 @@ Destroy complete! Resources: 29 destroyed.
 TerraformからフォークされたOpenTFを試してみました。
 財団が主張している内容については賛否があると思います。今後IaCのデファクトスタンダードがどのようなツールに変化していくのか注目していきたいと思います。
 
+# 英語記事
+英訳しました。
+https://dev.to/yuta28/opentf-forked-terraform-is-now-available-1ok5
+
 # 参考文献
 https://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%81%AE%E6%AD%B4%E5%8F%B2
 https://zenn.dev/koduki/articles/45f65a5318f019
