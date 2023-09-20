@@ -33,6 +33,7 @@ https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license
 ::: message
 OpenTF FoundationはLinux Foundationへ加入しました。
 :::
+https://twitter.com/linuxfoundation/status/1704389933526299129?s=20
 https://opentofu.org/
 
 OpenTF Foundationは上記マニフェスト(宣言書)によるとTerraformを真のオープンソースであり続けるためにはHashiCorp社へライセンス変更の撤廃を要求、それができないならTerraformからフォークしたOSSであるOpenTFを管理すると宣言しています。
