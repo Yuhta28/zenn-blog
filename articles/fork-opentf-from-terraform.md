@@ -6,10 +6,6 @@ topics: ["OSS","Terraform","OpenTofu"]
 published: true
 ---
 
-::: message alert
-OpenTFは2023/9/9時点でアルファ版リリース前です。この記事は2023/9/9時点の情報を基にしてます。
-:::
-
 ## 2023/9/20追記
 OpenTFの名称が変更されました。元々OpenTFで使用されているネーミングがHashiCorp周りの商標に触れるということで代替案を考える必要があるというissueがありました。
 
@@ -399,7 +395,7 @@ Destroy complete! Resources: 29 destroyed.
 
 
 # 所感
-TerraformからフォークされたOpenTFを試してみました。
+TerraformからフォークされたOpenTofuを試してみました。
 財団が主張している内容については賛否があると思います。今後IaCのデファクトスタンダードがどのようなツールに変化していくのか注目していきたいと思います。
 
 # 英語記事

@@ -5,3 +5,7 @@ type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Windows","scoop","go"]
 published: false
 ---
+
+# 序論
+
+Windowsにはいくつかのパッケージマネージャーがあります。
