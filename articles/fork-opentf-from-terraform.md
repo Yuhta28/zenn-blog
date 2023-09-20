@@ -1,6 +1,6 @@
 ---
-title: "TerraformからforkされたOpenTFが利用可能になりました"
-emoji: "🍴"
+title: "TerraformからforkされたOpenTofuが利用可能になりました"
+emoji: "⬜"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["OSS","Terraform","OpenTF"]
 published: true
@@ -9,6 +9,19 @@ published: true
 ::: message alert
 OpenTFは2023/9/9時点でアルファ版リリース前です。この記事は2023/9/9時点の情報を基にしてます。
 :::
+
+## 2023/9/20追記
+OpenTFの名称が変更されました。元々OpenTFで使用されているネーミングがHashiCorp周りの商標に触れるということで代替案を考える必要があるというissueがありました。
+
+https://github.com/opentofu/opentofu/issues/296
+
+2週間におよぶ~~大喜利~~話し合いの結果名前が`OpenTofu`に決まりました。素敵なアイコンも早速できています。
+![](/images/fork-opentf-from-terraform/image3.png)
+*シンボルアイコン*
+
+今後はOpenTofuを扱うエンジニアを豆腐職人と呼びましょう。
+タイトルおよび以下の記事内容を一部修正します。
+
 # 序論
 2023年8月にTerraformなどのOSSを開発しているHashiCorp社は自社製品のライセンスを変更することを発表しました。
 https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license
@@ -16,7 +29,11 @@ https://www.hashicorp.com/blog/hashicorp-adopts-business-source-license
 
 ただHashiCorp社のライセンス変更に反対する動きもありTerraformからフォークされた真のオープンソースを目指してるという団体が出てきました。
 それがOpenTF Foundationです。
-https://opentf.org/
+
+::: message
+OpenTF FoundationはLinux Foundationへ加入しました。
+:::
+https://opentofu.org/
 
 OpenTF Foundationは上記マニフェスト(宣言書)によるとTerraformを真のオープンソースであり続けるためにはHashiCorp社へライセンス変更の撤廃を要求、それができないならTerraformからフォークしたOSSであるOpenTFを管理すると宣言しています。
 
@@ -134,10 +151,10 @@ Terraformのステート管理を効率化してくれるアメリカのSaaS企�
 [^10]: https://www.scalr.com/
 
 
-# フォークされたOpenTF
+# フォークされたOpenTofu
 
-https://opentf.org/fork
-2023/9/6にフォークされたOpenTFはすでに5,000以上ものスターを獲得しています。
+https://opentofu.org/blog/the-opentofu-fork-is-now-available/
+2023/9/6にフォークされたOpenTofuはすでに6,000以上ものスターを獲得しています。
 ![](/images/fork-opentf-from-terraform/image1.png)
 
 もちろんリポジトリをクローンすれば自分のローカルマシン上でもOpenTFを動かすことができます。
