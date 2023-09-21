@@ -1,6 +1,6 @@
 ---
 title: "TerraformからforkされたOpenTofuが利用可能になりました"
-emoji: "⬜"
+emoji: "📛"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["OSS","Terraform","OpenTofu"]
 published: true
