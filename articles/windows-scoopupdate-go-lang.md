@@ -174,5 +174,25 @@ func main() {
 }
 ```
 
+`go run scoop-update-to-cleanup.go`でそのまま実行してもいいですし、`go build scoop-update-to-cleanup.go`でビルドしてバイナリファイルにしても動きます。
+プログラムを実行すればプログレスバーが表示され、アップデート完了までどれくらいかかるかわかりやすくなりました。
+![プログレスバー画面](/images/windows-scoopupdate-go-lang/image2.png)
+*プログレスバー画面*
+
+アップデート完了後に始まるクリーンアップと古いキャッシュ削除処理も最後まで進み完了したらEnterキーを押すまで待機状態になるように改良しました。
+![完了待機画面](/images/windows-scoopupdate-go-lang/image1.png)
+*完了待機画面*
+
+このプログラムはこちらのGitHubリポジトリに公開していますので興味ありましたら触ってみてください。
+(Goに詳しくないので何かおかしな部分ありましたらぜひともPRしてくれると助かります🙏)
+
+https://github.com/Yuhta28/Scoop-update-to-cleanup
+
+# 所感
+ChatGPT君に聞いてScoopのアップデートからキャッシュ削除までまとめて実行してくれるGoプログラムを作ってみました。
+ほぼほぼChatGPT君頼りとなりましたが、それでも普段のちょっとしたことを改善するプログラムができたのでプライベートでも小さなSREができたかなと思います。
+
+プログラミングは苦手ですが、ChatGPT君の力を借りて少しずつプログラミングの理解を深めていこうと思います。
+
 # 参考文献
 https://pkg.go.dev/os/exec
