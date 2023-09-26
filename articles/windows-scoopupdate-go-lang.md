@@ -12,39 +12,19 @@ published: false
 
 https://scoop.sh/
 
-コマンドラインベースでツールをインストールするメリットとしてアップデートが簡単にできることがあります。GUIでツール提供元ページからインストールすると、最新バージョンへの更新のたびに提供元ページへアクセスして、ソフトウェアを再インストールする必要があります。
-Scoop経由でインストールすればターミナル上でコマンド実行することで複数ソフトウェアを一括でインストールできますので抜け漏れがなくなります。
+WindowsでもHomebrew[^1]みたいにCLIベースでソフトウェア管理できるので、コマンド一発で一括更新できて大変便利です。とは言え毎回手動で更新コマンドを実行して、古いパッケージのクリーンアップコマンドを実行するのは面倒でしたので、更新からキャッシュ削除までをまとめて実行するプログラムをChatGPT君に作ってもらいました。
 
-Macを利用されている人でしたらHomebrewをつかってソフトウェアのバージョンアップデートをしているかと思います。
-
-```terminal:homebrew更新
-$ brew update && brew upgrade
-```
-
-ScoopもHomebrewと似たようなコマンドでソフトウェアのアップデートができます。
-
-```powershell:scoop更新
-scoop update && scoop update *
-```
-
-ただ更新後も古いパッケージがキャッシュで残っているのでクリーンアップして削除します。
-
-```powershell:scoopクリーンアップ
-scoop cleanup * && scoop cache rm *
-```
-
-毎回アップデートしてクリーンアップコマンドをターミナルから実行するのも面倒だと感じましたので、更新からパッケージのクリーンアップまでを一括で実行したいなと思いました。
-自分で実装できればいいのですが、プログラミングが苦手でしたので思い切ってChatGPTに全部作ってもらって動くかどうか検証してみました。
+[^1]: https://brew.sh/
 
 # 対象読者
 
 - Scoopインストーラーを使っている
-- パッケージのアップデートを楽にしたい
+- アップデート、クリーンアップを効率的にしたい
 
 # 実行プログラム
-実行するプログラミング言語は~~得意な言語がなかったので~~なんでもよかったのですが、バージョン互換やランタイムの有無を気にする必要がないGoで作ってみようと思いました。
+プログラミング言語は~~得意な言語がなかったので~~なんでもよかったのですが、バージョン互換やランタイムの有無を気にする必要がないGoにしました。
 
-最初にChatGPTに聞いて作られたプログラムがこちらです。
+最初にChatGPTが作ったプログラムがこちらです。
 
 ```go:scoop-package-to-cleanup.go
 package main
@@ -98,16 +78,101 @@ func main() {
 }
 ```
 
-`os/exec`パッケージで外部コマンドを呼び出します。PowerShellコマンドを呼び出し、ScoopのコマンドをGoで実行できるようにします。
-単純にScoopコマンドを4回呼び出して次々に実行するだけのシンプルなプログラムです。これをビルドしてバイナリファイルとして実行できるようにしましたが、プログラム実行中の間ターミナル上に何も変化がなく実行完了したら直ぐにターミナルが閉じてしまうため正しく動いているのかわかりにくいものでした。
+`os/exec`パッケージで外部コマンドを呼び出し、GoでScoopのコマンドを実行できるようにします。
+`go build`でビルドしてバイナリファイルにしましたが、プログラムの実行中何も変化がなく実行完了したら直ぐにターミナルが閉じてしまうため正しく動いているのかわかりにくいものでした。
 
-ですのプログレスバーを実装して処理がどれくらいまで進んでいるのか把握できるようにしました。
+ですのでプログレスバーを実装して処理がどれくらいまで進んでいるのか把握できるようにしました。
 Goでプログレスバーを実装する方法は以下の記事を参考にして同様にChatGPTにプログラムを作成してもらいました。
 https://qiita.com/Akazawa_Naoki/items/a63193e3ac4c8cd4f19a
 
 そして出来上がったプログラムがこちらです。
 
-https://github.com/Yuhta28/Scoop-update-to-cleanup/blob/main/scoop-update-to-cleanup.go
+```go:scoop-update-to-cleanup.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"os/exec"
+	"strings"
+
+	"github.com/schollz/progressbar/v3"
+)
+
+func main() {
+	// コマンドを作成
+	cmd := exec.Command("cmd.exe", "/C", "scoop update && scoop update *")
+
+	// 標準出力をキャプチャ
+	stdoutPipe, _ := cmd.StdoutPipe()
+
+	// コマンドを実行
+	err := cmd.Start()
+	if err != nil {
+		fmt.Println("コマンドの実行中にエラーが発生しました:", err)
+		return
+	}
+
+	// プログレスバーの設定
+	bar := progressbar.NewOptions(-1,
+		progressbar.OptionSetDescription("Scoopアップデート中"),
+		progressbar.OptionSpinnerType(14),
+		progressbar.OptionShowCount(),
+		progressbar.OptionSetWidth(15),
+		progressbar.OptionSetTheme(progressbar.Theme{
+			Saucer:        "[green]=[reset]",
+			SaucerHead:    "[green]>[reset]",
+			SaucerPadding: " ",
+			BarStart:      "[",
+			BarEnd:        "]",
+		}))
+
+	// 標準出力からデータを読み取り、プログレスバーに反映
+	buffer := make([]byte, 1024)
+	for {
+		n, err := stdoutPipe.Read(buffer)
+		if err != nil {
+			break
+		}
+		output := string(buffer[:n])
+		// Scoopの出力に進捗情報が含まれているか確認
+		if strings.Contains(output, "Updating") {
+			bar.Add(1)
+		}
+		fmt.Print(output)
+	}
+
+	// コマンドの終了を待機
+	err = cmd.Wait()
+	if err != nil {
+		fmt.Println("コマンドの実行中にエラーが発生しました:", err)
+		return
+	}
+
+	fmt.Println("Scoopパッケージのアップデートが完了しました。")
+
+	// クリーンアップとキャッシュ削除コマンドを作成
+	cleanupCmd := exec.Command("cmd.exe", "/C", "scoop cleanup * && scoop cache rm *")
+	
+	// 標準出力をキャプチャ
+	cleanupCmd.Stdout = os.Stdout
+	cleanupCmd.Stderr = os.Stderr
+
+	// クリーンアップとキャッシュ削除コマンドを実行
+	err = cleanupCmd.Run()
+	if err != nil {
+		fmt.Println("クリーンアップコマンドの実行中にエラーが発生しました:", err)
+		return
+	}
+
+	fmt.Println("古いパッケージのクリーンアップとキャッシュの削除が完了しました。")
+
+	// プログラムが終了しないように待機
+	fmt.Println("Enterキーを押してプログラムを終了してください...")
+	var input string
+	fmt.Scanln(&input)
+}
+```
 
 # 参考文献
 https://pkg.go.dev/os/exec
