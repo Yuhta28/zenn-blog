@@ -3,7 +3,7 @@ title: "Scoopのアップデートからキャッシュ削除までまとめて�
 emoji: "🥄"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Windows","scoop","go","chatgpt"]
-published: false
+published: true
 ---
 
 # 序論
@@ -190,7 +190,7 @@ https://github.com/Yuhta28/Scoop-update-to-cleanup
 
 # 所感
 ChatGPT君に聞いてScoopのアップデートからキャッシュ削除までまとめて実行してくれるGoプログラムを作ってみました。
-ほぼほぼChatGPT君頼りとなりましたが、それでも普段のちょっとしたことを改善するプログラムができたのでプライベートでも小さなSREができたかなと思います。
+ほぼChatGPT君頼りとなりましたが、それでも普段のちょっとしたことを改善するプログラムができたのでプライベートでも小さなSREができたかなと思います。
 
 プログラミングは苦手ですが、ChatGPT君の力を借りて少しずつプログラミングの理解を深めていこうと思います。
 
