@@ -37,7 +37,11 @@ EC2やRDS、ECSなどのコンピューティングリソースをプロビジ�
 しかし、毎回業務終了間際に検証環境のコンピューティングリソースを一台一台停止するのも運用が辛く万が一誤って本番環境のリソースを停止させてしまっては大問題です。
 
 こういった時こそ自動化することで人の運用負荷を上げずに楽にコスト最適できるようにするのがエンジニアです。
-以前Instance Scheduler[^3]を使ったリソース稼働時間の自動起動停止の方法について紹介しましたが、その後Systems Managerにもっと簡単にEC2の自動起動停止を実現できるResource Schedulerが登場しました。
-https://zenn.dev/yuta28/articles/ec2-schedule
+以前Instance Scheduler[^3]を使ったリソース稼働時間の自動起動停止の方法について[紹介](https://zenn.dev/yuta28/articles/ec2-schedule)しましたが、その後Systems Managerにもっと簡単にEC2の自動起動停止を実現できるResource Schedulerが登場しました。
+
+https://aws.amazon.com/jp/about-aws/whats-new/2022/12/aws-systems-manager-quick-setup-resource-scheduler/
+
+Instance Schedulerは特定の条件に一致したEC2を時間になったら自動で起動停止できるソリューションを提供していましたが、定期的にLambdaを実行し対象EC2を定期的にチェックする仕組みだったの少額ながら実行コストがかかる可能性がありました。
+Systems ManagerのResource SchedulerはInstance Scheduler程自由度はありませんが、無料で利用でき
 
 [^3]: https://aws.amazon.com/jp/solutions/implementations/instance-scheduler-on-aws/
