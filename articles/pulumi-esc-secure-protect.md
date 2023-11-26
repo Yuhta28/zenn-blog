@@ -2,7 +2,7 @@
 title: "Pulumi ESCで秘匿情報をセキュアに扱う"
 emoji: "🔑"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["pulumi","security"]
+topics: ["pulumi","security","aws"]
 published: false
 ---
 
@@ -10,6 +10,13 @@ published: false
 Pulumiから新しい機能がリリースされました。
 https://www.pulumi.com/product/esc/
 
-IaCでDBのパスワードといった認証情報をハードコーディングする方法はセキュリティ上推奨されておらず、環境変数から値を入れる。AWS Secrets Manager[^1]などを使って外部から値を取得するという運用が一般的です。
+Pulumi ESC(Environments, Secretes, Configuration)は名前のとおり、環境変数や認証情報を定義できるマネージドサービスです。
 
-[^1]: https://aws.amazon.com/jp/secrets-manager/
+![architecture](/images/pulumi-esc-secure-protect/image1.png)
+*アーキテクチャ[^1]*
+
+従来IaCで認証情報を参照する場合、Git管理外の変数ファイルから参照するか、AWS Secrets Manager[^2]やHashiCorp Vault[^3]のように別サービスから認証情報を参照するのが一般的です。
+
+[^1]: https://www.pulumi.com/product/esc/
+[^2]: https://aws.amazon.com/jp/secrets-manager/
+[^3]: https://www.vaultproject.io/
