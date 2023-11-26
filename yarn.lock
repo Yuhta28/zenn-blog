@@ -64,11 +64,11 @@
     treeverse "^3.0.0"
     walk-up-path "^3.0.1"
 
-"@npmcli/config@^8.0.1":
-  version "8.0.1"
+"@npmcli/config@^8.0.2":
+  version "8.0.2"
   dependencies:
     "@npmcli/map-workspaces" "^3.0.2"
-    ci-info "^3.8.0"
+    ci-info "^4.0.0"
     ini "^4.1.0"
     nopt "^7.0.0"
     proc-log "^3.0.0"
@@ -168,14 +168,14 @@
   version "0.2.1"
 
 "@sigstore/sign@^2.1.0":
-  version "2.1.0"
+  version "2.2.0"
   dependencies:
     "@sigstore/bundle" "^2.1.0"
     "@sigstore/protobuf-specs" "^0.2.1"
     make-fetch-happen "^13.0.0"
 
-"@sigstore/tuf@^2.1.0":
-  version "2.1.0"
+"@sigstore/tuf@^2.1.0", "@sigstore/tuf@^2.2.0":
+  version "2.2.0"
   dependencies:
     "@sigstore/protobuf-specs" "^0.2.1"
     tuf-js "^2.1.0"
@@ -214,7 +214,12 @@ ansi-regex@^5.0.1:
 ansi-regex@^6.0.1:
   version "6.0.1"
 
-ansi-styles@^4.0.0, ansi-styles@^4.3.0:
+ansi-styles@^4.0.0:
+  version "4.3.0"
+  dependencies:
+    color-convert "^2.0.1"
+
+ansi-styles@^4.3.0:
   version "4.3.0"
   dependencies:
     color-convert "^2.0.1"
@@ -289,13 +294,13 @@ chalk@^5.3.0:
 chownr@^2.0.0:
   version "2.0.0"
 
-ci-info@^3.6.1, ci-info@^3.7.1, ci-info@^3.8.0, ci-info@^3.9.0:
-  version "3.9.0"
+ci-info@^4.0.0:
+  version "4.0.0"
 
-cidr-regex@^3.1.1:
-  version "3.1.1"
+cidr-regex@4.0.3:
+  version "4.0.3"
   dependencies:
-    ip-regex "^4.1.0"
+    ip-regex "^5.0.0"
 
 clean-stack@^2.0.0:
   version "2.2.0"
@@ -416,8 +421,8 @@ fs-minipass@^3.0.0, fs-minipass@^3.0.3:
   dependencies:
     minipass "^7.0.3"
 
-function-bind@^1.1.1:
-  version "1.1.1"
+function-bind@^1.1.2:
+  version "1.1.2"
 
 gauge@^5.0.0:
   version "5.0.1"
@@ -446,10 +451,10 @@ graceful-fs@^4.2.11, graceful-fs@^4.2.6:
 has-unicode@^2.0.1:
   version "2.0.1"
 
-has@^1.0.3:
-  version "1.0.3"
+hasown@^2.0.0:
+  version "2.0.0"
   dependencies:
-    function-bind "^1.1.1"
+    function-bind "^1.1.2"
 
 hosted-git-info@^7.0.0, hosted-git-info@^7.0.1:
   version "7.0.1"
@@ -504,21 +509,21 @@ init-package-json@^6.0.0:
     validate-npm-package-license "^3.0.4"
     validate-npm-package-name "^5.0.0"
 
-ip-regex@^4.1.0:
-  version "4.3.0"
+ip-regex@^5.0.0:
+  version "5.0.0"
 
 ip@^2.0.0:
   version "2.0.0"
 
-is-cidr@^4.0.2:
-  version "4.0.2"
+is-cidr@^5.0.3:
+  version "5.0.3"
   dependencies:
-    cidr-regex "^3.1.1"
+    cidr-regex "4.0.3"
 
 is-core-module@^2.8.1:
-  version "2.13.0"
+  version "2.13.1"
   dependencies:
-    has "^1.0.3"
+    hasown "^2.0.0"
 
 is-fullwidth-code-point@^3.0.0:
   version "3.0.0"
@@ -573,12 +578,12 @@ libnpmdiff@^6.0.3:
     pacote "^17.0.4"
     tar "^6.2.0"
 
-libnpmexec@^7.0.3:
-  version "7.0.3"
+libnpmexec@^7.0.4:
+  version "7.0.4"
   dependencies:
     "@npmcli/arborist" "^7.2.1"
     "@npmcli/run-script" "^7.0.2"
-    ci-info "^3.7.1"
+    ci-info "^4.0.0"
     npm-package-arg "^11.0.1"
     npmlog "^7.0.1"
     pacote "^17.0.4"
@@ -613,10 +618,10 @@ libnpmpack@^6.0.3:
     npm-package-arg "^11.0.1"
     pacote "^17.0.4"
 
-libnpmpublish@^9.0.1:
-  version "9.0.1"
+libnpmpublish@^9.0.2:
+  version "9.0.2"
   dependencies:
-    ci-info "^3.6.1"
+    ci-info "^4.0.0"
     normalize-package-data "^6.0.0"
     npm-package-arg "^11.0.1"
     npm-registry-fetch "^16.0.0"
@@ -646,7 +651,9 @@ libnpmversion@^5.0.1:
     semver "^7.3.7"
 
 lru-cache@^10.0.1, "lru-cache@^9.1.1 || ^10.0.0":
-  version "10.0.1"
+  version "10.0.2"
+  dependencies:
+    semver "^7.3.5"
 
 lru-cache@^6.0.0:
   version "6.0.0"
@@ -824,25 +831,25 @@ npm-registry-fetch@^16.0.0, npm-registry-fetch@^16.1.0:
 npm-user-validate@^2.0.0:
   version "2.0.0"
 
-npm@^10.2.3:
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/npm/-/npm-10.2.3.tgz"
-  integrity sha512-GbUui/rHTl0mW8HhJSn4A0Xg89yCR3I9otgJT1i0z1QBPOVlgbh6rlcUTpHT8Gut9O1SJjWRUU0nEcAymhG2tQ==
+npm@^10.2.4:
+  version "10.2.4"
+  resolved "https://registry.npmjs.org/npm/-/npm-10.2.4.tgz"
+  integrity sha512-umEuYneVEYO9KoEEI8n2sSGmNQeqco/3BSeacRlqIkCzw4E7XGtYSWMeJobxzr6hZ2n9cM+u5TsMTcC5bAgoWA==
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/arborist" "^7.2.1"
-    "@npmcli/config" "^8.0.1"
+    "@npmcli/config" "^8.0.2"
     "@npmcli/fs" "^3.1.0"
     "@npmcli/map-workspaces" "^3.0.4"
     "@npmcli/package-json" "^5.0.0"
     "@npmcli/promise-spawn" "^7.0.0"
     "@npmcli/run-script" "^7.0.2"
-    "@sigstore/tuf" "^2.1.0"
+    "@sigstore/tuf" "^2.2.0"
     abbrev "^2.0.0"
     archy "~1.0.0"
     cacache "^18.0.0"
     chalk "^5.3.0"
-    ci-info "^3.9.0"
+    ci-info "^4.0.0"
     cli-columns "^4.0.0"
     cli-table3 "^0.6.3"
     columnify "^1.6.0"
@@ -853,16 +860,16 @@ npm@^10.2.3:
     hosted-git-info "^7.0.1"
     ini "^4.1.1"
     init-package-json "^6.0.0"
-    is-cidr "^4.0.2"
+    is-cidr "^5.0.3"
     json-parse-even-better-errors "^3.0.0"
     libnpmaccess "^8.0.1"
     libnpmdiff "^6.0.3"
-    libnpmexec "^7.0.3"
+    libnpmexec "^7.0.4"
     libnpmfund "^5.0.1"
     libnpmhook "^10.0.0"
     libnpmorg "^6.0.1"
     libnpmpack "^6.0.3"
-    libnpmpublish "^9.0.1"
+    libnpmpublish "^9.0.2"
     libnpmsearch "^7.0.0"
     libnpmteam "^6.0.0"
     libnpmversion "^5.0.1"
@@ -891,7 +898,7 @@ npm@^10.2.3:
     semver "^7.5.4"
     spdx-expression-parse "^3.0.1"
     ssri "^10.0.5"
-    strip-ansi "^6.0.1"
+    strip-ansi "^7.1.0"
     supports-color "^9.4.0"
     tar "^6.2.0"
     text-table "~0.2.0"
@@ -1044,7 +1051,7 @@ shebang-regex@^3.0.0:
   version "3.0.0"
 
 signal-exit@^4.0.1:
-  version "4.0.2"
+  version "4.1.0"
 
 sigstore@^2.0.0, sigstore@^2.1.0:
   version "2.1.0"
@@ -1131,12 +1138,17 @@ string-width@^5.1.2:
   dependencies:
     ansi-regex "^5.0.1"
 
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+strip-ansi@^6.0.0:
   version "6.0.1"
   dependencies:
     ansi-regex "^5.0.1"
 
-strip-ansi@^7.0.1:
+strip-ansi@^6.0.1:
+  version "6.0.1"
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^7.0.1, strip-ansi@^7.1.0:
   version "7.1.0"
   dependencies:
     ansi-regex "^6.0.1"
@@ -1240,7 +1252,7 @@ write-file-atomic@^5.0.0, write-file-atomic@^5.0.1:
 yallist@^4.0.0:
   version "4.0.0"
 
-zenn-cli@^0.1.148:
-  version "0.1.148"
-  resolved "https://registry.npmjs.org/zenn-cli/-/zenn-cli-0.1.148.tgz"
-  integrity sha512-q4c3W6HOJZzX+Ce/7d4vBm5iY2G8j5o+d5P04BuxE5U9rg2qOrZS9PJEIFk9QktJ7BwJ6RjxkGiQI+rnGx/BIw==
+zenn-cli@^0.1.149:
+  version "0.1.149"
+  resolved "https://registry.npmjs.org/zenn-cli/-/zenn-cli-0.1.149.tgz"
+  integrity sha512-vMOoEy15VOVLGSr0eXbz4bfsW4veODUMqA8SAR6h1oKfwe1z/aKW2gWC5wAotzAVHkcv8GqsRT++gSz6+cLkDA==
