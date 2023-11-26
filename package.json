@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/Yuhta28/zenn-blog#readme",
   "devDependencies": {
-    "zenn-cli": "^0.1.144"
+    "zenn-cli": "^0.1.149"
+  },
+  "dependencies": {
+    "npm": "^10.2.4"
   }
 }
