@@ -32,15 +32,15 @@ https://www.kadokawa.co.jp/product/322104000266/
 # EC2のコスト最適化
 
 EC2やRDS、ECSなどのコンピューティングリソースをプロビジョニングさせて課金させるリソースは、夜中や早朝の時間帯も起動させたままでは料金が発生してしまいます。
-本番稼働させているものでしたら24時間常時稼働させ続けますが、業務時間中にしか使わない検証環境のコンピューティングリソースも夜中や土日に稼働させたままにしておくのは非常にもったいないコストです。
+本番稼働させているものでしたら24時間稼働させ続けますが、業務時間中しか使わない検証環境のコンピューティングリソースも24時間稼働させたままにしておくのは非常にもったいないコストです。
 
-しかし、毎回業務終了間際に検証環境のコンピューティングリソースを一台一台停止するのも運用が辛く万が一誤って本番環境のリソースを停止させてしまっては大問題です。
+しかし、毎日の業後に検証環境のコンピューティングリソースを一台一台停止するのも運用が辛く万が一誤って本番環境のリソースを停止させてしまっては大問題です。
 
 以前Instance Scheduler[^3]を使ったリソース稼働時間の自動起動停止の方法について[紹介](https://zenn.dev/yuta28/articles/ec2-schedule)しましたが、その後Systems Managerでもっと簡単にEC2の自動起動停止を実現できるResource Schedulerが登場しました。
 
 https://aws.amazon.com/jp/about-aws/whats-new/2022/12/aws-systems-manager-quick-setup-resource-scheduler/
 
-Resource SchedulerはInstance Scheduler程自由にカスタマイズすることはできませんが、シンプルに設定できるのでAWSを始めたばかりの人にもおススメのサービスになります。
+Resource SchedulerはInstance Scheduler程自由にカスタマイズはできませんが、シンプルに設定できるのでAWSを始めたばかりの人にもおススメのサービスになります。
 Systems Managerのコンソール画面の左サイドバーから高速セットアップという項目がありますのでこちらをクリックします。
 ![](/images/aws-small-cost-optimize/image2.png)
 
@@ -50,7 +50,7 @@ Systems Managerのコンソール画面の左サイドバーから高速セッ�
 Resource Schedulerでは対象にしたいEC2のタグを指定し、EC2の起動時刻、停止時刻、適用曜日を設定できます。
 ![](/images/aws-small-cost-optimize/image4.png)
 
-残念ながら2023年11月時点ではタグは一つしか設定できず、複数タグによるAND条件やOR条件でのタグフィルタリングはできません。
+残念ながら2023年11月時点ではタグは1つしか設定できず、複数タグによるAND条件やOR条件でのタグフィルタリングはできません。
 
 [^3]: https://aws.amazon.com/jp/solutions/implementations/instance-scheduler-on-aws/
 
