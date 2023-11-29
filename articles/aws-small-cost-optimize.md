@@ -3,7 +3,7 @@ title: "小さなことから始めるAWSコスト最適入門"
 emoji: "💰"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","コスト最適化","systemsmanager","eventbridge"]
-published: false
+published: true
 ---
 
 # 序論
@@ -65,7 +65,7 @@ RDSについてはこの後紹介するEventBridge Schedulerを使うことでEC
 
 https://aws.amazon.com/jp/about-aws/whats-new/2022/11/amazon-eventbridge-launches-new-scheduler/
 
-EventBridge SchedulerはスケジュールをトリガーにAWSのAPIを実行できるサーバレススケジューラです。よくあるユースケースとしてLambdaを定期実行したいときにEventBridgeでセットした時間になったら実行したいLambdaをターゲットにEventBridgeがLambdaを叩くというバッチ処理が簡単に設定できます。
+EventBridge SchedulerはスケジュールをトリガーにAWSのAPIを実行できるサーバーレススケジューラです。よくあるユースケースとしてLambdaを定期実行したいときにEventBridgeでセットした時間になったら実行したいLambdaをターゲットにEventBridgeがLambdaを叩くというバッチ処理が簡単に設定できます。
 
 EventBridge Schedulerを使うことで先のResource Schedulerと同じように深夜帯になったら停止APIを実行し、業務開始時間になったら起動APIを実行するといった定期処理を実現できます。
 
