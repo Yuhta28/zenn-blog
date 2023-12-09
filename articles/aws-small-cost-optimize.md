@@ -153,6 +153,10 @@ ECSのスケジューラー作成もRDSとほとんど同じです。ECSのAPI�
 テスト用に動かしたリソースを消し忘れて気が付いたら課金されていたという経験をされた人は多いと思います。
 AWSコストの管理はユーザー自身の責任範囲ですので小規模からでも良いので是非AWSコストを最適化できるように意識してAWSを動かしてみてください。
 
+# LT資料
+LTのスライド資料です。
+@[speakerdeck](8ae771995e4d4e41a53f83e836779c5f)
+
 # 参考文献
 https://dev.classmethod.jp/articles/ssm-quick-setup-resource-scheduler/
 https://dev.classmethod.jp/articles/eventbridge-scheduler-and-event-bridge-rule-difference/
