@@ -12,7 +12,7 @@ Terraform[^1]にはDatadog[^2]の設定をコード管理できるプロパイ�
 
 https://registry.terraform.io/providers/DataDog/datadog/latest/docs
 
-Terraformの監視設定を管理画面から設定するとその時の担当者によって微妙に閾値の値がズレてたり、アラート通知メッセージに表記ゆれがあるなどバラバラになりがちです。
+Terraformの監視を管理画面から設定すると担当者毎によって微妙に閾値の値がズレてたり、アラート通知のメッセージ表記ゆれがあるなどバラバラになりがちです。
 昨今のクラウドインフラのIaCのようにDatadogの設定もTerraformでIaCすれば設定値が統一され、監視設定履歴もGit管理できるので新しく監視基盤をDatadogに移行する際にTerraformでコード化して監視設定やSLOを実装しました。
 この時、Datadogの監視設定をTerraformでコード管理するために`datadog_monitor`リソースを使って実装しました。
 
