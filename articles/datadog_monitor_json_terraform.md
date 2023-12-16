@@ -50,6 +50,31 @@ resource "datadog_monitor" "cpu_alert" {
 ![](/images/datadog_monitor_json_terraform/image1.png)
 *モニター画面*
 
+ただDatadogの設定をTerraformのtfファイルに書くのはとても大変で`terraform plan`では問題なくてもapply時にエラーが起きて失敗するということが多々ありました。
+例えば`query`に監視アラートを発砲するトリガー条件を書くのですがここに架空のメトリクスを書いても`terraform plan`は問題なく通ります。
+ここはTerraformの文法上とは関係なくTerraform側でDatadogのメトリクス情報を持っていないから適当な値でも通ってしまうからです。
+![](/images/datadog_monitor_json_terraform/image2.png)
+*適当なメトリクス値*
+
+会社ではTerraformの実行環境としてGitHub Actions上で動かし、mainブランチにPull Requestが入ったら`terraform plan`が実行し、問題なければマージして`terraform apply`を実行するというCI/CDパイプラインを構築していたのですが、マージしたのにエラーが発生しもう一度ブランチを切ってやり直すのは面倒で大変でした。
+
+Datadogの監視設定はJSON出力が可能でコンソールから簡単に確認できるのですが、この出力結果をそのまま`datadog_monitor`に使うことは文法上できません。
+![](/images/datadog_monitor_json_terraform/image3.png)
+
+Datadog使い始めの時は一度手作業で監視設定を作った後にJSON出力してTerraformで必要なパラメータと見比べて記述したのですが、もう少し楽にできる方法がないのかなと思っていました。
+
+その後TerraformのDatadogリソースに`datadog_monitor_json `リソースというJSON出力された監視設定値をそのまま使える便利なリソースがあることに気づきこっちを先に使えば良かったと後悔しました。
+https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/monitor_json
+
+これからDatadogの設定をTerraformで構築する予定の人にはぜひこの`datadog_monitor_json`を使って実装してほしいと考えていますので`datadog_monitor_json`を使ったDatadog監視の方法について紹介いたします。
+
 
 [^1]: https://www.terraform.io/
 [^2]: https://www.datadoghq.com/ja/
+
+# 対象読者
+
+- Datadogで監視している人
+- Terraformの使い方に慣れている人
+- Datadogの設定をTerraformで管理したい人
+
