@@ -186,7 +186,7 @@ resource "datadog_monitor_json" "monitor_json" {
 }
 ```
 
-templatefile関数は(JSONファイルパス先,変数値)で引数で指定した変数値をJSON内の${...}で括られた変数に入れられます。
+templatefile関数は(path,var)の引数で指定した変数値をJSON内の${...}で括られた変数に入れられます。
 引数の中に直接変数値を入れずTerraformで宣言した変数もセットできます。
 
 ```hcl:CPUモニター監視
