@@ -38,7 +38,7 @@ Mode                LastWriteTime         Length Name
 
 https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_profiles
 
-Windowsターミナル[^4]でPowerShellを起動するときに最初にPowerShellプロファイルに記載されているスクリプトが起動し、Gitプロンプトの見た目を編集、モジュールのセットアップが行われターミナル操作が楽になります。
+Windowsターミナル[^4]でPowerShellを起動すると最初にPowerShellプロファイルのスクリプトが起動し、Gitプロンプトの見た目を編集、モジュールのセットアップが行われターミナル操作が楽になります。
 
 [^1]: https://www.gnu.org/software/bash/
 [^2]: https://www.zsh.org/
