@@ -15,7 +15,7 @@ https://zenn.dev/yuta28/articles/windows-development-env
 今回は私のWindowsPCに設定しているPowerShellプロファイルの設定について紹介していきます。
 
 :::message
-一部以前の記事と重複した内容となります。
+一部以前の記事と重複した内容になります。
 :::
 
 # 対象読者
@@ -96,7 +96,7 @@ Scoopのタブ補完についても[以前私の記事](https://zenn.dev/yuta28/
 [^9]: https://developer.hashicorp.com/terraform/cli/commands#shell-tab-completion
 
 ## リポジトリ管理エイリアスコマンド
-GitHubからリポジトリをcloneする際にあちらこちらにcloneしてしまうとローカルリポジトリがとっ散らかってしまいどこにあるのか探すのに苦労します。
+GitHubからリポジトリをcloneする際あちらこちらにcloneしてしまうとローカルリポジトリがとっ散らかってしまいどこにあるのか探すのに苦労します。
 私は[ghq](https://github.com/x-motemen/ghq)を使ってローカルのリポジトリをcloneし管理しています。ghqならどこのパスからcloneしても特定フォルダ内にリポジトリをcloneしてくれます。
 さらに[peco](https://github.com/peco/peco)と組み合わせて使うことでいつでもローカルリポジトリに移動できるエイリアスコマンドを作りました。
 
