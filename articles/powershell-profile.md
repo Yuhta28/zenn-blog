@@ -3,7 +3,8 @@ title: "私のPowerShellプロファイルを紹介する"
 emoji: "🐚"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["powershell","windows"]
-published: false
+published: true
+published_at: 2024-01-09 11:00
 ---
 
 # 序論
@@ -54,9 +55,11 @@ Windowsターミナル[^4]でPowerShellを起動すると最初にPowerShellプ�
 本題となる私のPowerShellのプロファイルの中身です。
 順番に説明していきますが冗長になりますので下記の目次から気になる部分だけチェックしてみてください。
 
-- posh-git
-- タブ補完
-- リポジトリ管理エイリアスコマンド
+- [posh-git](#posh-git)
+- [タブ補完](#タブ補完)
+- [リポジトリ管理エイリアスコマンド](#リポジトリ管理エイリアスコマンド)
+- [Windowsターミナルカスタマイズ](#windowsターミナルカスタマイズ)
+- [zoxideを使ったパス移動](#zoxideを使ったパス移動)
 
 @[gist](https://gist.github.com/Yuhta28/6b4455937b0098e6b573bcf9a506798c)
 
@@ -107,9 +110,36 @@ function ghcd() {
 }
 ```
 
+![](/images/powershell-profile/image2.gif)
+*デモ画面*
 
+## Windowsターミナルカスタマイズ
 
-https://github.com/Yuhta28/zenn-blog/assets/54278643/48fbb035-52ce-4bf0-b835-f5f67af082f9
+https://ohmyposh.dev/
+
+oh-my-poshはgit-poshと同様にターミナルの見た目をリッチしてくれるOSSです。
+プロファイルにお気に入りのテーマ読み込みを設定しており、こちらも私の[以前の記事](https://zenn.dev/yuta28/articles/windows-git-dev#oh-my-posh)をご覧いただけると詳細がわかると思います。
+
+[Terminal-Icons](https://github.com/devblackops/Terminal-Icons)はVS Codeのようなファイル種類別のアイコンをターミナル上に表示してくれます。
+
+![](/images/powershell-profile/image3.png)
+*https://github.com/devblackops/Terminal-Icons/blob/main/media/screenshot.png*
+
+## zoxideを使ったパス移動
+
+https://github.com/ajeetdsouza/zoxide
+最後にzoxideを使った快適なパス移動について紹介します。
+
+zoxideはより快適なcdコマンドを目指して作られたRust製のOSSになります。
+`z <パス名>`で部分一致したパスまで一気にジャンプしてくれます。また`zi <パス名>`で部分一致で複数の候補を表示してくれるのでリポジトリ名があいまいでもすぐにリポジトリまで移動できます。
+
+![](/images/powershell-profile/image4.gif)
+*デモ画面*
+
+# 所感
+PowerShellプロファイルについて紹介しました。
+以前の記事でも紹介したとおりWindowsでもターミナル操作は非常に進化しており、Macと遜色ないくらい快適にターミナルでPC操作ができるようになりました。
+プロファイルをカスタマイズすることでより効率的なターミナル操作が実現できるので自分だけのターミナルをぜひ見つけてみてください。
 
 
 # 参考文献
