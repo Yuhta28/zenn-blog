@@ -28,7 +28,7 @@
     socks-proxy-agent "^8.0.1"
 
 "@npmcli/arborist@^7.2.1":
-  version "7.2.1"
+  version "7.2.2"
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/fs" "^3.1.0"
@@ -65,7 +65,7 @@
     walk-up-path "^3.0.1"
 
 "@npmcli/config@^8.0.2":
-  version "8.0.2"
+  version "8.0.3"
   dependencies:
     "@npmcli/map-workspaces" "^3.0.2"
     ci-info "^4.0.0"
@@ -272,15 +272,15 @@ builtins@^5.0.0:
   dependencies:
     semver "^7.0.0"
 
-cacache@^18.0.0:
-  version "18.0.0"
+cacache@^18.0.0, cacache@^18.0.1:
+  version "18.0.1"
   dependencies:
     "@npmcli/fs" "^3.1.0"
     fs-minipass "^3.0.0"
     glob "^10.2.2"
     lru-cache "^10.0.1"
     minipass "^7.0.3"
-    minipass-collect "^1.0.2"
+    minipass-collect "^2.0.1"
     minipass-flush "^1.0.5"
     minipass-pipeline "^1.2.4"
     p-map "^4.0.0"
@@ -484,8 +484,8 @@ iconv-lite@^0.6.2:
 ieee754@^1.2.1:
   version "1.2.1"
 
-ignore-walk@^6.0.0:
-  version "6.0.3"
+ignore-walk@^6.0.4:
+  version "6.0.4"
   dependencies:
     minimatch "^9.0.0"
 
@@ -544,8 +544,8 @@ jackspeak@^2.3.5:
   optionalDependencies:
     "@pkgjs/parseargs" "^0.11.0"
 
-json-parse-even-better-errors@^3.0.0:
-  version "3.0.0"
+json-parse-even-better-errors@^3.0.0, json-parse-even-better-errors@^3.0.1:
+  version "3.0.1"
 
 json-stringify-nice@^1.1.4:
   version "1.1.4"
@@ -560,13 +560,13 @@ just-diff@^6.0.0:
   version "6.0.2"
 
 libnpmaccess@^8.0.1:
-  version "8.0.1"
+  version "8.0.2"
   dependencies:
     npm-package-arg "^11.0.1"
     npm-registry-fetch "^16.0.0"
 
 libnpmdiff@^6.0.3:
-  version "6.0.3"
+  version "6.0.4"
   dependencies:
     "@npmcli/arborist" "^7.2.1"
     "@npmcli/disparity-colors" "^3.0.0"
@@ -579,7 +579,7 @@ libnpmdiff@^6.0.3:
     tar "^6.2.0"
 
 libnpmexec@^7.0.4:
-  version "7.0.4"
+  version "7.0.5"
   dependencies:
     "@npmcli/arborist" "^7.2.1"
     "@npmcli/run-script" "^7.0.2"
@@ -594,24 +594,24 @@ libnpmexec@^7.0.4:
     walk-up-path "^3.0.1"
 
 libnpmfund@^5.0.1:
-  version "5.0.1"
+  version "5.0.2"
   dependencies:
     "@npmcli/arborist" "^7.2.1"
 
 libnpmhook@^10.0.0:
-  version "10.0.0"
+  version "10.0.1"
   dependencies:
     aproba "^2.0.0"
     npm-registry-fetch "^16.0.0"
 
 libnpmorg@^6.0.1:
-  version "6.0.1"
+  version "6.0.2"
   dependencies:
     aproba "^2.0.0"
     npm-registry-fetch "^16.0.0"
 
 libnpmpack@^6.0.3:
-  version "6.0.3"
+  version "6.0.4"
   dependencies:
     "@npmcli/arborist" "^7.2.1"
     "@npmcli/run-script" "^7.0.2"
@@ -619,7 +619,7 @@ libnpmpack@^6.0.3:
     pacote "^17.0.4"
 
 libnpmpublish@^9.0.2:
-  version "9.0.2"
+  version "9.0.3"
   dependencies:
     ci-info "^4.0.0"
     normalize-package-data "^6.0.0"
@@ -631,18 +631,18 @@ libnpmpublish@^9.0.2:
     ssri "^10.0.5"
 
 libnpmsearch@^7.0.0:
-  version "7.0.0"
+  version "7.0.1"
   dependencies:
     npm-registry-fetch "^16.0.0"
 
 libnpmteam@^6.0.0:
-  version "6.0.0"
+  version "6.0.1"
   dependencies:
     aproba "^2.0.0"
     npm-registry-fetch "^16.0.0"
 
 libnpmversion@^5.0.1:
-  version "5.0.1"
+  version "5.0.2"
   dependencies:
     "@npmcli/git" "^5.0.3"
     "@npmcli/run-script" "^7.0.2"
@@ -651,9 +651,7 @@ libnpmversion@^5.0.1:
     semver "^7.3.7"
 
 lru-cache@^10.0.1, "lru-cache@^9.1.1 || ^10.0.0":
-  version "10.0.2"
-  dependencies:
-    semver "^7.3.5"
+  version "10.1.0"
 
 lru-cache@^6.0.0:
   version "6.0.0"
@@ -680,10 +678,10 @@ minimatch@^9.0.0, minimatch@^9.0.1, minimatch@^9.0.3:
   dependencies:
     brace-expansion "^2.0.1"
 
-minipass-collect@^1.0.2:
-  version "1.0.2"
+minipass-collect@^2.0.1:
+  version "2.0.1"
   dependencies:
-    minipass "^3.0.0"
+    minipass "^7.0.3"
 
 minipass-fetch@^3.0.0:
   version "3.0.4"
@@ -799,9 +797,9 @@ npm-package-arg@^11.0.0, npm-package-arg@^11.0.1:
     validate-npm-package-name "^5.0.0"
 
 npm-packlist@^8.0.0:
-  version "8.0.0"
+  version "8.0.1"
   dependencies:
-    ignore-walk "^6.0.0"
+    ignore-walk "^6.0.4"
 
 npm-pick-manifest@^9.0.0:
   version "9.0.0"
@@ -831,10 +829,10 @@ npm-registry-fetch@^16.0.0, npm-registry-fetch@^16.1.0:
 npm-user-validate@^2.0.0:
   version "2.0.0"
 
-npm@^10.2.4:
-  version "10.2.4"
-  resolved "https://registry.npmjs.org/npm/-/npm-10.2.4.tgz"
-  integrity sha512-umEuYneVEYO9KoEEI8n2sSGmNQeqco/3BSeacRlqIkCzw4E7XGtYSWMeJobxzr6hZ2n9cM+u5TsMTcC5bAgoWA==
+npm@^10.2.5:
+  version "10.2.5"
+  resolved "https://registry.npmjs.org/npm/-/npm-10.2.5.tgz"
+  integrity sha512-lXdZ7titEN8CH5YJk9C/aYRU9JeDxQ4d8rwIIDsvH3SMjLjHTukB2CFstMiB30zXs4vCrPN2WH6cDq1yHBeJAw==
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/arborist" "^7.2.1"
@@ -847,7 +845,7 @@ npm@^10.2.4:
     "@sigstore/tuf" "^2.2.0"
     abbrev "^2.0.0"
     archy "~1.0.0"
-    cacache "^18.0.0"
+    cacache "^18.0.1"
     chalk "^5.3.0"
     ci-info "^4.0.0"
     cli-columns "^4.0.0"
@@ -861,7 +859,7 @@ npm@^10.2.4:
     ini "^4.1.1"
     init-package-json "^6.0.0"
     is-cidr "^5.0.3"
-    json-parse-even-better-errors "^3.0.0"
+    json-parse-even-better-errors "^3.0.1"
     libnpmaccess "^8.0.1"
     libnpmdiff "^6.0.3"
     libnpmexec "^7.0.4"
@@ -890,7 +888,7 @@ npm@^10.2.4:
     npm-user-validate "^2.0.0"
     npmlog "^7.0.1"
     p-map "^4.0.0"
-    pacote "^17.0.4"
+    pacote "^17.0.5"
     parse-conflict-json "^3.0.1"
     proc-log "^3.0.0"
     qrcode-terminal "^0.12.0"
@@ -921,8 +919,8 @@ p-map@^4.0.0:
   dependencies:
     aggregate-error "^3.0.0"
 
-pacote@^17.0.0, pacote@^17.0.4:
-  version "17.0.4"
+pacote@^17.0.0, pacote@^17.0.4, pacote@^17.0.5:
+  version "17.0.5"
   dependencies:
     "@npmcli/git" "^5.0.0"
     "@npmcli/installed-package-contents" "^2.0.1"
@@ -1252,7 +1250,7 @@ write-file-atomic@^5.0.0, write-file-atomic@^5.0.1:
 yallist@^4.0.0:
   version "4.0.0"
 
-zenn-cli@^0.1.149:
-  version "0.1.149"
-  resolved "https://registry.npmjs.org/zenn-cli/-/zenn-cli-0.1.149.tgz"
-  integrity sha512-vMOoEy15VOVLGSr0eXbz4bfsW4veODUMqA8SAR6h1oKfwe1z/aKW2gWC5wAotzAVHkcv8GqsRT++gSz6+cLkDA==
+zenn-cli@^0.1.150:
+  version "0.1.150"
+  resolved "https://registry.npmjs.org/zenn-cli/-/zenn-cli-0.1.150.tgz"
+  integrity sha512-sf/oKEx8e74CyFQ4jwFMRKDyF9cVkDH3XrU1IhGddBvwpYYrFySZ5kKL3Wn0BVC7EiqVFMvoxjQ+nEGOoBCW9w==
