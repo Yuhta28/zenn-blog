@@ -24,6 +24,22 @@ https://aws.amazon.com/jp/solutions/implementations/centralized-logging-with-ope
 
 [^1]: https://aws.amazon.com/jp/solutions/
 
+# アーキテクチャ紹介
+![](/images/centralized-logging-os/image1.png)
+*ソリューションライブラリより引用*
+
+このソリューションライブラリには対象となるAWSサービスログの選定やアプリケーションログをOpenSearchへ取り込むためのパイプラインを簡単に作成してくれるWebベースのコンソール画面が提供されています。
+
+ライブラリにて提供されているCloudFormationをデプロイすることですぐに作成できます。
+![](/images/centralized-logging-os/image2.png)
+*コンソール画面*
+
+基本的に[実装ガイド](https://docs.aws.amazon.com/ja_jp/solutions/latest/centralized-logging-with-opensearch/solution-overview.html)通りに進めばログ分析パイプラインコンソール画面は作成できますが、OpenSearch自体は自分で作成する必要があります。またカスタムドメインを使って外部からOpenSearchダッシュボードへアクセスできるアクセスプロキシも提供していますがドメインの事前購入も必要です。
+
+字面だけではわかりにくいと思いますので順番に実装ガイドを見ながらユーザーが設定する項目について説明します。
+
+# 実装構築
+
 # 参考文献
 https://it-trend.jp/log_management/article/kind-of-purpose_and_the-log_of_the-log-management
 https://betterstack.com/community/guides/logging/logging-best-practices/
