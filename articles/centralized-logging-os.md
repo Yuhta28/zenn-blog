@@ -38,7 +38,44 @@ https://aws.amazon.com/jp/solutions/implementations/centralized-logging-with-ope
 
 字面だけではわかりにくいと思いますので順番に実装ガイドを見ながらユーザーが設定する項目について説明します。
 
-# 実装構築
+# ソリューション構築
+
+## 事前準備
+
+実装前の準備としてコンソール画面への認証方法を選択する必要があります。
+https://docs.aws.amazon.com/ja_jp/solutions/latest/centralized-logging-with-opensearch/automated-deployment.html
+
+Cognito以外にも自前のOpenID Connectを使った認証基盤実装も可能です。
+
+#### ドキュメント記載の対応OIDCクライアント一覧
+- Authing[^2]
+- Keycloak[^3]
+- ADFS[^4]
+- Auth0[^5]
+
+準備の手間が少ないのはもちろんCognitoですので、私はCognitoで認証基盤を実装しました。ログ分析パイプラインコンソールを既存VPC上で動かすか、新規にVPCを作成してその上で動かすかで対象となるCloudFormationテンプレートが変わりますが新規にVPCを作成したほうが後述のOpenSearch構築も楽になります。
+
+![](/images/centralized-logging-os/image3.png)
+*スタックテンプレート*
+
+このCloudFormationスタックではログイン用のメールアドレス入力欄があるだけですのでログイン時に利用するメールアドレスを入力したらその他はデフォルトのままCloudFormationをデプロイします。
+![](/images/centralized-logging-os/image4.png)
+*ログイン用メールアドレス入力*
+
+デプロイが完了するとメールアドレス宛に一時パスワードが発行されるので出力結果から`WebConsoleUrl`に記載されているURLへアクセスし、メールアドレスとパスワードを入力します。
+![](/images/centralized-logging-os/image5.png)
+
+[^2]: https://www.authing.cn/
+[^3]: https://github.com/aws-samples/keycloak-on-aws
+[^4]: https://learn.microsoft.com/en-us/windows-server/identity/ad-fs/ad-fs-overview
+[^5]: https://auth0.com/
+
+コンソール画面が表示されましたら事前準備完了です。
+
+## OpenSearch構築
+次にログ集約用のOpenSearchを構築します。
+この辺の構築手順はソリューションライブラリのドキュメントでは省略されていましたのでOpenSearchに不慣れな人はつまずくポイントになると思います。
+
 
 # 参考文献
 https://it-trend.jp/log_management/article/kind-of-purpose_and_the-log_of_the-log-management
