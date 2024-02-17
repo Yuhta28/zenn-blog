@@ -76,6 +76,21 @@ Cognito以外にも自前のOpenID Connectを使った認証基盤実装も可�
 次にログ集約用のOpenSearchを構築します。
 この辺の構築手順はソリューションライブラリのドキュメントでは省略されていましたのでOpenSearchに不慣れな人はつまずくポイントになると思います。
 
+:::message alert
+OpenSearchは高スペックなEC2インスタンスを複数台動かすようなものですので、使い終わったら必ずOpenSearchの削除を忘れないようにしましょう。
+:::
+
+OpenSearchのコンソール画面からドメインの作成を選択後、任意のドメイン名を決めます。ドメインの作成方法と開発テンプレートはそれぞれ「標準作成」、「開発/テスト」を選択します。
+
+![](/images/centralized-logging-os/image6.png)
+
+デプロイオプションに関して新規にVPCを作成した人は2個1組みのサブネットが作成されていますので、アベイラビリティゾーン2-AZを選択できるようにスタンバイ開発が無効のドメインを選びます。
+
+データノードはノードの数を2の倍数に合わせる以外はデフォルトの設定で問題ありません。
+しばらくスクロールするとネットワーク設定の項目がありますが、ここはVPC
+
+![](/images/centralized-logging-os/image7.png)
+*利用AZは2個なのでデータノードの数も2の倍数に変更*
 
 # 参考文献
 https://it-trend.jp/log_management/article/kind-of-purpose_and_the-log_of_the-log-management
