@@ -3,7 +3,7 @@ title: "OpenSearchを使用した統合ログ管理基盤を構築してみた"
 emoji: "🪵"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["aws","log","opensearch"]
-published: false
+published: true
 ---
 
 # 序論
