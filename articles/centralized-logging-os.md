@@ -70,7 +70,8 @@ Cognito以外にも自前のOpenID Connectを使った認証基盤実装も可�
 [^4]: https://learn.microsoft.com/en-us/windows-server/identity/ad-fs/ad-fs-overview
 [^5]: https://auth0.com/
 
-コンソール画面が表示されましたら事前準備完了です。
+また後述のアクセスプロキシ経由でOpenSearchダッシュボードへアクセスする場合、カスタムドメインとSSL証明書が必要になります。
+**Route53やドメインレジストリサイトでドメインを入手し、ACMでSSL証明書を発行しておいてください。**
 
 ## OpenSearch構築
 次にログ集約用のOpenSearchを構築します。
@@ -84,13 +85,62 @@ OpenSearchのコンソール画面からドメインの作成を選択後、任�
 
 ![](/images/centralized-logging-os/image6.png)
 
-デプロイオプションに関して新規にVPCを作成した人は2個1組みのサブネットが作成されていますので、アベイラビリティゾーン2-AZを選択できるようにスタンバイ開発が無効のドメインを選びます。
-
-データノードはノードの数を2の倍数に合わせる以外はデフォルトの設定で問題ありません。
-しばらくスクロールするとネットワーク設定の項目がありますが、ここはVPC
+デプロイオプションに関して新規にVPCを作成した人は2個1組のサブネットが作成されていますので、アベイラビリティゾーン2-AZを選択できるようにスタンバイ開発が無効のドメインを選びます。
 
 ![](/images/centralized-logging-os/image7.png)
 *利用AZは2個なのでデータノードの数も2の倍数に変更*
+
+
+データノードはノードの数を2の倍数に合わせる以外はデフォルトの設定で問題ありません。
+しばらくスクロールするとネットワーク設定の項目がありますが、ここはVPCを指定し、IPアドレスタイプをIPv4のみにします。
+CloudFormationで新規VPCの作成したら対応するサブネットとセキュリティグループも一緒に作られており、サブネットはプライベートサブネット、セキュリティグループは`OpenSearchSecurityGroup`と名付けられているものを選択します。
+
+![](/images/centralized-logging-os/image8.png)
+*他のサブネットを指定するとOpenSearchダッシュボードへアクセスできないので注意*
+
+きめ細かなアクセスコントロールではOpenSearchダッシュボードへアクセスするマスターユーザーになりますので、有効化しログイン用のマスターユーザーを作成します。
+![](/images/centralized-logging-os/image9.png)
+*パスワードを手元に控えること忘れずに*
+
+合わせてアクセスポリシーも`きめ細かなアクセスコントロールのみを使用`に変更します。
+![](/images/centralized-logging-os/image10.png)
+
+残りはデフォルトの設定で問題ありませんので、OpenSearchの作成をクリックします。10分ほどでOpenSearchの作成が完了します。
+
+## OpenSearchドメインのインポート
+
+https://docs.aws.amazon.com/ja_jp/solutions/latest/centralized-logging-with-opensearch/getting-started.html
+ここからはソリューションライブラリのドキュメント手順に戻って事前準備で作成したログ分析パイプラインコンソールとOpenSearchの連携を行ないます。
+コンソール画面トップから`Import domain`をクリックします。ドロップダウンリストから作成したOpenSearchを選択します。ネットワーク設定は`Automatic`を選択すれば各種必要なネットワーキング設定を自動で実装してくれます。
+お好みでタグ付けなど設定したらOpenSearchドメインのインポートを実行します。
+
+## アクセスプロキシ作成
+
+作成したOpenSearchはVPCのプライベートサブネット内に配置されているため通常外からアクセスはできません。ドメイン画面上部の`Access Proxy`を有効化する必要があります。
+![](/images/centralized-logging-os/image11.png)
+*作成前はEnableと表記されています*
+
+アクセスプロキシ作成画面へ移行したら配置サブネットの指定(表題通りパブリックサブネットを指定)、セキュリティグループを指定します。
+セキュリティグループは`ProxySecurityGroup`と名付けられたセキュリティグループを指定します。
+
+ドメインは事前準備で用意したカスタムドメイン、ロードバランサーSSL証明書はACMで発行したSSL証明書を選択します。
+
+作成するとアクセスプロキシ用のAWSリソースを作成するCloudFormationがデプロイされ、関連リソースを作成してくれます。
+
+![](/images/centralized-logging-os/image12.png)
+*アクセスプロキシ作成リソース*
+
+アクセスプロキシタブを確認すると設定情報が参照できるようになり、ALBのDNS名をカスタムドメインのCNAMEレコードに登録します。
+![](/images/centralized-logging-os/image13.png)
+*DNS名をコピー*
+
+![](/images/centralized-logging-os/image14.png)
+*サンプル画像はCloudFlare DNS*
+
+カスタムドメインでOpenSearchダッシュボードへアクセスできましたらアクセスプロキシの作成がうまくいったことになります。
+
+![](/images/centralized-logging-os/image15.png)
+
 
 # 参考文献
 https://it-trend.jp/log_management/article/kind-of-purpose_and_the-log_of_the-log-management
