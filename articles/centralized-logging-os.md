@@ -137,10 +137,87 @@ https://docs.aws.amazon.com/ja_jp/solutions/latest/centralized-logging-with-open
 ![](/images/centralized-logging-os/image14.png)
 *サンプル画像はCloudFlare DNS*
 
-カスタムドメインでOpenSearchダッシュボードへアクセスできましたらアクセスプロキシの作成がうまくいったことになります。
+カスタムドメインでOpenSearchダッシュボードへアクセスできるようになります。
 
 ![](/images/centralized-logging-os/image15.png)
 
+## ログ取り込み
+
+OpenSearchにログを取り込んでいきます。
+AWSサービスのログを取り込みたい場合、`AWS Service Log Analytics Pipeline`にチェックを入れてパイプラインの作成を選択します。
+
+![](/images/centralized-logging-os/image16.png)
+
+取り込めるAWSサービスログは図の通りです。ドキュメントではCloudTrailを例に挙げているのでCloudTrailのログを取り込んでみます。
+
+![](/images/centralized-logging-os/image17.png)
+*以降のステップはデフォルトでOK*
+
+ログパイプラインの作成も裏でCloudFormationがデプロイされ、ログをOpenSearchへ転送するAWSリソースが作成されます。パイプライン作成時に設定をデフォルト値のまま進めましたらOpenSearchのサンプルダッシュボードもセットで作成されます。
+
+![](/images/centralized-logging-os/image18.png)
+*パイプラインテンプレート(すごい複雑)*
+
+## OpenSearchダッシュボードアクセス
+
+初めてOpenSearchへアクセスする際、テナントの選択を聞かれますがGlobalテナントを選択してください。
+Globalテナントであることを確認したら左サイドバーからOpenSearch Dashboards > DashboardsでCloudTrailログ用のダッシュボードを確認します。
+
+![](/images/centralized-logging-os/image19.png)
+*テナント確認忘れず*
+
+サンプルダッシュボードのおかげでログを取り込むだけですぐに分析結果を可視化できます。
+
+![](/images/centralized-logging-os/image20.png)
+*CloudTrailログダッシュボード*
+
+AWSサービスに応じたログ別のサンプルダッシュボードがありますのでログ毎の分析も容易に行なえます。
+
+![](/images/centralized-logging-os/image21.png)
+*ALBアクセスログダッシュボード*
+
+
+## アプリケーションログ取り込み
+AWSサービスのログ以外にもサーバー内で生成されるログも取り組めるパイプラインも提供されています。
+アプリケーションログのログソースはEC2、EKS、S3などが選べます。EC2やEKSの場合、Fluent Bit[^6]を使ってログ転送します。
+
+![](/images/centralized-logging-os/image22.png)
+*アプリケーションログ一覧*
+
+EC2内で生成されるログをOpenSearchに取り組んでみます。事前にEC2 Instance Groupを作成する必要があります。
+
+https://docs.aws.amazon.com/ja_jp/solutions/latest/centralized-logging-with-opensearch/log-sources.html#amazon-ec2-instance-group
+
+ドキュメントによると必須要件としてSSMエージェントがインストールされていること、セッションマネージャーでEC2へアクセスできること、OpenSSL1.1がインストールされていることなどが挙げられています。
+必須要件を満たしたEC2を用意すればEC2 Instance Group作成画面でFluent BitエージェントがインストールされたEC2が表示されるので対象グループに含めてグループ作成します。
+
+![](/images/centralized-logging-os/image23.png)
+
+またEC2のログ転送時にOpenSearchにどのようにパースするのか定義するLog Configの設定も必要になります。
+
+![](/images/centralized-logging-os/image24.png)
+*Log Configs*
+
+EC2 Instance GroupとLog Configの作成ができましたらアプリケーションログのパイプライン作成からEC2をソース元にし、転送対象ログを選択します。
+
+![](/images/centralized-logging-os/image25.png)
+*サンプルにApacheのアクセスログを転送*
+
+ログパイプラインの作成が完了しましたらOpenSearchダッシュボードへアクセスし、アプリケーションログ用のログダッシュボードが作成されていることを確認します。
+
+![](/images/centralized-logging-os/image26.png)
+*Apacheアクセスログ用ダッシュボード*
+
+
+[^6]: https://fluentbit.io/
+
+
+# 所感
+OpenSearchを使った統合ログ管理基盤を構築してみました。AWSにはSIEM on OpenSearch[^7]を使ったログソリューションがあり、以前社内でも検証したことがあります。あちらと比べるとやや機能が物足りない部分がありますが、アプリケーションログのログ分析パイプライン機能をWebコンソールとして提供してくれるのでAWS以外のログの分析をしたいときに便利かなという印象でした。
+ドキュメントがややわかりにくい部分があり最初の構築につまずきましたが、一度構築すれば他のログも簡単に取り込めますので皆さんもお試しで実装してみてはいかがでしょうか。
+
+
+[^7]: https://github.com/aws-samples/siem-on-amazon-opensearch-service/blob/main/README_ja.md
 
 # 参考文献
 https://it-trend.jp/log_management/article/kind-of-purpose_and_the-log_of_the-log-management
