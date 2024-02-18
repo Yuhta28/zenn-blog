@@ -100,7 +100,7 @@ CloudFormationで新規VPCの作成したら対応するサブネットとセキ
 
 きめ細かなアクセスコントロールではOpenSearchダッシュボードへアクセスするマスターユーザーになりますので、有効化しログイン用のマスターユーザーを作成します。
 ![](/images/centralized-logging-os/image9.png)
-*パスワードを手元に控えること忘れずに*
+*パスワードを手元に控えることお忘れず*
 
 合わせてアクセスポリシーも`きめ細かなアクセスコントロールのみを使用`に変更します。
 ![](/images/centralized-logging-os/image10.png)
@@ -178,7 +178,7 @@ AWSサービスに応じたログ別のサンプルダッシュボードがあ�
 
 
 ## アプリケーションログ取り込み
-AWSサービスのログ以外にもサーバー内で生成されるログも取り組めるパイプラインも提供されています。
+AWSサービスのログ以外にサーバー内で生成されるログも取り組めるパイプラインも提供されています。
 アプリケーションログのログソースはEC2、EKS、S3などが選べます。EC2やEKSの場合、Fluent Bit[^6]を使ってログ転送します。
 
 ![](/images/centralized-logging-os/image22.png)
@@ -193,7 +193,7 @@ https://docs.aws.amazon.com/ja_jp/solutions/latest/centralized-logging-with-open
 
 ![](/images/centralized-logging-os/image23.png)
 
-またEC2のログ転送時にOpenSearchにどのようにパースするのか定義するLog Configの設定も必要になります。
+またEC2のログをOpenSearchに転送する際、どのようにパースするのか定義するLog Configの設定も必要になります。
 
 ![](/images/centralized-logging-os/image24.png)
 *Log Configs*
