@@ -15,7 +15,7 @@ https://terramate.io/
 
 https://github.com/terramate-io/terramate
 
-一見、Terraformの実行を代行するTerragrunt[^1]のようなラッパーツールかと思いましたが、Terramateは単なるラッパーツールではなくオーケストレーションツールとしてIaC開発を楽にしてくれる様々な機能が提供されていましたので、Terramateを使ったIaC開発について紹介いたします。
+一見、Terraformの実行を代行するTerragrunt[^1]のようなラッパーツールかと思いましたが、Terramateは単なるラッパーツールではなくオーケストレーションツールとしてIaC開発を楽にしてくれるさまざまな機能が提供されていましたので、Terramateを使ったIaC開発について紹介いたします。
 
 :::message alert
 オープンソース版に限定した機能の紹介になります。
@@ -40,9 +40,9 @@ DeepL訳:) Terramate CLIは、Terraform、OpenTofu、Terragrunt、Kubernetes、P
 
 > Terraform provides the concept of modules to allow reusing code, but modules on their own do not provide isolation on plan and apply time. As long as you keep a centralized state for all your Terraform code, all modules used in this code will always be planned and applied.
 
-DeepL訳:) Terraformはコードの再利用を可能にするためにモジュールの概念を提供していますが、モジュール単体では計画・適用時の分離はできません。すべてのTerraformコードの状態を一元管理している限り、このコードで使われているすべてのモジュールは常に計画・適用されます。
+DeepL訳:) Terraformはコードの再利用を可能にするためモジュールの概念を提供していますが、モジュール単体では計画・適用時の分離はできません。すべてのTerraformコードの状態を一元管理している限り、このコードで使われているすべてのモジュールは常に計画・適用されます。
 
-TerraformでIaC開発を進めていくとstateファイルが肥大化し、`terraform plan`や`terraform apply`に時間がかかってしまうことが多々あると思います。stateファイルを分割し、モジュールとして共通化することで複数環境で使いまわせるようにすることをTerraform開発元のHashiCorp社も推奨しております。[^2]
+TerraformでIaC開発を進めていくとStateファイルが肥大化し、`terraform plan`や`terraform apply`に時間がかかってしまうことが多々あると思います。Stateファイルを分割し、モジュールとして共通化し、複数環境で使いまわせるにようにすることをTerraform開発元のHashiCorp社も推奨しております。[^2]
 
 ```terminal
 tree complete-module/
@@ -70,6 +70,20 @@ tree complete-module/
 もしくは前述のTerragruntを使ってラッピングすることでStateファイルを細かく分離するという方法があります。
 https://zenn.dev/ring_belle/articles/terragrunt-start
 
-Terramateでは分離した個々のStateファイルのことをStacksと表現しています。
+Terramateでは分離した個々のStateファイルのことをStacksと表現していますが、小さく独立したStacksに分離したことに対するトレードオフについて創業者はブログで以下のように述べています。
+
+> But splitting your code into smaller independent units, that we call stacks, has some significant tradeoffs and it will require you to:
+> - Share data and code across all stacks to keep the code DRY (Don’t Repeat Yourself).
+> - Orchestrate your stacks so that not all stacks are executed all the time, but only stacks that have changed within a specific pull request (PR) will be executed (planned/applied).
+
+DeepL:) しかし、コードをスタックと呼ばれる小さな独立した単位に分割するには、いくつかの重大なトレードオフがある：
+- すべてのスタックでデータとコードを共有し、コードをDRY（Don't Repeat Yourself）に保つ。
+- すべてのスタックが常に実行されるのではなく、特定のプルリクエスト（PR）内で変更されたスタックだけが実行（計画／適用）されるように、スタックをオーケストレーションする。
+
+私も経験があるのでわかりますが、CI/CDパイプライン上にTerraform実行基盤を乗せて、`terraform apply`すると更新されていないモジュールに対してもデプロイが実行されてしまい、完了までの時間が段々と長くなってきます。TerramateのTerragruntとの大きな違いは、Gitと連携することでブランチ単位で行われた変更を検出し、必要なStateのみデプロイすることで実行時間の短縮を目的としていること、Terraformのラッパーではなく任意のコマンドを実行できることです。(これによりTerraform以外のIaCツールのコマンドも実行できます。)
+
+TerramateとTerragruntの違いについては創業者が同じように詳しくブログで解説していますので詳細を知りたい人はこちらの記事をご覧ください。
+
+https://blog.terramate.io/terramate-and-terragrunt-f27f2ec4032f
 
 [^2]: https://developer.hashicorp.com/terraform/language/modules/develop/structure
