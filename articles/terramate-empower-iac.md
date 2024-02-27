@@ -108,7 +108,7 @@ $ terramate install-completions
 
 https://terramate.io/docs/cli/getting-started/
 
-事前にgit[^4]とTerraform[^5]をローカルマシンで実行できるようにしておいてください。
+事前にGit[^4]とTerraform[^5]をローカルマシンで実行できるようにしておいてください。
 
 [^3]: https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
 [^4]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
