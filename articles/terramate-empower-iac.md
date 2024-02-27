@@ -87,3 +87,29 @@ TerramateとTerragruntの違いについては創業者が同じように詳し�
 https://blog.terramate.io/terramate-and-terragrunt-f27f2ec4032f
 
 [^2]: https://developer.hashicorp.com/terraform/language/modules/develop/structure
+
+# Terramate使い方
+Terramateを実際に使ってみたいと思います。
+インストール手順は[こちら](https://terramate.io/docs/cli/installation)です。MacならHomebrew経由でインストールできます。
+
+```terminal
+$ brew install terramate
+$ terramate version
+0.4.5
+```
+
+またデフォルトシェルがbash,zsh,fishの場合コマンドの自動補完が使えます。
+
+```terminal
+$ terramate install-completions
+```
+
+公式のクイックスタートではTerraformのnullリソース[^3]を作成する複数のTerraformに対して一括デプロイを実行します。nullリソースならGitHubとの連携やAWSやGoogle Cloudの認証を使う必要がなくすぐに始められます。
+
+https://terramate.io/docs/cli/getting-started/
+
+事前にgit[^4]とTerraform[^5]をローカルマシンで実行できるようにしておいてください。
+
+[^3]: https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource
+[^4]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+[^5]: https://developer.hashicorp.com/terraform/install
