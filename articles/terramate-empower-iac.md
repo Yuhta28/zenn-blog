@@ -46,7 +46,7 @@ DeepL訳:) Terramate CLIは、Terraform、OpenTofu、Terragrunt、Kubernetes、P
 
 DeepL訳:) Terraformはコードの再利用を可能にするためモジュールの概念を提供していますが、モジュール単体では計画・適用時の分離はできません。すべてのTerraformコードの状態を一元管理している限り、このコードで使われているすべてのモジュールは常に計画・適用されます。
 
-TerraformでIaC開発を進めていくとstateファイルが肥大化し、`terraform plan`や`terraform apply`に時間がかかってしまうことが多々あると思います。stateファイルを分割し、モジュールとして共通化し、複数環境で使いまわせるにようにすることをTerraform開発元のHashiCorp社も推奨しております。[^2]
+TerraformでIaC開発を進めていくとstateファイルが肥大化し、`terraform plan`や`terraform apply`に時間がかかってしまうことが多々あると思います。stateファイルを分割しモジュールとして共通化し、複数環境で使いまわせるようにすることをTerraform開発元のHashiCorp社も推奨しております。[^2]
 
 ```terminal
 tree complete-module/
@@ -80,13 +80,14 @@ Terramateでは分離した個々のstateファイルのことを[Stacks(以下�
 > - Share data and code across all stacks to keep the code DRY (Don’t Repeat Yourself).
 > - Orchestrate your stacks so that not all stacks are executed all the time, but only stacks that have changed within a specific pull request (PR) will be executed (planned/applied).
 
-DeepL:) しかし、コードをスタックと呼ばれる小さな独立した単位に分割するには、いくつかの重大なトレードオフがある：
+DeepL:) しかし、コードをスタックと呼ばれる小さな独立した単位に分割するには、いくつかの重大なトレードオフがある。
 - すべてのスタックでデータとコードを共有し、コードをDRY（Don't Repeat Yourself）に保つ。
-- すべてのスタックが常に実行されるのではなく、特定のプルリクエスト（PR）内で変更されたスタックだけが実行（計画／適用）されるように、スタックをオーケストレーションする。
+- すべてのスタックが常に実行されるのではなく、特定のPR内で変更されたスタックだけが実行（計画／適用）されるように、スタックをオーケストレーションする。
 
-私も経験があるのでわかりますが、CI/CDパイプライン上にTerraform実行基盤を乗せて、`terraform apply`すると更新されていないモジュールに対してもデプロイが実行されてしまい、完了までの時間が段々と長くなってきます。TerramateのTerragruntとの大きな違いは、Gitと連携することでブランチ単位で行われた変更を検出し、必要なstateのみデプロイすることで実行時間の短縮を目的としていること、Terraformのラッパーではなく任意のコマンドを実行できることです。(これによりTerraform以外のIaCツールのコマンドも実行できます。)
+私も経験があるのでわかりますが、CI/CDパイプライン上にTerraform実行基盤を乗せて、`terraform apply`を実行すると更新されていないモジュールに対してもデプロイが実行されてしまい、完了までの時間が段々と長くなってしまいます。
+TerramateとTerragruntの大きな違いは、Gitと連携することでブランチ単位で行われた変更を検出し、必要なstateのみをデプロイすることで実行時間の短縮を目的としていること、Terraformのラッパーではなく任意のコマンドを実行できることです。(これによりTerraform以外のIaCツールのコマンドも実行できます。)
 
-TerramateとTerragruntの違いについては創業者が同じように詳しくブログで解説していますので詳細を知りたい人はこちらの記事をご覧ください。
+TerramateとTerragruntの違いは創業者が詳しくブログにて解説していますので詳細を知りたい人はこちらの記事をご覧ください。
 
 https://blog.terramate.io/terramate-and-terragrunt-f27f2ec4032f
 
@@ -179,7 +180,7 @@ stacks/second
 
 ### 差分検知
 
-TerramateはGitの変更履歴をもとに差分検知を行ない、リポジトリ内の最新コミットで変更されたスタックのみを検出できます。
+TerramateはGitの変更履歴を元に差分検知を行ない、リポジトリ内の最新コミットで変更されたスタックのみを検出できます。
 
 ```bash
 #最初のコミットから2回目のコミットまでの変更した部分のみを検出
@@ -190,7 +191,7 @@ stacks/second
 
 ### コード生成
 
-TerramateにはスタックをDRY[^9]に保てるようにするコード生成機能が提供されています。例えば作成した2つのスタックをそれぞれローカルマシンの中にTerraform stateファイルを生成できるようにするローカルバックエンドを設定したいとします。
+TerramateにはスタックをDRY[^9]に保てるコード生成機能が提供されています。例えば作成した2つのスタックをそれぞれローカルマシンの中にTerraform stateファイルを生成できるようにするローカルバックエンドを設定したいとします。
 
 `stacks`ディレクトリにTerraformのバックエンドを指定する`backend.tm.hcl`を作成し、生成コマンドを実行することで自動的に各スタック配下にTerraformのバックエンド設定を記述したTerraform stateファイルが生成されます。
 
@@ -258,10 +259,10 @@ Terraformのバックエンド設定を記述したのでそれぞれのスタ�
 `terramate run`でスタック内のコマンドを実行できる機能が提供されており、個別に`terraform init`をする必要がなくなります。
 
 :::message
-Terragruntでもできるのでマッパーコマンドと思われるかもしれませんが、Terraform以外のコマンドも実行することが可能です。
+Terragruntでもできるのでマッパーコマンドと思われるかもしれませんが、Terraform以外のコマンドも実行できます。
 :::
 
-`terramate run`を実行する前にtfstateファイル各種をGitリポジトリにコミットしないようにするために、`.gitignore`ファイルを事前に作成しておきます。
+`terramate run`を実行する前に、`.gitignore`ファイルを作成してtfstateファイル各種をGitリポジトリにコミットしないようにします。
 
 ```text:.gitignore
 .terraform
