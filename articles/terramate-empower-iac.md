@@ -3,7 +3,7 @@ title: "Terramateを使えばIaCは豊かになれるのか?"
 emoji: "🧑🏻‍🤝‍🧑🏻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["terramate","terraform","aws","iac"]
-published: false
+published: true
 ---
 
 # 序論
@@ -85,7 +85,7 @@ DeepL:) しかし、コードをスタックと呼ばれる小さな独立した
 - すべてのスタックが常に実行されるのではなく、特定のPR内で変更されたスタックだけが実行（計画／適用）されるように、スタックをオーケストレーションする。
 
 私も経験があるのでわかりますが、CI/CDパイプライン上にTerraform実行基盤を乗せて、`terraform apply`を実行すると更新されていないモジュールに対してもデプロイが実行されてしまい、完了までの時間が段々と長くなってしまいます。
-TerramateとTerragruntの大きな違いは、Gitと連携することでブランチ単位で行われた変更を検出し、必要なstateのみをデプロイすることで実行時間の短縮を目的としていること、Terraformのラッパーではなく任意のコマンドを実行できることです。(これによりTerraform以外のIaCツールのコマンドも実行できます。)
+TerramateとTerragruntの大きな違いは、Gitと連携しブランチ単位で行われた変更を検出し、必要なstateのみをデプロイすることで実行時間の短縮を目的としていること、Terraformのラッパーではなく任意のコマンドを実行できることです。(これによりTerraform以外のIaCツールのコマンドも実行できます。)
 
 TerramateとTerragruntの違いは創業者が詳しくブログにて解説していますので詳細を知りたい人はこちらの記事をご覧ください。
 
@@ -262,7 +262,7 @@ Terraformのバックエンド設定を記述したのでそれぞれのスタ�
 Terragruntでもできるのでマッパーコマンドと思われるかもしれませんが、Terraform以外のコマンドも実行できます。
 :::
 
-`terramate run`を実行する前に、`.gitignore`ファイルを作成してtfstateファイル各種をGitリポジトリにコミットしないようにします。
+`terramate run`を実行する前に、`.gitignore`ファイルを作成してtfstateファイル各種をGitリポジトリへコミットすることを防ぎます。
 
 ```text:.gitignore
 .terraform
@@ -481,3 +481,10 @@ Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
 [^9]: https://e-words.jp/w/DRY%E5%8E%9F%E5%89%87.html
 
 # 所感
+
+Terramateの基本コンセプトとクイックスタートについて紹介しました。前職でTerraformのCI/CDパイプラインを構築した時はGitHub Actions上でTerraformを実行するようにしましたが、変更差分のあったTerraformモジュールだけTerraformデプロイできるようにワークフロー内でif文で分岐する作りこみがあり大変だった記憶があります。
+
+Terramateを使ったオーケストレーションなら実行時間の短縮と運用コスト削減を実現でき、複数のIaCツールを一つのリポジトリの中でまとめられるようにもなります。
+
+まだ開発段階のツールなので不足している部分もありすぐの業務利用は難しいですがこれからの発展に期待したいところです。
+
