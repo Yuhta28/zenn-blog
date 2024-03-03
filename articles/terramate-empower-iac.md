@@ -482,7 +482,7 @@ Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
 
 # 所感
 
-Terramateの基本コンセプトとクイックスタートについて紹介しました。前職ではTerraformのCI/CDパイプラインを構築した時はGitHub Actions上でTerraformを実行するようにしましたが、変更差分のあったTerraformモジュールだけTerraformデプロイできるようにワークフロー内でif文で分岐する作りこみがあり大変だった記憶があります。
+Terramateの基本コンセプトとクイックスタートについて紹介しました。前職でTerraformのCI/CDパイプラインを構築した時はGitHub Actionsを使用しましたが、変更差分のあったTerraformモジュールだけデプロイできるようにワークフロー内でif文で分岐する作りこみがあり大変だった記憶があります。
 
 Terramateを使ったオーケストレーションなら実行時間の短縮と運用コスト削減を実現でき、複数のIaCツールを1つのリポジトリの中でまとめられるようにもなります。
 
