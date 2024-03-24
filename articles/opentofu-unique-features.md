@@ -27,5 +27,16 @@ https://opentofu.org/blog/help-us-test-opentofu-1-7-0-alpha1/
 
 [^2]: 2024年3月時点
 
+# 追加機能について
+1.7では新機能や新しい関数などTerraformにはないものが組み込まれています。
+
+### 一例
+
+- Stateファイル暗号化
+- Stateファイルからのリソースを削除するremovedブロック
+- 外だしファイルに変数を埋め込む`templatestring`関数
+- IPアドレスが定義付けられたCIDR範囲内に含まれているかどうか判定する`cidrcontains`関数
+
+
 # 参考文献
 https://zenn.dev/yukionodera/articles/opentofu-ga-v1-6
