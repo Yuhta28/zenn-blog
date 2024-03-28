@@ -244,7 +244,7 @@ terraform {
 RemovedブロックはOpenTofuで作成されたリソースをStateファイルから除外してくれます。
 
 Terraformにも`terraform state rm ~`でStateファイルからリソースを除外してくれるサブコマンドはあります。
-ですが、`terraform state rm ~`は一つのリソースしか削除できず複数のリソースを削除してくれません。
+ですが、`terraform state rm ~`は1つのリソースしか削除できず複数のリソースを削除してくれません。
 
 ```terminal
 $ terraform state list ← Stateファイルに複数リソースを管理している。
@@ -268,7 +268,7 @@ Removedブロックを使えば複数のリソースを一括で除外してく�
 1. 設定ファイルからリソース記述を削除する
 2. Stateファイルから除外したいリソースを`removed`ブロックで囲む
 
-例として以下二つのリソースを作成していたとします。
+例として以下2つのリソースを作成していたとします。
 
 ```hcl:resources.tf
 resource "aws_s3_bucket" "example" {
@@ -281,7 +281,7 @@ resource "local_file" "test" {
 }
 ```
 
-`resources.tf`を削除した後に`removed.tf`に除外リソースを指定します。
+`resources.tf`ファイルを削除し、`removed.tf`に除外リソースを指定します。
 
 ```hcl:removed.tf
 removed {
