@@ -42,7 +42,7 @@ https://opentofu.org/blog/help-us-test-opentofu-1-7-0-alpha1/
 ### 主な追加機能
 
 - Stateファイルの暗号化
-- removedブロック
+- Removedブロック
 - 独自の組み込み関数
 
 Stateファイルの暗号化は1.7の大きな目玉として注目されており、すでに公式ドキュメントも充実しています。
@@ -64,7 +64,7 @@ OpenTofuの階層構造はシンプルにしており、Amazon S3を作成する
 
 ```terminal
 $ tree
-├── encrypt.tf　→ 今回の肝
+├── encrypt.tf　← 暗号化設定ファイル
 ├── init.tf
 └── s3.tf
 ```
@@ -113,7 +113,7 @@ terraform {
 
 `tofu apply`を実行し生成された`terraform.tfstate`を見ると中身が暗号化されております。
 
-```json
+```json:terraform.tfstate
 {
   "meta":{
     "key_provider.pbkdf2.basic":"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -155,12 +155,12 @@ resource "aws_s3_bucket" "example" {
 
 ### AWS KMSの場合
 
-AWS KMSを使った暗号化について紹介します。KMSを使う場合カスタマー管理型のキーを作成します。
+AWS KMSを使った暗号化について紹介します。KMSを使う場合カスタマー管理型のキーを作成し、そのキーを指定します。
 ![](/images/opentofu-unique-features/image1.png)
 *カスタマーキー作成*
 
 
-`key_provider`識別子と中のプロパティが異なりますので注意です。
+`key_provider`識別子と中のプロパティが変わりますので注意です。
 
 ```hcl:encrypt.tf
 terraform {
@@ -180,7 +180,7 @@ terraform {
 }
 ```
 
-```json
+```json:terraform.tfstate
 {
   "meta":{
     "key_provider.aws_kms.basic":"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
@@ -192,17 +192,19 @@ terraform {
 
 # 既存Stateファイルの暗号化
 
-既に平文で保存されているStateファイルを暗号化する方法もOpenTofuは提供しています。
+すでに平文で保存されているStateファイルを暗号化する方法もOpenTofuは提供しています。
 先ほどの`encrypt.tf`の`state`ブロックに以下を追加します。
 
 ```hcl:encrypt.tf
 terraform {
   encryption {
-    key_provider "pbkdf2" "passphrase" {
-      passphrase = "correct-horse-battery-staple" #最低でも16文字以上
+    key_provider "aws_kms" "basic" {
+      kms_key_id = "<your-own-customer-managed-key-id>"
+      region     = "ap-northeast-1"
+      key_spec   = "AES_256"
     }
     method "aes_gcm" "my_method" {
-      keys = key_provider.pbkdf2.passphrase
+      keys = key_provider.aws_kms.basic
     }
     state {
       method = method.aes_gcm.my_method
@@ -219,11 +221,13 @@ terraform {
 ```hcl:encrypt.tf
 terraform {
   encryption {
-    key_provider "pbkdf2" "passphrase" {
-      passphrase = "correct-horse-battery-staple" #最低でも16文字以上
+    key_provider "aws_kms" "basic" {
+      kms_key_id = "<your-own-customer-managed-key-id>"
+      region     = "ap-northeast-1"
+      key_spec   = "AES_256"
     }
     method "aes_gcm" "my_method" {
-      keys = key_provider.pbkdf2.passphrase
+      keys = key_provider.aws_kms.basic
     }
     state {
       fallback {
@@ -234,6 +238,101 @@ terraform {
   }
 }
 ```
+
+# Removed block
+
+RemovedブロックはOpenTofuで作成されたリソースをStateファイルから除外してくれます。
+
+Terraformにも`terraform state rm ~`でStateファイルからリソースを除外してくれるサブコマンドはあります。
+ですが、`terraform state rm ~`は一つのリソースしか削除できず複数のリソースを削除してくれません。
+
+```terminal
+$ terraform state list ← Stateファイルに複数リソースを管理している。
+aws_s3_bucket.example
+local_file.test
+
+$ terraform state rm  aws_s3_bucket.example local_file.text                                                                                    
+Removed aws_s3_bucket.example
+Successfully removed 1 resource instance(s). ← 最初のリソースしか削除してくれない。
+
+$ terraform state list
+local_file.test
+```
+
+Removedブロックを使えば複数のリソースを一括で除外してくれます。
+
+### Removedブロック使い方
+
+手順は以下の通りです。
+
+1. 設定ファイルからリソース記述を削除する
+2. Stateファイルから除外したいリソースを`removed`ブロックで囲む
+
+例として以下二つのリソースを作成していたとします。
+
+```hcl:resources.tf
+resource "aws_s3_bucket" "example" {
+  bucket = "yuta-opentofu-test-bucket"
+}
+
+resource "local_file" "test" {
+  content  = "Hello world!"
+  filename = "test.txt"
+}
+```
+
+`resources.tf`を削除した後に`removed.tf`に除外リソースを指定します。
+
+```hcl:removed.tf
+removed {
+  from = local_file.test
+}
+removed {
+  from = aws_s3_bucket.example
+}
+```
+
+`tofu plan`を実行するとStateファイルから除外しますが、リソースを削除しないメッセージが表示されます。
+
+```terminal
+$ tofu plan
+
+OpenTofu used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  . forget
+
+saOpenTofu will perform the following actions:
+
+  # aws_s3_bucket.example will be removed from the OpenTofu state but will not be destroyed ← Stateファイルから除外するがリソースを削除しない。
+  . resource "aws_s3_bucket" "example" {
+    arn                         = "arn:aws:s3:::yuta-opentofu-test-bucket"
+    bucket                      = "yuta-opentofu-test-bucket"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # local_file.test will be removed from the OpenTofu state but will not be destroyed ← Stateファイルから除外するがリソースを削除しない。
+  . resource "local_file" "test" {
+    content              = "Hello world!"
+```
+
+`tofu apply`を実行してもリソースは残り続けます。
+
+```terminal
+$ tofu apply
+
+
+Plan: 0 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  OpenTofu will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed. ← リソースは削除されない。
+```
+
+# その他の追加機能
+
+簡単ながらおまけに他の機能も紹介します。
+
 
 [^3]: https://ja.wikipedia.org/wiki/PBKDF2
 [^4]: https://aws.amazon.com/jp/kms/
