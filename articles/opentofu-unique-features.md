@@ -51,11 +51,38 @@ https://1-7-0-alpha1.opentofu.pages.dev/docs/language/state/encryption/
 # Stateファイル暗号化
 暗号化に使用する鍵は現時点では2つの手段があります。
 自身でパスフレーズを設定して、暗号鍵を生成するPBKDF2[^3]か、AWSの鍵管理マネージドサービスであるAWS KMS[^4]です。
+また2024年3月時点でサポートされている暗号化方式はAWS-GCM[^5]のみになります。
 
-[^3]: https://ja.wikipedia.org/wiki/PBKDF2
-[^4]: https://aws.amazon.com/jp/kms/
+ではStateファイルを暗号化するコードを書いていきます。
 
-AWS KMSを使った暗号化について紹介します。
+### PBKDF2
+
+PBKDF2の場合、パスフレーズをHCLコード内に記載します。
+
+```hcl:state暗号
+terraform {
+  encryption {
+    key_provider "pbkdf2" "passphrase" {
+      passphrase = "correct-horse-battery-staple" #最低でも16文字以上
+    }
+
+    method "aes_gcm" "my_method" {
+      keys = key_provider.pbkdf2.passphrase
+    }
+
+    state {
+      method = method.aes_gcm.my_method
+    }
+  }
+}
+```
+
+
+### AWS KMS
+AWS KMSを使った暗号化について紹介します。KMSを使う場合カスタマー管理型のキーを作成します。
+![](/images/opentofu-unique-features/image1.png)
+*カスタマーキー作成*
+
 
 ```hcl
 terraform {
@@ -77,6 +104,10 @@ terraform {
   }
 }
 ```
+
+[^3]: https://ja.wikipedia.org/wiki/PBKDF2
+[^4]: https://aws.amazon.com/jp/kms/
+[^5]: https://www.mbsd.jp/research/20200901/aes-gcm/
 
 # 参考文献
 https://zenn.dev/yukionodera/articles/opentofu-ga-v1-6
